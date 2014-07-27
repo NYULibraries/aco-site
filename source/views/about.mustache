@@ -2,7 +2,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>NYU Press: <% title %></title>
+  <title><% appName %>: <% title %></title>
   <%> head %>
 </head>
 <body class="about page">
@@ -10,12 +10,12 @@
   <div class="header"><%> header %></div>
   <div class="pure-g breadcrumb">
     <div class="pure-u-1">
-      <span class="page-title"><a href="<% appUrl %>">Home</a> &gt; About</span>
+      <span class="page-title"><a href="<% appUrl %>">Home</a> &gt; <% title %></span>
     </div>
   </div>
   <div class="pure-g container main">
     <div class="pure-u-1">
-      <h2>About</h2>
+      <h2><% title %></h2>
     </div>
   </div>
   <div class="pure-g container bottom">
