@@ -1,7 +1,5 @@
-aco-site
+Arabic Collections Online site
 ========
-
-Arabic Collections Online
 
 Setup
 
