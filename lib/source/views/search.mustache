@@ -1,0 +1,56 @@
+{{=<% %>=}}
+<!doctype html>
+<html>
+<head>
+  <title><% appName %> : <% title %></title>
+  <%> head %>
+  <script id="list-template" type="text/x-handlebars-template">
+    {{#items}}
+      <div class="pure-g library-item">
+        <div class="pure-u" lang="en" dir="ltr">       
+          {{#en}}
+            <div><span class="label">Title:</span> <span class="field"><a href="<% appUrl %>/book/{{../app}}/{{../identifier}}">{{title}}</a></span></div>                        
+            <div><span class="label">Author:</span> <span class="field">{{author}}</span></div>                        
+            <div><span class="label">Publisher:</span> <span class="field">{{publisher}}</span></div>                        
+            <div><span class="label">Date of publication:</span> <span class="field">{{publication_date}}</span></div>                        
+            <div><span class="label">Subject:</span> <span class="field">{{subjects}}</span></div>                         
+            <div><span class="label">Partner:</span> <span class="field">{{partner}}</span></div>                        
+          {{/en}}
+        </div>
+        <div class="pure-u img_hold">
+          <a href="<% appUrl %>/book/{{app}}/{{identifier}}"><img class="img-responsive" src="{{thumbHref}}" alt="" title="{{title}}"/></a>
+        </div>
+        <div class="pure-u" lang="ar" dir="rtl">
+          {{#ar}}
+            <div><span class="label">Title:</span> <span class="field"><a href="<% appUrl %>/book/{{../app}}/{{../identifier}}">{{title}}</a></span></div>                        
+            <div><span class="label">Author:</span> <span class="field">{{author}}</span></div>                        
+            <div><span class="label">Publisher:</span> <span class="field">{{publisher}}</span></div>                        
+            <div><span class="label">Date of publication:</span> <span class="field">{{publication_date}}</span></div>                        
+            <div><span class="label">Subject:</span> <span class="field">{{subjects}}</span></div>                         
+            <div><span class="label">Partner:</span> <span class="field">{{partner}}</span></div>                        
+          {{/ar}}
+        </div>        
+      </div>
+    {{/items}}
+  </script>  
+</head>
+<body class="search" data-app="<% appUrl %>" data-discovery-source="<% discovery %>">
+  <div class="header"><%> header %></div>
+  <div class="content-wrapper">
+    <div class="pure-g">
+      <div class="pure-u-1">
+        <h2><% title %></h2>
+      </div>
+    </div>
+    <div class="pure-g">
+      <div class="pure-u-1">
+        <span class="page-title"><a href="<% appUrl %>" title="<% appName %>"><% appName %></a> &gt; <% title %></span>
+      </div>
+    </div>
+    <div class="library-items" data-page="1" data-pages="1"></div>
+    <div class="pure-g partners"><%> partners %></div>
+    <div class="pure-g footer"><%> footer %></div>
+  </div>
+  <script src="<% appUrl %>/js/search.js"></script>
+</body>
+</html>
