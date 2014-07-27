@@ -73,6 +73,7 @@ module.exports = function(grunt) {
           , 'series'
           , 'collections'
           , 'search'
+          , 'book'          
         ]
     }
       
@@ -109,7 +110,11 @@ module.exports = function(grunt) {
     grunt.registerTask('search', 'search', function() {
         transformHTML(__dirname + '/build/search/index.html', 'search');    
     });
+    
+    grunt.registerTask('book', 'book', function() {
+        transformHTML(__dirname + '/build/book/index.html', 'book');    
+    });    
 
-    grunt.registerTask('default', ['uglify', 'sass', 'front', 'browse', 'about', 'series', 'collections', 'search']);
+    grunt.registerTask('default', ['uglify', 'sass', 'front', 'browse', 'about', 'series', 'collections', 'search', 'book']);
 
 };

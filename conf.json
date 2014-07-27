@@ -22,6 +22,9 @@
       , "search" : {
             "title" : "Search collection"
         }  
+      , "book" : {
+            "title" : "Book"
+        }          
     }
 
 }
