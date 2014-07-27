@@ -13,8 +13,7 @@ $ git clone https://github.com/dismorfo/aco-site.git
 
   Install dependencies
 ```bash
-$ cd aco-site
-$ npm install
+$ cd aco-site && npm install
 ```
 
   Getting started
