@@ -1,11 +1,10 @@
 <!doctype html>
 <html>
 <head>{{> head }}</head>
-<body data-app="{{ appUrl }}">
+<body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}">
   {{> header }}
   <a href="{{ appUrl }}">Home</a> &gt; {{ title }}
   <h1>{{ title }}</h1>
   {{> footer }}
-  {{{ javascript }}}
 </body>
 </html>
