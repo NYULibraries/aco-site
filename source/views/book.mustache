@@ -1,21 +1,10 @@
-{{=<% %>=}}
 <!doctype html>
 <html>
-<head>
-  <title><% appName %>: <% title %></title>
-  <%> head %>
-</head>
-<body class="page book" data-app="<% appUrl %>" data-sourceUrl="<% sourceUrl %>">
-  
-  <div class="header"><%> header %></div>
-  
-  <div class="bubblingG loading active">
-    <span id="bubblingG_1"></span>
-    <span id="bubblingG_2"></span>
-    <span id="bubblingG_3"></span>
-  </div>
-  
-  <iframe id="book" name="book" allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
-  <script src="<% appUrl %>/js/book.min.js"></script>
+<head>{{> head }}</head>
+<body data-app="{{ appUrl }}">
+  {{> header }}
+  <iframe id="book" name="book" data-sourceUrl="{{ sourceUrl }}" allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
+  {{> header }}
+  {{{ javascript }}}
 </body>
 </html>
