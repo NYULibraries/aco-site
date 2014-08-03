@@ -121,7 +121,7 @@ module.exports = function(grunt) {
         try {  
             
             Object.keys(conf.pages).forEach(function (key) {
-                transformHTML( __dirname + '/build' + conf.pages[key].path , key);
+                transformHTML( __dirname + '/build' + conf.pages[key].route , key);
             });
 
         }

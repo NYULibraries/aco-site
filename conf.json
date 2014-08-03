@@ -6,33 +6,33 @@
         "front" : {
             "title" : "Home"
           , "placeholder" : "america"            
-          , "path" : "/index.html"
+          , "route" : "/index.html"
         }
       , "browse" : {
             "title" : "Recently added titles"
-          , "path" : "/browse/index.html"
+          , "route" : "/browse/index.html"
         }
       , "about" : {
             "title" : "About"
-          , "path" : "/about/index.html"
+          , "route" : "/about/index.html"
         }  
       , "collections" : {
             "title" : "Browse collections"
-          , "path" : "/collections/index.html"
+          , "route" : "/collections/index.html"
         }  
       , "series" : {
             "title" : "Browse series"
-          , "path" : "/series/index.html"
+          , "route" : "/series/index.html"
         }
       , "search" : {
             "title" : "Search collection"
           , "placeholder" : "america"
-          , "path" : "/search/index.html"
+          , "route" : "/search/index.html"
         }  
       , "book" : {
             "title" : "Book"
           , "sourceUrl" : "http://dev-dl-pa.home.nyu.edu/books"
-          , "path" : "/book/index.html"
+          , "route" : "/book/index.html"
         }          
     }
 
