@@ -9,6 +9,7 @@ module.exports = function(grunt) {
             var conf = grunt.file.readJSON('conf.json'); 
 
             var source = conf.pages[task];
+                source.appRoot = conf.appRoot;
                 source.discovery = conf.discovery;
                 source.appName = conf.appName;
                 source.appUrl = conf.appUrl;

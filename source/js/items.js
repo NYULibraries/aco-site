@@ -20,9 +20,17 @@ YUI().use(
       , searchString = '*:*'
       , transactions = []
       , fold = 200
-      , lazyLoad = 0
+      , appRoot = body.getAttribute("data-app")
       , templates = {}
       , template
+      
+      // values can be overwrite by data attributes      
+      , lazyLoad = 0
+      , rows = 10
+      , query = 10      
+
+
+    // i need to make this a module
       
     lazyLoad = parseInt(container.getAttribute("data-lazyLoad"), 10)
     
@@ -62,7 +70,7 @@ YUI().use(
                       + "sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,"
                       + "sm_field_partner"
                       
-                      // + "&rows=2" // while testing pagination
+                      + "&rows=" + rows
     
     function onFailure() {
         Y.log('onFailure') // leave here for now
@@ -155,18 +163,20 @@ YUI().use(
 
             // for now, map this at Solr level and fix img to be absolute paths
             response.response.docs.forEach( function( element, index, array ) {
-
-                element.en = {}
                 
-                element.ar = {}         
-                
-                // english                       
+                element.appRoot = appRoot
                 
                 element.identifier = element.ss_identifer
 
                 element.app = element.ss_collection_identifier   
                 
                 element.thumbHref = element.ss_representative_image                
+
+                element.ar = {}         
+                
+                element.en = {}
+
+                // english
 
                 element.en.title = element.sm_field_title
 

@@ -1,15 +1,15 @@
 {{#items}}
   {{#en}}
-    <div>Title: <a href="<% appUrl %>/book/{{../app}}/{{../identifier}}">{{title}}</a></div>                        
+    <div>Title: <a href="{{../appRoot}}/book/{{../identifier}}">{{title}}</a></div>                        
     <div>Author: {{author}}</div>                        
     <div>Publisher: {{publisher}}</div>                        
     <div>Date of publication: {{publication_date}}</div>                        
     <div>Subject: {{subjects}}</div>                         
     <div>Partner: {{partner}}</div>                        
   {{/en}}
-  <a href="<% appUrl %>/book/{{app}}/{{identifier}}"><img class="img-responsive" src="{{thumbHref}}" alt="" title="{{title}}"/></a>
+  <a href="{{../appRoot}}/book/{{identifier}}"><img class="img-responsive" src="{{thumbHref}}" alt="" title="{{title}}"/></a>
   {{#ar}}
-    <div>Title: <a href="<% appUrl %>/book/{{../app}}/{{../identifier}}">{{title}}</a></div>                        
+    <div>Title: <a href="{{../appRoot}}/book/{{../identifier}}">{{title}}</a></div>                        
     <div>Author: {{author}}</div>                        
     <div>Publisher: {{publisher}}</div>                        
     <div>Date of publication: {{publication_date}}</div>                        
