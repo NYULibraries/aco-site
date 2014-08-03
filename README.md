@@ -32,6 +32,14 @@ All the pages are represented in the configuration file (**conf.json**). To add 
 }
 ```  
 
+##### myNewPagePartial.mustache
+
+```mustache
+<ul>
+  <li>I'm a list</li>
+</ul>
+```  
+
 ##### myNewPage.mustache
 
 ```mustache
@@ -42,6 +50,7 @@ All the pages are represented in the configuration file (**conf.json**). To add 
   {{> header }}
   <a href="{{ appUrl }}">Home</a> &gt; {{ title }}
   <h1>{{ title }}</h1>
+  {{> myNewPagePartial }}
   {{> footer }}
 </body>
 </html>
