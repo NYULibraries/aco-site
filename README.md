@@ -21,13 +21,30 @@ $ cd aco-site && npm install
   
 #### Adding a page
   
-All the pages are represented in the configuration file (**cong.json**). To add a new page include it in the pages object. title and route are require (note that the route is relative to the **appRoot**). In this file you also declare mustache variables.
-  
+All the pages are represented in the configuration file (**conf.json**). To add a new page include it in the pages object. title and route are require (note that the route is relative to the **appRoot**). In this file you also declare mustache variables.
+
+##### conf.json
+
 ```javascript
 "myNewPage" : {
         "title" : "My new page"
       , "route" : "/mynewpage/index.html"
 }
+```  
+
+##### myNewPage.mustache
+
+```mustache
+<!doctype html>
+<html>
+<head>{{> head }}</head>
+<body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}">
+  {{> header }}
+  <a href="{{ appUrl }}">Home</a> &gt; {{ title }}
+  <h1>{{ title }}</h1>
+  {{> footer }}
+</body>
+</html>
 ```  
 
 #### Make changes
