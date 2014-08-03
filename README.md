@@ -3,7 +3,7 @@ Arabic Collections Online site
 
 ### Setup
 
-Make sure you have nodejs.org and gruntjs.com
+Make sure you have http://nodejs.org and http://gruntjs.com
 
 ### Installation
 
