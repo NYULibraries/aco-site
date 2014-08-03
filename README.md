@@ -27,7 +27,6 @@ All the pages are represented in the configuration file (cong.json). To add a ne
 "myNewPage" : {
         "title" : "My new page"
       , "route" : "/mynewpage/index.html"
-    }
 }
 ```  
 
