@@ -1,8 +1,6 @@
-@import "bootstrap-compass";
 @import "bootstrap-variables";
 @import "bootstrap";
 
-$darker-tan: darken($navbar-default-bg, 6.5%);
 
 html {
     font-size: $font-size-base;
