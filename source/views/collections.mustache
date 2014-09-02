@@ -1,11 +1,12 @@
 <!doctype html>
 <html>
 <head>{{> head }}</head>
-<body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}">
+<body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{bodyClass}}">
   {{> header }}
+  <div class="main">
   <h2>{{ title }}</h2>
   <span><a href="{{ appUrl }}" title="{{ appName }}">{{ appName }}</a> &gt; {{ title }}</span>
-  {{> partners }}
+ </div>
   {{> footer }}
 </body>
 </html>

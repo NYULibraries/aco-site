@@ -1,10 +1,73 @@
 <!doctype html>
 <html>
-<head>{{> head }}</head>
-<body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}">
-  {{> header }}
-  {{> search_form }}
-  <h2>{{ appName }} : {{ title }}</h2>
-  {{> footer }}
-</body>
+  <head>
+    {{> head }}
+  </head>
+  <body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{bodyClass}}">
+    {{> header }}
+    <div class="main container-fluid">
+      <div class="intro" lang="en"> Welcome to Arabic Collections Online!<br> Organized by NYU in partnership with Columbia, Princeton, Cornell, and others, Arabic Collections Online (ACO) aims to be one of the largest digital collections of out-of-copyright Arabic texts. ACO is the largest digital reformatting project that Digital Library Technology Services has undertaken to date. <a href="/aco/about" class="readmore">READ&nbsp;MORE…</a>
+    </div>
+    <div class="intro" dir="rtl" lang="ar">مرحبا بكم في المجموعات العربية على الانترنت!<br> المجموعات العربية على الانترنت نظمت من طرف جامعة نيويورك بالاشتراك مع كولومبيا، برنستون، كورنيل، وجامعات اخرى. يهدف المشروع إلى أن يجعل هذه المجموعات العربية الالكترونية واحدة من أكبر المجموعات الرقمية من النصوص العربية التي سقطت عنها حقوق المؤلف. مشروع المجموعات العربية الرقمية هو أكبر مشروع قامت به الخدمات الرقمية التكنولوجية بالمكتبة حتى الآن في أطار إعادة الصياغة الرقمية اقرأ.
+      <a href="/aco/about" class="readmore">المزيد...</a> </div>
+      <div class="featured " lang="en">
+        <h3>Browse The Collections</h3>
+        <article>
+          <ul>
+            <li>
+              <h4>Recently Added Titles</h4>
+              <ul class="subjectList">
+                <li><a href="#">Title of Book: Subtitle Lorem Ipsum Lorem Ipsum Lorem Ipsum</a></li>
+                <li><a href="#">Title of Book: Subtitle Lorem Ipsum</a></li>
+                <li><a href="#">Title of Book: Subtitle Lorem Ipsum Lorem Ipsum Lorem Ipsum</a></li>
+                <li><a href="{{appUrl}}/browse" class="readmore">all recent titles</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <h4>Featured Subjects</h4>
+              <ul class="subjectList">
+                <li><a href="{{appUrl}}/subject/hadith">Hadith-- Dictionaries</a></li>
+                <li><a href="{{appUrl}}/subject/arabic_language">Arabic language-- Dictionaries</a></li>
+                <li><a href="{{appUrl}}/subject/Homer">Homer</a></li>
+                <li><a href="{{appUrl}}/subject/bustani">Bustānī</a></li>
+                <li><a href="#" class="readmore">all subjects</a></li>
+              </ul>
+            </li>
+          </ul>
+        </article>
+      </div>
+      <div class="featured" dir="rtl" lang="ar">
+        <h3>:التصفح</h3>
+        <article>
+          <ul>
+            <li>
+              <h4>العناوين المضافة حديثا</h4>
+              <ul class="subjectList">
+                <li><a href="#">العناوين المضافة حديثا</a></li>
+                <li><a href="#">العناوين المضافة حديثا</a></li>
+                <li><a href="#">العناوين المضافة حديثا</a></li>
+                <li><a href="#">العناوين المضافة حديثا</a></li>
+                <li><a href="#" class="readmore">...المزيد</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <h4>لمواضيع</h4>
+            </li>
+            <ul class="subjectList">
+             <li><a href="#">Hadith-- Dictionaries</a></li>
+                <li><a href="#">Arabic language-- Dictionaries</a></li>
+                <li><a href="#">Homer</a></li>
+                <li><a href="#">Bustānī</a></li>
+                <li><a href="#" class="readmore">all subjects</a></li>
+            </ul>
+          </ul>
+        </article>
+      </div>
+    </div>
+    {{> footer }}
+  </body>
 </html>
