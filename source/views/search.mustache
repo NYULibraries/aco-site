@@ -1,13 +1,14 @@
 <!doctype html>
 <html>
 <head>{{> head }}</head>
-<body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}">
-  {{> header }}
-  <h2>{{ title }}</h2>
-  <span><a href="{{ appUrl }}" title="{{ appName }}">{{ appName }}</a> &gt; {{ title }}</span>
-  {{> search_form }}
-  {{> items }}
-  {{> partners }}
-  {{> footer }}
+<body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{bodyClass}}">
+	{{> header }}
+	<div class="main container-fluid">
+		<div class="breadcrumbs" lang="en"><a href="{{ appUrl }}" title="{{ appName }}">{{ appName }}</a> &gt; {{ title }}</div>
+		<h2>{{ title }}</h2>
+		{{> search_form }}
+		{{> items }}
+	</div>
+	{{> footer }}
 </body>
 </html>
