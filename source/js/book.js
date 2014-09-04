@@ -3,99 +3,109 @@ YUI().use(
   , 'anim'
   , 'crossframe'
   , 'router'
+  , 'event-resize'
   , 'json-stringify'
   , function (Y) {
   
     'use strict'
-
+    
     var body = Y.one('body')
-      , topOffsetHeight = Y.one('.home-menu').get('offsetHeight')
-      , iframe = Y.one('iframe')
-      , match = location.pathname.match(/\/book\/(.*)\/(.*)/)
-      , match_page = location.pathname.match(/\/book\/(.*)\/(.*)\/(.*)/)
-      , viewport = Y.DOM.viewportRegion()
-      , src
-      , router = new Y.Router(
-        {
-            root : '/aco',
-            routes: [
-                {
-                  path: 'book/1', 
-                  callbacks: function () { 
-
-                  }
-                }
-            ]
-        }
-      )
-      , x
-
-    iframe.setStyles({
-      top: topOffsetHeight,
-      height: viewport.height - topOffsetHeight
-    })
+      , widget = Y.one('.widget.book')
+      , match_book = location.pathname.match(/\/book\/(.*)/)
+      , match_book_page = location.pathname.match(/\/book\/(.*)\/(.*)/)
+      , sourceUrl = widget.getAttribute("data-sourceUrl")
+      , appRoot = body.getAttribute("data-appRoot")
+      , availableHeight = calculateAvailableHeight()
+      , src = ''
+      , identifier = '';
+      
+    body.addClass('io-loading');
+      
+    function calculateAvailableHeight() {
+      
+        var siblings = widget.siblings()
+          , viewport = Y.DOM.viewportRegion()
+          , availableHeight = viewport.height;
+      
+        siblings.each(function(node) {
+            availableHeight = availableHeight - node.get('offsetHeight')
+        })
+          
+        return availableHeight;
+    }
+      
+    function hideSiblings() {
+        widget.siblings().each(function(node) {
+            node.setStyles( { 'display' : 'none', 'visibility' : 'hidden' })
+        })
+    }
+      
+    function showSiblings() {
+        widget.siblings().each(function(node) {
+            node.setStyles( { 'display' : 'initial', 'visibility' : 'visible' })
+        })
+    }      
 
     if (
-         match_page
+         match_book_page
          &&
-         match_page[3]
+         match_book_page[2]
       ) 
     {
+    
+      identifier = match_book_page[1]
       
-      x = match_page
-      
-      src = body.getAttribute("data-sourceUrl") + '/books/' + match_page[2] + '/' +  match_page[3];
+      src = widget.getAttribute("data-sourceUrl") + '/books/' + identifier + '/' +  match_book_page[2];
 
     }
     
     else if (
-         match 
+         match_book
          &&
-         match[2]
-      ) 
+         match_book[1]
+    ) 
     {
-      x = match 
-      
-      src = body.getAttribute("data-sourceUrl") + '/books/' + match[2] + '/1';
-      
+    
+      identifier = match_book[1]
+          
+      src = sourceUrl + '/books/' + identifier + '/1';
     }    
     
-    Y.log(src)
-    
-    iframe.set('src', src)
-    
-    Y.on('button:button-fullscreen:on', function(e) {
-        Y.one('.header').setStyles({
-          display: 'none',
-          visibility: 'hidden'          
-        })
-        
-        Y.one('#book').setStyles({
-          top: 0,
-          height: viewport.height
-        })
+    var router = new Y.Router({
+        root : appRoot,
+        routes: [
+            {
+                path: '*', 
+                callbacks: function () {
+                    Y.log('TIME: ' + new Date() + '. At some point this will work and make sure the browser back button works as expected');
+                }
+            }
+        ]
     });
     
-    Y.on('openlayers:change', function(data) {        
-        router.save('/book/' + x[1] + '/' + x[2] + '/' + data.sequence)
-    });    
+    widget.setStyles({ height : calculateAvailableHeight() })
     
+    widget.set('src', src)
+
+    Y.on('windowresize', function(e, data) {
+        widget.setStyles({ height : calculateAvailableHeight() });
+    });
+    
+    Y.on('button:button-fullscreen:on', function(e) {
+        hideSiblings();
+        widget.setStyles({ height: calculateAvailableHeight() })
+    });
+
     Y.on('button:button-fullscreen:off', function(e, data) {
-        
-        Y.one('.header').setStyles({
-          display: 'initial',
-          visibility: 'visible'          
-        })
-        
-        Y.one('#book').setStyles({
-          top: topOffsetHeight,
-          height: viewport.height - topOffsetHeight
-        })
-                
+         showSiblings()        
+         widget.setStyles({ height: calculateAvailableHeight() })
     });    
     
-    // https://github.com/josephj/yui3-crossframe
-    iframe.on('load', function() {  
+    Y.on('openlayers:change', function(data) {        
+        router.save('/book/' + identifier + '/' + data.sequence)
+    });        
+    
+    widget.on('load', function() {
     
         var frameName = 'frames["book"]'
           , message   = body.getAttribute("data-app") + '/css/book.css'
@@ -103,21 +113,19 @@ YUI().use(
               "eventType"   : "crossframe:css",
               "callback"    : function (o) {
 
-                  iframe.setStyles({ visibility: 'visible' })
-
                   var anim = new Y.Anim({
-                    node: '#book',
+                    node: '.widget.book',
                     to: { opacity: 1 },
                     duration: 0.2
                   });
                   
                   anim.run();
                   
-                  Y.one('.loading').removeClass('active')
+                  body.removeClass('io-loading');
                   
               }
-          };
-
+        };
+        
         Y.CrossFrame.postMessage(frameName, message, config)
 
         Y.Global.on("crossframe:message", function (o, data, callback) {

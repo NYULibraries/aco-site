@@ -1,0 +1,31 @@
+<div class="item-list">
+  {{#items}}
+  <div class="item">
+    <div class="l-hold">
+      <div class="thumbs">
+        <a href="{{appRoot}}/book/{{identifier}}"><img class="img-responsive" src="{{thumbHref}}" alt="" title="{{title}}"/></a>
+      </div>
+      {{#en}}
+      <div lang="en">
+        <div><span class="md_label">Title:</span> <a href="{{../appRoot}}/book/{{../identifier}}">{{title}}</a></div>        
+        <div><span class="md_label">Author:</span> {{author}}</div>                        
+        <div><span class="md_label">Publisher:</span> {{publisher}}</div>                        
+        <div><span class="md_label">Date of publication:</span> {{publication_date}}</div>                        
+        <div><span class="md_label">Subject:</span> {{subjects}}</div>                         
+        <div><span class="md_label">Provider:</span> {{partner}}</div>                        
+      </div>
+      {{/en}}
+    </div>
+    {{#ar}}
+    <div dir="rtl" lang="ar">
+      <div dir="rtl" lang="ar"><span class="md_label">العنوان:</span> <a href="{{../appRoot}}/book/{{../identifier}}">{{title}}</a></div>
+      <div dir="rtl" lang="ar"><span class="md_label">المؤلف:</span> {{author}}</div>                        
+      <div dir="rtl" lang="ar"><span class="md_label">الناشر:</span> {{publisher}}</div>                        
+      <div dir="rtl" lang="ar"><span class="md_label">تاريخ النشر:</span> {{publication_date}}</div>                        
+      <div dir="rtl" lang="ar"><span class="md_label">الموضوع:</span> {{subjects}}</div>                         
+      <div dir="rtl" lang="ar"><span class="md_label">شريك:</span> {{partner}}</div>  
+    </div>                      
+    {{/ar}}
+  </div>
+  {{/items}}
+</div>

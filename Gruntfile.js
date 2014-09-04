@@ -1,50 +1,98 @@
 module.exports = function(grunt) {
 
-    function transformHTML(buildPath, task) {
+  function transformHTML(buildPath, task) {
 
-        grunt.log.write('Transforming ' + task + ' template into HTML ').ok();  
+        try {  
 
-        var hogan = require('hogan');
+            var hogan = require('hogan');
 
-        var conf = grunt.file.readJSON('conf.json'); 
+            var conf = grunt.file.readJSON('conf.json'); 
 
-        var source = conf.pages[task];
-            source.discovery = conf.discovery;
-            source.appName = conf.appName;
-            source.appUrl = conf.appUrl;
-            source.css = grunt.file.read(__dirname + '/build/css/style.css');
+            var source = conf.pages[task];
+                source.appRoot = conf.appRoot;
+                source.discovery = conf.discovery;
+                source.appName = conf.appName;
+                source.appUrl = conf.appUrl;
+                source.partners = conf.partners;                
 
-        // compile template
-        var template = hogan.compile( grunt.file.read(__dirname + '/source/views/' + task + '.mustache') );
+                // later on for prod
+                // source.css = grunt.file.read(__dirname + '/build/css/style.css');
 
-        // write file
-        grunt.file.write(buildPath, template.render( source, { 
-            'head' : grunt.file.read(__dirname + '/source/views/head.mustache')
-          , 'header' : grunt.file.read(__dirname + '/source/views/header.mustache')
-          , 'partners' : grunt.file.read(__dirname + '/source/views/partners.mustache')
-          , 'footer' : grunt.file.read(__dirname + '/source/views/footer.mustache')          
-        }))
-    }
+            // compile template
+            var template = hogan.compile( grunt.file.read(__dirname + '/source/views/' + task + '.mustache') );
+        
+            var partials = {}
+        
+            grunt.file.recurse( __dirname + '/source/views/' , function callback(abspath, rootdir, subdir, filename) {
+              if (filename.match(".mustache") && task + '.mustache' !== filename) {
+                  var name = filename.replace(".mustache", "");
+                  partials[name] = grunt.file.read(abspath)
+              }
+            })
+        
+            grunt.file.recurse( __dirname + '/source/views/' , function callback(abspath, rootdir, subdir, filename) {
+        
+              if ( filename.match(".hbs") ) {
+                  grunt.file.write( 'build/js/' + filename, grunt.file.read( abspath ) )
+              
+              }
+            })
+            
+            // write file
+            grunt.file.write( buildPath, template.render( source, partials ) )
+            
+            grunt.log.write('Transforming ' + task + ' template into HTML ').ok();  
+        }
+
+        catch (err) {  
+            grunt.log.write('Transforming ' + task + ' template into HTML. See ' + err.description + ' ').error();  
+        }        
+        
+
+  }
+
+  function targetsCallback() {
+
+    var targets = {};
+     
+    grunt.file.recurse( __dirname + '/source/js/' , function callback(abspath, rootdir, subdir, filename) {
+          
+          if (filename.match(".js")) {
+          
+              var name = filename.replace(".js", "");
+
+              targets['build/js/'+ name +'.min.js'] = abspath
+          }
+          
+    })
+  
+    return targets;
+
+  }
 
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    clean: [ 
+      __dirname + '/build/images', 
+      __dirname + '/build/css'
+    ],
+    copy: {
+      main: {
+        expand: true ,
+        cwd: 'source/images',
+        src: '**/*',
+        dest: 'build/images',
+      },
+    },    
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
         compress: true,
-        preserveComments: false        
+        preserveComments: false
       },
       my_target: {
-          files : {
-              'build/js/book.min.js' : __dirname + '/source/js/book.js',
-              'build/js/browse.min.js' : __dirname + '/source/js/browse.js',
-              'build/js/collections.min.js' : __dirname + '/source/js/collections.js' ,
-              'build/js/front.min.js' : __dirname + '/source/js/front.js',
-              'build/js/search.min.js' : __dirname + '/source/js/search.js',
-              'build/js/series.min.js' : __dirname + '/source/js/series.js',
-              'build/js/crossframe.min.js' : __dirname + '/source/js/crossframe.js'
-          }
+          files : targetsCallback()
       }
     },
     sass: {
@@ -67,54 +115,39 @@ module.exports = function(grunt) {
         tasks: [
             'uglify'
           , 'sass'
-          , 'front'
-          , 'browse'
-          , 'about'
-          , 'series'
-          , 'collections'
-          , 'search'
-          , 'book'          
+          , 'writeHTML'          
         ]
     }
       
     });
 
-    // Load the plugin that provides the "uglify" task.
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    
     grunt.loadNpmTasks('grunt-contrib-uglify');
   
     grunt.loadNpmTasks('grunt-contrib-sass');
     
     grunt.loadNpmTasks('grunt-contrib-watch');
+    
+    grunt.registerTask('writeHTML', 'writeHTML', function() {
+    
+        var conf = grunt.file.readJSON('conf.json'); 
+    
+        try {  
+            
+            Object.keys(conf.pages).forEach(function (key) {
+                transformHTML( __dirname + '/build' + conf.pages[key].route , key);
+            });
 
-    grunt.registerTask('front', 'front', function() {
-        transformHTML(__dirname + '/build/index.html', 'front');
-    });  
-  
-    grunt.registerTask('browse', 'browse', function() {
-        transformHTML(__dirname + '/build/browse/index.html', 'browse');    
-    });  
-  
-    // A very basic default task.
-    grunt.registerTask('about', 'about', function() {
-        transformHTML(__dirname + '/build/about/index.html', 'about');
-    });  
-    
-    grunt.registerTask('series', 'series', function() {
-        transformHTML(__dirname + '/build/series/index.html', 'series');    
-    });
-    
-    grunt.registerTask('collections', 'collections', function() {
-        transformHTML(__dirname + '/build/collections/index.html', 'collections');    
-    });
-    
-    grunt.registerTask('search', 'search', function() {
-        transformHTML(__dirname + '/build/search/index.html', 'search');    
-    });
-    
-    grunt.registerTask('book', 'book', function() {
-        transformHTML(__dirname + '/build/book/index.html', 'book');    
-    });    
+        }
+        catch (err) {  
+            grunt.log.write("Unknown error: " + err.description).error();  
+        }
 
-    grunt.registerTask('default', ['uglify', 'sass', 'front', 'browse', 'about', 'series', 'collections', 'search', 'book']);
+    });  
+
+    grunt.registerTask('default', ['clean', 'copy', 'uglify', 'sass', 'writeHTML']);
 
 };

@@ -337,7 +337,7 @@ YUI.add("crossframe", function (Y) {
         config.useProxy     = (config.useProxy === true) || false;
 
         // Message must be transformed to string format.
-        if (typeof message === "Object") {
+        if (typeof message === "object") {
             message = Y.JSON.stringify(message);
         }
 
@@ -400,7 +400,7 @@ YUI.add("crossframe", function (Y) {
                 Y.log("postMessage() - You are using opener hack approach.", "info", MODULE_ID);
                 if (!_openerObject) {
                     _openerObject = {};
-                    _openerObject.messageCallbackAdapter = _messageCallbackAdapter
+                    _openerObject.messageCallbackAdapter = _messageCallbackAdapter;
                     target = eval(target);
                     target.opener = _openerObject;
                 }
@@ -467,7 +467,7 @@ YUI.add("crossframe", function (Y) {
                 Y.error("The target iframe doesn't exist");
             }
             _openerObject = {};
-            _openerObject.messageCallbackAdapter = _messageCallbackAdapter
+            _openerObject.messageCallbackAdapter = _messageCallbackAdapter;
             iframeEl.contentWindow.opener = _openerObject;
         }
     };

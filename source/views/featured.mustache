@@ -1,0 +1,15 @@
+{{#content}}
+  {{#featured}}
+    <div class="featured" lang="{{language_code}}" dir="{{language_dir}}">
+      <h3>{{title}}</h3>
+      <article>
+        {{#recentlyAddedTitles}}
+          {{> recentlyAddedTitles }}
+        {{/recentlyAddedTitles}}
+        {{#featuredSubjects}}
+          {{> featuredSubjects }}
+        {{/featuredSubjects}}
+      </article>
+    </div>
+  {{/featured}}
+{{/content}}

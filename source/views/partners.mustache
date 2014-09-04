@@ -1,4 +1,6 @@
-{{=<% %>=}}
-<div class="pure-u-1">
-  <p>add partners logos here</p>
+<div class="partners">Arabic Collections Online is organized by NYU in partnership with <a href="#">Columbia</a>, <a href="#">Cornell</a>, <a href="#">Princeton</a>, and the <a href="#">American University of Beirut</a>.</div>
+<div class="logo-hold">
+  {{#partners}}
+    <div class="logo {{id}}"><a href="{{url}}"><img src="{{appUrl}}/{{logo}}" alt="" title="{{name}}"></a></div>
+  {{/partners}}
 </div>

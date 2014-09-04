@@ -3,12 +3,17 @@
 <head>{{> head }}</head>
 <body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{bodyClass}}">
   {{> header }}
-  <div class="main container-fluid">
+  <main class="main container-fluid">
     <div class="breadcrumbs" lang="en"><a href="{{ appUrl }}" title="{{ appName }}">{{ appName }}</a> &gt; {{ title }}</div>
     <h2>{{ title }}</h2>
-	{{> search_form }}
-    {{> items }}
-  </div>
+    {{#content}}
+    <div class="page-content">    
+      {{#main}}
+      <div class="{{class}}" lang="{{language_code}}" dir="{{language_dir}}">{{{html}}}</div>
+      {{/main}}
+    </div>
+    {{/content}}
+  </main>
   {{> footer }}
 </body>
 </html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+	<head>{{> head }}
+		<script>
+		// populate page title according to what is in the URL
+		YUI().use(
+		'node'
+			, function (Y) {
+			'use strict';
+			// match returns an array
+			var match = location.pathname.match(/\/subject\/(.*)/);
+			Y.one(".subjectname").setContent(match[1]);
+			Y.all(".subcat-nav a").each(function (node) {
+				var bigSrc = node.get('href');
+				if ( bigSrc == window.location ) {
+					node.addClass('active');
+				}
+			});
+		});
+		</script>
+	</head>
+	<body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}"  class="{{bodyClass}}">
+		{{> header }}
+		<main class="main container-fluid">
+		<header>
+			
+			<h2><span class="subjectlabel">{{ title }}:</span> <div class="subjectname"> </div></h2>
+			
+			<nav class="navbar subcat-nav" role="navigation">
+				<ul class="nav navbar-nav">
+					<li><h3>Subcategories:</h3></li>
+					<li ><a href="{{ appUrl }}/subject/hadith">All</a></li>
+					<li><a href="{{ appUrl }}/subject/hadith/dictionaries">Dictionaries</a></li>
+					<li><a href="{{ appUrl }}/subject/hadith/bukhari">Bukhari</a></li>
+				</ul>
+			</nav>
+			<select id="browse-select" style="-webkit-appearance: menulist-button; border-color: rgb(153, 153, 153);">
+				<option value="Sort by / فرز حسب">Sort by / فرز حسب</option>
+				<option value="Arabic / عربي">Title in Arabic / عربي</option>
+				<option value="Title in English / انجليزي"> Title in English / انجليزي نجليزينجليزي</option>
+				<option value="Date Newest / الأحدث">Publication Date Newest to Oldest / الأحدث الأحدث الأحدث الأحدث</option>
+			</select>
+			<div class="resultsnum">Showing results 1 - 10 of 112</div>
+		</header>
+		{{> items }}
+		</main>
+		{{> footer }}
+	</body>
+</html>

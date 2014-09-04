@@ -1,2 +1,0 @@
-/*! dlts-aco 2014-07-27 */
-YUI().use("node","event",function(a){"use strict";function b(b){b.preventDefault();var c=b.currentTarget,d=a.one(".pure-input"),e=d.get("value");e.length&&(location.href=c.get("action")+"/"+d.get("value"))}var c=a.one("body");c.delegate("submit",b,"form")});
