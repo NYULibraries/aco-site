@@ -13,7 +13,10 @@ module.exports = function(grunt) {
                 source.discovery = conf.discovery;
                 source.appName = conf.appName;
                 source.appUrl = conf.appUrl;
+<<<<<<< HEAD
                 source.partners = conf.partners;                
+=======
+>>>>>>> 3fa4891d93a230336192adc1dbc139d259fd43aa
 
                 // later on for prod
                 // source.css = grunt.file.read(__dirname + '/build/css/style.css');
@@ -148,6 +151,10 @@ module.exports = function(grunt) {
 
     });  
 
+<<<<<<< HEAD
     grunt.registerTask('default', ['clean', 'copy', 'uglify', 'sass', 'writeHTML']);
+=======
+    grunt.registerTask('default', ['uglify', 'sass', 'writeHTML']);
+>>>>>>> 3fa4891d93a230336192adc1dbc139d259fd43aa
 
 };

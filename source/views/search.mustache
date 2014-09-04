@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>{{> head }}</head>
+<<<<<<< HEAD
 <body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{bodyClass}}">
   {{> header }}
   <div class="main container-fluid">
@@ -9,6 +10,15 @@
 	{{> search_form }}
     {{> items }}
   </div>
+=======
+<body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}">
+  {{> header }}
+  <h2>{{ title }}</h2>
+  <span><a href="{{ appUrl }}" title="{{ appName }}">{{ appName }}</a> &gt; {{ title }}</span>
+  {{> search_form }}
+  {{> items }}
+  {{> partners }}
+>>>>>>> 3fa4891d93a230336192adc1dbc139d259fd43aa
   {{> footer }}
 </body>
 </html>

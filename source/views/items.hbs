@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="item-list">
   {{#items}}
   <div class="item">
@@ -29,3 +30,24 @@
   </div>
   {{/items}}
 </div>
+=======
+{{#items}}
+  {{#en}}
+    <div>Title: <a href="{{../appRoot}}/book/{{../identifier}}">{{title}}</a></div>                        
+    <div>Author: {{author}}</div>                        
+    <div>Publisher: {{publisher}}</div>                        
+    <div>Date of publication: {{publication_date}}</div>                        
+    <div>Subject: {{subjects}}</div>                         
+    <div>Partner: {{partner}}</div>                        
+  {{/en}}
+  <a href="{{appRoot}}/book/{{identifier}}"><img class="img-responsive" src="{{thumbHref}}" alt="" title="{{title}}"/></a>
+  {{#ar}}
+    <div>Title: <a href="{{../appRoot}}/book/{{../identifier}}">{{title}}</a></div>                        
+    <div>Author: {{author}}</div>                        
+    <div>Publisher: {{publisher}}</div>                        
+    <div>Date of publication: {{publication_date}}</div>                        
+    <div>Subject: {{subjects}}</div>                         
+    <div>Partner: {{partner}}</div>                        
+  {{/ar}}
+{{/items}}
+>>>>>>> 3fa4891d93a230336192adc1dbc139d259fd43aa
