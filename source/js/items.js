@@ -268,9 +268,13 @@ YUI().use(
 
     }
     
-    container.each( function (node) {
+    container.each( function ( node ) {
 
         var data = node.getData()
+        
+        if ( node.hasClass('loaded') ) return false
+        
+        node.addClass('loaded')
         
         node.setAttribute("data-id", Y.guid() )
         

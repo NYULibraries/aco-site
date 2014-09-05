@@ -6,7 +6,11 @@ module.exports = function(grunt) {
 
             var hogan = require('hogan');
 
-            var conf = grunt.file.readJSON('conf.json'); 
+            var conf = grunt.file.readJSON('conf.json');
+            
+            var pages = grunt.file.readJSON('pages.json');
+            
+            // console.log(pages)
 
             var source = conf.pages[task];
                 source.appRoot = conf.appRoot;
