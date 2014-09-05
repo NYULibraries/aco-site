@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "appName": "Arabic Collections Online",
   "appUrl": "http://localhost:8000/aco",
   "appRoot": "/aco",
@@ -149,43 +148,6 @@
       "title": "Book",
       "sourceUrl": "http://dev-dl-pa.home.nyu.edu/books",
       "route": "/book/index.html"
-=======
-    "appName" : "Arabic Collections Online"
-  , "appUrl" : "http://localhost:8000/aco"
-  , "appRoot" : "/aco"  
-  , "pages" : {
-        "front" : {
-            "title" : "Home"
-          , "placeholder" : "america"            
-          , "route" : "/index.html"
-        }
-      , "browse" : {
-            "title" : "Recently added titles"
-          , "route" : "/browse/index.html"
-        }
-      , "about" : {
-            "title" : "About"
-          , "route" : "/about/index.html"
-        }  
-      , "collections" : {
-            "title" : "Browse collections"
-          , "route" : "/collections/index.html"
-        }  
-      , "series" : {
-            "title" : "Browse series"
-          , "route" : "/series/index.html"
-        }
-      , "search" : {
-            "title" : "Search collection"
-          , "placeholder" : "america"
-          , "route" : "/search/index.html"
-        }  
-      , "book" : {
-            "title" : "Book"
-          , "sourceUrl" : "http://dev-dl-pa.home.nyu.edu/books"
-          , "route" : "/book/index.html"
-        }          
->>>>>>> 3fa4891d93a230336192adc1dbc139d259fd43aa
     }
   },
   "partners": [
