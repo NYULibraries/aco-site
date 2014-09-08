@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 
             var conf = grunt.file.readJSON('conf.json');
             
-            var pages = grunt.file.readJSON('pages.json');
+            // var pages = grunt.file.readJSON('pages.json');
             
             // console.log(pages)
 
@@ -48,7 +48,10 @@ module.exports = function(grunt) {
         }
 
         catch (err) {  
-            grunt.log.write('Transforming ' + task + ' template into HTML. See ' + err.description + ' ').error();  
+            
+            grunt.log.write('Transforming template into HTML. See ' + err.description + ' ').error();  
+            
+            console.log( err );
         }        
         
 
