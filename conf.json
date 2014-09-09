@@ -12,12 +12,12 @@
             {
               "language_code" : "en",
               "language_dir" : "ltr",              
-              "html" : "Welcome to Arabic Collections Online!<br> Organized by NYU in partnership with Columbia, Princeton, Cornell, and others, Arabic Collections Online (ACO) aims to be one of the largest digital collections of out-of-copyright Arabic texts. ACO is the largest digital reformatting project that Digital Library Technology Services has undertaken to date. <a href=\"/aco/about\" class=\"readmore\">READ&nbsp;MORE…</a>"
+              "html" : "<p><i>Arabic Collections Online</i> (ACO) is a publicly available digital library of public domain Arabic language content. Funded by New York University Abu Dhabi, this mass digitization project aims to expose up to 15,000 volumes from NYU and partner institutions over a period of five years. <a href=\"/aco/about\" class=\"readmore\">READ&nbsp;MORE…</a></p>"
             },
             {
               "language_code" : "ar",         
               "language_dir" : "rtl",              
-              "html" : "مرحبا بكم في المجموعات العربية على الانترنت!<br> المجموعات العربية على الانترنت نظمت من طرف جامعة نيويورك بالاشتراك مع كولومبيا، برنستون، كورنيل، وجامعات اخرى. يهدف المشروع إلى أن يجعل هذه المجموعات العربية الالكترونية واحدة من أكبر المجموعات الرقمية من النصوص العربية التي سقطت عنها حقوق المؤلف. مشروع المجموعات العربية الرقمية هو أكبر مشروع قامت به الخدمات الرقمية التكنولوجية بالمكتبة حتى الآن في أطار إعادة الصياغة الرقمية اقرأ.<a href=\"/aco/about\" class=\"readmore\">المزيد...</a>"
+              "html" : "<p>ن مجموعة الكتب العربية المدونة على الشبكة العنكبوتية عبارة عن مكتبة عامَّة رقمية للكتب المؤلفة بااللغة العربية وممولة من فبل جامعة نيويورك أبو ظبي.  يهدف هذا المشروع الرقمي الهائل إلى عرض مايقارب خمسة عشرة ألف كتاب من قبل جامعة نيويورك والجامعات الأخرى المشاركة خلال مدة خمس سنوات من العمل. إن جامعة نيويورك والجامعات الأخرى المساهمة ستقدم أنواع مختلفة من الكتب كاالأدب و التجارة والعلوم وأكثر من ذلك من قتنياتهم من الكتب العربية. <a href=\"/aco/about\" class=\"readmore\">المزيد...</a></p>"
             }
         ],
         "featured" : [
@@ -101,13 +101,13 @@
               "language_code" : "en",
               "class" : "col-l",
               "language_dir" : "ltr",              
-              "html" : "<p>Flat informational page.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper massa at nunc pretium rhoncus. Quisque vitae  bibendum nibh. Mauris eget tellus dignissim, malesuada sapien nec, pellentesque tellus. Duis magna dui, tempor sit amet fermentum non,  ullamcorper vitae purus. Sed hendrerit eu urna nec cursus. Aenean sagittis  odio nec felis aliquam dignissim. Nullam dictum blandit augue, eu vestibulum  diam molestie vitae. Morbi aliquam imperdiet eleifend. Aenean vel enim vel turpis sollicitudin ultrices.</p>"
+              "html" : "<p><i>Arabic Collections Online</i> (ACO) is a publicly available digital library of public domain Arabic language content. Funded by New York University Abu Dhabi, this mass digitization project aims to expose up to 15,000 volumes from NYU and partner institutions over a period of five years. NYU and the partner institutions are contributing all types of material&mdash;literature, business, science, and more&mdash;from their Arabic language collections. ACO will provide digital access to printed books drawn from rich Arabic collections of prominent libraries.</p><h3>Contributing Partners:</h3><ul><li>American University of Beirut</li><li>Columbia University</li><li>Cornell University</li><li>New York University</li><li>Princeton University</li></ul><h3>ACO Project Team:</h3><ul><li>Adham Alok</li><li>Guy Barak</li><li>Melitte Buchman</li><li>Heidi Frank</li><li>Laura Henze</li><li>Carol Kassel</li><li>Alberto Ortiz Flores</li><li>Joseph Pawletko</li><li>Ekaterina Pechekhonova</li><li>Rasan Rasch</li><li>Michael Stasiak</li><li>Claudia Suleiman</li></ul>"
             },
             {
               "language_code" : "ar",
               "class" : "col-r",              
               "language_dir" : "rtl",              
-              "html" : "<p>هنالك العديد من الأنواع المتوفرة لنصوص لوريم إيبسوم، ولكن الغالبية تم تعديلها بشكل ما عبر إدخال بعض النوادر أو الكلمات العشوائية إلى النص. إن كنت تريد أن تستخدم نص لوريم إيبسوم ما، عليك أن تتحقق أولاً أن ليس هناك أي كلمات أو عبارات محرجة أو غير لائقة مخبأة في هذا النص. بينما تعمل جميع مولّدات نصوص لوريم إيبسوم على الإنترنت على إعادة تكرار مقاطع من نص لوريم إيبسوم نفسه عدة مرات بما تتطلبه الحاجة، يقوم مولّدنا هذا باستخدام كلمات من قاموس يحوي على أكثر من 200 كلمة لا تينية، مضاف إليها مجموعة من الجمل النموذجية، لتكوين نص لوريم إيبسوم ذو شكل منطقي قريب إلى النص الحقيقي. وبالتالي يكون النص الناتح خالي من التكرار، أو أي كلمات أو عبارات غير لائقة أو ما شابه. وهذا ما يجعله أول مولّد نص لوريم إيبسوم حقيقي على الإنترنت.</p>"
+              "html" : "<p>ن مجموعة الكتب العربية المدونة على الشبكة العنكبوتية عبارة عن مكتبة عامَّة رقمية للكتب المؤلفة بااللغة العربية وممولة من فبل جامعة نيويورك أبو ظبي.  يهدف هذا المشروع الرقمي الهائل إلى عرض مايقارب خمسة عشرة ألف كتاب من قبل جامعة نيويورك والجامعات الأخرى المشاركة خلال مدة خمس سنوات من العمل. إن جامعة نيويورك والجامعات الأخرى المساهمة ستقدم أنواع مختلفة من الكتب كاالأدب و التجارة والعلوم وأكثر من ذلك من قتنياتهم من الكتب العربية.  ان مجموعة الكتب العربية المدونة على الشبكة العنكبوتية سوف توفر امكانية الوصول الى الكتب المطبوعة والمستمدة من مجموعات قيمة من المكتبات العربية البارزة.   </p><h3> الجامعات الأعضاء المشاركة</h3><ul><li>الجامعة الأمريكية في بيروت</li><li>جامعة كولومبيا</li><li>جامعة كورنيل</li><li>جامعة نيويورك</li><li>جامعة برينستون</li></ul><h3>أفراد طاقم المشروع</h3><ul><li>ادهم العك</li><li>جاي بوراك</li><li>ميليت بوشمان</li><li>هايدي فرانك</li><li>لورا هينز</li><li>كارول كاسبل</li><li>البيرتواورتيزفلوريس</li><li>جوزيف باولتيكو</li><li>ايكتارينا بيكانوفا</li><li>رازان راسش</li><li>مايكل ستاسيك</li><li>كلوديا سليمان</li></ul>"
             }
         ]
       }
