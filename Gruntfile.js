@@ -39,6 +39,8 @@ module.exports = function(grunt) {
             source.appRoot = conf.appRoot;
             
             source.discovery = conf.discovery;
+
+            // var pages = grunt.file.readJSON('pages.json');
             
             source.appName = conf.appName;
             
@@ -46,11 +48,6 @@ module.exports = function(grunt) {
             
             source.partners = conf.partners;  
             
-            // source.widgets = conf.widgets;
-            
-            // this is working
-            // source.recentlyAddedTitles = source.widgets.recentlyAddedTitles
-           
            // later on for prod
            // source.css = grunt.file.read(__dirname + '/build/css/style.css');
             
@@ -93,7 +90,10 @@ module.exports = function(grunt) {
         }
 
         catch (err) {  
-            grunt.log.write('Transforming ' + task + ' template into HTML. See ' + err.description + ' ').error();  
+            
+            grunt.log.write('Transforming template into HTML. See ' + err.description + ' ').error();  
+            
+            console.log( err );
         }        
         
 
