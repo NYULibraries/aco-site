@@ -605,3 +605,8 @@ select#browse-select {
     margin: 1em auto;
     width: auto;
 }
+
+#browse-select {
+  -webkit-appearance: menulist-button; 
+  border-color: rgb(153, 153, 153);
+}

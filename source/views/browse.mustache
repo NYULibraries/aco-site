@@ -3,20 +3,24 @@
 <head>{{> head }}</head>
 <body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{ bodyClass }}">
   {{> header }}
+
   <main class="main container-fluid">
+
     <header>
+
       <div class="breadcrumbs arabic" lang="ar" dir="rtl"><a>المجموعات العربية على الانترنت</a> &gt; <a>تصفح المواضيع</a> &gt; النتائج</div>
       <div class="breadcrumbs" lang="en"><a href="{{ appUrl }}" title="{{ appName }}">{{ appName }}</a> &gt; {{ title }}</div>
+
       <h2>{{ title }}</h2>
-      <select id="browse-select" style="-webkit-appearance: menulist-button; border-color: rgb(153, 153, 153);">
-        <option value="Sort by / فرز حسب">Sort by / فرز حسب</option>
-        <option value="Arabic / عربي">Title in Arabic / عربي</option>
-        <option value="Title in English / انجليزي"> Title in English / انجليزي نجليزينجليزي</option>
-        <option value="Date Newest / الأحدث">Publication Date Newest to Oldest / الأحدث الأحدث الأحدث الأحدث</option>
-      </select>
+      
+      {{> browseSelect }}
+
       <div class="resultsnum">Showing results 1 - 10 of 112</div>
+
     </header>
+
     {{> items }}
+
     <div class="text-center">
       <ul class="pagination">
         <li class="disabled"><a href="#">&laquo;</a></li>
@@ -30,5 +34,7 @@
     </div>
   </main>
   {{> footer }}
+
 </body>
+
 </html>

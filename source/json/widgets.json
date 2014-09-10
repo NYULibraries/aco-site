@@ -56,7 +56,7 @@
       "ar" : {
         "title" : "العناوين المضافة حديثا",
         "sourceType" : "json",
-        "source" : "source/json/datasources/recentlyAddedTitlesEN.json"               
+        "source" : "source/json/datasources/recentlyAddedTitlesAR.json"               
       }
   }
 }

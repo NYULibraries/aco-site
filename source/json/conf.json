@@ -2,8 +2,6 @@
   "appName": "Arabic Collections Online",
   "appUrl": "http://localhost:8000/aco",
   "appRoot": "/aco",
-
-  
   "partners": [
     {
       "id" : "nyu",
