@@ -1,8 +1,26 @@
-{{#subjects}}
-  <h4>{{title}}</h4>
-  <div class="item-list">
-    {{#data}}
-      <li><a href="{{ appUrl }}/subject/{{tid}}">{{term}}</a></li>
-    {{/data}}
-  </div>
-{{/subjects}}
+<!doctype html>
+<html>
+  <head>{{> head }}</head>
+  <body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}"  class="{{bodyClass}}">
+    {{> header }}
+	<main class="main container-fluid">
+	  <header>
+	    <h4>{{title}}</h4>
+	  </header>
+      {{#content}}
+        {{#body}}
+          {{#widgets}}
+            {{#subjects}}
+              <div class="item-list">
+                {{#data}}
+                  <li><a href="{{ appUrl }}/subject/{{tid}}">{{term}}</a></li>
+                {{/data}}
+              </div>
+            {{/subjects}}
+          {{/widgets}}
+        {{/body}}
+      {{/content}}
+    </main>
+    {{> footer }}
+  </body>
+</html>

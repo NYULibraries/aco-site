@@ -82,14 +82,14 @@
         ]
       }      
     },
-    "subject": {
-      "title": "Subject",
-      "route": "/subject/index.html",
+    "subjects": {
+      "title": "Subjects",
+      "route": "/subjects/index.html",
       "bodyClass": "subject",
       "content" : {
         "body" : [
           {
-            "title" : "Filter by subject",
+            "title" : "Subjects",
             "language_code" : "en",
             "language_dir" : "ltr",
             "widgets" : [ "subjects" ]
@@ -97,6 +97,12 @@
         ]
       }
     },
+    "subject": {
+      "title": "Subject",
+      "route": "/subject/index.html",
+      "bodyClass": "subject",
+      "content" : {}
+    },    
     "search": {
       "title": "Search collection",
       "placeholder": "america",

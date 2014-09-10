@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 
                       source.content[a][b].widgets[c] = spaghetti
                       
-                      console.log(spaghetti)
+                      // console.log(spaghetti)
                       
                     })
                   }
@@ -208,18 +208,16 @@ module.exports = function(grunt) {
     // far from ideal
     grunt.registerTask('massageDataSource', 'massageDataSource', function() {
     	
-    	var subjects_source = grunt.file.readJSON( __dirname + '/source/json/datasources/subject.json' );
-    	
-    	var terms = subjects_source.facet_counts.facet_fields.sm_vid_Terms;
-    	
-    	var subjects = []
-    	
+    	var subjects_source = grunt.file.readJSON( __dirname + '/source/json/datasources/subject.json' )
+    	  , terms = subjects_source.facet_counts.facet_fields.sm_vid_Terms
+    	  , subjects = []
+
     	_.each( _.filter( terms, function ( term ) { return _.isString( term ) }), function ( subject, index ) {
     		subjects.push( { term : subject, tid : subject, facet : 'sm_vid_Terms' })
     	})
 
     	grunt.file.write( __dirname + '/source/json/datasources/subject.json', JSON.stringify( subjects ) )
-    			
+
     })
     
     grunt.registerTask('writeHTML', 'writeHTML', function() {
