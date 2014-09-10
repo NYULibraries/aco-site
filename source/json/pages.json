@@ -36,9 +36,9 @@
       }      
     },
     "browse": {
-      "title": "Recently added titles",
+      "title": "Browse titles",
       "route": "/browse/index.html",
-      "bodyClass": "about"
+      "bodyClass": "browse"
     },
     "about": {
       "title": "About Arabic Collections Online",

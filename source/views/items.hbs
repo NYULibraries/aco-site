@@ -3,29 +3,25 @@
   <div class="item">
     <div class="l-hold">
       <div class="thumbs">
-        <a href="{{appRoot}}/book/{{identifier}}"><img class="img-responsive" src="{{thumbHref}}" alt="" title="{{title}}"/></a>
+        <a href="{{appRoot}}/book/{{identifier}}"><img class="img-responsive" src="{{ss_representative_image}}" alt="" title="{{sm_field_title}}"/></a>
       </div>
-      {{#en}}
       <div lang="en">
-        <div><span class="md_label">Title:</span> <a href="{{../appRoot}}/book/{{../identifier}}">{{title}}</a></div>        
-        <div><span class="md_label">Author:</span> {{author}}</div>                        
-        <div><span class="md_label">Publisher:</span> {{publisher}}</div>                        
-        <div><span class="md_label">Date of publication:</span> {{publication_date}}</div>                        
-        <div><span class="md_label">Subject:</span> {{subjects}}</div>                         
+        <div><span class="md_label">Title:</span> <a href="{{appRoot}}/book/{{ss_identifer}}">{{sm_field_title}}</a></div>        
+        <div><span class="md_label">Author:</span> {{sm_field_author}}</div>                        
+        <div><span class="md_label">Publisher:</span> {{sm_field_publisher}}</div>                        
+        <div><span class="md_label">Date of publication:</span> {{sm_field_publication_date_text}}</div>                        
+        <div><span class="md_label">Subject:</span> {{#each sm_vid_Terms}}<div>{{this}}</div> {{/each}}</div>                         
         <div><span class="md_label">Provider:</span> {{partner}}</div>                        
       </div>
-      {{/en}}
     </div>
-    {{#ar}}
     <div dir="rtl" lang="ar">
-      <div dir="rtl" lang="ar"><span class="md_label">العنوان:</span> <a href="{{../appRoot}}/book/{{../identifier}}">{{title}}</a></div>
-      <div dir="rtl" lang="ar"><span class="md_label">المؤلف:</span> {{author}}</div>                        
-      <div dir="rtl" lang="ar"><span class="md_label">الناشر:</span> {{publisher}}</div>                        
-      <div dir="rtl" lang="ar"><span class="md_label">تاريخ النشر:</span> {{publication_date}}</div>                        
-      <div dir="rtl" lang="ar"><span class="md_label">الموضوع:</span> {{subjects}}</div>                         
-      <div dir="rtl" lang="ar"><span class="md_label">شريك:</span> {{partner}}</div>  
+      <div dir="rtl" lang="ar"><span class="md_label">العنوان:</span> <a href="{{appRoot}}/book/{{ss_identifer}}">{{sm_ar_title}}</a></div>
+      <div dir="rtl" lang="ar"><span class="md_label">المؤلف:</span> {{sm_ar_author}}</div>                        
+      <div dir="rtl" lang="ar"><span class="md_label">الناشر:</span> {{sm_ar_publisher}}</div>                        
+      <div dir="rtl" lang="ar"><span class="md_label">تاريخ النشر:</span> {{sm_ar_publication_date}}</div>                        
+      <div dir="rtl" lang="ar"><span class="md_label">الموضوع:</span> {{sm_ar_subjects}}</div>                         
+      <div dir="rtl" lang="ar"><span class="md_label">شريك:</span> {{sm_ar_partner}}</div>  
     </div>                      
-    {{/ar}}
   </div>
   {{/items}}
 </div>

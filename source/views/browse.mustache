@@ -13,14 +13,24 @@
 
       <h2>{{ title }}</h2>
       
+      <!--
       {{> browseSelect }}
-
-      <div class="resultsnum">Showing results 1 - 10 of 112</div>
+      -->
+      
+      <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
 
     </header>
 
-    {{> items }}
-
+    <div 
+      class="widget" 
+      data-name="items" 
+      data-lazyLoad="0" 
+      data-rows="10" 
+      data-paginator="0" 
+      data-script='{ "js" : [ "browse.min.js" ], "hbs" : [ { "items" : "items.hbs" }, { "paginator" : "paginator.hbs" } ] }'
+    ></div>
+    
+    <!--
     <div class="text-center">
       <ul class="pagination">
         <li class="disabled"><a href="#">&laquo;</a></li>
@@ -32,6 +42,8 @@
         <li><a href="#">&raquo;</a></li>
       </ul>
     </div>
+    -->
+    
   </main>
   {{> footer }}
 
