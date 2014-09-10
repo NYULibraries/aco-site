@@ -32,7 +32,7 @@ build/Release
 .project
 .settings/
 
-source/json/*.json
+source/json/datasources/*.json
 
 # Dependency directory
 # Deployed apps should consider commenting this line out:

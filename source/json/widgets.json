@@ -1,0 +1,62 @@
+{
+    "featuredSubjects" : {
+      "en" : {
+        "title" : "Featured Subjects",
+        "sourceType" : "local",
+        "data": [
+            {
+                "tid" : "hadith",
+                "term" : "Hadith-- Dictionaries"
+            },
+            {
+                "tid" : "arabic_language",
+                "term" : "Arabic language-- Dictionaries"
+            },
+            {
+                "tid" : "homer",
+                "term" : "Homer"
+            },
+            {
+                "tid" : "bustani",
+                "term" : "Bustānī"
+            }                          
+        ]
+      },
+      "ar" : {
+        "title" : "التصفح",
+        "sourceType" : "local",
+        "data": [
+            {
+                "tid" : "hadith",
+                "term" : "Hadith-- Dictionaries"
+            },
+            {
+                "tid" : "arabic_language",
+                "term" : "Arabic language-- Dictionaries"
+            },
+            {
+                "tid" : "homer",
+                "term" : "Homer"
+            },
+            {
+                "tid" : "bustani",
+                "term" : "Bustānī"
+            }                          
+        ]
+      }
+    
+    },
+
+    "recentlyAddedTitles" : {
+      "en" : {
+        "title" : "Recently Added Titles",
+        "sourceType" : "json",
+        "source" : "source/json/datasources/recentlyAddedTitlesEN.json"               
+      },
+      "ar" : {
+        "title" : "العناوين المضافة حديثا",
+        "sourceType" : "json",
+        "source" : "source/json/datasources/recentlyAddedTitlesEN.json"               
+      }
+  }
+}

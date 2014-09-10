@@ -1,18 +1,20 @@
 module.exports = function(grunt) {
 
+    var _ = require('underscore')
+              
     function transformHTML( buildPath, task ) {
-    	
+    
         try {
         
             var hogan = require('hogan')
-              , _ = require('underscore')
-              , conf = grunt.file.readJSON('conf.json')
-              , source = conf.pages[task]
-              , content
+              , conf = grunt.file.readJSON( __dirname + '/source/json/conf.json')
+              , pages = grunt.file.readJSON( __dirname + '/source/json/pages.json')
+              , widgets = grunt.file.readJSON(__dirname + '/source/json/widgets.json')
+              , source = pages[task]
               , navbar = []
               , template = hogan.compile( grunt.file.read( __dirname + '/source/views/' + task + '.mustache' ) )
               , partials = {};
-              
+
             // this spaghetti maps the widgets to the taks and load data Object if type is not local
             if ( source.content ) {
               _.each( source.content, function ( content, a ) {
@@ -22,7 +24,7 @@ module.exports = function(grunt) {
 
                       var spaghetti = {}
 
-                      spaghetti[widget] = conf.widgets[source.content[a][b].widgets[c]][source.content[a][b].language_code]
+                      spaghetti[widget] = widgets[source.content[a][b].widgets[c]][source.content[a][b].language_code]
 
                       if ( spaghetti[widget].sourceType == 'json' ) {
                         spaghetti[widget].data = grunt.file.readJSON( __dirname + '/' + spaghetti[widget].source )   
@@ -40,8 +42,6 @@ module.exports = function(grunt) {
             
             source.discovery = conf.discovery;
 
-            // var pages = grunt.file.readJSON('pages.json');
-            
             source.appName = conf.appName;
             
             source.appUrl = conf.appUrl;
@@ -50,8 +50,8 @@ module.exports = function(grunt) {
             
            // later on for prod
            // source.css = grunt.file.read(__dirname + '/build/css/style.css');
-            
-           Object.keys( conf.pages ).forEach( function ( key ) {
+           /**
+           Object.keys( pages ).forEach( function ( key ) {
 
                 if ( 
                     conf.pages[key].menu && 
@@ -66,6 +66,7 @@ module.exports = function(grunt) {
                 }
 
             })
+            **/
 
             grunt.file.recurse( __dirname + '/source/views/' , function callback(abspath, rootdir, subdir, filename) {
               if ( filename.match(".mustache") && task + '.mustache' !== filename ) {
@@ -75,10 +76,8 @@ module.exports = function(grunt) {
             })
         
             grunt.file.recurse( __dirname + '/source/views/' , function callback(abspath, rootdir, subdir, filename) {
-        
               if ( filename.match(".hbs") ) {
                   grunt.file.write( 'build/js/' + filename, grunt.file.read( abspath ) )
-              
               }
             })
             
@@ -126,11 +125,11 @@ module.exports = function(grunt) {
     curl: {
         'recentlyAddedTitlesEN': {
             src: 'http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fq=ss_language:en&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=10',
-            dest: 'source/json/recentlyAddedTitlesEN.json'
+            dest: 'source/json/datasources/recentlyAddedTitlesEN.json'
         },
         'recentlyAddedTitlesAR': {
             src: 'http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fq=ss_language:en&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=10',
-            dest: 'source/json/recentlyAddedTitlesAR.json'
+            dest: 'source/json/datasources/recentlyAddedTitlesAR.json'
         }        
     },
     
@@ -170,11 +169,14 @@ module.exports = function(grunt) {
     watch: {
         files: [
             __dirname + '/source/js/*.js'
+          , __dirname + '/source/json/*.json'            
           , __dirname + '/source/sass/*.scss'
           , __dirname + '/source/views/*.mustache'
         ],
         tasks: [
-            'uglify'
+            'clean'
+          , 'copy'
+          , 'uglify'
           , 'sass'
           , 'writeHTML'          
         ]
@@ -198,15 +200,16 @@ module.exports = function(grunt) {
     
     grunt.registerTask('writeHTML', 'writeHTML', function() {
     
-        var conf = grunt.file.readJSON('conf.json'); 
+        var pages = grunt.file.readJSON(__dirname + '/source/json/pages.json'); 
     
         try {  
-            
-            Object.keys(conf.pages).forEach(function (key) {
-                transformHTML( __dirname + '/build' + conf.pages[key].route , key);
-            });
+        
+          _.each( pages, function ( element, index ) {
+            transformHTML( __dirname + '/build' + pages[index].route , index);
+          })
 
         }
+        
         catch (err) {  
             grunt.log.write("Unknown error: " + err.description).error();  
         }
