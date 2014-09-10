@@ -8,7 +8,10 @@
     {{#content}}
     <div class="main container-fluid">
       {{#intro}}
-        <div class="intro" lang="{{language_code}}" dir="{{language_dir}}">{{{html}}}</div>
+        <div class="intro" lang="{{language_code}}" dir="{{language_dir}}">
+          <h2>{{title}}</h2>
+          {{{html}}}
+        </div>
       {{/intro}}
       {{> featured }}
     </div>

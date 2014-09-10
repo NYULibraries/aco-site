@@ -1,6 +1,8 @@
 YUI().use("node", "event", function(Y) {
 
     "use strict";
+    
+    Y.log('search_form.min.js')
 
     var body = Y.one("body");
 

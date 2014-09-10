@@ -1,15 +1,11 @@
-{{#content}}
-  {{#featured}}
+{{#featured}}
     <div class="featured" lang="{{language_code}}" dir="{{language_dir}}">
       <h3>{{title}}</h3>
       <article>
-        {{#recentlyAddedTitles}}
-          {{> recentlyAddedTitles }}
-        {{/recentlyAddedTitles}}
-        {{#featuredSubjects}}
-          {{> featuredSubjects }}
-        {{/featuredSubjects}}
-      </article>
+      {{#widgets}}
+        {{> recentlyAddedTitles }}
+        {{> featuredSubjects }}
+      {{/widgets}}
+      </article>      
     </div>
-  {{/featured}}
-{{/content}}
+{{/featured}}

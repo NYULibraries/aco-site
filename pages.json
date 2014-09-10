@@ -1,40 +1,84 @@
 {
-  "appName": "Arabic Collections Online",
-  "appUrl": "http://localhost:8000/aco",
-  "appRoot": "/aco",
   "pages": {
     "front": {
       "title": "Home",
       "route": "/index.html",
-      "menu" : [ "navbar" ],
       "bodyClass" : "front",
       "content" : {
         "intro" : [
             {
-              "title" : "Welcome to Arabic Collections Online!",
               "language_code" : "en",
               "language_dir" : "ltr",              
-              "html" : "<p><i>Arabic Collections Online</i> (ACO) is a publicly available digital library of public domain Arabic language content. Funded by New York University Abu Dhabi, this mass digitization project aims to expose up to 15,000 volumes from NYU and partner institutions over a period of five years. <a href=\"/aco/about\" class=\"readmore\">READ&nbsp;MORE…</a></p>"
+              "html" : "Welcome to Arabic Collections Online!<br> Organized by NYU in partnership with Columbia, Princeton, Cornell, and others, Arabic Collections Online (ACO) aims to be one of the largest digital collections of out-of-copyright Arabic texts. ACO is the largest digital reformatting project that Digital Library Technology Services has undertaken to date. <a href=\"/aco/about\" class=\"readmore\">READ&nbsp;MORE…</a>"
             },
             {
-              "title" : "مرحبا بكم في المجموعات العربية على الانترنت!",
               "language_code" : "ar",         
               "language_dir" : "rtl",              
-              "html" : "المجموعات العربية على الانترنت نظمت من طرف جامعة نيويورك بالاشتراك مع كولومبيا، برنستون، كورنيل، وجامعات اخرى. يهدف المشروع إلى أن يجعل هذه المجموعات العربية الالكترونية واحدة من أكبر المجموعات الرقمية من النصوص العربية التي سقطت عنها حقوق المؤلف. مشروع المجموعات العربية الرقمية هو أكبر مشروع قامت به الخدمات الرقمية التكنولوجية بالمكتبة حتى الآن في أطار إعادة الصياغة الرقمية اقرأ.<a href=\"/aco/about\" class=\"readmore\">المزيد...</a>"
+              "html" : "مرحبا بكم في المجموعات العربية على الانترنت!<br> المجموعات العربية على الانترنت نظمت من طرف جامعة نيويورك بالاشتراك مع كولومبيا، برنستون، كورنيل، وجامعات اخرى. يهدف المشروع إلى أن يجعل هذه المجموعات العربية الالكترونية واحدة من أكبر المجموعات الرقمية من النصوص العربية التي سقطت عنها حقوق المؤلف. مشروع المجموعات العربية الرقمية هو أكبر مشروع قامت به الخدمات الرقمية التكنولوجية بالمكتبة حتى الآن في أطار إعادة الصياغة الرقمية اقرأ.<a href=\"/aco/about\" class=\"readmore\">المزيد...</a>"
             }
         ],
         "featured" : [
           {
             "title" : "Browse The Collections",
             "language_code" : "en",
-            "language_dir" : "ltr",   
-            "widgets" : [ "recentlyAddedTitles", "featuredSubjects" ]
+            "language_dir" : "ltr",          
+            "featuredSubjects" : {
+              "title" : "Featured Subjects",
+              "subjects": [
+                {
+                  "tid" : "hadith",
+                  "term" : "Hadith-- Dictionaries"
+                },
+                {
+                  "tid" : "arabic_language",
+                  "term" : "Arabic language-- Dictionaries"
+                },
+                {
+                  "tid" : "homer",
+                  "term" : "Homer"
+                },
+                {
+                  "tid" : "bustani",
+                  "term" : "Bustānī"
+                }                          
+              ]
+            },
+            "recentlyAddedTitles" : {
+              "title" : "Browse The Collections",
+              "language_code" : "en",
+              "language_dir" : "ltr"              
+            }
           },
           {
             "title" : "التصفح",
             "language_code" : "ar",
             "language_dir" : "rtl",          
-            "widgets" : [ "recentlyAddedTitles", "featuredSubjects" ]
+            "featuredSubjects" : {
+              "title" : "واضيع",
+              "subjects": [
+                {
+                  "tid" : "hadith",
+                  "term" : "Hadith-- Dictionaries"
+                },
+                {
+                  "tid" : "arabic_language",
+                  "term" : "Arabic language-- Dictionaries"
+                },
+                {
+                  "tid" : "homer",
+                  "term" : "Homer"
+                },
+                {
+                  "tid" : "bustani",
+                  "term" : "Bustānī"
+                }                          
+              ]
+            },
+            "recentlyAddedTitles" : {  
+              "title" : "العناوين المضافة حديثا",
+              "language_code" : "ar",
+              "language_dir" : "rtl"              
+            }
           }
         ]
       }      
@@ -75,7 +119,7 @@
               "language_code" : "en",
               "class" : "col-l",
               "language_dir" : "ltr",              
-              "html" : "<p><i>Arabic Collections Online</i> (ACO) is a publicly available digital library of public domain Arabic language content. Funded by New York University Abu Dhabi, this mass digitization project aims to expose up to 15,000 volumes from NYU and partner institutions over a period of five years. NYU and the partner institutions are contributing all types of material&mdash;literature, business, science, and more&mdash;from their Arabic language collections. ACO will provide digital access to printed books drawn from rich Arabic collections of prominent libraries.</p><h3>Contributing Partners:</h3><ul><li>American University of Beirut</li><li>Columbia University</li><li>Cornell University</li><li>New York University</li><li>Princeton University</li></ul><h3>ACO Project Team:</h3><ul><li>Adham Alok</li><li>Guy Barak</li><li>Melitte Buchman</li><li>Heidi Frank</li><li>Laura Henze</li><li>Carol Kassel</li><li>Alberto Ortiz Flores</li><li>Joseph Pawletko</li><li>Ekaterina Pechekhonova</li><li>Rasan Rasch</li><li>Michael Stasiak</li><li>Claudia Suleiman</li></ul>"
+              "html" : "<p>Flat informational page.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper massa at nunc pretium rhoncus. Quisque vitae  bibendum nibh. Mauris eget tellus dignissim, malesuada sapien nec, pellentesque tellus. Duis magna dui, tempor sit amet fermentum non,  ullamcorper vitae purus. Sed hendrerit eu urna nec cursus. Aenean sagittis  odio nec felis aliquam dignissim. Nullam dictum blandit augue, eu vestibulum  diam molestie vitae. Morbi aliquam imperdiet eleifend. Aenean vel enim vel turpis sollicitudin ultrices.</p>"
             },
             {
               "language_code" : "ar",
@@ -103,70 +147,6 @@
       "route": "/book/index.html"
     }
   },
-  
-  "widgets" : {
-    "featuredSubjects" : {
-      "en" : {
-        "title" : "Featured Subjects",
-        "sourceType" : "local",
-        "data": [
-            {
-                "tid" : "hadith",
-                "term" : "Hadith-- Dictionaries"
-            },
-            {
-                "tid" : "arabic_language",
-                "term" : "Arabic language-- Dictionaries"
-            },
-            {
-                "tid" : "homer",
-                "term" : "Homer"
-            },
-            {
-                "tid" : "bustani",
-                "term" : "Bustānī"
-            }                          
-        ]
-      },
-      "ar" : {
-        "title" : "التصفح",
-        "sourceType" : "local",
-        "data": [
-            {
-                "tid" : "hadith",
-                "term" : "Hadith-- Dictionaries"
-            },
-            {
-                "tid" : "arabic_language",
-                "term" : "Arabic language-- Dictionaries"
-            },
-            {
-                "tid" : "homer",
-                "term" : "Homer"
-            },
-            {
-                "tid" : "bustani",
-                "term" : "Bustānī"
-            }                          
-        ]
-      }
-    
-    },
-
-    "recentlyAddedTitles" : {
-      "en" : {
-        "title" : "Recently Added Titles",
-        "sourceType" : "json",
-        "source" : "source/json/recentlyAddedTitlesEN.json"               
-      },
-      "ar" : {
-        "title" : "العناوين المضافة حديثا",
-        "sourceType" : "json",
-        "source" : "source/json/recentlyAddedTitlesEN.json"               
-      }
-    }
-  },
-  
   "partners": [
     {
       "id" : "nyu",

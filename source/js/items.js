@@ -11,20 +11,21 @@ YUI().use(
   , 'gallery-idletimer'
   , function (Y) {
 
-    'use strict'
-                      
+    // 'use strict'
+	  
     var body = Y.one('body')
       , container = Y.all('[data-name="items"]')
-      , searchString = '*:*'
+      // , searchString = '*:*'
       , transactions = []
       , fold = 200
       , language = 'und' // find a better solution
       , appRoot = body.getAttribute("data-app")
       , templates = {}
-      , template      
+      , handlebarsTemplates = []
+      // , template      
       , lazyLoad = 0
       , rows = 10
-      , query = 10  
+      // , query = 10  
       , paginator = 1
       , datasourceURLs = "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/"
                        + "select?wt=json&json.wrf=callback={callback}&fq=hash:iy26sh&fq="
@@ -39,21 +40,6 @@ YUI().use(
                        + "sm_field_partner"
                        + "&rows=" + rows      
 
-    function initRequest ( options ) {
-
-         // make the first request
-         Y.jsonp(datasourceURLs, {
-             on: {
-                 success: onSuccess,
-                 failure: onFailure,
-                 timeout: onTimeout
-             },
-             args: options,
-             timeout: 3000
-         })
-     
-     }                       
-
     function onFailure() {
         Y.log('onFailure')
     }
@@ -62,10 +48,12 @@ YUI().use(
         onFailure()
     }
 
+    /**
     function onClick(e) {
         e.preventDefault()
         onScroll()
-    }      
+    }
+    */   
       
     function onScroll() {
     
@@ -73,27 +61,27 @@ YUI().use(
           , start = 0
           , docslength = 0
           , next = 0
-          , sourceIndex = 0
-          , sourceLength = 1
+          // , sourceIndex = 0
+          // , sourceLength = 1
           , href
-          
+
         if ( body.hasClass('io-done') ) return
-          
+
         numfound = parseInt(container.getAttribute("data-numfound"), 10)
 
         start = parseInt(container.getAttribute("data-start"), 10)
 
         docslength = parseInt(container.getAttribute("data-docslength"), 10)
-        
+
         next = ( start + docslength )
         
         if (
           next <= numfound
         ) {
-        
+
             href = datasourceURLs + '&start=' + next
             
-	        if (Y.Array.indexOf(transactions, href) < 0 && !body.hasClass('io-loading')) {
+	        if (Y.Array.indexOf( transactions, href ) < 0 && !body.hasClass('io-loading')) {
                 
                 if (
                     body.scrollInfo.getScrollInfo().atBottom ||
@@ -119,89 +107,63 @@ YUI().use(
         }
         
     }
-    
+
     function onSuccess( response, args ) {
-    
+    	
         try {
-        
+        	
             var node = args.container
               , data = node.getData()
               , numfound = parseInt(response.response.numFound, 10)
               , start = parseInt(response.response.start, 10)
               , docslength = parseInt(response.response.docs.length, 10)
               , language = 'und'
-
+            	  
             if ( data.language ) {
                 language = data.language
             }
             
             // store called to avoid making the request multiple times
-            transactions.push( this.url )
+            transactions.push ( this.url )
 
             // for now, map this at Solr level and fix img to be absolute paths
-            response.response.docs.forEach( function ( element, index, array ) {
-                
-                element.appRoot = appRoot
-                
-                element.identifier = element.ss_identifer
+            response.response.docs.forEach ( function ( element ) {
+            	
+            	if ( language === 'en' || language === 'ar' && element.sm_ar_title ) {
 
-                element.app = element.ss_collection_identifier   
-                
-                element.thumbHref = element.ss_representative_image                
+                    element.appRoot = appRoot
+            	    element.identifier = element.ss_identifer
+            	    element.app = element.ss_collection_identifier
+            	    element.thumbHref = element.ss_representative_image                
 
-                element.language = {}
+                    element.en.title = element.sm_field_title
+                    element.en.author = element.sm_field_author
+                    element.en.publisher = element.sm_field_publisher
+                    element.en.publication_location = element.sm_field_publication_location
+                    element.en.publication_date = element.sm_field_publication_date_text
+                    element.en.subjects = element.sm_vid_Terms
 
-                element.ar = {}         
-                
-                element.en = {}
-                
-                // language
+                    element.ar.title = element.sm_ar_title
+                    element.ar.author = element.sm_ar_author
+                    element.ar.publisher = element.sm_ar_publisher
+                    element.ar.publication_location = element.sm_ar_publication_location
+                    element.ar.publication_date = element.sm_ar_publication_date
+                    element.ar.subjects = element.sm_ar_subjects
+            	
+            	    element.title = element[language].title
+            	    element.author = element[language].author
+            	    element.publisher = element[language].publisher
+            	    element.publication_location = element[language].publication_location
+            	    element.publication_date = element[language].publication_date
+            	    element.subjects = element[language].subjects
+            	
+                }
 
-                element.language.title = element.sm_field_title
-
-                element.language.author = element.sm_field_author
-
-                element.language.publisher = element.sm_field_publisher                                 
-
-                element.language.publication_location = element.sm_field_publication_location
-
-                element.language.publication_date = element.sm_field_publication_date_text             
-
-                element.language.subjects = element.sm_vid_Terms                  
-
-                // english
-
-                element.en.title = element.sm_field_title
-
-                element.en.author = element.sm_field_author
-
-                element.en.publisher = element.sm_field_publisher                                 
-
-                element.en.publication_location = element.sm_field_publication_location
-
-                element.en.publication_date = element.sm_field_publication_date_text             
-
-                element.en.subjects = element.sm_vid_Terms  
-                
-                // arabic
-                
-                element.ar.title = element.sm_ar_title
-
-                element.ar.author = element.sm_ar_author
-
-                element.ar.publisher = element.sm_ar_publisher                              
-
-                element.ar.publication_location = element.sm_ar_publication_location
-
-                element.ar.publication_date = element.sm_ar_publication_date            
-
-                element.ar.subjects = element.sm_ar_subjects
-                
             })
 
-            if ( paginator ) {
+            //if ( paginator ) {
              
-               if ( transactions.length === 1 ) {
+               //if ( transactions.length === 1 ) {
                
                  // first transaction; enable paginator
                
@@ -210,16 +172,16 @@ YUI().use(
                  // http://yuilibrary.com/gallery-archive/gallery/show/paginator-view.html
                  // node.insert( templates['paginator']({ pages : [ { number: 1 } ]}), 'after' )
                  
-               }
+               //}
              
-            }
-             
-            node.setAttribute("data-numFound", numfound)
+            //}
 
-            node.setAttribute("data-start", start)
+            node.setAttribute( "data-numFound", numfound)
 
-            node.setAttribute("data-docsLength", docslength)
-             
+            node.setAttribute( "data-start", start)
+
+            node.setAttribute( "data-docsLength", docslength )
+            
             // render HTML and append to container
             node.append(
               templates['items']({
@@ -227,32 +189,54 @@ YUI().use(
               })
             )
 
-            if ( 
-                start + docslength === numfound 
-            ) 
-            {
-                body.addClass('io-done')
-            }
+            //if ( 
+              //  start + docslength === numfound 
+            //) 
+            //{
+              //  body.addClass('io-done')
+            //}
             
-            else if ( 
-                start + docslength === numfound  
-            )
-            {
+            //else if ( 
+              //  start + docslength === numfound  
+            //)
+            //{
 
-                container.setAttribute("data-start", 0)
+              //  container.setAttribute("data-start", 0)
 
-                container.setAttribute("data-docsLength", 0)
+                //container.setAttribute("data-docsLength", 0)
                 
-            }
+            //}
             
-            body.removeClass('io-loading')
+            //body.removeClass('io-loading')
+            
+            Y.log ( 'estamos aqui' )
             
         }
+
         catch (e) {
+
+        	Y.log(e)
+
             Y.log('something went wrong. error')
+
         }
         
     }
+    
+    function initRequest ( options ) {
+
+        // make the first request
+        Y.jsonp( datasourceURLs, {
+            on: {
+                success: onSuccess,
+                failure: onFailure,
+                timeout: onTimeout
+            },
+            args: options,
+            timeout: 3000
+        })
+    
+    }            
     
     if ( lazyLoad === 1 ) {
 
@@ -296,24 +280,45 @@ YUI().use(
       
         if ( data.script ) {
           
-          var files = JSON.parse(data.script);
+          var files = JSON.parse( data.script )
           
           Y.Array.each( files.hbs, function( source ) {
-            
+        	  
             Y.Object.each( source, function( file, key ) {
+          	    
+            	handlebarsTemplates.push(file)
+            	
+            	//if ( ! Y.Array.indexOf( handlebarsTemplates, file ) ) {
                 
-                Y.io( body.getAttribute("data-app") + '/js/' + file, {
-  			      sync: false,
-  			      on: {
-                        success: function( transactionId, response ) {
-                          templates[key] = Y.Handlebars.compile(response.responseText)
-  				      },
-                        failure:function() {
-  					      throw "Handlebars: failed to retrieve url: " + url;
-  				      }
-  			      },
-  			      context: this
-                })
+                    handlebarsTemplates[file] = file
+                    
+                    Y.io( body.getAttribute("data-app") + '/js/' + file, {
+  			            sync: false,
+  			            on: {
+
+                            success: function( transactionId, response ) {
+
+                                Y.log ("Handlebars: retrieve file: " + file );
+
+                                templates[key] = Y.Handlebars.compile(response.responseText)
+  
+         				    },
+         				    
+                            failure:function() {
+
+  					            throw "Handlebars: failed to retrieve url: " + url;
+
+  				            }
+  				            
+    			        },
+  			            context: this
+                    })
+                
+               //}
+              
+              //else {
+                  // Y.log( 'else ' + file )
+              //}
 
             })
   		  

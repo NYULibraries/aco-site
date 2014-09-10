@@ -1,33 +1,77 @@
 module.exports = function(grunt) {
 
-  function transformHTML(buildPath, task) {
-
-        try {  
-
-            var hogan = require('hogan');
-
-            var conf = grunt.file.readJSON('conf.json');
-            
-            var pages = grunt.file.readJSON('pages.json');
-            
-            // console.log(pages)
-
-            var source = conf.pages[task];
-                source.appRoot = conf.appRoot;
-                source.discovery = conf.discovery;
-                source.appName = conf.appName;
-                source.appUrl = conf.appUrl;
-                source.partners = conf.partners;                
-                // later on for prod
-                // source.css = grunt.file.read(__dirname + '/build/css/style.css');
-
-            // compile template
-            var template = hogan.compile( grunt.file.read(__dirname + '/source/views/' + task + '.mustache') );
+    function transformHTML( buildPath, task ) {
+    	
+        try {
         
-            var partials = {}
-        
+            var hogan = require('hogan')
+              , _ = require('underscore')
+              , conf = grunt.file.readJSON('conf.json')
+              , source = conf.pages[task]
+              , content
+              , navbar = []
+              , template = hogan.compile( grunt.file.read( __dirname + '/source/views/' + task + '.mustache' ) )
+              , partials = {};
+              
+            // this spaghetti maps the widgets to the taks and load data Object if type is not local
+            if ( source.content ) {
+              _.each( source.content, function ( content, a ) {
+                _.each( source.content[a], function ( pane, b ) {
+                  if ( _.isArray( source.content[a][b].widgets ) ) {
+                    _.each( source.content[a][b].widgets, function ( widget, c ) {
+
+                      var spaghetti = {}
+
+                      spaghetti[widget] = conf.widgets[source.content[a][b].widgets[c]][source.content[a][b].language_code]
+
+                      if ( spaghetti[widget].sourceType == 'json' ) {
+                        spaghetti[widget].data = grunt.file.readJSON( __dirname + '/' + spaghetti[widget].source )   
+                      }
+
+                      source.content[a][b].widgets[c] = spaghetti
+                      
+                    })
+                  }
+                })
+              })
+            }
+
+            source.appRoot = conf.appRoot;
+            
+            source.discovery = conf.discovery;
+            
+            source.appName = conf.appName;
+            
+            source.appUrl = conf.appUrl;
+            
+            source.partners = conf.partners;  
+            
+            // source.widgets = conf.widgets;
+            
+            // this is working
+            // source.recentlyAddedTitles = source.widgets.recentlyAddedTitles
+           
+           // later on for prod
+           // source.css = grunt.file.read(__dirname + '/build/css/style.css');
+            
+           Object.keys( conf.pages ).forEach( function ( key ) {
+
+                if ( 
+                    conf.pages[key].menu && 
+                    conf.pages[key].menu.indexOf( 'navbar' )  
+                ) {
+
+                    navbar.push( { 
+                        title: conf.pages[key].title,
+                        route: conf.pages[key].route
+                    } )
+
+                }
+
+            })
+
             grunt.file.recurse( __dirname + '/source/views/' , function callback(abspath, rootdir, subdir, filename) {
-              if (filename.match(".mustache") && task + '.mustache' !== filename) {
+              if ( filename.match(".mustache") && task + '.mustache' !== filename ) {
                   var name = filename.replace(".mustache", "");
                   partials[name] = grunt.file.read(abspath)
               }
@@ -44,7 +88,8 @@ module.exports = function(grunt) {
             // write file
             grunt.file.write( buildPath, template.render( source, partials ) )
             
-            grunt.log.write('Transforming ' + task + ' template into HTML ').ok();  
+            grunt.log.write('Transforming ' + task + ' template into HTML ').ok()
+            
         }
 
         catch (err) {  
@@ -75,7 +120,20 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+    
+	pkg: grunt.file.readJSON('package.json'),
+    
+    curl: {
+        'recentlyAddedTitlesEN': {
+            src: 'http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fq=ss_language:en&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=10',
+            dest: 'source/json/recentlyAddedTitlesEN.json'
+        },
+        'recentlyAddedTitlesAR': {
+            src: 'http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fq=ss_language:en&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=10',
+            dest: 'source/json/recentlyAddedTitlesAR.json'
+        }        
+    },
+    
     clean: [ 
       __dirname + '/build/images', 
       __dirname + '/build/css'
@@ -123,6 +181,10 @@ module.exports = function(grunt) {
     }
       
     });
+  
+    grunt.loadNpmTasks('grunt-curl');
+  
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     
@@ -151,6 +213,6 @@ module.exports = function(grunt) {
 
     });  
 
-    grunt.registerTask('default', ['clean', 'copy', 'uglify', 'sass', 'writeHTML']);
+    grunt.registerTask('default', ['curl', 'clean', 'copy', 'uglify', 'sass', 'writeHTML']);
 
 };
