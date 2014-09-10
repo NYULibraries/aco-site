@@ -1,4 +1,11 @@
 {
+    "subjects" : {
+      "en" : {
+        "title" : "Filter by subject",
+        "sourceType" : "json",
+        "source" : "source/json/datasources/subject.json"
+      }
+    },
     "featuredSubjects" : {
       "en" : {
         "title" : "Featured Subjects",
@@ -44,14 +51,13 @@
             }                          
         ]
       }
-    
     },
 
     "recentlyAddedTitles" : {
       "en" : {
         "title" : "Recently Added Titles",
         "sourceType" : "json",
-        "source" : "source/json/datasources/recentlyAddedTitlesEN.json"               
+        "source" : "source/json/datasources/recentlyAddedTitlesEN.json"
       },
       "ar" : {
         "title" : "العناوين المضافة حديثا",

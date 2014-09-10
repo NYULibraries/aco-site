@@ -32,6 +32,8 @@ module.exports = function(grunt) {
 
                       source.content[a][b].widgets[c] = spaghetti
                       
+                      console.log(spaghetti)
+                      
                     })
                   }
                 })
@@ -130,7 +132,11 @@ module.exports = function(grunt) {
         'recentlyAddedTitlesAR': {
             src: 'http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fq=ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5',
             dest: 'source/json/datasources/recentlyAddedTitlesAR.json'
-        }        
+        },
+        'subject': {
+        	src: 'http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fq=ss_language:und&fl=sm_vid_Terms,tm_vid_1_names&rows=0&facet=true&facet.field=sm_vid_Terms',
+        	dest: 'source/json/datasources/subject.json'
+        }
     },
     
     clean: [ 
@@ -199,6 +205,23 @@ module.exports = function(grunt) {
     
     grunt.loadNpmTasks('grunt-contrib-watch');
     
+    // far from ideal
+    grunt.registerTask('massageDataSource', 'massageDataSource', function() {
+    	
+    	var subjects_source = grunt.file.readJSON( __dirname + '/source/json/datasources/subject.json' );
+    	
+    	var terms = subjects_source.facet_counts.facet_fields.sm_vid_Terms;
+    	
+    	var subjects = []
+    	
+    	_.each( _.filter( terms, function ( term ) { return _.isString( term ) }), function ( subject, index ) {
+    		subjects.push( { term : subject, tid : subject, facet : 'sm_vid_Terms' })
+    	})
+
+    	grunt.file.write( __dirname + '/source/json/datasources/subject.json', JSON.stringify( subjects ) )
+    			
+    })
+    
     grunt.registerTask('writeHTML', 'writeHTML', function() {
     
         var pages = grunt.file.readJSON(__dirname + '/source/json/pages.json'); 
@@ -217,6 +240,6 @@ module.exports = function(grunt) {
 
     });  
 
-    grunt.registerTask('default', ['clean', 'copy', 'curl', 'uglify', 'sass', 'writeHTML']);
+    grunt.registerTask('default', ['clean', 'copy', 'curl', 'massageDataSource', 'uglify', 'sass', 'writeHTML']);
 
 };

@@ -85,7 +85,17 @@
     "subject": {
       "title": "Subject",
       "route": "/subject/index.html",
-      "bodyClass": "subject"
+      "bodyClass": "subject",
+      "content" : {
+        "body" : [
+          {
+            "title" : "Filter by subject",
+            "language_code" : "en",
+            "language_dir" : "ltr",
+            "widgets" : [ "subjects" ]
+          }
+        ]
+      }
     },
     "search": {
       "title": "Search collection",
