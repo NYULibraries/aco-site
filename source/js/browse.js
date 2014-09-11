@@ -9,6 +9,7 @@ YUI().use(
   , 'paginator'
   , 'jsonp-url'
   , 'gallery-idletimer'
+  , 'gallery-paginator'
   , function (Y) {
 
     // 'use strict'
@@ -39,6 +40,14 @@ YUI().use(
                        + "sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,"
                        + "sm_field_partner"
                        + "&rows=" + rows      
+
+	function update(
+		/* object */	state)
+	{
+		this.setPage(state.page, true);
+		this.setRowsPerPage(state.rowsPerPage, true);
+	}
+
 
     function onFailure() {
         Y.log('onFailure')
@@ -115,6 +124,9 @@ YUI().use(
               , docslengthNode = resultsnum.one('.docslength')
               , docslength = parseInt(response.response.docs.length, 10)
               , language = 'und'
+              
+              
+            Y.log ( 'docslength: ' + docslength )
             	  
             if ( data.language ) {
                 language = data.language
@@ -129,21 +141,22 @@ YUI().use(
             	response.response.docs[index].identifier = element.ss_identifer
             	response.response.docs[index].app = element.ss_collection_identifier
             })
-
-            //if ( paginator ) {
-             
-               //if ( transactions.length === 1 ) {
+            
+            // if ( transactions.length < 1) {
+              
+                // first transaction; enable paginator
+                // view-source:http://jafl.github.io/yui-modules/paginator/
+                var p4 = new Y.Paginator({
+                             totalRecords: numfound,
+                             rowsPerPage: docslength,
+                             template: '{FirstPageLink} {PageLinks} {NextPageLink}'
+                })
                
-                 // first transaction; enable paginator
+                p4.on('changeRequest', update)
                
-                 // var pg = new Y.Paginator({ totalItems : numfound })
-
-                 // http://yuilibrary.com/gallery-archive/gallery/show/paginator-view.html
-                 // node.insert( templates['paginator']({ pages : [ { number: 1 } ]}), 'after' )
-                 
-               //}
-             
-            //}
+                p4.render('#pg5')
+           
+            // }
 
             node.setAttribute( "data-numFound", numfound)
 

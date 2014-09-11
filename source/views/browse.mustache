@@ -12,11 +12,11 @@
       <div class="breadcrumbs" lang="en"><a href="{{ appUrl }}" title="{{ appName }}">{{ appName }}</a> &gt; {{ title }}</div>
 
       <h2>{{ title }}</h2>
-      
+
       <!--
       {{> browseSelect }}
       -->
-      
+
       <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
 
     </header>
@@ -26,12 +26,15 @@
       data-name="items" 
       data-lazyLoad="0" 
       data-rows="10" 
-      data-paginator="0" 
-      data-script='{ "js" : [ "browse.min.js" ], "hbs" : [ { "items" : "items.hbs" }, { "paginator" : "paginator.hbs" } ] }'
+      data-paginator="1" 
+      data-script='{ "js" : [ "browse.min.js" ], "hbs" : [ { "items" : "items.hbs" } ] }'
     ></div>
-    
-    <!--
+
     <div class="text-center">
+      <div id="pg5" class="pagination"></div>
+    </div>
+
+    <!--    
       <ul class="pagination">
         <li class="disabled"><a href="#">&laquo;</a></li>
         <li class="active"><a href="#">1</a></li>
