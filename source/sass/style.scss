@@ -610,3 +610,16 @@ select#browse-select {
   -webkit-appearance: menulist-button; 
   border-color: rgb(153, 153, 153);
 }
+
+
+.io-loading {
+
+  .resultsnum {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px);
+  }
+
+}
