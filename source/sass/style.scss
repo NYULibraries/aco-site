@@ -219,8 +219,7 @@ main {
                 width: 17%;
             }
             .meta {
-              
-                 margin: 0 0 0 21%;
+                margin: 0 0 0 21%;
             }
         }
         &[lang="en"] ul.subjectList {
@@ -233,12 +232,12 @@ main {
                 padding-right: 0;
             }
             .itemhome {
-              .thumbs {
-                float: right;
-            }
-             .meta {
-                margin: 0 21% 0 0;
-            }
+                .thumbs {
+                    float: right;
+                }
+                .meta {
+                    margin: 0 21% 0 0;
+                }
             }
         }
     }
@@ -699,4 +698,19 @@ select#browse-select {
 .pagination {
     margin: 1em auto;
     width: auto;
+}
+
+#browse-select {
+    -webkit-appearance: menulist-button;
+    border-color: rgb(153, 153, 153);
+}
+
+.io-loading {
+    .resultsnum {
+        position: absolute !important;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+        clip: rect(1px 1px 1px 1px);
+    }
 }

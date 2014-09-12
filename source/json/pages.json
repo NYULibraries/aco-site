@@ -38,7 +38,7 @@
     "browse": {
       "title": "Browse titles",
       "route": "/browse/index.html",
-      "bodyClass": "browse"
+      "bodyClass": "browse io-loading"
     },
     "resources": {
       "title": "Resources",

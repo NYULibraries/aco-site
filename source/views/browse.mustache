@@ -3,24 +3,16 @@
 <head>{{> head }}</head>
 <body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{ bodyClass }}">
   {{> header }}
-
   <main class="main container-fluid">
-
     <header>
-
       <div class="breadcrumbs arabic" lang="ar" dir="rtl"><a>المجموعات العربية على الانترنت</a> &gt; <a>تصفح المواضيع</a> &gt; النتائج</div>
       <div class="breadcrumbs" lang="en"><a href="{{ appUrl }}" title="{{ appName }}">{{ appName }}</a> &gt; {{ title }}</div>
-
       <h2>{{ title }}</h2>
-
       <!--
       {{> browseSelect }}
       -->
-
       <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
-
     </header>
-
     <div 
       class="widget" 
       data-name="items" 
@@ -29,27 +21,10 @@
       data-paginator="1" 
       data-script='{ "js" : [ "browse.min.js" ], "hbs" : [ { "items" : "items.hbs" } ] }'
     ></div>
-
     <div class="text-center">
-      <div id="pg5" class="pagination"></div>
+      <div id="paginator" class="pagination"></div>
     </div>
-
-    <!--    
-      <ul class="pagination">
-        <li class="disabled"><a href="#">&laquo;</a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">&raquo;</a></li>
-      </ul>
-    </div>
-    -->
-    
   </main>
   {{> footer }}
-
 </body>
-
 </html>

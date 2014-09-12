@@ -2,52 +2,24 @@ YUI().use(
     'node'
   , 'event'
   , 'io'
-  , 'node-scroll-info'
   , 'handlebars'
   , 'json-parse'
   , 'jsonp'
   , 'paginator'
   , 'jsonp-url'
-  , 'gallery-idletimer'
   , 'gallery-paginator'
   , function (Y) {
 
-    // 'use strict'
-	  
+    'use strict'
+
     var body = Y.one('body')
-      , container = Y.all('[data-name="items"]')
-      // , searchString = '*:*'
+      , container = Y.one('[data-name="items"]')
+      , data = container.getData()      
       , transactions = []
-      , fold = 200
-      , language = 'und' // find a better solution
       , appRoot = body.getAttribute("data-app")
       , templates = {}
       , handlebarsTemplates = []
-      // , template      
-      , lazyLoad = 0
-      , rows = 10
-      // , query = 10  
       , paginator = 1
-      , datasourceURLs = "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/"
-                       + "select?wt=json&json.wrf=callback={callback}&fq=hash:iy26sh&fq="
-                       + "ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&"
-                       + "fq=ss_language:und&fl=ss_embedded,title,type,"
-                       + "ss_collection_identifier,ss_identifer,ss_representative_image,"
-                       + "teaser,sm_field_author,sm_field_title,ss_language,"
-                       + "sm_field_publication_date_text,sm_field_publication_location,"
-                       + "sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,"
-                       + "sm_ar_author,sm_ar_publisher,sm_ar_publication_location,"
-                       + "sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,"
-                       + "sm_field_partner"
-                       + "&rows=" + rows      
-
-	function update(
-		/* object */	state)
-	{
-		this.setPage(state.page, true);
-		this.setRowsPerPage(state.rowsPerPage, true);
-	}
-
 
     function onFailure() {
         Y.log('onFailure')
@@ -56,64 +28,41 @@ YUI().use(
     function onTimeout() {
         onFailure()
     }
-
-    function onScroll() {
     
-        var numfound = 0
-          , start = 0
-          , docslength = 0
-          , next = 0
-          // , sourceIndex = 0
-          // , sourceLength = 1
-          , href
-
-        if ( body.hasClass('io-done') ) return
-
-        numfound = parseInt(container.getAttribute("data-numfound"), 10)
-
-        start = parseInt(container.getAttribute("data-start"), 10)
-
-        docslength = parseInt(container.getAttribute("data-docslength"), 10)
-
-        next = ( start + docslength )
+    function initPaginator( totalRecords, rowsPerPage ) {
         
-        if (
-          next <= numfound
-        ) {
-
-            href = datasourceURLs + '&start=' + next
-            
-	        if (Y.Array.indexOf( transactions, href ) < 0 && !body.hasClass('io-loading')) {
-                
-                if (
-                    body.scrollInfo.getScrollInfo().atBottom ||
-                    (
-                        Y.IdleTimer.isIdle() && pager.get('region').top - fold < body.get('winHeight')
-                    )
-                ) {
-             
-                  body.addClass('io-loading')
-                  
-                  Y.jsonp( href, {
-                    on: {
-                      success: onSuccess,
-                      failure: onFailure,
-                      timeout: onTimeout
-                    },
-                    timeout: 3000
-                  })
-
-                }
+    	function update ( state ) {
+	
+	        var node = Y.one('[data-name="items"]')
+	     
+    		this.setPage(state.page, true)
+		
+	    	this.setRowsPerPage(state.rowsPerPage, true)
+		
+    		initRequest ( { 
+		        container : node
+	    	  , start : state.page * state.rowsPerPage
+    		  , rows : state.rowsPerPage 
+		    } ) 
+				
+	    }        
+        
+        var paginatorConfiguration = {
+                totalRecords: totalRecords
+              , rowsPerPage: rowsPerPage
+              , template: '{FirstPageLink} {PageLinks} {NextPageLink}'        
             }
+          , paginator = new Y.Paginator( paginatorConfiguration )
 
-        }
-        
-    }
+        paginator.on( 'changeRequest', update )
+               
+        paginator.render('#paginator')
+    }    
 
     function onSuccess ( response, args ) {
-    	
+
         try {
-        	
+
             var node = args.container
               , data = node.getData()
               , resultsnum = Y.one('.resultsnum')
@@ -123,15 +72,10 @@ YUI().use(
               , startNode = resultsnum.one('.start')
               , docslengthNode = resultsnum.one('.docslength')
               , docslength = parseInt(response.response.docs.length, 10)
-              , language = 'und'
-              
-              
-            Y.log ( 'docslength: ' + docslength )
-            	  
-            if ( data.language ) {
-                language = data.language
-            }
-            
+
+            // first transaction; enable paginator
+            if ( transactions.length < 1 ) initPaginator( numfound, docslength )
+
             // store called to avoid making the request multiple times
             transactions.push ( this.url )
 
@@ -141,22 +85,6 @@ YUI().use(
             	response.response.docs[index].identifier = element.ss_identifer
             	response.response.docs[index].app = element.ss_collection_identifier
             })
-            
-            // if ( transactions.length < 1) {
-              
-                // first transaction; enable paginator
-                // view-source:http://jafl.github.io/yui-modules/paginator/
-                var p4 = new Y.Paginator({
-                             totalRecords: numfound,
-                             rowsPerPage: docslength,
-                             template: '{FirstPageLink} {PageLinks} {NextPageLink}'
-                })
-               
-                p4.on('changeRequest', update)
-               
-                p4.render('#pg5')
-           
-            // }
 
             node.setAttribute( "data-numFound", numfound)
 
@@ -165,7 +93,7 @@ YUI().use(
             node.setAttribute( "data-docsLength", docslength )
             
             startNode.set('innerHTML', start + 1)
-            
+
             docslengthNode.set('innerHTML', docslength)
             
             numfoundNode.set('innerHTML', numfound)
@@ -177,39 +105,74 @@ YUI().use(
               })
             )
 
-            //if ( 
-              //  start + docslength === numfound 
-            //) 
-            //{
-              //  body.addClass('io-done')
-            //}
-            
-            //else if ( 
-              //  start + docslength === numfound  
-            //)
-            //{
+            body.removeClass('io-loading')
 
-              //  container.setAttribute("data-start", 0)
-
-                //container.setAttribute("data-docsLength", 0)
-                
-            //}
-            
-            //body.removeClass('io-loading')
-            
         }
 
         catch (e) {
 
-        	Y.log(e)
-
             Y.log('something went wrong. error')
 
         }
-        
+
     }
     
     function initRequest ( options ) {
+    
+        var rows = 10
+          , start = 0
+          , language = 'und'
+          , discoveryURL = "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select"
+          , fl = [ 
+                   'ss_embedded'
+                 , 'title'
+                 , 'type'
+                 , 'ss_collection_identifier'
+                 , 'ss_identifer'
+                 , 'ss_representative_image'
+                 , 'teaser'
+                 , 'sm_field_title'
+                 , 'ss_language'
+                 , 'sm_field_publication_date_text'
+                 , 'sm_field_publication_location'
+                 , 'sm_field_publisher'
+                 , 'sm_vid_Terms'
+                 , 'tm_vid_1_names'
+                 , 'sm_ar_title'
+                 , 'sm_ar_author'
+                 , 'sm_ar_publisher'
+                 , 'sm_ar_publication_location'
+                 , 'sm_ar_subjects'
+                 , 'sm_ar_publication_date'
+                 , 'sm_ar_partner'
+                 , 'sm_field_partner'
+            ]
+            
+        if ( options.language ) {
+          language = options.language
+        }
+
+        if ( options.start ) {
+          start = parseInt( options.start, 10 )
+        }
+
+        if ( options.rows ) {
+          rows = parseInt( options.rows, 10 )
+        }
+
+        var datasourceURLs = discoveryURL + "?"
+                           + "wt=json"
+                           + "&json.wrf=callback={callback}"
+                           + "&fq=hash:iy26sh"
+                           + "&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050"
+                           + "&fq=ss_language:" + language                           
+                           + "&fl=" + fl.join()
+                           + "&rows=" + rows
+                           + "&start=" + start    
+                       
+        body.addClass('io-loading')
+        
+        options.container.empty()
 
         // make the first request
         Y.jsonp( datasourceURLs, {
@@ -222,50 +185,11 @@ YUI().use(
             timeout: 3000
         })
     
-    }            
-    
-    if ( lazyLoad === 1 ) {
-
-        Y.IdleTimer.subscribe('idle', onScroll)
-
-        // be opportunistic
-        Y.IdleTimer.start(5000)
-
-        // Plug ScrollInfo 
-        body.plug(Y.Plugin.ScrollInfo, { scrollMargin: fold })
-
-        body.scrollInfo.on({ scroll: onScroll })
-
     }
     
-    container.each( function ( node ) {
+    // prod will take care of this task
+    if ( data.script ) {
 
-        var data = node.getData()
-        
-        if ( node.hasClass('loaded') ) return false
-        
-        node.addClass('loaded')
-        
-        node.setAttribute("data-id", Y.guid() )
-        
-        if ( data.lazyload ) {
-          lazyLoad = parseInt( data.lazyload, 10 )
-        }
-
-        if ( data.language ) {
-          language = data.language
-        }
-          
-        if ( data.rows ) {
-          rows = parseInt( data.rows, 10 )
-        }    
-      
-        if ( data.paginator ) {
-          paginator = parseInt( data.paginator, 10 )
-        }
-      
-        if ( data.script ) {
-          
           var files = JSON.parse( data.script )
           
           Y.Array.each( files.hbs, function( source ) {
@@ -274,8 +198,6 @@ YUI().use(
           	    
             	handlebarsTemplates.push(file)
             	
-            	//if ( ! Y.Array.indexOf( handlebarsTemplates, file ) ) {
-                
                     Y.io( body.getAttribute("data-app") + '/js/' + file, {
   			            sync: false,
   			            on: {
@@ -290,28 +212,20 @@ YUI().use(
          				    
                             failure:function() {
 
-  					            throw "Handlebars: failed to retrieve url: " + url;
+  					            throw "Handlebars: failed to retrieve url: " + url
 
   				            }
   				            
     			        },
   			            context: this
                     })
-                
-               //}
-              
-              //else {
-                  // Y.log( 'else ' + file )
-              //}
 
             })
   		  
-          })
+        })
 
-        }
-        
-        initRequest ( { container : node } )
+    }
 
-    })    
+    initRequest ( { container : container } )
 
 })
