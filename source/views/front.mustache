@@ -6,7 +6,7 @@
   <body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{bodyClass}}">
     {{> header }}
     {{#content}}
-    <div class="main container-fluid">
+    <main class="main container-fluid">
       {{#intro}}
         <div class="intro" lang="{{language_code}}" dir="{{language_dir}}">
           <h2>{{title}}</h2>
@@ -14,7 +14,7 @@
         </div>
       {{/intro}}
       {{> featured }}
-    </div>
+    </main>
     {{/content}}    
     {{> footer }}
   </body>
