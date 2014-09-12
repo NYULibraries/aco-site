@@ -21,10 +21,10 @@
         ],
         "featured" : [
           {
-            "title" : "Browse The Collections",
+            "title" : "Recently Added Titles",
             "language_code" : "en",
             "language_dir" : "ltr",   
-            "widgets" : [ "recentlyAddedTitles", "featuredSubjects" ]
+            "widgets" : [ "recentlyAddedTitles"]
           },
           {
             "title" : "التصفح",

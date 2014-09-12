@@ -1,16 +1,17 @@
 {{#recentlyAddedTitles}}
-<ul>
-  <li>
-    <h4>{{title}}</h4>
-    <ul class="subjectList">
-    {{#data}}
+<article>
+ {{#data}}
       {{#response}}
         {{#docs}}
-          <li><a href="{{appUrl}}/book/{{ss_identifer}}">{{sm_field_title}}</a></li>
+          <div class="itemhome">
+             <div class="thumbs"><a href="{{appRoot}}/book/{{identifier}}"><img class="img-responsive" src="{{ss_representative_image}}" alt="" title="{{title}}"/></a></div>
+             <div class="meta">
+             <div class="title"><a href="{{appUrl}}/book/{{ss_identifer}}">{{sm_field_title}}</a></div>
+             <div class="subjects">{{sm_vid_Terms}}</div></div>
+             <hr> 
+          </div> 
         {{/docs}}
       {{/response}}
     {{/data}}
-    </ul>
-  </li>
-</ul>
+</article>
 {{/recentlyAddedTitles}}
