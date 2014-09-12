@@ -3,7 +3,7 @@
 <head>{{> head }}</head>
 <body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{ bodyClass }}">
   {{> header }}
-  <main class="main container-fluid">
+  <main class="main container-fluid" role="main">
     <div class="breadcrumbs" lang="en"><a href="{{ appUrl }}" title="{{ appName }}">{{ appName }}</a> &gt; {{ title }}</div>
     <h2>{{ title }}</h2>
     {{#content}}
