@@ -691,13 +691,29 @@ select#browse-select {
 .book {
     .navbar {
         margin-bottom: 0;
+        display: none;
     }
     .header-main {
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
     .container-fluid {
         max-width: none;
+    }
+    .navbar-collapse.collapse {
+        display: none;
+    }
+    .navbar-collapse.collapse.in {
+        display: block;
+    }
+    h1.title, .titlebar {
+        // background: #5e4625;
+        // background-image: -webkit-gradient( linear, left top, left bottom, color-stop(0, rgb(122,98,65)), color-stop(0.5, rgb(107,83,50)), color-stop(0.75, rgb(94,70,37)) );
+        // background-image: -moz-linear-gradient( center top, rgb(122,98,65) 0%, rgb(107,83,50) 50%, rgb(94,70,37) 75% );
+        background: #492602;
+    }
+    iframe#book {
+        border: none;
     }
 }
 
@@ -711,12 +727,6 @@ select#browse-select {
     .navbar-collapse {
         border-top: 1px solid transparent;
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-    .navbar-collapse.collapse {
-        display: none;
-    }
-    .navbar-collapse.collapse.in {
-        display: block;
     }
     .navbar-nav {
         float: none !important;
