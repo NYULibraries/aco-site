@@ -111,6 +111,7 @@
     },
     "book": {
       "title": "Book",
+       "bodyClass" : "book",
       "sourceUrl": "http://dev-dl-pa.home.nyu.edu/books",
       "route": "/book/index.html"
     }
