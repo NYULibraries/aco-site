@@ -66,6 +66,7 @@
     box-shadow: none;
 
     &.collapse {
+      /* LMH -- can we remove the !important? */
       display: block !important;
       height: auto !important;
       padding-bottom: 0; // Override default setting

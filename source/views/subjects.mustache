@@ -3,19 +3,19 @@
   <head>{{> head }}</head>
   <body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}"  class="{{bodyClass}}">
     {{> header }}
-	<main class="main container-fluid">
+	<main class="main container-fluid" role="main">
 	  <header>
-	    <h4>{{title}}</h4>
+	    <h2>{{title}}</h2>
 	  </header>
       {{#content}}
         {{#body}}
           {{#widgets}}
             {{#subjects}}
-              <div class="item-list">
+              <ul>
                 {{#data}}
                   <li><a href="{{ appUrl }}/subject/{{tid}}">{{term}}</a></li>
                 {{/data}}
-              </div>
+              </ul>
             {{/subjects}}
           {{/widgets}}
         {{/body}}
