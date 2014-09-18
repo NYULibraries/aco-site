@@ -1,93 +1,113 @@
 h1.title, .titlebar {
-  // background: #5e4625;
-  // background-image: -webkit-gradient( linear, left top, left bottom, color-stop(0, rgb(122,98,65)), color-stop(0.5, rgb(107,83,50)), color-stop(0.75, rgb(94,70,37)) );
-  // background-image: -moz-linear-gradient( center top, rgb(122,98,65) 0%, rgb(107,83,50) 50%, rgb(94,70,37) 75% );
+    // background: #5e4625;
+    // background-image: -webkit-gradient( linear, left top, left bottom, color-stop(0, rgb(122,98,65)), color-stop(0.5, rgb(107,83,50)), color-stop(0.75, rgb(94,70,37)) );
+    // background-image: -moz-linear-gradient( center top, rgb(122,98,65) 0%, rgb(107,83,50) 50%, rgb(94,70,37) 75% );
+    background: #492602;
 }
 
-.pane.navbar {
-  // background: #2c4985 !important;
+.pane.navbar#navbar {
+    display: block;
+    width: 100%;
+    height: 55px;
+    background: #333;
+    border-top:   1px solid #444;
+    border-bottom: 1px solid #222;
 }
 
 .pane.pagemeta {
-  // background-color: #ddd;
-  // background-image: #ddd;
+    // background-color: #ddd;
+    // background-image: #ddd;
 }
 
 body .pane.display {
-  // background-color: #fff;
-  // background-image: #fff;  
+    // background-color: #fff;
+    // background-image: #fff;
 }
 
 #pager {
-  // background: #2d3e50;
-  // border-top: 1px solid #2c4985;
+    // background: #2d3e50;
+    // border-top: 1px solid #2c4985;
 }
 
 #top {
-  // display: none;
-  // visibility: hidden;
+    display: none;
+    visibility: hidden;
+}
+
+.field-name-field-title {
+    font-weight: bold;
+    font-size: 1.3em;
+    margin: .5em 0;
+    line-height: 1.3;
+}
+
+.field-name-field-rights {
+    margin-top: .5em;
+    border-top: 1px solid #ccc;
+    padding-top: .5em;
+    font-size: .9em;
 }
 
 html body a.button:visited {
-  color: #2d3e50;
+    color: #2d3e50;
 }
 
 html body a.button {
-  border: none;
-  color: #fff;
+    border: none;
+    color: #fff;
 }
 
 html body a.button:link {
-  color: #fff; 
-  border: none;
+    color: #fff;
+    border: none;
 }
 
 html body a.button:active {
-  color: #fff;
-  border: none;
+    color: #fff;
+    border: none;
 }
 
 .pane.navbar a.button:hover {
-  color: #fff;
-  border: none;
-  text-decoration: none;
+    color: #fff;
+    border: none;
+    text-decoration: none;
 }
 
 .navbar-item span {
-  border: none;
+    border: none;
 }
 
 #pager .sequence_count {
-  color: #fff;
+    color: #fff;
 }
 
 .navbar-item a, .navbar-item span, .navbar-item .olControlDLTSZoomInItemInactive, .navbar-item .olControlDLTSZoomOutItemInactive {
-  color: #fff;
-  border: none;
-  box-shadow: initial;
-  transition-property: initial;
-  transition-duration: initial;
-  transition-timing-function: initial;
+    color: #fff;
+    border: none;
+    box-shadow: initial;
+    transition-property: initial;
+    transition-duration: initial;
+    transition-timing-function: initial;
 }
 
 .navbar-item a:visited {
-  color: #fff;
-  border: none;
-  box-shadow: initial;
-  transition-property: initial;
-  transition-duration: initial;
-  transition-timing-function: initial;
+    color: #fff;
+    border: none;
+    box-shadow: initial;
+    transition-property: initial;
+    transition-duration: initial;
+    transition-timing-function: initial;
 }
 
 .pane.thumbnails .thumbnails-container #book-navbar {
-  background-color: #2d3e50;
-  background-image: #2d3e50;
+    background-color: #2d3e50;
+    background-image: #2d3e50;
 }
 
 .pane.thumbnails a, a:visited, a:link {
-  color: #fff;
+    // color: #fff;
 }
 
 .pane.thumbnails a:active, a:hover {
-  color: #6fbef3;
+    color: #6fbef3;
 }
