@@ -5,7 +5,9 @@
   {{> header }}
   <main class="main container-fluid" role="main">
     <header>
-      <h2>{{ title }}</h2>
+      {{#title}}
+      <h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}">{{{html}}}</h2>
+      {{/title}}
       <!--
       {{> browseSelect }}
       -->

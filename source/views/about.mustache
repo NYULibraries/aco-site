@@ -4,7 +4,9 @@
 <body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{ bodyClass }}">
   {{> header }}
   <main class="main container-fluid" role="main">
-    <h2>{{ title }}</h2>
+     {{#title}}
+      <h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}">{{{html}}}</h2>
+      {{/title}}
     {{#content}}
     <div class="page-content">    
       {{#main}}

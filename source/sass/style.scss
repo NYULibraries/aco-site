@@ -146,12 +146,16 @@ main {
             &[lang="en"] {
                 float: left;
                 clear: left;
+                font: normal 1rem / 1.5 $font-family-sans-serif;
             }
         }
     }
+    h2.page-title[lang="en"] {
+        float: left;
+        clear: left;
+    }
     .intro {
         margin: 0;
-        font: normal 1rem / 1.5 $font-family-sans-serif;
     }
     .featured {
         hr {
@@ -196,13 +200,12 @@ main {
             clear: left;
             font-size: 1rem;
         }
+       
         .itemhome {
             width: 100%;
             margin-bottom: 10px;
             font-size: .9em;
-            // padding-right: 15px;
             transition: all 0.5s ease;
-            font-family: $font-family-serif;
             .title {
                 font-weight: bold;
                 padding-top: .3em;
@@ -219,6 +222,9 @@ main {
                 margin: 0 0 0 21%;
             }
         }
+        &[lang="en"] .itemhome {
+            font-family: $font-family-serif;
+        }
         &[lang="ar"] {
             .itemhome {
                 .thumbs {
@@ -226,6 +232,9 @@ main {
                 }
                 .meta {
                     margin: 0 21% 0 0;
+                }
+                .title {
+                    font-size: 1.2em;
                 }
             }
         }
