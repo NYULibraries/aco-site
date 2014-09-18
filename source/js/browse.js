@@ -20,7 +20,7 @@ YUI().use(
       , app = body.getAttribute('data-app')
       , appRoot = body.getAttribute('data-approot')      
       , data = container.getData()    
-      , start = 0  
+      , page = 1
       , transactions = []
       , handlebarsTemplates = []
       , templates = {}
@@ -29,16 +29,21 @@ YUI().use(
     router.route( appRoot +  '/browse', function ( req ) {
         
         var rows = ( req.query.rows ) ? req.query.rows : 10
-          , start =  parseInt( req.query.start, 10 )
+          , page =  ( req.query.page ) ?  parseInt( req.query.page, 10 ) : 0
+          , start =  0
           , node = Y.one('[data-name="items"]')
           
-        if ( start <= 1 ) {
+        if ( page <= 1 ) {
             start = 0
         }
-	     
+        else {
+            start = ( page * rows ) - rows
+        }
+        
     	initRequest ( {
 		    container : node
 	      , start : start
+	      , page : page
     	  , rows : rows
 		} )
         
@@ -58,7 +63,7 @@ YUI().use(
 		
 	    this.setRowsPerPage(state.rowsPerPage, true)
 	    	
-	    router.save( appRoot + '/browse?start=' + state.page )
+	    router.save( appRoot + '/browse?page=' + state.page )
 	    	
     }
     
@@ -142,6 +147,8 @@ YUI().use(
         var rows = 10
           , start = 0
           , page = 0
+          , sortBy = 'ss_longlabel'
+          , sortDir = 'asc'          
           , language = 'en'
           , discoveryURL = "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select"
           , fl = [ 
@@ -169,6 +176,10 @@ YUI().use(
                  , 'sm_field_partner'
             ]
 
+        if ( options.page ) {
+          page = parseInt( options.page, 10 )
+        }
+
         if ( options.language ) {
           language = options.language
         }
@@ -180,8 +191,9 @@ YUI().use(
         if ( options.rows ) {
           rows = parseInt( options.rows, 10 )
         }
-        
-        var datasourceURLs = discoveryURL + "?"
+
+        var datasourceURLs = discoveryURL 
+                           + "?"
                            + "wt=json"
                            + "&json.wrf=callback={callback}"
                            + "&fq=hash:iy26sh"
@@ -190,7 +202,8 @@ YUI().use(
                            + "&fl=" + fl.join()
                            + "&rows=" + rows
                            + "&start=" + start
-                       
+                           + "&sort=" + longlabel + "%20" + sortDir
+                           
         body.addClass('io-loading')
         
         options.container.empty()
@@ -245,11 +258,11 @@ YUI().use(
         })
 
     }
-
-    if ( QueryString.start ) { 
-      start = QueryString.start
+    
+    if ( QueryString.page ) { 
+        page = QueryString.page
     }
     
-    initRequest ( { container : container, start : start } )
+    router.save( appRoot + '/browse?page=' + page )
 
 })
