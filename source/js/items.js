@@ -8,6 +8,7 @@ YUI().use(
   , 'jsonp'
   , 'paginator'
   , 'jsonp-url'
+  , 'router'  
   , 'gallery-idletimer'
   , function (Y) {
 

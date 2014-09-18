@@ -7,20 +7,43 @@ YUI().use(
   , 'jsonp'
   , 'paginator'
   , 'jsonp-url'
+  , 'router'    
+  , 'querystring-parse'
   , 'gallery-paginator'
   , function (Y) {
 
-    'use strict'
+    // 'use strict'
 
     var body = Y.one('body')
+      , QueryString = ( Y.QueryString.parse( location.search, '?') )
       , container = Y.one('[data-name="items"]')
-      , data = container.getData()      
+      , app = body.getAttribute('data-app')
+      , appRoot = body.getAttribute('data-approot')      
+      , data = container.getData()    
+      , start = 0  
       , transactions = []
-      , appRoot = body.getAttribute("data-app")
-      , templates = {}
       , handlebarsTemplates = []
-      , paginator = 1
-
+      , templates = {}
+      , router = new Y.Router()
+      
+    router.route( appRoot +  '/browse', function ( req ) {
+        
+        var rows = ( req.query.rows ) ? req.query.rows : 10
+          , start =  parseInt( req.query.start, 10 )
+          , node = Y.one('[data-name="items"]')
+          
+        if ( start <= 1 ) {
+            start = 0
+        }
+	     
+    	initRequest ( {
+		    container : node
+	      , start : start
+    	  , rows : rows
+		} )
+        
+    })
+    
     function onFailure() {
         Y.log('onFailure')
     }
@@ -29,27 +52,22 @@ YUI().use(
         onFailure()
     }
     
-    function initPaginator( totalRecords, rowsPerPage ) {
-        
-    	function update ( state ) {
+    function update ( state ) {
 	
-	        var node = Y.one('[data-name="items"]')
-	     
-    		this.setPage(state.page, true)
+    	this.setPage( state.page, true )
 		
-	    	this.setRowsPerPage(state.rowsPerPage, true)
-		
-    		initRequest ( { 
-		        container : node
-	    	  , start : state.page * state.rowsPerPage
-    		  , rows : state.rowsPerPage 
-		    } ) 
-				
-	    }        
+	    this.setRowsPerPage(state.rowsPerPage, true)
+	    	
+	    router.save( appRoot + '/browse?start=' + state.page )
+	    	
+    }
+    
+    function initPaginator( page, totalRecords, rowsPerPage ) {
         
         var paginatorConfiguration = {
                 totalRecords: totalRecords
               , rowsPerPage: rowsPerPage
+              , initialPage : page
               , template: '{FirstPageLink} {PageLinks} {NextPageLink}'        
             }
           , paginator = new Y.Paginator( paginatorConfiguration )
@@ -57,44 +75,46 @@ YUI().use(
         paginator.on( 'changeRequest', update )
                
         paginator.render('#paginator')
+
     }    
 
     function onSuccess ( response, args ) {
 
         try {
-
+        
             var node = args.container
-              , data = node.getData()
               , resultsnum = Y.one('.resultsnum')
+              , page = ( args.page ) ? args.page : 1
               , numfound = parseInt(response.response.numFound, 10)
               , numfoundNode = resultsnum.one('.numfound')
               , start = parseInt(response.response.start, 10)
+              , displayStart = ( start < 1 ) ? 1 : start
               , startNode = resultsnum.one('.start')
               , docslengthNode = resultsnum.one('.docslength')
               , docslength = parseInt(response.response.docs.length, 10)
-
+              
             // first transaction; enable paginator
-            if ( transactions.length < 1 ) initPaginator( numfound, docslength )
+            if ( transactions.length < 1 ) initPaginator( page , numfound, docslength )
 
             // store called to avoid making the request multiple times
             transactions.push ( this.url )
 
             // for now, map this at Solr level and fix img to be absolute paths
             response.response.docs.forEach ( function ( element, index ) {
-            	response.response.docs[index].appRoot = appRoot
+            	response.response.docs[index].appRoot = app
             	response.response.docs[index].identifier = element.ss_identifer
             	response.response.docs[index].app = element.ss_collection_identifier
             })
 
-            node.setAttribute( "data-numFound", numfound)
+            node.setAttribute( "data-numFound", numfound )
 
-            node.setAttribute( "data-start", start)
+            node.setAttribute( "data-start", start )
 
             node.setAttribute( "data-docsLength", docslength )
             
-            startNode.set('innerHTML', start + 1)
+            startNode.set( 'innerHTML', displayStart )
 
-            docslengthNode.set('innerHTML', docslength)
+            docslengthNode.set('innerHTML', start + docslength )
             
             numfoundNode.set('innerHTML', numfound)
             
@@ -121,7 +141,8 @@ YUI().use(
     
         var rows = 10
           , start = 0
-          , language = 'und'
+          , page = 0
+          , language = 'en'
           , discoveryURL = "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select"
           , fl = [ 
                    'ss_embedded'
@@ -147,7 +168,7 @@ YUI().use(
                  , 'sm_ar_partner'
                  , 'sm_field_partner'
             ]
-            
+
         if ( options.language ) {
           language = options.language
         }
@@ -159,7 +180,7 @@ YUI().use(
         if ( options.rows ) {
           rows = parseInt( options.rows, 10 )
         }
-
+        
         var datasourceURLs = discoveryURL + "?"
                            + "wt=json"
                            + "&json.wrf=callback={callback}"
@@ -168,13 +189,12 @@ YUI().use(
                            + "&fq=ss_language:" + language                           
                            + "&fl=" + fl.join()
                            + "&rows=" + rows
-                           + "&start=" + start    
+                           + "&start=" + start
                        
         body.addClass('io-loading')
         
         options.container.empty()
 
-        // make the first request
         Y.jsonp( datasourceURLs, {
             on: {
                 success: onSuccess,
@@ -204,7 +224,7 @@ YUI().use(
 
                             success: function( transactionId, response ) {
 
-                                Y.log ("Handlebars: retrieve file: " + file );
+                                Y.log ("Handlebars: retrieve file: " + file )
 
                                 templates[key] = Y.Handlebars.compile ( response.responseText )
   
@@ -226,6 +246,10 @@ YUI().use(
 
     }
 
-    initRequest ( { container : container } )
+    if ( QueryString.start ) { 
+      start = QueryString.start
+    }
+    
+    initRequest ( { container : container, start : start } )
 
 })

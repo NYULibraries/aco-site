@@ -1,11 +1,11 @@
 module.exports = function(grunt) {
 
     var _ = require('underscore')
-              
+
     function transformHTML( buildPath, task ) {
-    
+
         try {
-        
+
             var hogan = require('hogan')
               , conf = grunt.file.readJSON( __dirname + '/source/json/conf.json')
               , pages = grunt.file.readJSON( __dirname + '/source/json/pages.json')
@@ -13,8 +13,23 @@ module.exports = function(grunt) {
               , source = pages[task]
               , navbar = []
               , template = hogan.compile( grunt.file.read( __dirname + '/source/views/' + task + '.mustache' ) )
-              , partials = {};
-
+              , partials = {}
+              , menus = []
+            
+            // build the menu object
+            _.each( pages, function ( page, index ) {
+                if ( _.isArray( pages[index].menu ) ) {
+                    _.each( pages[index].menu, function ( menu ) {
+                       menus[menu.weight] = {
+                            label : menu.label
+                         ,  route : pages[index].route
+                         ,  page : index
+                         ,  weight : menu.weight
+                        }
+                    })
+                }
+            })
+            
             // this spaghetti maps the widgets to the taks and load data Object if type is not local
             if ( source.content ) {
               _.each( source.content, function ( content, a ) {
@@ -31,14 +46,14 @@ module.exports = function(grunt) {
                       }
 
                       source.content[a][b].widgets[c] = spaghetti
-                      
-                      // console.log(spaghetti)
-                      
+
                     })
                   }
                 })
               })
             }
+            
+            source.menus = menus;
 
             source.appRoot = conf.appRoot;
             
@@ -52,23 +67,6 @@ module.exports = function(grunt) {
             
            // later on for prod
            // source.css = grunt.file.read(__dirname + '/build/css/style.css');
-           /**
-           Object.keys( pages ).forEach( function ( key ) {
-
-                if ( 
-                    conf.pages[key].menu && 
-                    conf.pages[key].menu.indexOf( 'navbar' )  
-                ) {
-
-                    navbar.push( { 
-                        title: conf.pages[key].title,
-                        route: conf.pages[key].route
-                    } )
-
-                }
-
-            })
-            **/
 
             grunt.file.recurse( __dirname + '/source/views/' , function callback(abspath, rootdir, subdir, filename) {
               if ( filename.match(".mustache") && task + '.mustache' !== filename ) {
@@ -105,12 +103,13 @@ module.exports = function(grunt) {
     var targets = {};
      
     grunt.file.recurse( __dirname + '/source/js/' , function callback(abspath, rootdir, subdir, filename) {
+          var name;
           
           if (filename.match(".js")) {
           
-              var name = filename.replace(".js", "");
+              name = filename.replace('.js', '');
 
-              targets['build/js/'+ name +'.min.js'] = abspath
+              targets['build/js/' + name + '.min.js'] = abspath
           }
           
     })
@@ -212,7 +211,7 @@ module.exports = function(grunt) {
     	  , terms = subjects_source.facet_counts.facet_fields.sm_vid_Terms
     	  , subjects = []
 
-    	_.each( _.filter( terms, function ( term ) { return _.isString( term ) }), function ( subject, index ) {
+    	_.each( _.filter( terms, function ( term ) { return _.isString( term ) } ), function ( subject, index ) {
     		subjects.push( { term : subject, tid : subject, facet : 'sm_vid_Terms' })
     	})
 

@@ -1,19 +1,33 @@
 YUI().use(
     'get'
   , 'node'
+  , 'anim'
   , function (Y) {
 
     'use strict'
 
     var widgets = Y.all('.widget')
       , js_loaded = []
+      , body = Y.one('body')
+      
+      
+    function onClick ( event ) {
+
+        var currentTarget = event.currentTarget
+        
+        currentTarget.toggleClass('collapsed')
+        
+        Y.log( currentTarget.getData() )
+        
+    }
+      
+    body.delegate('click', onClick, '.navbar-toggle');
 
     if ( widgets.size() ) {
 
         widgets.each( function ( node ) {
 
             var data = node.getData()
-              , body = Y.one('body')
               , files;
 
             node.addClass( data.name )
