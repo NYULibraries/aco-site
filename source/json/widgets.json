@@ -30,7 +30,7 @@
         ]
       },
       "ar" : {
-        "title" : "التصفح",
+        "title" : "ًعناوين مضافة مؤخرا",
         "sourceType" : "local",
         "data": [
             {
@@ -60,7 +60,7 @@
         "source" : "source/json/datasources/recentlyAddedTitlesEN.json"
       },
       "ar" : {
-        "title" : "العناوين المضافة حديثا",
+        "title" : "ًعناوين مضافة مؤخرا",
         "sourceType" : "json",
         "source" : "source/json/datasources/recentlyAddedTitlesAR.json"               
       }

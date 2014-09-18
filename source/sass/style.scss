@@ -125,7 +125,7 @@ main {
     }
     [lang="en"] .readmore {
         font: 0.9rem / 1.2 $font-family-sans-serif;
-        font-size: 1em ;
+        font-size: 1em;
         font-size: .9rem;
         padding-left: 10px;
         display: inline-block;
@@ -146,12 +146,16 @@ main {
             &[lang="en"] {
                 float: left;
                 clear: left;
+                font: normal 1rem / 1.5 $font-family-sans-serif;
             }
         }
     }
+    h2.page-title[lang="en"] {
+        float: left;
+        clear: left;
+    }
     .intro {
         margin: 0;
-        font: normal 1rem / 1.5 $font-family-sans-serif;
     }
     .featured {
         hr {
@@ -196,13 +200,12 @@ main {
             clear: left;
             font-size: 1rem;
         }
+       
         .itemhome {
             width: 100%;
             margin-bottom: 10px;
             font-size: .9em;
-            // padding-right: 15px;
             transition: all 0.5s ease;
-            font-family: $font-family-serif;
             .title {
                 font-weight: bold;
                 padding-top: .3em;
@@ -219,6 +222,9 @@ main {
                 margin: 0 0 0 21%;
             }
         }
+        &[lang="en"] .itemhome {
+            font-family: $font-family-serif;
+        }
         &[lang="ar"] {
             .itemhome {
                 .thumbs {
@@ -226,6 +232,9 @@ main {
                 }
                 .meta {
                     margin: 0 21% 0 0;
+                }
+                .title {
+                    font-size: 1.2em;
                 }
             }
         }
@@ -244,7 +253,7 @@ main {
 .header-main {
     padding-top: 10px;
     padding-bottom: 10px;
-    display: table !impor;
+    display: table !important;
     width: 100%;
     // for mobile, they are stacked
     >div {
@@ -589,19 +598,18 @@ body.subject {
         text-align: center;
     }
     .logo-hold {
-        max-width: 80%;
         margin: 0 auto;
     }
     .logo {
-        padding: 0 30px;
-        margin-bottom: 30px;
-        // float: left;
         display: inline-block;
+        margin: 0 30px 30px;
         line-height: 1;
         width: auto;
         height: 40px;
-        &.aub {
-            padding-right: 0px;
+        a {
+            display: block;
+            width: auto;
+            height: 100%;
         }
         img {
             width: auto;
