@@ -37,13 +37,13 @@
     },
     "browse": {
       "title": "Browse titles",
-      "menu" : [ { "context" : "navbar", "label" : "Browse", "weight" : 2 }  ],
+      "menu" : [ { "context" : "navbar", "label" : "Browse", "weight" : 3 }  ],
       "route": "/browse/index.html",
       "bodyClass": "browse io-loading"
     },
     "resources": {
       "title": "Other Resources",
-      "menu" : [ { "context" : "navbar", "label" : "Other Resources", "weight" : 1 }  ],
+      "menu" : [ { "context" : "navbar", "label" : "Other Resources", "weight" : 2 }  ],
       "route": "/resources/index.html",
       "bodyClass": "page",
       "content" : {
@@ -65,7 +65,7 @@
     },
     "about": {
       "title": "About",
-      "menu" : [ { "context" : "navbar", "label" : "About this project", "weight" : 0 }  ],     
+      "menu" : [ { "context" : "navbar", "label" : "About this project", "weight" : 1 }  ],     
       "route": "/about/index.html",
       "bodyClass": "page",
       "content" : {

@@ -202,7 +202,7 @@ YUI().use(
                            + "&fl=" + fl.join()
                            + "&rows=" + rows
                            + "&start=" + start
-                           + "&sort=" + longlabel + "%20" + sortDir
+                           + "&sort=" + sortBy + "%20" + sortDir
                            
         body.addClass('io-loading')
         
