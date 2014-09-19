@@ -166,14 +166,14 @@ YUI().use(
                  , 'sm_field_publisher'
                  , 'sm_vid_Terms'
                  , 'tm_vid_1_names'
+                 , 'sm_partners'
                  , 'sm_ar_title'
                  , 'sm_ar_author'
                  , 'sm_ar_publisher'
                  , 'sm_ar_publication_location'
                  , 'sm_ar_subjects'
                  , 'sm_ar_publication_date'
-                 , 'sm_ar_partner'
-                 , 'sm_field_partner'
+                 , 'sm_ar_partners'
             ]
 
         if ( options.page ) {
