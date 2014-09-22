@@ -1,8 +1,6 @@
 YUI().use("node", "event", function(Y) {
 
     "use strict";
-    
-    Y.log('search_form.min.js')
 
     var body = Y.one("body");
 
@@ -10,14 +8,18 @@ YUI().use("node", "event", function(Y) {
     
         event.preventDefault();
         
-        var currentTarget = event.currentTarget,
-            input = currentTarget.one("input"),
-            value = input.get("value");
-            
-        value.length && (location.href = currentTarget.get("action") + "/" + value);
+        var currentTarget = event.currentTarget
+          , input = currentTarget.one('[type="text"]')
+          , value = input.get("value");
         
+        if ( value.length ) {
+            
+            location.href = currentTarget.get("action") + "/" + value.trim().replace(/\s/g, '+').toLowerCase();
+            
+        }
+
     }
 
-    body.delegate("submit", onSubmit, "form")
+    body.delegate("submit", onSubmit, "form");
 
 });

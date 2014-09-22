@@ -12,9 +12,43 @@ module.exports = function(grunt) {
               , widgets = grunt.file.readJSON(__dirname + '/source/json/widgets.json')
               , source = pages[task]
               , navbar = []
-              , template = hogan.compile( grunt.file.read( __dirname + '/source/views/' + task + '.mustache' ) )
+              , uncompileTemplate = grunt.file.read( __dirname + '/source/views/' + task + '.mustache' )
+              , template
               , partials = {}
               , menus = []
+              , matchWidgetsRegEx = "data-script='(.*)'"
+              , matchWidgets = uncompileTemplate.match( matchWidgetsRegEx )
+              , toJSON = ''
+              , javascriptString = ''
+              , javascriptTagOpen = '<script>'
+              , javascriptTagClose = '</script>'     
+              , closure = ''
+              
+            if ( matchWidgets && matchWidgets[0] ) {
+                
+                toJSON = matchWidgets[0]
+                
+                toJSON = toJSON.replace(/'/g, '').replace(/data-script=/g, '')
+
+                toJSON = JSON.parse( toJSON )
+
+                _.each( toJSON.js, function ( js ) {
+                    if ( grunt.file.isFile ( 'build/js/' + js ) ) {
+                        javascriptString += javascriptTagOpen + grunt.file.read( 'build/js/' + js ) + javascriptTagClose
+                    }
+                })
+                
+                //_.each( toJSON.hbs, function ( hbs, name ) {
+                //    console.log(hbs)
+                //})
+
+            }
+            
+            closure += javascriptString
+            
+            source.closure = closure
+            
+            template = hogan.compile( uncompileTemplate )
             
             // build the menu object
             _.each( pages, function ( page, index ) {
@@ -67,12 +101,44 @@ module.exports = function(grunt) {
             source.partners = conf.partners;  
             
            // later on for prod
-           // source.css = grunt.file.read(__dirname + '/build/css/style.css');
+           source.css = grunt.file.read(__dirname + '/build/css/style.css');
 
             grunt.file.recurse( __dirname + '/source/views/' , function callback(abspath, rootdir, subdir, filename) {
               if ( filename.match(".mustache") && task + '.mustache' !== filename ) {
-                  var name = filename.replace(".mustache", "");
-                  partials[name] = grunt.file.read(abspath)
+
+                  var name = filename.replace(".mustache", "")
+                    , partial = grunt.file.read(abspath)
+                    , matchWidgetsRegEx = "data-script='(.*)'"
+                    , matchWidgets = partial.match( matchWidgetsRegEx )
+                    , toJSON = ''
+                    , javascriptString = ''
+                    , javascriptTagOpen = '<script>'
+                    , javascriptTagClose = '</script>'     
+                    , closure = ''                  
+                  
+                  if ( ! _.find(_.keys(pages), name) ) {
+                  
+                      if ( matchWidgets && matchWidgets[0] ) {
+                
+                          toJSON = matchWidgets[0]
+                
+                          toJSON = toJSON.replace(/'/g, '').replace(/data-script=/g, '')
+
+                          toJSON = JSON.parse( toJSON )
+
+                          _.each( toJSON.js, function ( js ) {
+           
+                              if ( grunt.file.isFile ( 'build/js/' + js ) ) {
+                                  javascriptString += javascriptTagOpen + grunt.file.read( 'build/js/' + js ) + javascriptTagClose
+                              }
+                          })
+                
+                       }                  
+                  
+                      partials[name] = partial + javascriptString
+                  
+                  }
+                  
               }
             })
         
@@ -140,9 +206,9 @@ module.exports = function(grunt) {
     },
     
     clean: [ 
-      __dirname + '/build/images', 
-      __dirname + '/build/css',
-      __dirname + 'source/json/datasources'
+      , __dirname + '/build/images', 
+      , __dirname + '/build/css'
+      //  __dirname + 'source/json/datasources'
     ],
     copy: {
       main: {
@@ -165,7 +231,7 @@ module.exports = function(grunt) {
     sass: {
         dist: {
             options: {
-                style: 'expanded'
+                style: 'compressed'
             },
             files: {
                'build/css/style.css' : __dirname + '/source/sass/style.scss',
@@ -238,6 +304,8 @@ module.exports = function(grunt) {
 
     });  
 
-    grunt.registerTask('default', ['clean', 'copy', 'curl', 'massageDataSource', 'uglify', 'sass', 'writeHTML']);
+    // grunt.registerTask('default', ['clean', 'copy', 'curl', 'massageDataSource', 'uglify', 'sass', 'writeHTML']);
+    
+    grunt.registerTask('default', ['clean', 'copy', 'uglify', 'sass', 'writeHTML']);
 
 };

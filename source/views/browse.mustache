@@ -5,12 +5,8 @@
   {{> header }}
   <main class="main container-fluid" role="main">
     <header>
-      {{#title}}
-      <h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}">{{{html}}}</h2>
-      {{/title}}
-      <!--
-      {{> browseSelect }}
-      -->
+      {{#title}}<h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}">{{{html}}}</h2>{{/title}}
+      <!-- {{> browseSelect }} -->
       <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
     </header>
     <div 
@@ -26,5 +22,6 @@
     </div>
   </main>
   {{> footer }}
+  {{{ closure }}}
 </body>
 </html>

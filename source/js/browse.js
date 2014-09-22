@@ -174,6 +174,16 @@ YUI().use(
                  , 'sm_ar_subjects'
                  , 'sm_ar_publication_date'
                  , 'sm_ar_partners'
+                 
+                 // English fields
+                 , 'sm_field_title'
+                 , 'sm_author'
+                 , 'sm_publisher'                 
+                 , 'ss_pubdate'
+                 , 'sm_subject'
+                 , 'sm_partners'                 
+                 
+                                  
             ]
 
         if ( options.page ) {
