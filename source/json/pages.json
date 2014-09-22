@@ -36,7 +36,7 @@
       }      
     },
     "browse": {
-      "title": "Browse titles",
+      "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"Browse titles"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"تصفح العناوين"}],
       "menu" : [ { "context" : "navbar", "label" : "Browse", "weight" : 3 }  ],
       "route": "/browse/index.html",
       "bodyClass": "browse io-loading"
@@ -50,7 +50,7 @@
     },    
 
     "resources": {
-      "title": "Other Resources",
+       "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"Other Resources"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"المواقع الأخرى"}],
       "menu" : [ { "context" : "navbar", "label" : "Other Resources", "weight" : 2 }  ],
       "route": "/resources/index.html",
       "bodyClass": "page",
@@ -72,7 +72,7 @@
       }
     },
     "about": {
-      "title": "About",
+       "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"About"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"اعن هذا المشروع"}],
       "menu" : [ { "context" : "navbar", "label" : "About this project", "weight" : 1 }  ],     
       "route": "/about/index.html",
       "bodyClass": "page",
@@ -101,7 +101,7 @@
     },
     "book": {
       "title": "Book",
-       "bodyClass" : "book",
+      "bodyClass" : "book",
       "sourceUrl": "http://dev-dl-pa.home.nyu.edu/books",
       "route": "/book/index.html"
     }
