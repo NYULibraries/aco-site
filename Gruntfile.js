@@ -209,7 +209,7 @@ module.exports = function(grunt) {
             dest: 'source/json/datasources/recentlyAddedTitlesAR.json'
         },
         'subject': {
-        	src: 'http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fl=sm_vid_Terms,tm_vid_1_names&rows=0&facet=true&facet.field=sm_vid_Terms',
+        	src: 'http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&rows=0&facet=true&facet.field=im_field_subject',
         	dest: 'source/json/datasources/subject.json'
         },
         'drupalSubjecs' : {
@@ -289,25 +289,32 @@ module.exports = function(grunt) {
     grunt.registerTask('massageDataSource', 'massageDataSource', function() {
     	
     	var subjects_source = grunt.file.readJSON( __dirname + '/source/json/datasources/subject.json' )
-    	  , terms = subjects_source.facet_counts.facet_fields.sm_vid_Terms
+    	  , drupal_subjects_source = grunt.file.readJSON( __dirname + '/source/json/datasources/subjectsList.json' )
+    	  , terms = subjects_source.facet_counts.facet_fields.im_field_subject
     	  , subjects = []
+    	  , z = []
+    	  , subjects_source_map = []
+    	  , gaga = []
           , jsonScriptTagOpen = '<script id="subjecsList" type="application/json">'
           , jsonScriptTagClose = '</script>'     
           
-    	/**
-    	_.each( _.filter( terms, function ( term ) { return _.isString( term ) } ), function ( subject, index ) {
-    		subjects.push( { term : subject, tid : subject, facet : 'sm_vid_Terms' })
-    	})
-    	*/
-    	
-    	var drupal_subjects_source = grunt.file.readJSON( __dirname + '/source/json/datasources/subjectsList.json' )
-    	
-    	_.each( drupal_subjects_source , function ( subject, index ) {
-    	    // , facet : 'im_field_subject'
-    		subjects.push( { term : subject.value, tid : subject.raw_value })
-    	})
-    	
-   	    grunt.file.write( __dirname + '/source/views/subjectsList.mustache', jsonScriptTagOpen + JSON.stringify( subjects ) + jsonScriptTagClose  )    	
+        _.each( drupal_subjects_source , function ( subject, index ) {
+        	subjects.push( { term : subject.value, tid : subject.raw_value })
+        })
+        	  
+        _.each( _.filter( terms, function ( term ) { return _.isString( term ) } ), function ( subject, index ) {
+        	 
+        	 var z = _.findWhere( subjects, { tid :  subject });
+        	 
+        	 if ( z ) {
+        	     subjects_source_map.push ( z )
+        	 }
+        	     
+        })
+        
+   	    grunt.file.write( __dirname + '/source/views/subjectsList.mustache', jsonScriptTagOpen + JSON.stringify( subjects_source_map ) + jsonScriptTagClose  )
+   	    
+        grunt.file.write(__dirname + '/source/json/datasources/subject.json', JSON.stringify( subjects_source_map ) )   	    
 
     })
     

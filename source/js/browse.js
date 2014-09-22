@@ -39,11 +39,11 @@ YUI().use(
     }      
       
     Y.Handlebars.registerHelper('subject', function (text) {
-    
+
         var subject = findById ( subjects, text );
-        
-        return '<a href="' + appRoot + '/subject/' + subject.tid + '">' + subject.term + '</a>';
-        
+
+        return '<a href="' + appRoot + '/subject?tid=' + subject.tid + '">' + subject.term + '</a>';
+
     });
       
     router.route( appRoot +  '/browse', function ( req ) {
