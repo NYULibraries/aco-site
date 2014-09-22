@@ -34,7 +34,6 @@ YUI().use(
         
         var rows = ( req.query.rows ) ? req.query.rows : 10
           , page =  ( req.query.page ) ?  parseInt( req.query.page, 10 ) : 0
-          , keyword =  ( req.query.keyword ) ?  parseInt( req.query.keyword, 10 ) : 0          
           , start =  0
           , query = req.params.keyword
           , node = Y.one('[data-name="items"]')
