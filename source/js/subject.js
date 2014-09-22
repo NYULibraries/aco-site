@@ -13,32 +13,64 @@ YUI().use(
   , function (Y) {
 
     'use strict'
-    
+
     var body = Y.one('body')
       , QueryString = ( Y.QueryString.parse( location.search, '?') )
-      , container = Y.one('[data-name="items"]')
+      , container = Y.one('[data-name="subjects"]')
       , app = body.getAttribute('data-app')
       , appRoot = body.getAttribute('data-approot')      
-      , data = container.getData()    
       , page = 1
       , transactions = []
       , handlebarsTemplates = []
       , templates = {}
+      , itemsTemplateSource = Y.one('#hbs_items').getHTML()
+      , itemsTemplate = Y.Handlebars.compile(itemsTemplateSource)
       , router = new Y.Router()
+      , subjectsList = Y.one('#subjecsList')
+      , subjects = JSON.parse(subjectsList.get('innerHTML'))
       
-    router.param('keyword', function (value) {
-        return unescape(encodeURIComponent(value));
+    function findByTerm(term) {
+        for (var i = 0; i < subjects.length; i++) {
+            if (subjects[i].term === term) {
+                return subjects[i];
+            }
+        }
+    }      
+    
+    function findById(tid) {
+        
+        for (var i = 0; i < subjects.length; i++) {
+            if (subjects[i].tid === tid) {
+                return subjects[i];
+            }
+        }
+    }      
+    
+      
+    Y.Handlebars.registerHelper('subject', function (text) {
+    
+        var subject = findByTerm ( text );
+        
+        return '<a href="' + appRoot + '/subject/' + subject.tid + '">' + subject.term + '</a>';
+        
+    });
+      
+    router.param('subject', function (value) {
+        return value;
     })
 
-    router.route( appRoot +  '/search/:keyword', function ( req ) {
-        
+    router.route( appRoot +  '/subject/:subject', function ( req ) {
+    
         var rows = ( req.query.rows ) ? req.query.rows : 10
           , page =  ( req.query.page ) ?  parseInt( req.query.page, 10 ) : 0
           , start =  0
-          , query = req.params.keyword
-          , node = Y.one('[data-name="items"]')
-          , queryField = Y.one('.search_holder [type="text"]')
-          
+          , query = req.params.subject
+          , subject = findById(query)
+          , node = Y.one('[data-name="subjects"]')
+          , subjectname = Y.one('.subjectname')
+        
+        subjectname.set('innerHTML', subject.term)
+        
         if ( page <= 1 ) {
             start = 0
         }
@@ -47,12 +79,12 @@ YUI().use(
             start = ( page * rows ) - rows
         }
 
-        queryField.set('value', decodeURIComponent( query ) )
-        
     	initRequest ( {
 		    container : node
 	      , start : start
-	      , query : query
+	      , fq : [ 
+	          'im_field_subject:' + subject.tid
+	        ]
 	      , page : page
     	  , rows : rows
 		} )
@@ -109,44 +141,44 @@ YUI().use(
               , docslength = parseInt(response.response.docs.length, 10)
               
             // first transaction; enable paginator
-            if ( transactions.length < 1 ) initPaginator( page , numfound, docslength )
+            if ( transactions.length < 1 ) initPaginator( page , numfound, docslength );
 
             // store called to avoid making the request multiple times
-            transactions.push ( this.url )
+            transactions.push ( this.url );
 
             // for now, map this at Solr level and fix img to be absolute paths
             response.response.docs.forEach ( function ( element, index ) {
             	response.response.docs[index].appRoot = app
             	response.response.docs[index].identifier = element.ss_identifer
             	response.response.docs[index].app = element.ss_collection_identifier
-            })
+            });
 
-            node.setAttribute( "data-numFound", numfound )
+            node.setAttribute( "data-numFound", numfound );
 
-            node.setAttribute( "data-start", start )
+            node.setAttribute( "data-start", start );
 
-            node.setAttribute( "data-docsLength", docslength )
+            node.setAttribute( "data-docsLength", docslength );
             
-            startNode.set( 'innerHTML', displayStart )
+            startNode.set( 'innerHTML', displayStart );
 
-            docslengthNode.set('innerHTML', start + docslength )
+            docslengthNode.set('innerHTML', start + docslength );
             
-            numfoundNode.set('innerHTML', numfound)
+            numfoundNode.set('innerHTML', numfound);
             
             // render HTML and append to container
             node.append(
-              templates.items({
+              itemsTemplate({
                 items : response.response.docs
               })
-            )
+            );
 
-            body.removeClass('io-loading')
+            body.removeClass('io-loading');
 
         }
 
         catch (e) {
 
-            Y.log('something went wrong. error')
+            Y.log('something went wrong. error');
 
         }
 
@@ -161,7 +193,6 @@ YUI().use(
           , sortDir = 'asc'          
           , language = 'en'
           , discoveryURL = "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select"
-          , query = ''
           , fl = [ 
                    'ss_embedded'
                  , 'title'
@@ -200,11 +231,6 @@ YUI().use(
         if ( options.page ) {
           page = parseInt( options.page, 10 )
         }
-        
-        if ( options.query ) {
-          query = options.query
-        }
-        
 
         if ( options.language ) {
           language = options.language
@@ -220,9 +246,7 @@ YUI().use(
 
         var datasourceURLs = discoveryURL 
                            + "?"
-                           + "q=" + query
-                           + "&q.op=AND"                           
-                           + "&wt=json"
+                           + "wt=json"
                            + "&json.wrf=callback={callback}"
                            + "&fq=hash:iy26sh"
                            + "&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050"
@@ -231,6 +255,10 @@ YUI().use(
                            + "&rows=" + rows
                            + "&start=" + start
                            + "&sort=" + sortBy + "%20" + sortDir
+                           
+        if ( options.fq ) {
+          datasourceURLs = datasourceURLs + '&fq=' + options.fq.join('&fq=');
+        }
                            
         body.addClass('io-loading')
         
@@ -248,49 +276,10 @@ YUI().use(
     
     }
     
-    // prod will take care of this task
-    if ( data.script ) {
-
-          var files = JSON.parse( data.script )
-          
-          Y.Array.each( files.hbs, function( source ) {
-        	  
-            Y.Object.each( source, function( file, key ) {
-          	    
-            	handlebarsTemplates.push(file)
-            	
-                    Y.io( body.getAttribute("data-app") + '/js/' + file, {
-  			            sync: false,
-  			            on: {
-
-                            success: function( transactionId, response ) {
-
-                                Y.log ("Handlebars: retrieve file: " + file )
-
-                                templates[key] = Y.Handlebars.compile ( response.responseText )
-  
-         				    },
-         				    
-                            failure:function() {
-
-  					            throw "Handlebars: failed to retrieve url: " + url
-
-  				            }
-  				            
-    			        },
-  			            context: this
-                    })
-
-            })
-  		  
-        })
-
-    }
-    
     if ( QueryString.page ) { 
         page = QueryString.page
     }
     
-    router.save( router.getPath() + '?page=' + page )
+    router.save( router.getPath() + '?page=' + page )    
 
 })

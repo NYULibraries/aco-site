@@ -1,14 +1,29 @@
 <!doctype html>
 <html>
 <head>{{> head }}</head>
-<body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{bodyClass}}">
+<body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{ bodyClass }}">
   {{> header }}
-  <div class="main container-fluid" role="main">
-    <div class="breadcrumbs" lang="en"><a href="{{ appUrl }}" title="{{ appName }}">{{ appName }}</a> &gt; {{ title }}</div>
-    <h2>{{ title }}</h2>
-	{{> search_form }}
-    {{> items }}
-  </div>
+  <main class="main container-fluid" role="main">
+    <header>
+      <div class="breadcrumbs" lang="en"><a href="{{ appUrl }}" title="{{ appName }}">{{ appName }}</a> &gt; {{ title }}</div>
+      {{#title}}
+        <h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}">{{{html}}}</h2>
+      {{/title}}
+      {{> search_form }}
+      <!-- {{> browseSelect }} -->
+      <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
+    </header>
+    <div 
+      class="widget" 
+      data-name="items"
+      data-rows="10"
+      data-script='{ "js" : [ "search.min.js" ], "hbs" : [ { "items" : "items.hbs" } ] }'
+    ></div>
+    <div class="text-center">
+      <div id="paginator" class="pagination"></div>
+    </div>
+  </main>
   {{> footer }}
+  {{{ closure }}}
 </body>
 </html>

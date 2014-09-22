@@ -15,14 +15,9 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-      
-      {{#navbar}}
-          <li><a href="{{ appUrl }}/about">About</a></li>      
-      {{/navbar}}
-        <li><a href="{{ appUrl }}">Home</a></li>
-        <li><a href="{{ appUrl }}/about">About</a></li>
-        <li><a href="{{ appUrl }}/resources">Other Resources</a></li>
-        <li><a href="{{ appUrl }}/browse">Browse</a></li>
+      {{#menus}}
+          <li><a href="{{ appUrl }}{{ route }}" class="{{ page }}">{{ label }}</a></li>
+      {{/menus}}      
       </ul>
       {{> search_form_nav }} </div>
     <!-- /.navbar-collapse --> 

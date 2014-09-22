@@ -7,7 +7,7 @@ YUI().use(
   , 'json-stringify'
   , function (Y) {
   
-    'use strict'
+    'use strict';
     
     var body = Y.one('body')
       , widget = Y.one('.widget.book')
@@ -15,7 +15,6 @@ YUI().use(
       , match_book_page = location.pathname.match(/\/book\/(.*)\/(.*)/)
       , sourceUrl = widget.getAttribute("data-sourceUrl")
       , appRoot = body.getAttribute("data-appRoot")
-      , availableHeight = calculateAvailableHeight()
       , src = ''
       , identifier = '';
       
@@ -28,8 +27,8 @@ YUI().use(
           , availableHeight = viewport.height;
       
         siblings.each(function(node) {
-            availableHeight = availableHeight - node.get('offsetHeight')
-        })
+            availableHeight = availableHeight - node.get('offsetHeight');
+        });
           
         return availableHeight;
     }
@@ -37,13 +36,13 @@ YUI().use(
     function hideSiblings() {
         widget.siblings().each(function(node) {
             node.setStyles( { 'display' : 'none', 'visibility' : 'hidden' })
-        })
+        });
     }
       
     function showSiblings() {
         widget.siblings().each(function(node) {
             node.setStyles( { 'display' : 'initial', 'visibility' : 'visible' })
-        })
+        });
     }      
 
     if (
@@ -53,7 +52,7 @@ YUI().use(
       ) 
     {
     
-      identifier = match_book_page[1]
+      identifier = match_book_page[1];
       
       src = widget.getAttribute("data-sourceUrl") + '/books/' + identifier + '/' +  match_book_page[2];
 
@@ -66,7 +65,7 @@ YUI().use(
     ) 
     {
     
-      identifier = match_book[1]
+      identifier = match_book[1];
           
       src = sourceUrl + '/books/' + identifier + '/1';
     }    
@@ -83,26 +82,26 @@ YUI().use(
         ]
     });
     
-    widget.setStyles({ height : calculateAvailableHeight() })
+    widget.setStyles({ height : calculateAvailableHeight() });
     
-    widget.set('src', src)
+    widget.set('src', src);
 
-    Y.on('windowresize', function(e, data) {
+    Y.on('windowresize', function( ) {
         widget.setStyles({ height : calculateAvailableHeight() });
     });
     
-    Y.on('button:button-fullscreen:on', function(e) {
+    Y.on('button:button-fullscreen:on', function() {
         hideSiblings();
-        widget.setStyles({ height: calculateAvailableHeight() })
+        widget.setStyles({ height: calculateAvailableHeight() });
     });
 
-    Y.on('button:button-fullscreen:off', function(e, data) {
-         showSiblings()        
-         widget.setStyles({ height: calculateAvailableHeight() })
+    Y.on('button:button-fullscreen:off', function() {
+         showSiblings();
+         widget.setStyles({ height: calculateAvailableHeight() });
     });    
     
     Y.on('openlayers:change', function(data) {        
-        router.save('/book/' + identifier + '/' + data.sequence)
+        router.save('/book/' + identifier + '/' + data.sequence);
     });        
     
     widget.on('load', function() {
@@ -111,8 +110,7 @@ YUI().use(
           , message   = body.getAttribute("data-app") + '/css/book.css'
           , config    = {
               "eventType"   : "crossframe:css",
-              "callback"    : function (o) {
-
+              "callback"    : function () {
                   var anim = new Y.Anim({
                     node: '.widget.book',
                     to: { opacity: 1 },
@@ -126,16 +124,16 @@ YUI().use(
               }
         };
         
-        Y.CrossFrame.postMessage(frameName, message, config)
+        Y.CrossFrame.postMessage(frameName, message, config);
 
-        Y.Global.on("crossframe:message", function (o, data, callback) {
-            
+        Y.Global.on("crossframe:message", function (o, data) {
+
             var message = JSON.parse(data.message);
              
             Y.fire(message.fire, message.data );
             
-        })
+        });
     
-    })
+    });
 
-})
+});

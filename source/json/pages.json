@@ -1,8 +1,8 @@
 {
     "front": {
       "title": "Home",
+      "menu" : [ { "context" : "navbar", "label" : "Home", "weight" : 0 }  ],      
       "route": "/index.html",
-      "menu" : [ "navbar" ],
       "bodyClass" : "front",
       "content" : {
         "intro" : [
@@ -36,12 +36,22 @@
       }      
     },
     "browse": {
-      "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"Browse titles"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"تصفح العناوين"}],
+      "title": "Browse titles",
+      "menu" : [ { "context" : "navbar", "label" : "Browse", "weight" : 3 }  ],
       "route": "/browse/index.html",
       "bodyClass": "browse io-loading"
     },
+    
+    "subject": {
+      "title": "Subject",
+      "route": "/subject/index.html",
+      "bodyClass": "subject",
+      "content" : {}
+    },    
+
     "resources": {
-      "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"Other Resources"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"المواقع الأخرى"}],
+      "title": "Other Resources",
+      "menu" : [ { "context" : "navbar", "label" : "Other Resources", "weight" : 2 }  ],
       "route": "/resources/index.html",
       "bodyClass": "page",
       "content" : {
@@ -62,7 +72,8 @@
       }
     },
     "about": {
-      "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"About"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"اعن هذا المشروع"}],
+      "title": "About",
+      "menu" : [ { "context" : "navbar", "label" : "About this project", "weight" : 1 }  ],     
       "route": "/about/index.html",
       "bodyClass": "page",
       "content" : {
@@ -82,27 +93,6 @@
         ]
       }      
     },
-    "subjects": {
-      "title": "Subjects",
-      "route": "/subjects/index.html",
-      "bodyClass": "subject",
-      "content" : {
-        "body" : [
-          {
-            "title" : "Subjects",
-            "language_code" : "en",
-            "language_dir" : "ltr",
-            "widgets" : [ "subjects" ]
-          }
-        ]
-      }
-    },
-    "subject": {
-      "title": "Subject",
-      "route": "/subject/index.html",
-      "bodyClass": "subject",
-      "content" : {}
-    },    
     "search": {
       "title": "Search collection",
       "placeholder": "america",
