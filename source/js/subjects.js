@@ -3,7 +3,7 @@ YUI().use(
   , function (Y) {
 	
     'use strict';
-	
+
     // match returns an array
 	
     var match = location.pathname.match(/\/subject\/(.*)/);

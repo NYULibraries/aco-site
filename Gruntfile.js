@@ -21,7 +21,9 @@ module.exports = function(grunt) {
               , toJSON = ''
               , javascriptString = ''
               , javascriptTagOpen = '<script>'
-              , javascriptTagClose = '</script>'     
+              , javascriptTagClose = '</script>'
+              , javascriptString = ''
+              , handlebarsTemplate = ''              
               , closure = ''
               
             if ( matchWidgets && matchWidgets[0] ) {
@@ -38,13 +40,20 @@ module.exports = function(grunt) {
                     }
                 })
                 
-                //_.each( toJSON.hbs, function ( hbs, name ) {
-                //    console.log(hbs)
-                //})
+                _.each( toJSON.hbs, function ( hbs ) {
+                
+                    var handlebarsTagOpen = '<script id="hbs_'+ hbs.id +'" type="text/x-handlebars-template">'
+                      , handlebarsTagClose = '</script>'
+
+                    if ( grunt.file.isFile ( 'source/views/' + hbs.template ) ) {
+                        handlebarsTemplate += handlebarsTagOpen + grunt.file.read( 'source/views/' + hbs.template ) + handlebarsTagClose
+                    }
+
+                })
 
             }
             
-            closure += javascriptString
+            closure += handlebarsTemplate + javascriptString
             
             source.closure = closure
             
@@ -202,13 +211,18 @@ module.exports = function(grunt) {
         'subject': {
         	src: 'http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fl=sm_vid_Terms,tm_vid_1_names&rows=0&facet=true&facet.field=sm_vid_Terms',
         	dest: 'source/json/datasources/subject.json'
+        },
+        'drupalSubjecs' : {
+        	src: 'http://alpha-user:dlts2010@dev-dl-pa.home.nyu.edu/books/sources/field/field_subject',
+        	dest: 'source/json/datasources/subjectsList.json'        	
+        	
         }
     },
     
     clean: [ 
       , __dirname + '/build/images', 
       , __dirname + '/build/css'
-      //  __dirname + 'source/json/datasources'
+      , __dirname + 'source/json/datasources'
     ],
     copy: {
       main: {
@@ -277,12 +291,23 @@ module.exports = function(grunt) {
     	var subjects_source = grunt.file.readJSON( __dirname + '/source/json/datasources/subject.json' )
     	  , terms = subjects_source.facet_counts.facet_fields.sm_vid_Terms
     	  , subjects = []
-
+          , jsonScriptTagOpen = '<script id="subjecsList" type="application/json">'
+          , jsonScriptTagClose = '</script>'     
+          
+    	/**
     	_.each( _.filter( terms, function ( term ) { return _.isString( term ) } ), function ( subject, index ) {
     		subjects.push( { term : subject, tid : subject, facet : 'sm_vid_Terms' })
     	})
-
-    	grunt.file.write( __dirname + '/source/json/datasources/subject.json', JSON.stringify( subjects ) )
+    	*/
+    	
+    	var drupal_subjects_source = grunt.file.readJSON( __dirname + '/source/json/datasources/subjectsList.json' )
+    	
+    	_.each( drupal_subjects_source , function ( subject, index ) {
+    	    // , facet : 'im_field_subject'
+    		subjects.push( { term : subject.value, tid : subject.raw_value })
+    	})
+    	
+   	    grunt.file.write( __dirname + '/source/views/subjectsList.mustache', jsonScriptTagOpen + JSON.stringify( subjects ) + jsonScriptTagClose  )    	
 
     })
     
@@ -304,8 +329,6 @@ module.exports = function(grunt) {
 
     });  
 
-    // grunt.registerTask('default', ['clean', 'copy', 'curl', 'massageDataSource', 'uglify', 'sass', 'writeHTML']);
-    
-    grunt.registerTask('default', ['clean', 'copy', 'uglify', 'sass', 'writeHTML']);
+    grunt.registerTask('default', ['clean', 'copy', 'curl', 'massageDataSource', 'uglify', 'sass', 'writeHTML']);
 
 };

@@ -16,10 +16,9 @@ YUI().use(
 
     var body = Y.one('body')
       , QueryString = ( Y.QueryString.parse( location.search, '?') )
-      , container = Y.one('[data-name="items"]')
+      , container = Y.one('[data-name="subjects"]')
       , app = body.getAttribute('data-app')
       , appRoot = body.getAttribute('data-approot')      
-      , data = container.getData()    
       , page = 1
       , transactions = []
       , handlebarsTemplates = []
@@ -30,39 +29,62 @@ YUI().use(
       , subjectsList = Y.one('#subjecsList')
       , subjects = JSON.parse(subjectsList.get('innerHTML'))
       
-    function findById(source, term) {
-        for (var i = 0; i < source.length; i++) {
-            if (source[i].term === term) {
-                return source[i];
+    function findByTerm(term) {
+        for (var i = 0; i < subjects.length; i++) {
+            if (subjects[i].term === term) {
+                return subjects[i];
             }
         }
     }      
+    
+    function findById(tid) {
+        
+        for (var i = 0; i < subjects.length; i++) {
+            if (subjects[i].tid === tid) {
+                return subjects[i];
+            }
+        }
+    }      
+    
       
     Y.Handlebars.registerHelper('subject', function (text) {
     
-        var subject = findById ( subjects, text );
+        var subject = findByTerm ( text );
         
         return '<a href="' + appRoot + '/subject/' + subject.tid + '">' + subject.term + '</a>';
         
     });
       
-    router.route( appRoot +  '/browse', function ( req ) {
-        
+    router.param('subject', function (value) {
+        return value;
+    })
+
+    router.route( appRoot +  '/subject/:subject', function ( req ) {
+    
         var rows = ( req.query.rows ) ? req.query.rows : 10
           , page =  ( req.query.page ) ?  parseInt( req.query.page, 10 ) : 0
           , start =  0
-          , node = Y.one('[data-name="items"]')
-          
+          , query = req.params.subject
+          , subject = findById(query)
+          , node = Y.one('[data-name="subjects"]')
+          , subjectname = Y.one('.subjectname')
+        
+        subjectname.set('innerHTML', subject.term)
+        
         if ( page <= 1 ) {
             start = 0
         }
+        
         else {
             start = ( page * rows ) - rows
         }
-        
+
     	initRequest ( {
 		    container : node
 	      , start : start
+	      , fq : [ 
+	          'im_field_subject:' + subject.tid
+	        ]
 	      , page : page
     	  , rows : rows
 		} )
@@ -83,7 +105,7 @@ YUI().use(
 		
 	    this.setRowsPerPage(state.rowsPerPage, true)
 	    	
-	    router.save( appRoot + '/browse?page=' + state.page )
+	    router.save( router.getPath() + '?page=' + state.page )
 	    	
     }
     
@@ -119,44 +141,44 @@ YUI().use(
               , docslength = parseInt(response.response.docs.length, 10)
               
             // first transaction; enable paginator
-            if ( transactions.length < 1 ) initPaginator( page , numfound, docslength )
+            if ( transactions.length < 1 ) initPaginator( page , numfound, docslength );
 
             // store called to avoid making the request multiple times
-            transactions.push ( this.url )
+            transactions.push ( this.url );
 
             // for now, map this at Solr level and fix img to be absolute paths
             response.response.docs.forEach ( function ( element, index ) {
             	response.response.docs[index].appRoot = app
             	response.response.docs[index].identifier = element.ss_identifer
             	response.response.docs[index].app = element.ss_collection_identifier
-            })
+            });
 
-            node.setAttribute( "data-numFound", numfound )
+            node.setAttribute( "data-numFound", numfound );
 
-            node.setAttribute( "data-start", start )
+            node.setAttribute( "data-start", start );
 
-            node.setAttribute( "data-docsLength", docslength )
+            node.setAttribute( "data-docsLength", docslength );
             
-            startNode.set( 'innerHTML', displayStart )
+            startNode.set( 'innerHTML', displayStart );
 
-            docslengthNode.set('innerHTML', start + docslength )
+            docslengthNode.set('innerHTML', start + docslength );
             
-            numfoundNode.set('innerHTML', numfound)
-
+            numfoundNode.set('innerHTML', numfound);
+            
             // render HTML and append to container
             node.append(
               itemsTemplate({
                 items : response.response.docs
               })
-            )
+            );
 
-            body.removeClass('io-loading')
+            body.removeClass('io-loading');
 
         }
 
         catch (e) {
 
-            Y.log('something went wrong. error')
+            Y.log('something went wrong. error');
 
         }
 
@@ -234,6 +256,10 @@ YUI().use(
                            + "&start=" + start
                            + "&sort=" + sortBy + "%20" + sortDir
                            
+        if ( options.fq ) {
+          datasourceURLs = datasourceURLs + '&fq=' + options.fq.join('&fq=');
+        }
+                           
         body.addClass('io-loading')
         
         options.container.empty()
@@ -254,6 +280,6 @@ YUI().use(
         page = QueryString.page
     }
     
-    router.save( appRoot + '/browse?page=' + page )
+    router.save( router.getPath() + '?page=' + page )    
 
 })

@@ -14,16 +14,25 @@
             <li><a href="{{ appUrl }}/subject/hadith/bukhari">Bukhari</a></li>
           </ul>
         </nav>
-        {{> browseSelect }}
+        <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
+        <!-- {{> browseSelect }} -->
       </header>
-      {{#content}}
-        {{#body}}
-          {{#widgets}}
-            {{> subjects }}
-          {{/widgets}}
-        {{/body}}
-      {{/content}}
+      <div 
+        class="widget" 
+        data-name="subjects" 
+        data-rows="10" 
+        data-script='{ "js" : [ "subject.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" } ] }'
+      ></div>
+      <div class="text-center">
+        <div id="paginator" class="pagination"></div>
+      </div>      
     </main>
+
     {{> footer }}
+
+    {{> subjectsList }}
+
+    {{{ closure }}}
+    
   </body>
 </html>

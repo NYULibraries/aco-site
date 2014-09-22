@@ -15,13 +15,19 @@
       data-lazyLoad="0" 
       data-rows="10" 
       data-paginator="1" 
-      data-script='{ "js" : [ "browse.min.js" ], "hbs" : [ { "items" : "items.hbs" } ] }'
+      data-script='{ "js" : [ "browse.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" } ] }'
     ></div>
+    
     <div class="text-center">
       <div id="paginator" class="pagination"></div>
     </div>
   </main>
+  
   {{> footer }}
+
+  {{> subjectsList }}
+
   {{{ closure }}}
+  
 </body>
 </html>

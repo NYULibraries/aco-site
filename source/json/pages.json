@@ -41,6 +41,14 @@
       "route": "/browse/index.html",
       "bodyClass": "browse io-loading"
     },
+    
+    "subject": {
+      "title": "Subject",
+      "route": "/subject/index.html",
+      "bodyClass": "subject",
+      "content" : {}
+    },    
+
     "resources": {
       "title": "Other Resources",
       "menu" : [ { "context" : "navbar", "label" : "Other Resources", "weight" : 2 }  ],

@@ -10,7 +10,7 @@
         <div><span class="md_label">Author:</span> {{#each sm_author}}<span>{{this}}</span>{{/each}}</div>                        
         <div><span class="md_label">Publisher:</span> {{#each sm_publisher}}<span>{{this}}</span>{{/each}}</div>                        
         <div><span class="md_label">Date of publication:</span> {{ss_pubdate}}</div>                        
-        <div><span class="md_label">Subject:</span> {{#each sm_subject}}<span>{{this}}</span>{{/each}}</div>                         
+        <div><span class="md_label">Subject:</span> {{#each sm_subject}}{{{subject this}}}{{/each}}</div>
         <div><span class="md_label">Provider:</span> {{#each sm_partners}}<span>{{this}}</span>{{/each}}</div>                        
       </div>
     </div>
