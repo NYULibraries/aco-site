@@ -27,10 +27,10 @@
             "widgets" : [ "recentlyAddedTitles"]
           },
           {
-            "title" : "التصفح",
+            "title" : "ًعناوين مضافة مؤخرا",
             "language_code" : "ar",
             "language_dir" : "rtl",          
-            "widgets" : [ "recentlyAddedTitles", "featuredSubjects" ]
+            "widgets" : [ "recentlyAddedTitles" ]
           }
         ]
       }      
@@ -107,8 +107,7 @@
       }      
     },
     "search": {
-       "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"Search Results"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"ابحث"}],
-      "placeholder": "america",
+       "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"Search Results"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"نتائج البحث"}],
       "route": "/search/index.html",
       "bodyClass": "search"
     },
