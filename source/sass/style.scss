@@ -200,7 +200,6 @@ main {
             clear: left;
             font-size: 1rem;
         }
-       
         .itemhome {
             width: 100%;
             margin-bottom: 10px;
@@ -716,12 +715,14 @@ select#browse-select {
     .md_label {
         font-weight: bold;
     }
+    .md_subject {
+        display: block;
+    }
 }
 
 .book {
     .navbar {
         margin-bottom: 0;
-        // display: none;
     }
     .header-main {
         padding-top: 20px;
@@ -747,8 +748,6 @@ select#browse-select {
         border: none;
     }
 }
-
-
 
 .pagination {
     margin: 1em auto;
