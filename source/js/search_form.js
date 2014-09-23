@@ -13,9 +13,7 @@ YUI().use("node", "event", function(Y) {
           , value = input.get("value");
         
         if ( value.length ) {
-            
-            location.href = currentTarget.get("action") + "/" + value.trim().replace(/\s/g, '+').toLowerCase();
-            
+            location.href = currentTarget.get("action") + "?q=" + value.trim().replace(/\s/g, '+').toLowerCase();
         }
 
     }

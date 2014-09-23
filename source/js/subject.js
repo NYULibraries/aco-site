@@ -28,44 +28,34 @@ YUI().use(
       , router = new Y.Router()
       , subjectsList = Y.one('#subjecsList')
       , subjects = JSON.parse(subjectsList.get('innerHTML'))
+      , querySubject =''
       
-    function findByTerm(term) {
-        for (var i = 0; i < subjects.length; i++) {
-            if (subjects[i].term === term) {
-                return subjects[i];
-            }
-        }
-    }      
-    
+          
     function findById(tid) {
-        
-        for (var i = 0; i < subjects.length; i++) {
-            if (subjects[i].tid === tid) {
-                return subjects[i];
-            }
-        }
-    }      
-    
-      
-    Y.Handlebars.registerHelper('subject', function (text) {
-    
-        var subject = findByTerm ( text );
-        
-        return '<a href="' + appRoot + '/subject/' + subject.tid + '">' + subject.term + '</a>';
-        
-    });
-      
-    router.param('subject', function (value) {
-        return value;
-    })
+    	        for ( var i = 0; i < subjects.length; i++) {
+    	            if (subjects[i].tid == tid) {
+    	                return subjects[i];
+    	            }
+    	        }
+    }
+    	    
+    Y.Handlebars.registerHelper('subject', function (value) {
+    	    	
+    	        var subject = findById ( value );
+    	        
+    	        if (subject) {
+    	            return '<a href="' + appRoot + '/subject?tid=' + subject.tid + '">' + subject.term + '</a>';
+    	        }
 
-    router.route( appRoot +  '/subject/:subject', function ( req ) {
+    });
+    	    
+    router.route( appRoot +  '/subject/', function ( req ) {
     
         var rows = ( req.query.rows ) ? req.query.rows : 10
           , page =  ( req.query.page ) ?  parseInt( req.query.page, 10 ) : 0
           , start =  0
-          , query = req.params.subject
-          , subject = findById(query)
+          , query = req.query.tid
+          , subject = findById( query )
           , node = Y.one('[data-name="subjects"]')
           , subjectname = Y.one('.subjectname')
         
@@ -100,13 +90,15 @@ YUI().use(
     }
     
     function update ( state ) {
+    	
+    	Y.log(state)
 	
     	this.setPage( state.page, true )
 		
 	    this.setRowsPerPage(state.rowsPerPage, true)
 	    	
 	    router.save( router.getPath() + '?page=' + state.page )
-	    	
+
     }
     
     function initPaginator( page, totalRecords, rowsPerPage ) {
@@ -224,8 +216,6 @@ YUI().use(
                  , 'ss_pubdate'
                  , 'sm_subject'
                  , 'sm_partners'                 
-                 
-                                  
             ]
 
         if ( options.page ) {
@@ -276,10 +266,16 @@ YUI().use(
     
     }
     
-    if ( QueryString.page ) { 
-        page = QueryString.page
+    var tid = '';
+    
+    if ( QueryString.tid ) { 
+    	tid = QueryString.tid
     }
     
-    router.save( router.getPath() + '?page=' + page )    
+    if ( QueryString.page ) { 
+        ruta = ruta + '&page=' + QueryString.page
+    }  
+    
+    router.save( router.getPath() + '?tid=' + tid ) 
 
 })

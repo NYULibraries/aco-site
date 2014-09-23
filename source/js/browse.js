@@ -18,34 +18,38 @@ YUI().use(
       , QueryString = ( Y.QueryString.parse( location.search, '?') )
       , container = Y.one('[data-name="items"]')
       , app = body.getAttribute('data-app')
-      , appRoot = body.getAttribute('data-approot')      
-      , data = container.getData()    
+      , appRoot = body.getAttribute('data-approot')
       , page = 1
       , transactions = []
-      , handlebarsTemplates = []
-      , templates = {}
       , itemsTemplateSource = Y.one('#hbs_items').getHTML()
       , itemsTemplate = Y.Handlebars.compile(itemsTemplateSource)
       , router = new Y.Router()
       , subjectsList = Y.one('#subjecsList')
       , subjects = JSON.parse(subjectsList.get('innerHTML'))
       
-    function findById(source, term) {
-        for (var i = 0; i < source.length; i++) {
-            if (source[i].term === term) {
-                return source[i];
+    // Y.log ( subjects )
+      
+    function findById(tid) {
+        for ( var i = 0; i < subjects.length; i++) {
+            if (subjects[i].tid == tid) {
+                return subjects[i];
             }
         }
-    }      
-      
-    Y.Handlebars.registerHelper('subject', function (text) {
+    }
     
-        var subject = findById ( subjects, text );
+    Y.Handlebars.registerHelper('subject', function (value) {
+    	
+        var subject = findById ( value );
         
-        return '<a href="' + appRoot + '/subject/' + subject.tid + '">' + subject.term + '</a>';
-        
+        if (subject) {
+        	
+            // return '<a href="' + appRoot + '/subject?tid=' + subject.tid + '">' + subject.term + '</a>';
+            
+            return subject.term;
+        }
+
     });
-      
+
     router.route( appRoot +  '/browse', function ( req ) {
         
         var rows = ( req.query.rows ) ? req.query.rows : 10
@@ -200,8 +204,11 @@ YUI().use(
                  , 'sm_author'
                  , 'sm_publisher'                 
                  , 'ss_pubdate'
-                 , 'sm_subject'
-                 , 'sm_partners'                 
+                 // , 'sm_subject'
+                 , 'sm_partners'
+                 
+                 // Subject
+                 , 'im_field_subject'
                  
                                   
             ]
@@ -254,6 +261,6 @@ YUI().use(
         page = QueryString.page
     }
     
-    router.save( appRoot + '/browse?page=' + page )
+    router.replace( appRoot + '/browse?page=' + page )
 
 })
