@@ -27,10 +27,10 @@
             "widgets" : [ "recentlyAddedTitles"]
           },
           {
-            "title" : "التصفح",
+            "title" : "العناوين المضافة مؤخراً",
             "language_code" : "ar",
             "language_dir" : "rtl",          
-            "widgets" : [ "recentlyAddedTitles", "featuredSubjects" ]
+            "widgets" : [ "recentlyAddedTitles" ]
           }
         ]
       }      
@@ -86,7 +86,7 @@
     },
     "about": {
        "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"About"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"اعن هذا المشروع"}],
-      "menu" : [ { "context" : "navbar", "label" : "About this project", "weight" : 1 }  ],     
+      "menu" : [ { "context" : "navbar", "label" : "About", "weight" : 1 }  ],     
       "route": "/about/index.html",
       "bodyClass": "page",
       "content" : {
@@ -95,7 +95,7 @@
               "language_code" : "en",
               "class" : "col-l",
               "language_dir" : "ltr",              
-              "html" : "<p><i>Arabic Collections Online</i> (ACO) is a publicly available digital library of public domain Arabic language content. Funded by New York University Abu Dhabi, this mass digitization project aims to expose up to 15,000 volumes from NYU and partner institutions over a period of five years. NYU and the partner institutions are contributing all types of material&mdash;literature, business, science, and more&mdash;from their Arabic language collections. ACO will provide digital access to printed books drawn from rich Arabic collections of prominent libraries.</p><h3>Contributing Partners:</h3><ul><li>American University of Beirut</li><li>Columbia University</li><li>Cornell University</li><li>New York University</li><li>Princeton University</li></ul><h3>ACO Project Team:</h3><ul><li>Adham Alok</li><li>Guy Barak</li><li>Melitte Buchman</li><li>Heidi Frank</li><li>Laura Henze</li><li>Carol Kassel</li><li>Alberto Ortiz Flores</li><li>Joseph Pawletko</li><li>Ekaterina Pechekhonova</li><li>Rasan Rasch</li><li>Michael Stasiak</li><li>Claudia Suleiman</li></ul>"
+              "html" : "<p><i>Arabic Collections Online</i> (ACO) is a publicly available digital library of public domain Arabic language content. Funded by New York University Abu Dhabi, this mass digitization project aims to expose up to 15,000 volumes from NYU and partner institutions over a period of five years. NYU and the partner institutions are contributing all types of material&mdash;literature, business, science, and more&mdash;from their Arabic language collections. ACO will provide digital access to printed books drawn from rich Arabic collections of prominent libraries.</p><h3>Contributing Partners:</h3><ul><li>American University of Beirut</li><li>Columbia University</li><li>Cornell University</li><li>New York University</li><li>Princeton University</li></ul><h3>ACO Project Team:</h3><ul><li>Adham Alok</li><li>Guy Burak</li><li>Melitte Buchman</li><li>Heidi Frank</li><li>Laura Henze</li><li>Carol Kassel</li><li>Alberto Ortiz Flores</li><li>Joseph Pawletko</li><li>Ekaterina Pechekhonova</li><li>Rasan Rasch</li><li>Michael Stasiak</li><li>Claudia Suleiman</li></ul>"
             },
             {
               "language_code" : "ar",
@@ -107,8 +107,7 @@
       }      
     },
     "search": {
-      "title": "Search collection",
-      "placeholder": "america",
+       "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"Search Results"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"نتائج البحث"}],
       "route": "/search/index.html",
       "bodyClass": "search"
     },
