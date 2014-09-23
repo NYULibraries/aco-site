@@ -718,6 +718,12 @@ select#browse-select {
     .md_subject {
         display: block;
     }
+    .md_subjects {
+        line-height: 1.25;
+        .md_label {
+            line-height: 1.7;
+        }
+    }
 }
 
 .book {
