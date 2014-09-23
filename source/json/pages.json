@@ -41,14 +41,27 @@
       "route": "/browse/index.html",
       "bodyClass": "browse io-loading"
     },
-    
     "subject": {
       "title": "Subject",
       "route": "/subject/index.html",
       "bodyClass": "subject",
       "content" : {}
+    },
+    "subjects": {
+      "title": "Subjects",
+      "route": "/subjects/index.html",
+      "bodyClass": "subject",
+      "content" : {
+        "body" : [
+          {
+            "title" : "Filter by Subject",
+            "language_code" : "en",
+            "language_dir" : "ltr",
+            "widgets" : [ "subjects"]
+          }
+        ]      
+      }
     },    
-
     "resources": {
        "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"Other Resources"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"المواقع الأخرى"}],
       "menu" : [ { "context" : "navbar", "label" : "Other Resources", "weight" : 2 }  ],
@@ -94,7 +107,7 @@
       }      
     },
     "search": {
-      "title": "Search collection",
+       "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"Search Results"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"ابحث"}],
       "placeholder": "america",
       "route": "/search/index.html",
       "bodyClass": "search"

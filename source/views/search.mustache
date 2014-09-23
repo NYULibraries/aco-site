@@ -5,11 +5,11 @@
   {{> header }}
   <main class="main container-fluid" role="main">
     <header>
-      <div class="breadcrumbs" lang="en"><a href="{{ appUrl }}" title="{{ appName }}">{{ appName }}</a> &gt; {{ title }}</div>
+    
       {{#title}}
         <h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}">{{{html}}}</h2>
       {{/title}}
-      {{> search_form }}
+   
       <!-- {{> browseSelect }} -->
       <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
     </header>
@@ -17,13 +17,14 @@
       class="widget" 
       data-name="items"
       data-rows="10"
-      data-script='{ "js" : [ "search.min.js" ], "hbs" : [ { "items" : "items.hbs" } ] }'
+      data-script='{ "js" : [ "search.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" } ] }'
     ></div>
     <div class="text-center">
       <div id="paginator" class="pagination"></div>
     </div>
   </main>
   {{> footer }}
+  {{> subjectsList }}
   {{{ closure }}}
 </body>
 </html>
