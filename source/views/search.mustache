@@ -17,13 +17,14 @@
       class="widget" 
       data-name="items"
       data-rows="10"
-      data-script='{ "js" : [ "search.min.js" ], "hbs" : [ { "items" : "items.hbs" } ] }'
+      data-script='{ "js" : [ "search.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" } ] }'
     ></div>
     <div class="text-center">
       <div id="paginator" class="pagination"></div>
     </div>
   </main>
   {{> footer }}
+  {{> subjectsList }}
   {{{ closure }}}
 </body>
 </html>

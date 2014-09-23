@@ -30,31 +30,25 @@ YUI().use(
       , subjects = JSON.parse(subjectsList.get('innerHTML'))
       , querySubject =''
       
-    function findByTerm(term) {
-        for (var i = 0; i < subjects.length; i++) {
-            if (subjects[i].term === term) {
-                return subjects[i];
-            }
-        }
-    }      
-    
+          
     function findById(tid) {
-        
-        for (var i = 0; i < subjects.length; i++) {
-            if (subjects[i].tid === tid) {
-                return subjects[i];
-            }
-        }
-    }      
-      
-    Y.Handlebars.registerHelper('subject', function (text) {
-    
-        var subject = findByTerm ( text );
-        
-        return '<a href="' + appRoot + '/subject?tid=' + subject.tid + '">' + subject.term + '</a>';
-        
+    	        for ( var i = 0; i < subjects.length; i++) {
+    	            if (subjects[i].tid == tid) {
+    	                return subjects[i];
+    	            }
+    	        }
+    }
+    	    
+    Y.Handlebars.registerHelper('subject', function (value) {
+    	    	
+    	        var subject = findById ( value );
+    	        
+    	        if (subject) {
+    	            return '<a href="' + appRoot + '/subject?tid=' + subject.tid + '">' + subject.term + '</a>';
+    	        }
+
     });
-      
+    	    
     router.route( appRoot +  '/subject/', function ( req ) {
     
         var rows = ( req.query.rows ) ? req.query.rows : 10
