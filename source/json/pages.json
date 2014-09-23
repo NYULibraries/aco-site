@@ -86,7 +86,7 @@
     },
     "about": {
        "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"About"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"اعن هذا المشروع"}],
-      "menu" : [ { "context" : "navbar", "label" : "About this project", "weight" : 1 }  ],     
+      "menu" : [ { "context" : "navbar", "label" : "About", "weight" : 1 }  ],     
       "route": "/about/index.html",
       "bodyClass": "page",
       "content" : {
