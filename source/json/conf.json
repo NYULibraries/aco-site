@@ -1,6 +1,6 @@
 {
   "appName": "Arabic Collections Online",
-  "appUrl": "http://localhost:8000/aco",
+  "appUrl": "http://dev-dl-pa.home.nyu.edu/aco",
   "appRoot": "/aco",
   "partners": [
     {
@@ -37,7 +37,7 @@
       "id" : "aub",
       "name" : "American University of Beirut",
       "logo" : "images/logos/aub.png",
-      "url" : "http://www.aubmc.org/pages/home.aspx"
+      "url" : "http://www.aub.edu.lb/"
     }
   ]
 }
