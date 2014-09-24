@@ -6,7 +6,7 @@
         <a href="{{appRoot}}/book/{{identifier}}"><img class="img-responsive" src="{{ss_representative_image}}" alt="" title="{{sm_field_title}}"/></a>
       </div>
       <div lang="en">
-        <div><span class="md_label">Title:</span> <a href="{{appRoot}}/book/{{ss_identifer}}">{{sm_field_title}}</a></div>        
+        <div class="md_title"><span class="md_label">Title:</span> <a href="{{appRoot}}/book/{{ss_identifer}}">{{sm_field_title}}</a></div>        
         <div><span class="md_label">Author:</span> {{#each sm_author}}<span>{{this}}</span>{{/each}}</div>                        
         <div><span class="md_label">Publisher:</span> {{#each sm_publisher}}<span>{{this}}</span>{{/each}}</div>                        
         <div><span class="md_label">Date of publication:</span> {{ss_pubdate}}</div>                        
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div dir="rtl" lang="ar">
-      <div dir="rtl" lang="ar"><span class="md_label">العنوان:</span> <a href="{{appRoot}}/book/{{ss_identifer}}">{{sm_ar_title}}</a></div>
+      <div dir="rtl" lang="ar" class="md_title"><span class="md_label">العنوان:</span> <a href="{{appRoot}}/book/{{ss_identifer}}">{{sm_ar_title}}</a></div>
       <div dir="rtl" lang="ar"><span class="md_label">المؤلف:</span> {{sm_ar_author}}</div>                        
       <div dir="rtl" lang="ar"><span class="md_label">الناشر:</span> {{sm_ar_publisher}}</div>                        
       <div dir="rtl" lang="ar"><span class="md_label">تاريخ النشر:</span> {{sm_ar_publication_date}}</div>                        

@@ -76,7 +76,7 @@ body {
 }
 
 [lang="ar"] {
-    font-family: 'Amiri', serif;
+    font-family: 'Amiri', $font-family-serif;
     line-height: 1.7;
 }
 
@@ -146,14 +146,7 @@ main {
         margin: 0;
     }
     .featured {
-        hr {
-            border-bottom: 1px solid #ECDCC8;
-            border-top: none;
-            margin: 0 auto;
-            width: 90%;
-            padding: 10px 0 0 0;
-            clear: both;
-        }
+        
         h3 {
             background-color: #ECDCC8;
             padding: 17px 25px 5px;
@@ -171,7 +164,13 @@ main {
             overflow: hidden;
         }
         &[lang="en"] h3 {
-            font: normal 1.1rem / 1 'Gotham', 'gotham', Helvetica, sans-serif;
+            // screen smart book
+            font-family: 'Gotham SSm 4r', 'Gotham SSm A', 'Gotham SSm B', Helvetica, sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 1.1em;
+            font-size: 1.1rem;
+            line-height: 1;
         }
         &[lang="ar"] h3 {
             line-height: 1.2;
@@ -205,7 +204,7 @@ main {
                 font-size: 1em;
             }
             .subjects {
-                font-size: .8em;
+                font-size: .9em;
             }
             .thumbs {
                 float: left;
@@ -213,6 +212,19 @@ main {
             }
             .meta {
                 margin: 0 0 0 21%;
+            }
+            hr {
+                border-bottom: 1px solid #ECDCC8;
+                border-top: none;
+                margin: 0 auto;
+                width: 90%;
+                padding: 10px 0 0 0;
+                clear: both;
+            }
+            &:last-child {
+                hr {
+                     border-bottom:none;
+                }
             }
         }
         &[lang="en"] .itemhome {
@@ -281,11 +293,13 @@ main {
             letter-spacing: normal;
             font-size: 20px;
             font-size: 1.4rem;
-            font-family: 'Gotham-ExtraLight', 'gotham', sans-serif;
+            // extra light
+            font-family: 'Gotham 2r', 'Gotham A', 'Gotham B', Helvetica, sans-serif;
+            font-weight: 200;
+            font-style: normal;
             letter-spacing: .5px;
             font-weight: 300;
             text-transform: uppercase;
-            // padding-bottom: 10px;
             @media (max-width: $screen-xs) {
                 font-size: 1.3rem;
             }
@@ -346,7 +360,11 @@ nav.navbar.navbar-default {
     //   border-bottom: 1px solid $brand-primary;
     border-bottom: 1px solid #DECCBF;
     li > a {
-        font: 300 .9em/1.5 'Gotham', 'gotham', Helvetica, sans-serif;
+        font-size: .9em;
+        line-height: 1.5;
+        font-family: 'Gotham SSm 4r', 'Gotham SSm A', 'Gotham SSm B', Helvetica, sans-serif;
+        font-weight: 400;
+        font-style: normal;
         transition: all .4s;
     }
     .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
@@ -582,10 +600,13 @@ body.subject {
         float: none;
         clear: both;
         text-transform: uppercase;
-        font: 300 .9em/1.5 'Gotham', 'gotham', Helvetica, sans-serif;
+        // screen smart book
+        font-family: 'Gotham SSm 4r', 'Gotham SSm A', 'Gotham SSm B', Helvetica, sans-serif;
+        font-weight: 400;
+        font-style: normal;
         font-size: .9em;
-        // IE8 does not recognize rems; IE below 11 cannot see rems in font shorthand
         font-size: .9rem;
+        line-height: 1.5;
         padding-top: 5px;
         letter-spacing: 1px;
         text-align: center;
@@ -630,6 +651,9 @@ select#browse-select {
 .resultsnum {
     font-size: .8em;
     color: #666;
+    .s-query {
+        font-weight: bold;
+    }
 }
 
 .item-list {
@@ -705,6 +729,9 @@ select#browse-select {
                 }
             }
         }
+    }
+    .md_title {
+         font-weight: bold;
     }
     .md_label {
         font-weight: bold;
