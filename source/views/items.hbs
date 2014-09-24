@@ -10,7 +10,7 @@
         <div><span class="md_label">Author:</span> {{#each sm_author}}<span>{{this}}</span>{{/each}}</div>                        
         <div><span class="md_label">Publisher:</span> {{#each sm_publisher}}<span>{{this}}</span>{{/each}}</div>                        
         <div><span class="md_label">Date of publication:</span> {{ss_pubdate}}</div>                        
-        <div><span class="md_label">Subject:</span> {{#each im_field_subject}}{{{subject this}}}{{/each}}</div>
+        <div><span class="md_label">Subject:</span> {{#each im_field_subject}}<span class="md_subject">{{{subject this}}}</span>{{/each}}</div>
         <div><span class="md_label">Provider:</span> {{#each sm_partners}}<span>{{this}}</span>{{/each}}</div>                        
       </div>
     </div>
@@ -19,7 +19,7 @@
       <div dir="rtl" lang="ar"><span class="md_label">المؤلف:</span> {{sm_ar_author}}</div>                        
       <div dir="rtl" lang="ar"><span class="md_label">الناشر:</span> {{sm_ar_publisher}}</div>                        
       <div dir="rtl" lang="ar"><span class="md_label">تاريخ النشر:</span> {{sm_ar_publication_date}}</div>                        
-      <div dir="rtl" lang="ar"><span class="md_label">الموضوع:</span> {{#each im_field_subject}}{{{subject this}}}{{/each}}</div>
+      <div class="md_subjects" dir="rtl" lang="ar"><span class="md_label">الموضوع:</span> {{#each im_field_subject}}<span class="md_subject">{{{subject this}}}</span>{{/each}}</div>
       <div dir="rtl" lang="ar"><span class="md_label">شريك:</span> {{#each sm_ar_partners}}<span>{{this}}</span>{{/each}}</div>  
     </div>                      
   </div>
