@@ -36,7 +36,18 @@
       }      
     },
     "browse": {
-      "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"Browse titles"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"تصفح العناوين"}],
+      "title": [
+        { 
+          "language_code" : "en",  
+          "language_dir" : "ltr",  
+          "html" :"Browse titles"
+        }, 
+        { 
+          "language_code" : "ar", 
+          "language_dir" : "rtl",   
+          "html" :"تصفح العناوين"
+        }
+      ],
       "menu" : [ { "context" : "navbar", "label" : "Browse", "weight" : 3 }  ],
       "route": "/browse/index.html",
       "bodyClass": "browse io-loading"

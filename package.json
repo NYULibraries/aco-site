@@ -13,6 +13,7 @@
     "grunt-curl": "^2.0.3",
     "hogan": "*",
     "request": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "diacritics": "*"
   }
 }
