@@ -3,6 +3,17 @@
 <head>{{> head }}</head>
 <body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{ bodyClass }}">
   {{> header }}
-  <iframe width="100%" height="800px" class="widget book" id="book" name="book" data-name="book" data-sourceUrl="{{ sourceUrl }}" data-script='{ "js" : [ "crossframe.min.js", "book.min.js" ] }' allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
+  <iframe 
+    width="100%" 
+    height="800px" 
+    class="widget book" 
+    id="book" 
+    name="book" 
+    data-name="book" 
+    data-sourceUrl="{{ sourceUrl }}" 
+    data-script='{ "js" : [ "crossframe.min.js", "book.min.js" ] }' 
+    allowfullscreen mozallowfullscreen webkitallowfullscreen>
+  </iframe>
+  {{{ closure }}}
 </body>
 </html>
