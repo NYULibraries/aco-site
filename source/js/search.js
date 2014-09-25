@@ -113,6 +113,7 @@ YUI().use(
         
             var node = args.container
               , resultsnum = Y.one('.resultsnum')
+              , querytextNode = Y.one('.s-query')
               , page = ( args.page ) ? args.page : 1
               , numfound = parseInt(response.response.numFound, 10)
               , numfoundNode = resultsnum.one('.numfound')
@@ -147,6 +148,10 @@ YUI().use(
             
             numfoundNode.set('innerHTML', numfound);
             
+            if ( QueryString.q ) { 
+              querytextNode.set('innerHTML', QueryString.q);
+            }
+
             // render HTML and append to container
             node.append(
               itemsTemplate({
