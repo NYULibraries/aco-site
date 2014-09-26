@@ -27,8 +27,6 @@ YUI().use(
       , subjectsList = Y.one('#subjecsList')
       , subjects = JSON.parse(subjectsList.get('innerHTML'))
       
-    // Y.log ( subjects )
-      
     function findById(tid) {
         for ( var i = 0; i < subjects.length; i++) {
             if (subjects[i].tid == tid) {
@@ -36,19 +34,16 @@ YUI().use(
             }
         }
     }
-    
-    Y.Handlebars.registerHelper('subject', function (value) {
-    	
-        var subject = findById ( value );
-        
-        if (subject) {
-        	
-            // return '<a href="' + appRoot + '/subject?tid=' + subject.tid + '">' + subject.term + '</a>';
-            
-            return subject.term;
-        }
 
+    /**  
+    Unused until subject page is available
+    Y.Handlebars.registerHelper('subject', function (value) {
+        var subject = findById ( value );
+        if (subject) {
+            return '<a href="' + appRoot + '/subject?tid=' + subject.tid + '">' + subject.term + '</a>';
+        }
     });
+    */
 
     router.route( appRoot +  '/browse', function ( req ) {
         
@@ -204,13 +199,12 @@ YUI().use(
                  , 'sm_author'
                  , 'sm_publisher'                 
                  , 'ss_pubdate'
-                 // , 'sm_subject'
+                 , 'sm_subject'
                  , 'sm_partners'
                  
                  // Subject
                  , 'im_field_subject'
                  
-                                  
             ]
 
         if ( options.page ) {
