@@ -22,10 +22,15 @@ YUI().use(
       , itemsTemplateSource = Y.one('#hbs_items').getHTML()
       , itemsTemplate = Y.Handlebars.compile(itemsTemplateSource)
       , router = new Y.Router()
-      , subjectsList = Y.one('#subjecsList')
-      , subjects = JSON.parse(subjectsList.get('innerHTML'))
       , q = ''
       
+    /**  
+    
+    Unused until subject page is available
+
+    var = subjectsList = Y.one('#subjecsList')
+        , subjects = JSON.parse(subjectsList.get('innerHTML'))
+
     function findById ( tid ) {
         for ( var i = 0; i < subjects.length; i++) {
     	    if (subjects[i].tid == tid) {
@@ -39,11 +44,12 @@ YUI().use(
         var subject = findById ( value );
         
     	if (subject) {
-    	    //return '<a href="' + appRoot + '/subject?tid=' + subject.tid + '">' + subject.term + '</a>';
-    	    return subject.term;
+    	    return '<a href="' + appRoot + '/subject?tid=' + subject.tid + '">' + subject.term + '</a>';
     	}
 
     });
+    
+    */
     	    
     router.route( appRoot +  '/search', function ( req ) {
     
@@ -123,43 +129,48 @@ YUI().use(
               , docslengthNode = resultsnum.one('.docslength')
               , docslength = parseInt(response.response.docs.length, 10)
               
-            // first transaction; enable paginator
-            if ( transactions.length < 1 ) initPaginator( page , numfound, docslength );
+            if ( numfound > 0 ) {
+              
+                // first transaction; enable paginator
+                if ( transactions.length < 1 ) {
+                    initPaginator( page , numfound, docslength );
+                }
 
-            // store called to avoid making the request multiple times
-            transactions.push ( this.url );
+                // store called to avoid making the request multiple times
+                transactions.push ( this.url );
 
-            // for now, map this at Solr level and fix img to be absolute paths
-            response.response.docs.forEach ( function ( element, index ) {
-            	response.response.docs[index].appRoot = app
-            	response.response.docs[index].identifier = element.ss_identifer
-            	response.response.docs[index].app = element.ss_collection_identifier
-            });
+                node.setAttribute( "data-numFound", numfound );
 
-            node.setAttribute( "data-numFound", numfound );
+                node.setAttribute( "data-start", start );
 
-            node.setAttribute( "data-start", start );
-
-            node.setAttribute( "data-docsLength", docslength );
+                node.setAttribute( "data-docsLength", docslength );
             
-            startNode.set( 'innerHTML', displayStart );
+                startNode.set( 'innerHTML', displayStart );
 
-            docslengthNode.set('innerHTML', start + docslength );
+                docslengthNode.set('innerHTML', start + docslength );
             
-            numfoundNode.set('innerHTML', numfound);
+                numfoundNode.set('innerHTML', numfound);
             
-            if ( QueryString.q ) { 
-              querytextNode.set('innerHTML', QueryString.q);
+                if ( QueryString.q ) { 
+                    querytextNode.set('innerHTML', QueryString.q);
+                }
+
+                // render HTML and append to container
+                node.append(
+                    itemsTemplate({
+                        items : response.response.docs,
+                        app: { appRoot : app }
+                    })
+                );
+
+                body.removeClass('io-loading');
+            
             }
-
-            // render HTML and append to container
-            node.append(
-              itemsTemplate({
-                items : response.response.docs
-              })
-            );
-
-            body.removeClass('io-loading');
+            
+            // no results
+            else {
+            
+            }
 
         }
 
@@ -181,39 +192,25 @@ YUI().use(
           , language = 'en'
           , discoveryURL = "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select"
           , fl = [ 
-                   'ss_embedded'
-                 , 'title'
-                 , 'type'
-                 , 'ss_collection_identifier'
+                 /** shared fields */
+                 , 'ss_thumbnail'
                  , 'ss_identifer'
-                 , 'ss_representative_image'
-                 , 'teaser'
-                 , 'sm_field_title'
-                 , 'ss_language'
-                 , 'sm_field_publication_date_text'
-                 , 'sm_field_publication_location'
-                 , 'sm_field_publisher'
-                 , 'sm_vid_Terms'
-                 , 'tm_vid_1_names'
-                 , 'sm_partners'
-                 , 'sm_ar_title'
-                 , 'sm_ar_author'
-                 , 'sm_ar_publisher'
-                 , 'sm_ar_publication_location'
-                 , 'sm_ar_subjects'
-                 , 'sm_ar_publication_date'
-                 , 'sm_ar_partners'
                  
-                 // English fields
-                 , 'sm_field_title'
+                 /** english fields */                 
+                 , 'ss_title'
                  , 'sm_author'
                  , 'sm_publisher'                 
                  , 'ss_pubdate'
-                 , 'sm_subject'
-                 , 'sm_partners'      
+                 , 'sm_partner'
+                 , 'sm_subject' 
                  
-                 // Subject
-                 , 'im_field_subject'                 
+                 /** arabic fields */
+                 , 'ss_ar_title'
+                 , 'sm_ar_author'
+                 , 'sm_ar_publisher'
+                 , 'sm_ar_publication_date'
+                 , 'sm_ar_partner'
+                 , 'sm_ar_subject'          
             ]
 
         if ( options.page ) {

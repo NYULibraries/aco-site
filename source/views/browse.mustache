@@ -8,7 +8,11 @@
       {{#title}}
         <h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}">{{{html}}}</h2>
       {{/title}}
-      <!-- {{> browseSelect }} -->
+      <select id="browse-select">
+        <option value="sort_longlabel" selected> Title in English / انجليزي نجليزينجليزي</option>
+        <option value="sort_ar_longlabel">Title in Arabic / عربي</option>
+        <option value="score">Sort by relevance/ فرز حسب</option>
+      </select>
       <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
     </header>
     <div 
@@ -22,7 +26,6 @@
     </div>
   </main>
   {{> footer }}
-  {{> subjectsList }}
   {{{ closure }}}
 </body>
 </html>

@@ -16,7 +16,6 @@ YUI().use(
 
     var body = Y.one('body')
       , QueryString = ( Y.QueryString.parse( location.search, '?') )
-      , container = Y.one('[data-name="items"]')
       , app = body.getAttribute('data-app')
       , appRoot = body.getAttribute('data-approot')
       , page = 1
@@ -24,9 +23,14 @@ YUI().use(
       , itemsTemplateSource = Y.one('#hbs_items').getHTML()
       , itemsTemplate = Y.Handlebars.compile(itemsTemplateSource)
       , router = new Y.Router()
-      , subjectsList = Y.one('#subjecsList')
-      , subjects = JSON.parse(subjectsList.get('innerHTML'))
-      
+
+    /**  
+    
+    Unused until subject page is available
+
+     var subjectsList = Y.one('#subjecsList')
+       , subjects = JSON.parse(subjectsList.get('innerHTML'))
+    
     function findById(tid) {
         for ( var i = 0; i < subjects.length; i++) {
             if (subjects[i].tid == tid) {
@@ -35,8 +39,6 @@ YUI().use(
         }
     }
 
-    /**  
-    Unused until subject page is available
     Y.Handlebars.registerHelper('subject', function (value) {
         var subject = findById ( value );
         if (subject) {
@@ -67,6 +69,31 @@ YUI().use(
 		} )
         
     })
+    
+    function onSelectChange() {
+
+        var QueryString = ( Y.QueryString.parse( location.search, '?') )
+          , rows = 10
+          , page =  ( QueryString.page ) ?  parseInt( QueryString.page, 10 ) : 0
+          , start =  0
+          , node = Y.one('[data-name="items"]')
+          
+        if ( page <= 1 ) {
+            start = 0
+        }
+        
+        else {
+            start = ( page * rows ) - rows
+        }
+        
+    	initRequest ( {
+		    container : node
+	      , start : start
+	      , page : page
+    	  , rows : rows    	  
+		} )
+
+    }
     
     function onFailure() {
         Y.log('onFailure')
@@ -123,13 +150,6 @@ YUI().use(
             // store called to avoid making the request multiple times
             transactions.push ( this.url )
 
-            // for now, map this at Solr level and fix img to be absolute paths
-            response.response.docs.forEach ( function ( element, index ) {
-            	response.response.docs[index].appRoot = app
-            	response.response.docs[index].identifier = element.ss_identifer
-            	response.response.docs[index].app = element.ss_collection_identifier
-            })
-
             node.setAttribute( "data-numFound", numfound )
 
             node.setAttribute( "data-start", start )
@@ -142,12 +162,12 @@ YUI().use(
             
             numfoundNode.set('innerHTML', numfound)
 
-            // render HTML and append to container
             node.append(
               itemsTemplate({
-                items : response.response.docs
+                items : response.response.docs,
+                app: { appRoot : app }
               })
-            )
+            );            
 
             body.removeClass('io-loading')
 
@@ -166,44 +186,31 @@ YUI().use(
         var rows = 10
           , start = 0
           , page = 0
-          , sortBy = 'ss_longlabel'
+          , sortBy = Y.one('#browse-select').get('value')
           , sortDir = 'asc'          
           , language = 'en'
           , discoveryURL = "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select"
           , fl = [ 
-                   'ss_embedded'
-                 , 'title'
-                 , 'type'
-                 , 'ss_collection_identifier'
+
+                 /** shared fields */
+                 , 'ss_thumbnail'
                  , 'ss_identifer'
-                 , 'ss_representative_image'
-                 , 'teaser'
-                 , 'sm_field_title'
-                 , 'ss_language'
-                 , 'sm_field_publication_date_text'
-                 , 'sm_field_publication_location'
-                 , 'sm_field_publisher'
-                 , 'sm_vid_Terms'
-                 , 'tm_vid_1_names'
-                 , 'sm_partners'
-                 , 'sm_ar_title'
-                 , 'sm_ar_author'
-                 , 'sm_ar_publisher'
-                 , 'sm_ar_publication_location'
-                 , 'sm_ar_subjects'
-                 , 'sm_ar_publication_date'
-                 , 'sm_ar_partners'
                  
-                 // English fields
-                 , 'sm_field_title'
+                 /** english fields */                 
+                 , 'ss_title'
                  , 'sm_author'
                  , 'sm_publisher'                 
                  , 'ss_pubdate'
-                 , 'sm_subject'
-                 , 'sm_partners'
+                 , 'sm_partner'
+                 , 'sm_subject' 
                  
-                 // Subject
-                 , 'im_field_subject'
+                 /** arabic fields */
+                 , 'ss_ar_title'
+                 , 'sm_ar_author'
+                 , 'sm_ar_publisher'
+                 , 'sm_ar_publication_date'
+                 , 'sm_ar_partner'
+                 , 'sm_ar_subject'
                  
             ]
 
@@ -222,6 +229,8 @@ YUI().use(
         if ( options.rows ) {
           rows = parseInt( options.rows, 10 )
         }
+        
+        Y.log ( sortBy )
 
         var datasourceURLs = discoveryURL 
                            + "?"
@@ -256,5 +265,7 @@ YUI().use(
     }
     
     router.replace( appRoot + '/browse?page=' + page )
+    
+    body.delegate('change', onSelectChange, '#browse-select');
 
 })

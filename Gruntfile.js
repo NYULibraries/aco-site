@@ -107,7 +107,7 @@ module.exports = function(grunt) {
             
             source.appUrl = conf.appUrl;
             
-            source.partners = conf.partners;  
+            source.partners = widgets.partners;  
             
            // later on for prod
            source.css = grunt.file.read(__dirname + '/build/css/style.css');
