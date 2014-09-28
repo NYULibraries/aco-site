@@ -8,7 +8,12 @@
       {{#title}}
         <h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}">{{{html}}}</h2>
       {{/title}}
-      <!-- {{> browseSelect }} -->
+      <select id="browse-select">
+        <option value="ss_longlabel"> Title in English / انجليزي نجليزينجليزي</option>
+        <option value="ss_ar_title">Title in Arabic / عربي</option>
+        <option value="ss_sauthor">Author / المؤلف</option>
+        <option value="score" selected>Sort by relevance/ فرز حسب</option>
+      </select>
       <div class="resultsnum">Showing  <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span> results for <span class="s-query"></span></div>
     </header>
     <div 

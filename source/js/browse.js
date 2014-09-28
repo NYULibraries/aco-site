@@ -1,32 +1,54 @@
 YUI().use(
     'node'
   , 'event'
-  , 'io'
   , 'handlebars'
   , 'json-parse'
   , 'jsonp'
   , 'paginator'
   , 'jsonp-url'
-  , 'router'    
-  , 'querystring-parse'
+  , 'router'
   , 'gallery-paginator'
   , function (Y) {
 
     'use strict'
 
     var body = Y.one('body')
-      , QueryString = ( Y.QueryString.parse( location.search, '?') )
       , app = body.getAttribute('data-app')
       , appRoot = body.getAttribute('data-approot')
-      , page = 1
       , transactions = []
       , itemsTemplateSource = Y.one('#hbs_items').getHTML()
       , itemsTemplate = Y.Handlebars.compile(itemsTemplateSource)
       , router = new Y.Router()
+      
+    function getRoute () {
 
-    /**  
-    
-    Unused until subject page is available
+        var pageQueryString = getParameterByName('page')
+          , sortQueryString = getParameterByName('sort')
+          , page = ( pageQueryString ) ? pageQueryString : 1
+          , route = appRoot + '/browse?page=' + page;
+
+        if ( sortQueryString ) {
+            route = route + '&sort=' + sortQueryString
+        }
+        
+        return route;
+
+    }
+      
+    function getParameterByName(name) {
+        
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }      
+
+    /**
+     *
+     * Unused until subject page its available
+     * 
 
      var subjectsList = Y.one('#subjecsList')
        , subjects = JSON.parse(subjectsList.get('innerHTML'))
@@ -48,12 +70,14 @@ YUI().use(
     */
 
     router.route( appRoot +  '/browse', function ( req ) {
-        
-        var rows = ( req.query.rows ) ? req.query.rows : 10
+
+        var node = Y.one('[data-name="items"]')
+          , data = node.getData()
+          , rows = ( req.query.rows ) ? req.query.rows : ( ( data.rows ) ? data.rows : 10 ) 
+          , sort = ( req.query.sort ) ? req.query.sort : ( ( data.sort ) ? data.sort : Y.one('#browse-select').get('value') )           
           , page =  ( req.query.page ) ?  parseInt( req.query.page, 10 ) : 0
           , start =  0
-          , node = Y.one('[data-name="items"]')
-          
+
         if ( page <= 1 ) {
             start = 0
         }
@@ -66,51 +90,31 @@ YUI().use(
 	      , start : start
 	      , page : page
     	  , rows : rows
-		} )
+    	  , sort : sort
+		} );
         
     })
     
-    function onSelectChange() {
-
-        var QueryString = ( Y.QueryString.parse( location.search, '?') )
-          , rows = 10
-          , page =  ( QueryString.page ) ?  parseInt( QueryString.page, 10 ) : 0
-          , start =  0
-          , node = Y.one('[data-name="items"]')
-          
-        if ( page <= 1 ) {
-            start = 0
-        }
-        
-        else {
-            start = ( page * rows ) - rows
-        }
-        
-    	initRequest ( {
-		    container : node
-	      , start : start
-	      , page : page
-    	  , rows : rows    	  
-		} )
-
+    function onSelectChange( ) {
+        router.replace( getRoute() );
     }
     
     function onFailure() {
-        Y.log('onFailure')
+        Y.log('onFailure');
     }
     
     function onTimeout() {
-        onFailure()
+        onFailure();
     }
     
     function update ( state ) {
 	
-    	this.setPage( state.page, true )
+    	this.setPage( state.page, true );
 		
-	    this.setRowsPerPage(state.rowsPerPage, true)
+	    this.setRowsPerPage( state.rowsPerPage, true );
 	    	
-	    router.save( appRoot + '/browse?page=' + state.page )
-	    	
+	    router.save( appRoot + '/browse?page=' + state.page );
+
     }
     
     function initPaginator( page, totalRecords, rowsPerPage ) {
@@ -123,16 +127,16 @@ YUI().use(
             }
           , paginator = new Y.Paginator( paginatorConfiguration )
 
-        paginator.on( 'changeRequest', update )
+        paginator.on( 'changeRequest', update );
                
-        paginator.render('#paginator')
+        paginator.render('#paginator');
 
     }    
 
     function onSuccess ( response, args ) {
 
         try {
-        
+            
             var node = args.container
               , resultsnum = Y.one('.resultsnum')
               , page = ( args.page ) ? args.page : 1
@@ -145,29 +149,31 @@ YUI().use(
               , docslength = parseInt(response.response.docs.length, 10)
               
             // first transaction; enable paginator
-            if ( transactions.length < 1 ) initPaginator( page , numfound, docslength )
+            if ( transactions.length < 1 ) initPaginator( page , numfound, docslength );
 
             // store called to avoid making the request multiple times
-            transactions.push ( this.url )
+            transactions.push ( this.url );
 
-            node.setAttribute( "data-numFound", numfound )
+            node.setAttribute( 'data-numFound', numfound );
 
-            node.setAttribute( "data-start", start )
+            node.setAttribute( 'data-start', start );
 
-            node.setAttribute( "data-docsLength", docslength )
+            node.setAttribute( 'data-docsLength', docslength );
             
-            startNode.set( 'innerHTML', displayStart )
+            startNode.set( 'innerHTML', displayStart );
 
-            docslengthNode.set('innerHTML', start + docslength )
+            docslengthNode.set( 'innerHTML', start + docslength );
             
-            numfoundNode.set('innerHTML', numfound)
+            numfoundNode.set( 'innerHTML', numfound );
 
             node.append(
               itemsTemplate({
                 items : response.response.docs,
                 app: { appRoot : app }
               })
-            );            
+            );
+            
+            args.container.setAttribute( 'data-requesterror', 0 );
 
             body.removeClass('io-loading')
 
@@ -175,7 +181,21 @@ YUI().use(
 
         catch (e) {
 
-            Y.log('something went wrong. error')
+            var data = args.container.getData()
+              , requestError = data.requesterror
+              
+            if ( !requestError ) {
+                args.container.setAttribute( 'data-requesterror', 1 );
+                requestError = 1;
+            }
+            else { 
+                requestError = parseInt(requestError, 10) + 1;
+                args.container.setAttribute( 'data-requesterror', requestError );                
+            }
+            
+            if ( requestError < 3 ) {
+                router.replace( getRoute () );
+            }
 
         }
 
@@ -211,27 +231,34 @@ YUI().use(
                  , 'sm_ar_publication_date'
                  , 'sm_ar_partner'
                  , 'sm_ar_subject'
+
+                 /** sort fields */
+                 , 'score'
+                 , 'ss_longlabel'
+                 , 'ss_ar_title'      
+                 , 'ss_sauthor'
+                 , 'ss_ar_sauthor'           
                  
             ]
 
+        Y.one('body').addClass('io-loading');
+
         if ( options.page ) {
-          page = parseInt( options.page, 10 )
+            page = parseInt( options.page, 10 );
         }
 
         if ( options.language ) {
-          language = options.language
+            language = options.language;
         }
 
         if ( options.start ) {
-          start = parseInt( options.start, 10 )
+            start = parseInt( options.start, 10 );
         }
 
         if ( options.rows ) {
-          rows = parseInt( options.rows, 10 )
+            rows = parseInt( options.rows, 10 );
         }
         
-        Y.log ( sortBy )
-
         var datasourceURLs = discoveryURL 
                            + "?"
                            + "wt=json"
@@ -244,9 +271,7 @@ YUI().use(
                            + "&start=" + start
                            + "&sort=" + sortBy + "%20" + sortDir
                            
-        body.addClass('io-loading')
-        
-        options.container.empty()
+        options.container.empty();
 
         Y.jsonp( datasourceURLs, {
             on: {
@@ -256,16 +281,12 @@ YUI().use(
             },
             args: options,
             timeout: 3000
-        })
+        });
     
     }
     
-    if ( QueryString.page ) { 
-        page = QueryString.page
-    }
+    router.replace( getRoute () );
     
-    router.replace( appRoot + '/browse?page=' + page )
-    
-    body.delegate('change', onSelectChange, '#browse-select');
+    Y.one('body').delegate('change', onSelectChange, '#browse-select');
 
-})
+});

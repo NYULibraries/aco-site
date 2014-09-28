@@ -9,16 +9,16 @@
         <h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}">{{{html}}}</h2>
       {{/title}}
       <select id="browse-select">
-        <option value="sort_longlabel" selected> Title in English / انجليزي نجليزينجليزي</option>
-        <option value="sort_ar_longlabel">Title in Arabic / عربي</option>
-        <option value="score">Sort by relevance/ فرز حسب</option>
+        <option value="ss_longlabel" selected> Title in English / انجليزي نجليزينجليزي</option>
+        <option value="ss_ar_title">Title in Arabic / عربي</option>
+        <option value="ss_sauthor">Author / المؤلف</option>
       </select>
       <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
     </header>
     <div 
       class="widget" 
       data-name="items" 
-      data-rows="10" 
+      data-rows="10"
       data-script='{ "js" : [ "browse.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" } ] }'
     ></div>
     <div class="text-center">
