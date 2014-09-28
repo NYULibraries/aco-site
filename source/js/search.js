@@ -1,27 +1,48 @@
 YUI().use(
     'node'
   , 'event'
-  , 'io'
   , 'handlebars'
-  , 'json-parse'
   , 'jsonp'
-  , 'paginator'
-  , 'jsonp-url'
   , 'router'    
   , 'gallery-paginator'
   , function (Y) {
 
-    'use strict'
+    'use strict';
 
-    var body = Y.one('body')
-      , app = body.getAttribute('data-app')
-      , appRoot = body.getAttribute('data-approot')
-      , transactions = []
-      , itemsTemplateSource = Y.one('#hbs_items').getHTML()
+    var itemsTemplateSource = Y.one('#hbs_items').getHTML()
       , itemsTemplate = Y.Handlebars.compile(itemsTemplateSource)
       , router = new Y.Router()
-      , q = getParameterByName('q')
-      
+      , transactions = [];    
+
+    function getRoute () {
+
+        var pageQueryString = getParameterByName('page')
+          , sortQueryString = getParameterByName('sort')
+          , qQueryString = getParameterByName('q')
+          , page = ( pageQueryString ) ? pageQueryString : 1
+          , q = ( qQueryString ) ? qQueryString : ''
+          , route = router.getPath() + '?q=' + q + '&page=' + page;
+        
+        // throw error if q is empty?
+
+        if ( sortQueryString ) {
+            route = route + '&sort=' + sortQueryString;
+        }
+        
+        return route;
+
+    }
+    
+    function getParameterByName(name) {
+        
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
+          , results = regex.exec(location.search);
+
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    
     /**  
     
     Unused until subject page is available
@@ -374,14 +395,16 @@ YUI().use(
         return removeDiacritics( str )
     
     }    
-    	    
-    router.route( appRoot +  '/search', function ( req ) {
+
+    router.route( router.getPath(), function ( req ) {
     
-        var rows = ( req.query.rows ) ? req.query.rows : 10
-          , page =  ( req.query.page ) ?  parseInt( req.query.page, 10 ) : 0
-          , start =  0
-          , query = req.query.q
-          , node = Y.one('[data-name="items"]')
+        var node = Y.one('[data-name="items"]')
+          , data = node.getData()
+          , rows = ( req.query.rows ) ? req.query.rows : ( ( data.rows ) ? data.rows : 10 ) 
+          , sort = ( req.query.sort ) ? req.query.sort : ( ( data.sort ) ? data.sort : Y.one('#browse-select').get('value') )           
+          , page = ( req.query.page ) ? parseInt( req.query.page, 10 ) : 0
+          , query = ( req.query.q ) ? req.query.q : ''
+          , start =  0;          
           
         Y.one('.search_holder [name="q"]').set('value', query);
         
@@ -396,38 +419,44 @@ YUI().use(
     	initRequest ( {
 		    container : node
 	      , start : start
-	      , q : removeQueryDiacritics ( query )
 	      , page : page
     	  , rows : rows
+    	  , sort : sort
+	      , q : removeQueryDiacritics ( query )
 		} );
         
     });
     
-    function getParameterByName(name) {
-        
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-
-        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
-    
     function onSelectChange( ) {
-
-        var queryPage = getParameterByName('page')
-          , page = ( queryPage ) ? queryPage : 1
-
-        router.save( appRoot + '/search?q=' + getParameterByName('q') + '&page=' + page )
-
+        router.replace( getRoute() );
     }
     
-    function onFailure() {
-        Y.log('onFailure')
+    function onFailure( response, args ) {
+    	
+        // mover a onFailure
+        var data = args.container.getData()
+          , requestError = data.requesterror;
+          
+        if ( !requestError ) {
+            args.container.setAttribute( 'data-requesterror', 1 );
+            requestError = 1;
+        }
+        else { 
+            requestError = parseInt(requestError, 10) + 1;
+            args.container.setAttribute( 'data-requesterror', requestError );                
+        }
+    	
+        /** there try 3 more times before giving up */
+        if ( requestError < 3 ) {
+            router.replace( getRoute () );
+        }
+        else {
+        	Y.log('onFailure: there was a problem with this request');
+        }
     }
     
     function onTimeout() {
-        onFailure()
+        onFailure();
     }
     
     function update ( state ) {
@@ -436,7 +465,7 @@ YUI().use(
 		
 	    this.setRowsPerPage(state.rowsPerPage, true)
 	    
-	    router.save( appRoot +  '/search?q=' + getParameterByName('q') + '&page=' + state.page )
+	    router.save( router.getPath() + '?q=' + getParameterByName('q') + '&page=' + state.page );
 
     }
     
@@ -472,6 +501,7 @@ YUI().use(
               , docslengthNode = resultsnum.one('.docslength')
               , docslength = parseInt(response.response.docs.length, 10)
               , q = getParameterByName('q')
+              , appRoot = Y.one('body').getAttribute('data-app');
               
             if ( numfound > 0 ) {
               
@@ -503,11 +533,13 @@ YUI().use(
                 node.append(
                     itemsTemplate({
                         items : response.response.docs,
-                        app: { appRoot : app }
+                        app: { appRoot : appRoot }
                     })
                 );
 
-                body.removeClass('io-loading');
+                args.container.setAttribute( 'data-requesterror', 0 );
+
+                Y.one('body').removeClass('io-loading');
             
             }
             
@@ -520,106 +552,63 @@ YUI().use(
 
         catch (e) {
 
-            var data = args.container.getData()
-              , requestError = data.requesterror
-              
-            if ( !requestError ) {
-                args.container.setAttribute( 'data-requesterror', 1 );
-                requestError = 1;
-            }
-            else { 
-                requestError = parseInt(requestError, 10) + 1;
-                args.container.setAttribute( 'data-requesterror', requestError );                
-            }
-            
-            if ( requestError < 3 ) {
-                router.replace( getRoute () );
-            }
-
         }
 
     }
     
     function initRequest ( options ) {
     
-        var rows = 10
-          , start = 0
+        var start = 0
           , page = 0
-          , sortBy = Y.one('#browse-select').get('value')
-          , sortDir = 'asc'     
-          , language = 'en'
-          , discoveryURL = "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select"
-          , fl = [ 
-                 /** shared fields */
-                 , 'ss_thumbnail'
-                 , 'ss_identifer'
-                 
-                 /** english fields */                 
-                 , 'ss_title'
-                 , 'sm_author'
-                 , 'sm_publisher'                 
-                 , 'ss_pubdate'
-                 , 'sm_partner'
-                 , 'sm_subject' 
-                 
-                 /** arabic fields */
-                 , 'ss_ar_title'
-                 , 'sm_ar_author'
-                 , 'sm_ar_publisher'
-                 , 'sm_ar_publication_date'
-                 , 'sm_ar_partner'
-                 , 'sm_ar_subject'       
-                 
-                 /** sort fields */
-                 , 'score'
-                 , 'ss_longlabel'
-                 , 'ss_ar_title'      
-                 , 'ss_sauthor'
-                 , 'ss_ar_sauthor'                            
-            ]
+          , sortData = Y.one('#browse-select :checked')
+          , sortBy = sortData.get('value')
+          , sortDir = sortData.getAttribute( "data-sort-dir" )
+          , data = options.container.getData()
+          , source = ( data.source ) ? data.source : null
+          , fl = ( data.fl ) ? data.fl : '*'
+          , rows = ( data.rows ) ? data.rows : 10
+          , fq = [];
 
-        if ( options.page ) {
-          page = parseInt( options.page, 10 )
-        }
+      Y.one('body').addClass('io-loading');
+      
+      /** find all data-fq and push the value into fq Array*/
+      for ( var prop in data ) {
+          if ( data.hasOwnProperty( prop ) ) {
+        	    if ( prop.match('fq-') ) {
+        	    	fq.push( prop.replace('fq-', '') + ':' + data[prop] );
+      	    }
+          }
+      }
 
-        if ( options.language ) {
-          language = options.language
-        }
+      if ( options.page ) {
+          page = parseInt( options.page, 10 );
+      }
 
-        if ( options.start ) {
-          start = parseInt( options.start, 10 )
-        }
+      if ( options.start ) {
+          start = parseInt( options.start, 10 );
+      }
 
-        if ( options.rows ) {
-          rows = parseInt( options.rows, 10 )
-        }
+      if ( options.rows ) {
+          rows = parseInt( options.rows, 10 );
+      }
+      
+      source = source 
+             + "?"
+             + "wt=json"
+             + "&json.wrf=callback={callback}"
+             + "&fl=" + fl
+             + "&fq=" + fq.join("&fq=")
+             + "&rows=" + rows
+             + "&start=" + start
+             + "&sort=" + sortBy + "%20" + sortDir;
 
-        var datasourceURLs = discoveryURL 
-                           + "?"
-                           + "wt=json"
-                           + "&json.wrf=callback={callback}"
-                           + "&fq=hash:iy26sh"
-                           + "&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050"
-                           + "&fq=ss_language:" + language                           
-                           + "&fl=" + fl.join()
-                           + "&rows=" + rows
-                           + "&start=" + start
-                           + "&sort=" + sortBy + "%20" + sortDir
-                           
-        if ( options.fq ) {
-          datasourceURLs = datasourceURLs + '&fq=' + options.fq.join('&fq=');
-        }
-        
         if ( options.q ) {
-            datasourceURLs = datasourceURLs + '&q=' + options.q;
+        	source = source + '&q=' + options.q;
         }
-        
                            
-        body.addClass('io-loading')
-        
         options.container.empty()
 
-        Y.jsonp( datasourceURLs, {
+        Y.jsonp( source, {
             on: {
                 success: onSuccess,
                 failure: onFailure,
@@ -627,12 +616,13 @@ YUI().use(
             },
             args: options,
             timeout: 3000
-        })
+        });
     
     }
-    
-    router.replace( appRoot +  '/search?q=' + q )
-    
+
+    router.replace( getRoute () );
+
+    // Sort
     Y.one('body').delegate('change', onSelectChange, '#browse-select');    
 
 })

@@ -50,7 +50,48 @@
       ],
       "menu" : [ { "context" : "navbar", "label" : "Browse", "weight" : 3 }  ],
       "route": "/browse/index.html",
-      "bodyClass": "browse io-loading"
+      "bodyClass": "browse io-loading",
+      "content" : {
+        "items" : {
+          "source" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select",
+          "rows" : 10,
+          "fl" : [
+                   "ss_thumbnail"
+                 , "ss_identifer"
+                 , "ss_title"
+                 , "sm_author"
+                 , "sm_publisher"                 
+                 , "ss_pubdate"
+                 , "sm_partner"
+                 , "sm_subject" 
+                 , "ss_ar_title"
+                 , "sm_ar_author"
+                 , "sm_ar_publisher"
+                 , "sm_ar_publication_date"
+                 , "sm_ar_partner"
+                 , "sm_ar_subject"
+                 , "score"
+                 , "ss_longlabel"
+                 , "ss_ar_title"      
+                 , "ss_sauthor"
+                 , "ss_ar_sauthor"              
+          ],
+          "fq" : [
+            { 
+              "filter" : "hash",
+              "value" : "iy26sh" 
+            },
+            { 
+              "filter" : "ss_collection_identifier", 
+              "value" : "7b71e702-e6b8-4f09-90c9-e5c2906f3050" 
+            },
+            { 
+              "filter" : "ss_language",
+              "value" : "en" 
+            }
+          ]
+        }
+      }
     },
     "subject": {
       "title": "Subject",
@@ -118,9 +159,50 @@
       }      
     },
     "search": {
-       "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"Search Results"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"نتائج البحث"}],
-      "route": "/search/index.html",
-      "bodyClass": "search"
+        "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"Search Results"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"نتائج البحث"}],
+        "route": "/search/index.html",
+        "bodyClass": "search io-loading",
+        "content" : {
+            "items" : {
+                "source" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select",
+                "rows" : 10,
+                "fl" : [
+                    "ss_thumbnail"
+                   , "ss_identifer"
+                   , "ss_title"
+                   , "sm_author"
+                   , "sm_publisher"                 
+                   , "ss_pubdate"
+                   , "sm_partner"
+                   , "sm_subject" 
+                   , "ss_ar_title"
+                   , "sm_ar_author"
+                   , "sm_ar_publisher"
+                   , "sm_ar_publication_date"
+                   , "sm_ar_partner"
+                   , "sm_ar_subject"
+                   , "score"
+                   , "ss_longlabel"
+                   , "ss_ar_title"      
+                   , "ss_sauthor"
+                   , "ss_ar_sauthor"              
+              ],
+              "fq" : [
+                  { 
+                      "filter" : "hash",
+                      "value" : "iy26sh" 
+                  },
+                  { 
+                      "filter" : "ss_collection_identifier", 
+                      "value" : "7b71e702-e6b8-4f09-90c9-e5c2906f3050" 
+                  },
+                  { 
+                      "filter" : "ss_language",
+                      "value" : "en" 
+                  }
+              ]
+          }
+      }        
     },
     "book": {
       "title": "Book",

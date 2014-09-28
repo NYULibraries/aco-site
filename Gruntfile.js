@@ -334,7 +334,7 @@ module.exports = function(grunt) {
             grunt.log.write("Unknown error: " + err.description).error();  
         }
 
-    });  
+    });
 
     grunt.registerTask('default', ['clean', 'copy', 'curl', 'massageDataSource', 'uglify', 'sass', 'writeHTML']);
 

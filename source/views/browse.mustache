@@ -9,21 +9,30 @@
         <h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}">{{{html}}}</h2>
       {{/title}}
       <select id="browse-select">
-        <option value="ss_longlabel" selected> Title in English / انجليزي نجليزينجليزي</option>
-        <option value="ss_ar_title">Title in Arabic / عربي</option>
-        <option value="ss_sauthor">Author / المؤلف</option>
+        <option data-sort-dir="asc" value="ss_longlabel" selected> Title in English / انجليزي نجليزينجليزي</option>
+        <option data-sort-dir="asc" value="ss_ar_title">Title in Arabic / عربي</option>
+        <option data-sort-dir="asc" value="ss_sauthor">Author / المؤلف</option>
       </select>
       <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
     </header>
-    <div 
-      class="widget" 
-      data-name="items" 
-      data-rows="10"
-      data-script='{ "js" : [ "browse.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" } ] }'
-    ></div>
-    <div class="text-center">
-      <div id="paginator" class="pagination"></div>
-    </div>
+    {{#content}}
+      {{#items}}
+        <div 
+          class="widget" 
+          data-name="items" 
+          data-rows="{{ rows }}"
+          data-source="{{ source }}"
+          data-fl="{{ fl }}"
+          {{#fq}}
+          data-fq-{{ filter }}="{{ value }}"
+          {{/fq}}
+          data-script='{ "js" : [ "browse.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" } ] }'
+        ></div>
+        <div class="text-center">
+          <div id="paginator" class="pagination"></div>
+        </div>        
+      {{/items}}
+    {{/content}}
   </main>
   {{> footer }}
   {{{ closure }}}
