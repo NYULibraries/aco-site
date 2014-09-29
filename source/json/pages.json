@@ -1,5 +1,6 @@
 {
     "front": {
+      "htmltitle": "Welcome",
       "title": "Home",
       "menu" : [ { "context" : "navbar", "label" : "Home", "weight" : 0 }  ],      
       "route": "/index.html",
@@ -36,6 +37,7 @@
       }      
     },
     "browse": {
+      "htmltitle": "Browse",
       "title": [
         { 
           "language_code" : "en",  
@@ -94,12 +96,14 @@
       }
     },
     "subject": {
+      "htmltitle": "Subject",
       "title": "Subject",
       "route": "/subject/index.html",
       "bodyClass": "subject",
       "content" : {}
     },
     "subjects": {
+      "htmltitle": "Subjects",
       "title": "Subjects",
       "route": "/subjects/index.html",
       "bodyClass": "subject",
@@ -115,6 +119,7 @@
       }
     },    
     "resources": {
+      "htmltitle": "Other Resources",
        "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"Other Resources"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"المواقع الأخرى"}],
       "menu" : [ { "context" : "navbar", "label" : "Other Resources", "weight" : 2 }  ],
       "route": "/resources/index.html",
@@ -137,6 +142,7 @@
       }
     },
     "about": {
+      "htmltitle": "About",
        "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"About"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"عن هذا المشروع"}],
       "menu" : [ { "context" : "navbar", "label" : "About", "weight" : 1 }  ],     
       "route": "/about/index.html",
@@ -159,6 +165,7 @@
       }      
     },
     "search": {
+      "htmltitle": "Search",
         "title": [{ "language_code" : "en",  "language_dir" : "ltr",  "html" :"Search Results"}, { "language_code" : "ar",  "language_dir" : "rtl",   "html" :"نتائج البحث"}],
         "route": "/search/index.html",
         "bodyClass": "search io-loading",
@@ -205,6 +212,7 @@
       }        
     },
     "book": {
+      "htmltitle": "Book",
       "title": "Book",
       "bodyClass" : "book",
       "sourceUrl": "http://dev-dl-pa.home.nyu.edu/books",
