@@ -12,8 +12,10 @@ YUI().use(
     var itemsTemplateSource = Y.one('#hbs_items').getHTML()
       , itemsTemplate = Y.Handlebars.compile(itemsTemplateSource)
       , router = new Y.Router()
-      , transactions = [];    
-
+      , transactions = []    
+      , nrSource = Y.one('#noresults').getHTML()
+      , noresultsTemplate = Y.Handlebars.compile(nrSource);
+      
     function getRoute () {
 
         var pageQueryString = getParameterByName('page')
@@ -545,6 +547,8 @@ YUI().use(
             
             // no results
             else {
+          
+              node.append(noresultsTemplate());
             
             }
 
