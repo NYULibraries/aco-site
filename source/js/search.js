@@ -15,7 +15,7 @@ YUI().use(
       , transactions = []    
       , nrSource = Y.one('#noresults').getHTML()
       , noresultsTemplate = Y.Handlebars.compile(nrSource);
-      
+
     function getRoute () {
 
         var pageQueryString = getParameterByName('page')
@@ -498,7 +498,7 @@ YUI().use(
               , numfound = parseInt(response.response.numFound, 10)
               , numfoundNode = resultsnum.one('.numfound')
               , start = parseInt(response.response.start, 10)
-              , displayStart = ( start < 1 ) ? 1 : start
+              , displayStart = ( start < 1 ) ? 1 : (start + 1)
               , startNode = resultsnum.one('.start')
               , docslengthNode = resultsnum.one('.docslength')
               , docslength = parseInt(response.response.docs.length, 10)
