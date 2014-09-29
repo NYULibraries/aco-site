@@ -643,6 +643,7 @@ body.subject {
 }
 
 select#browse-select {
+    display: none;
     float: right;
     padding-bottom: 6px;
     font-size: .75em;

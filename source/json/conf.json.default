@@ -1,6 +1,8 @@
 {
   "appName": "Arabic Collections Online",
   "appUrl": "http://dev-dl-pa.home.nyu.edu/aco",
+  "appUrl": "http://localhost:8000/aco",
+   "appUrl": "http://dlib.nyu.edu/aco",
   "appRoot": "/aco",
   "partners": [
     {
