@@ -12,7 +12,9 @@ YUI().use(
     var itemsTemplateSource = Y.one('#hbs_items').getHTML()
       , itemsTemplate = Y.Handlebars.compile(itemsTemplateSource)
       , router = new Y.Router()
-      , transactions = [];    
+      , transactions = []    
+      , nrSource = Y.one('#noresults').getHTML()
+      , noresultsTemplate = Y.Handlebars.compile(nrSource);
 
     function getRoute () {
 
@@ -496,7 +498,7 @@ YUI().use(
               , numfound = parseInt(response.response.numFound, 10)
               , numfoundNode = resultsnum.one('.numfound')
               , start = parseInt(response.response.start, 10)
-              , displayStart = ( start < 1 ) ? 1 : start
+              , displayStart = ( start < 1 ) ? 1 : (start + 1)
               , startNode = resultsnum.one('.start')
               , docslengthNode = resultsnum.one('.docslength')
               , docslength = parseInt(response.response.docs.length, 10)
@@ -545,6 +547,8 @@ YUI().use(
             
             // no results
             else {
+          
+              node.append(noresultsTemplate());
             
             }
 
