@@ -1,0 +1,22 @@
+name = ACO Website
+description = ACO Website theme.
+core = 7.x
+engine = phptemplate
+version = 2.0.10
+screenshot = screenshot.png
+
+base theme = dlts_book
+
+stylesheets[all][] = css/aco.css
+
+scripts[] =js/aco.js
+
+regions[header] = Header
+regions[search] = Search
+regions[content] = Content
+regions[footer] = Footer
+
+features[] = logo
+features[] = name
+features[] = search
+features[] = favicon
