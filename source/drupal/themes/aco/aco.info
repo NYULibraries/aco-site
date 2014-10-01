@@ -9,7 +9,7 @@ base theme = dlts_book
 
 stylesheets[all][] = css/aco.css
 
-scripts[] =js/aco.js
+;scripts[] =js/aco.js
 
 regions[header] = Header
 regions[search] = Search
