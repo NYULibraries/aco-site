@@ -15,6 +15,7 @@ YUI().use(
       , match_book_page = location.pathname.match(/\/book\/(.*)\/(.*)/)
       , sourceUrl = widget.getAttribute("data-sourceUrl")
       , appRoot = body.getAttribute("data-appRoot")
+      , bookTheme = widget.getAttribute("data-bookTheme")
       , src = ''
       , identifier = '';
       
@@ -69,7 +70,7 @@ YUI().use(
           
       src = sourceUrl + '/books/' + identifier + '/1';
     }    
-    
+    src = src + "?ctheme=" + bookTheme;
     var router = new Y.Router({
         root : appRoot,
         routes: [

@@ -215,7 +215,8 @@
       "htmltitle": "Book",
       "title": "Book",
       "bodyClass" : "book",
-      "sourceUrl": "http://dlib.nyu.edu/books",
+      "bookTheme": "aco" ,
+      "sourceUrl": "http://dev-dl-pa.home.nyu.edu/books",
       "route": "/book/index.html"
     }
 }
