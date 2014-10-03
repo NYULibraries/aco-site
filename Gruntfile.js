@@ -16,7 +16,8 @@ module.exports = function( grunt ) {
               , matchWidgets = uncompileTemplate.match( matchWidgetsRegEx )
               , javascriptTagOpen = '<script>'
               , javascriptTagClose = '</script>'
-              , template
+              , template = hogan.compile( uncompileTemplate )
+              , environment = conf.environment
               , partials = {}
               , menus = []
               , navbar = []
@@ -24,6 +25,7 @@ module.exports = function( grunt ) {
               , javascriptString = ''
               , javascriptString = ''
               , handlebarsTemplate = ''
+              , links = ''
               , closure = '';
             
             if ( matchWidgets && matchWidgets[0] ) {
@@ -38,26 +40,24 @@ module.exports = function( grunt ) {
                     if ( grunt.file.isFile ( 'build/js/' + js ) ) {
                         javascriptString += javascriptTagOpen + grunt.file.read( 'build/js/' + js ) + javascriptTagClose;
                     }
-                })
+                });
                 
                 _.each( toJSON.hbs, function ( hbs ) {
                 	
                     var handlebarsTagOpen = '<script id="'+ hbs.id +'" type="text/x-handlebars-template">'
-                      , handlebarsTagClose = '</script>'
+                      , handlebarsTagClose = '</script>';
 
                     if ( grunt.file.isFile ( 'source/views/' + hbs.template ) ) {
-                        handlebarsTemplate += handlebarsTagOpen + grunt.file.read( 'source/views/' + hbs.template ) + handlebarsTagClose
+                        handlebarsTemplate += handlebarsTagOpen + grunt.file.read( 'source/views/' + hbs.template ) + handlebarsTagClose;
                     }
 
-                })
+                });
 
             }
             
-            closure += handlebarsTemplate + javascriptString
+            closure += handlebarsTemplate + javascriptString;
             
-            source.closure = closure
-            
-            template = hogan.compile( uncompileTemplate )
+            source.closure = closure;
             
             // build the menu object
             _.each( pages, function ( page, index ) {
@@ -101,18 +101,23 @@ module.exports = function( grunt ) {
             
             source.menus = menus;
 
-            source.appRoot = conf[conf.enviorment].appRoot;  
+            source.appRoot = conf[environment].appRoot;  
             
             source.discovery = conf.discovery;
 
             source.appName = conf.appName;
             
-            source.appUrl = conf[conf.enviorment].appUrl;
+            source.appUrl = conf[environment].appUrl;
             
             source.partners = widgets.partners;  
             
-           // later on for prod
-           source.css = grunt.file.read(__dirname + '/build/css/style.css');
+            if ( conf[environment].sass.build === 'external' ) {
+            	source.css = "<link href='"+ source.appUrl + "/css/style.css' rel='stylesheet' type='text/css'>";	
+            }
+
+            else {
+                source.css = "<style>" + grunt.file.read(__dirname + '/build/css/style.css') + "</style>";
+            }
 
             grunt.file.recurse( __dirname + '/source/views/' , function callback(abspath, rootdir, subdir, filename) {
 
@@ -182,7 +187,7 @@ module.exports = function( grunt ) {
 
       var conf = grunt.file.readJSON( __dirname + '/source/json/conf.json');
       
-      return conf[conf.enviorment].curl;
+      return conf[conf.environment].curl;
       
   }
   
@@ -192,7 +197,7 @@ module.exports = function( grunt ) {
       
       return {
           dist : {
-              options : conf[conf.enviorment].sass.options
+              options : conf[conf.environment].sass.options
             , files: {
                  'build/css/style.css' : __dirname + '/source/sass/style.scss'
               }
