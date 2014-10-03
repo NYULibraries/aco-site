@@ -1,5 +1,77 @@
 {
-    "appName": "Arabic Collections Online"
-  , "appUrl": "http://dlib.nyu.edu/aco"
-  , "appRoot": "/aco"
+    "appName": "Arabic Collections Online",
+    "enviorment" : "local",
+    "development" : {
+        "appUrl": "http://dev-dl-pa.home.nyu.edu/aco",
+        "appRoot": "/aco",
+        "curl" : {
+            "recentlyAddedTitlesEN" : {
+                "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fq=!ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5&&sort=ds_changed%20desc",
+                "dest" : "source/json/datasources/recentlyAddedTitlesEN.json"
+            },
+            "recentlyAddedTitlesAR" : {
+                "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fq=ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5&sort=ds_changed%20desc",
+                "dest" : "source/json/datasources/recentlyAddedTitlesAR.json"
+            },
+            "subject" : {
+        	    "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&rows=0&facet=true&facet.field=im_field_subject",
+                "dest" : "source/json/datasources/subject.json"
+            },
+            "drupalSubjecs" : {
+               "src" : "http://alpha-user:dlts2010@dev-dl-pa.home.nyu.edu/books/sources/field/field_subject",
+        	   "dest" : "source/json/datasources/subjectsList.json"
+            }
+        }      
+    },
+    "local" : {
+        "appUrl" : "http://localhost:8000/aco",
+        "appRoot" : "/aco",
+        "sass" : {
+            "options" : {
+                "style" : "expanded"
+              , "debugInfo" : true
+              , "lineNumbers" : true
+            }
+        },
+        "curl" : {
+            "recentlyAddedTitlesEN" : {
+                "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fq=!ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5&&sort=ds_changed%20desc",
+                "dest" : "source/json/datasources/recentlyAddedTitlesEN.json"
+            },
+            "recentlyAddedTitlesAR" : {
+                "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fq=ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5&sort=ds_changed%20desc",
+                "dest" : "source/json/datasources/recentlyAddedTitlesAR.json"
+            },
+            "subject" : {
+        	    "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&rows=0&facet=true&facet.field=im_field_subject",
+                "dest" : "source/json/datasources/subject.json"
+            },
+            "drupalSubjecs" : {
+               "src" : "http://dlib.nyu.edu/books/sources/field/field_subject",
+        	   "dest" : "source/json/datasources/subjectsList.json"
+            }
+        }      
+    },
+    "production" : {
+        "appUrl": "http://dlib.nyu.edu/aco",
+        "appRoot": "/aco",
+        "curl" : {
+            "recentlyAddedTitlesEN" : {
+                "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fq=!ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5&&sort=ds_changed%20desc",
+                "dest" : "source/json/datasources/recentlyAddedTitlesEN.json"
+            },
+            "recentlyAddedTitlesAR" : {
+                "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fq=ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5&sort=ds_changed%20desc",
+                "dest" : "source/json/datasources/recentlyAddedTitlesAR.json"
+            },
+            "subject" : {
+        	    "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&rows=0&facet=true&facet.field=im_field_subject",
+                "dest" : "source/json/datasources/subject.json"
+            },
+            "drupalSubjecs" : {
+               "src" : "http://dlib.nyu.edu/books/sources/field/field_subject",
+        	   "dest" : "source/json/datasources/subjectsList.json"
+            }
+        }      
+    }        
 }

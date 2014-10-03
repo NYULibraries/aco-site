@@ -1,8 +1,8 @@
-module.exports = function(grunt) {
+module.exports = function( grunt ) {
 
-    var _ = require('underscore')
+    var _ = require('underscore');
 
-    function transformHTML( buildPath, task ) {
+    function transformHTML ( buildPath, task ) {
 
         try {
 
@@ -10,33 +10,33 @@ module.exports = function(grunt) {
               , conf = grunt.file.readJSON( __dirname + '/source/json/conf.json')
               , pages = grunt.file.readJSON( __dirname + '/source/json/pages.json')
               , widgets = grunt.file.readJSON(__dirname + '/source/json/widgets.json')
-              , source = pages[task]
-              , navbar = []
               , uncompileTemplate = grunt.file.read( __dirname + '/source/views/' + task + '.mustache' )
+              , source = pages[task]
+              , matchWidgetsRegEx = "data-script='(.*)'"
+              , matchWidgets = uncompileTemplate.match( matchWidgetsRegEx )
+              , javascriptTagOpen = '<script>'
+              , javascriptTagClose = '</script>'
               , template
               , partials = {}
               , menus = []
-              , matchWidgetsRegEx = "data-script='(.*)'"
-              , matchWidgets = uncompileTemplate.match( matchWidgetsRegEx )
+              , navbar = []
               , toJSON = ''
               , javascriptString = ''
-              , javascriptTagOpen = '<script>'
-              , javascriptTagClose = '</script>'
               , javascriptString = ''
-              , handlebarsTemplate = ''              
-              , closure = ''
-              
+              , handlebarsTemplate = ''
+              , closure = '';
+            
             if ( matchWidgets && matchWidgets[0] ) {
                 
-                toJSON = matchWidgets[0]
+                toJSON = matchWidgets[0];
                 
-                toJSON = toJSON.replace(/'/g, '').replace(/data-script=/g, '')
+                toJSON = toJSON.replace(/'/g, '').replace(/data-script=/g, '');
 
-                toJSON = JSON.parse( toJSON )
+                toJSON = JSON.parse( toJSON );
 
                 _.each( toJSON.js, function ( js ) {
                     if ( grunt.file.isFile ( 'build/js/' + js ) ) {
-                        javascriptString += javascriptTagOpen + grunt.file.read( 'build/js/' + js ) + javascriptTagClose
+                        javascriptString += javascriptTagOpen + grunt.file.read( 'build/js/' + js ) + javascriptTagClose;
                     }
                 })
                 
@@ -69,43 +69,45 @@ module.exports = function(grunt) {
                          ,  route : pages[index].route.replace('/index.html', '')
                          ,  page : index
                          ,  weight : menu.weight
-                        }
-                    })
+                        };
+                       
+                    });
                 }
-            })
+            });
             
-            // this spaghetti maps the widgets to the taks and load data Object if type is not local
+            // this spaghetti maps the widgets to the taks and 
+            // load data Object if type is not local
             if ( source.content ) {
               _.each( source.content, function ( content, a ) {
                 _.each( source.content[a], function ( pane, b ) {
                   if ( _.isArray( source.content[a][b].widgets ) ) {
                     _.each( source.content[a][b].widgets, function ( widget, c ) {
 
-                      var spaghetti = {}
+                      var spaghetti = {};
 
-                      spaghetti[widget] = widgets[source.content[a][b].widgets[c]][source.content[a][b].language_code]
+                      spaghetti[widget] = widgets[source.content[a][b].widgets[c]][source.content[a][b].language_code];
 
                       if ( spaghetti[widget].sourceType == 'json' ) {
-                        spaghetti[widget].data = grunt.file.readJSON( __dirname + '/' + spaghetti[widget].source )   
+                        spaghetti[widget].data = grunt.file.readJSON( __dirname + '/' + spaghetti[widget].source );   
                       }
 
-                      source.content[a][b].widgets[c] = spaghetti
+                      source.content[a][b].widgets[c] = spaghetti;
 
-                    })
+                    });
                   }
-                })
-              })
+                });
+              });
             }
             
             source.menus = menus;
 
-            source.appRoot = conf.appRoot;
+            source.appRoot = conf[conf.enviorment].appRoot;  
             
             source.discovery = conf.discovery;
 
             source.appName = conf.appName;
             
-            source.appUrl = conf.appUrl;
+            source.appUrl = conf[conf.enviorment].appUrl;
             
             source.partners = widgets.partners;  
             
@@ -175,100 +177,109 @@ module.exports = function(grunt) {
         
 
   }
-
-  function targetsCallback() {
-
-    var targets = {};
-     
-    grunt.file.recurse( __dirname + '/source/js/' , function callback(abspath, rootdir, subdir, filename) {
-          var name;
-          
-          if (filename.match(".js")) {
-          
-              name = filename.replace('.js', '');
-
-              targets['build/js/' + name + '.min.js'] = abspath
-          }
-          
-    })
   
-    return targets;
+  function curlConfiguration () {
 
+      var conf = grunt.file.readJSON( __dirname + '/source/json/conf.json');
+      
+      return conf[conf.enviorment].curl;
+      
+  }
+  
+  function sassConfiguration () {
+
+      var conf = grunt.file.readJSON( __dirname + '/source/json/conf.json');
+      
+      return {
+          dist : {
+              options : conf[conf.enviorment].sass.options
+            , files: {
+                 'build/css/style.css' : __dirname + '/source/sass/style.scss'
+              }
+          }
+      };
+
+  }
+  
+  function copyConfiguration () {
+	  return {
+	      main : {
+	        expand : true ,
+	        cwd : 'source/images',
+	        src : '**/*',
+	        dest : 'build/images',
+	      }
+      };
+  }
+  
+  function cleanConfiguration () {
+      return [ 
+	      , __dirname + '/build/images', 
+	      , __dirname + '/build/css'
+	  ];  
+  }
+  
+  function watchConfiguration () {
+	  return {
+	        files: [
+	            __dirname + '/source/js/*.js'
+	          , __dirname + '/source/json/*.json'            
+	          , __dirname + '/source/sass/*.scss'
+	          , __dirname + '/source/views/*.mustache'
+	        ],
+	        tasks: [
+	            'clean'
+	          , 'copy'
+	          , 'uglify'
+	          , 'sass'
+	          , 'writeHTML'
+	        ]
+	    };
+  }
+  
+  function uglifyConfiguration () {
+	  
+	  function targetsCallback() {
+
+		    var targets = {};
+		     
+		    grunt.file.recurse( __dirname + '/source/js/' , function callback(abspath, rootdir, subdir, filename) {
+		          var name;
+		          
+		          if ( filename.match('.js') ) {
+		          
+		              name = filename.replace('.js', '');
+
+		              targets['build/js/' + name + '.min.js'] = abspath
+		          }
+		          
+		    })
+		  
+		    return targets;
+
+      }
+	  
+	  return {
+	      options : {
+	        banner : '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+	        compress : true,
+	        preserveComments : false
+	      },
+	      my_target: {
+	          files : targetsCallback()
+	      }
+      };
   }
 
   // Project configuration.
-  grunt.initConfig({
-    
-	pkg: grunt.file.readJSON('package.json'),
-    
-    curl: {
-        'recentlyAddedTitlesEN': {
-            src: 'http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fq=!ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5&&sort=ds_changed%20desc',
-            dest: 'source/json/datasources/recentlyAddedTitlesEN.json'
-        },
-        'recentlyAddedTitlesAR': {
-            src: 'http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&fq=ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5&sort=ds_changed%20desc',
-            dest: 'source/json/datasources/recentlyAddedTitlesAR.json'
-        },
-        'subject': {
-        	src: 'http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=ss_collection_identifier:7b71e702-e6b8-4f09-90c9-e5c2906f3050&rows=0&facet=true&facet.field=im_field_subject',
-        	dest: 'source/json/datasources/subject.json'
-        },
-        'drupalSubjecs' : {
-        	src: 'http://dlib.nyu.edu/books/sources/field/field_subject',
-        	dest: 'source/json/datasources/subjectsList.json'
-        }
-    },
-    
-    clean: [ 
-      , __dirname + '/build/images', 
-      , __dirname + '/build/css'
-    ],
-    copy: {
-      main: {
-        expand: true ,
-        cwd: 'source/images',
-        src: '**/*',
-        dest: 'build/images',
-      },
-    },    
-    uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-        compress: true,
-        preserveComments: false
-      },
-      my_target: {
-          files : targetsCallback()
-      }
-    },
-    sass: {
-        dist: {
-            options: {
-                style: 'compressed'
-            },
-            files: {
-               'build/css/style.css' : __dirname + '/source/sass/style.scss',
-               'build/css/book.css' : __dirname + '/source/sass/book.scss',               
-            }
-        }
-    },
-    watch: {
-        files: [
-            __dirname + '/source/js/*.js'
-          , __dirname + '/source/json/*.json'            
-          , __dirname + '/source/sass/*.scss'
-          , __dirname + '/source/views/*.mustache'
-        ],
-        tasks: [
-            'clean'
-          , 'copy'
-          , 'uglify'
-          , 'sass'
-          , 'writeHTML'          
-        ]
-    }
-      
+    grunt.initConfig({
+        pkg : grunt.file.readJSON('package.json')
+      , curl : curlConfiguration()
+      , clean : cleanConfiguration()
+      , copy : copyConfiguration()
+      , uglify : uglifyConfiguration()
+      , sass : sassConfiguration()
+      , watch : watchConfiguration()
     });
   
     grunt.loadNpmTasks('grunt-curl');
@@ -325,8 +336,8 @@ module.exports = function(grunt) {
         try {  
         
           _.each( pages, function ( element, index ) {
-            transformHTML( __dirname + '/build' + pages[index].route , index);
-          })
+              transformHTML( __dirname + '/build' + pages[index].route , index);
+          });
 
         }
         
