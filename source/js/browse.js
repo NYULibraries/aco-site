@@ -10,7 +10,7 @@ YUI().use(
 	
     'use strict';
 
-    var itemsTemplateSource = Y.one('#hbs_items').getHTML()
+    var itemsTemplateSource = Y.one('#items').getHTML()
       , itemsTemplate = Y.Handlebars.compile(itemsTemplateSource)
       , router = new Y.Router()
       , transactions = [];

@@ -41,8 +41,8 @@ module.exports = function(grunt) {
                 })
                 
                 _.each( toJSON.hbs, function ( hbs ) {
-                
-                    var handlebarsTagOpen = '<script id="hbs_'+ hbs.id +'" type="text/x-handlebars-template">'
+                	
+                    var handlebarsTagOpen = '<script id="'+ hbs.id +'" type="text/x-handlebars-template">'
                       , handlebarsTagClose = '</script>'
 
                     if ( grunt.file.isFile ( 'source/views/' + hbs.template ) ) {
@@ -113,6 +113,7 @@ module.exports = function(grunt) {
            source.css = grunt.file.read(__dirname + '/build/css/style.css');
 
             grunt.file.recurse( __dirname + '/source/views/' , function callback(abspath, rootdir, subdir, filename) {
+
               if ( filename.match(".mustache") && task + '.mustache' !== filename ) {
 
                   var name = filename.replace(".mustache", "")
@@ -149,6 +150,7 @@ module.exports = function(grunt) {
                   }
                   
               }
+
             })
         
             grunt.file.recurse( __dirname + '/source/views/' , function callback(abspath, rootdir, subdir, filename) {
@@ -213,16 +215,14 @@ module.exports = function(grunt) {
         	dest: 'source/json/datasources/subject.json'
         },
         'drupalSubjecs' : {
-        	src: 'http://alpha-user:dlts2010@dev-dl-pa.home.nyu.edu/books/sources/field/field_subject',
-        	dest: 'source/json/datasources/subjectsList.json'        	
-        	
+        	src: 'http://dlib.nyu.edu/books/sources/field/field_subject',
+        	dest: 'source/json/datasources/subjectsList.json'
         }
     },
     
     clean: [ 
       , __dirname + '/build/images', 
       , __dirname + '/build/css'
-      , __dirname + 'source/json/datasources'
     ],
     copy: {
       main: {
@@ -301,15 +301,15 @@ module.exports = function(grunt) {
         _.each( drupal_subjects_source , function ( subject, index ) {
         	subjects.push( { term : subject.value, tid : subject.raw_value })
         })
-        	  
+
         _.each( _.filter( terms, function ( term ) { return _.isString( term ) } ), function ( subject, index ) {
-        	 
+
         	 var z = _.findWhere( subjects, { tid :  subject });
-        	 
+
         	 if ( z ) {
         	     subjects_source_map.push ( z )
         	 }
-        	     
+
         })
         
    	    grunt.file.write( __dirname + '/source/views/subjectsList.mustache', jsonScriptTagOpen + JSON.stringify( subjects_source_map ) + jsonScriptTagClose  )

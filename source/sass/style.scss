@@ -643,7 +643,6 @@ body.subject {
 }
 
 select#browse-select {
-    display: none;
     float: right;
     padding-bottom: 6px;
     font-size: .75em;
@@ -815,11 +814,16 @@ select#browse-select {
     }
 }
 
-/**
-#bs-example-navbar-collapse-1 {
-  clear: both;
-  overflow: hidden;
-  zoom: 1;
-  height: 0; 
+.widget {
+  &.book {
+      width: 100%;
+      opacity: 0;
+  }
 }
-*/
+
+@import "bubbling";
+
+.hiddenSiblings {
+  display: none;
+  visibility: hidden;
+}

@@ -9,12 +9,12 @@ YUI().use(
 
     'use strict';
 
-    var itemsTemplateSource = Y.one('#hbs_items').getHTML()
+    var itemsTemplateSource = Y.one('#items').getHTML()
       , itemsTemplate = Y.Handlebars.compile(itemsTemplateSource)
-      , router = new Y.Router()
-      , transactions = []    
       , nrSource = Y.one('#noresults').getHTML()
-      , noresultsTemplate = Y.Handlebars.compile(nrSource);
+      , noresultsTemplate = Y.Handlebars.compile(nrSource)
+      , router = new Y.Router()
+      , transactions = [];      
 
     function getRoute () {
 

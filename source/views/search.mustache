@@ -27,7 +27,7 @@
           {{#fq}}
           data-fq-{{ filter }}="{{ value }}"
           {{/fq}}
-          data-script='{ "js" : [ "search.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" } ] }'
+          data-script='{ "js" : [ "search.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" }, { "template" : "noresults.hbs", "id" : "noresults" } ] }'
         ></div>
         <div class="text-center">
           <div id="paginator" class="pagination"></div>
@@ -35,16 +35,6 @@
       {{/items}}
     {{/content}}    
   </main>
-  <script id="noresults" type="text/x-handlebars-template">
-    <div class="col-l" lang="en" dir="ltr">
-          <p>Sorry, no results found.</p>
-          <p>Try a different term.</p>
-    </div>
-    <div class="col-r" lang="ar" dir="rtl">
-          <p>عذراً، لا توجد نتائج.</p>
-          <p>إبحث عن مصطلح آخر.</p>
-    </div>  
-  </script>   
   {{> footer }}
   {{{ closure }}}
 </body>

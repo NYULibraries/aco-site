@@ -96,7 +96,7 @@ YUI.add("crossframe", function (Y) {
             try {
                 window[tid](data);
             } catch (e2) {
-                Y.log(e2.message, "error", MODULE_ID);
+                // Y.log(e2.message, "error", MODULE_ID);
             }
             return;
         }
@@ -165,7 +165,7 @@ YUI.add("crossframe", function (Y) {
      * @return void
      */
     _bindOpener = function () {
-        Y.log("_bindOpener() is executed.", "info", MODULE_ID);
+        // Y.log("_bindOpener() is executed.", "info", MODULE_ID);
         if (typeof window.opener === "undefined" || typeof window.opener.messageCallbackAdapter === "undefined") {
             Y.later(100, null, arguments.callee);
             return;
@@ -183,13 +183,13 @@ YUI.add("crossframe", function (Y) {
      * @return void
      */
     _init = function () {
-        Y.log("_init(): is executed", "info", MODULE_ID);
+        // Y.log("_init(): is executed", "info", MODULE_ID);
         if (typeof window.addEventListener !== "undefined") { // W3C browsers.
             window.addEventListener("message", _onMessage, false);
         } else if (typeof window.attachEvent !== "undefined" && Y.UA.ie >= 8) { // IE browsers.
             window.attachEvent("onmessage", _onMessage);
         } else {
-            Y.log("_init(): This browser doesn't support onmessage event.", "info", MODULE_ID);
+            // Y.log("_init(): This browser doesn't support onmessage event.", "info", MODULE_ID);
         }
     };
 
@@ -215,7 +215,7 @@ YUI.add("crossframe", function (Y) {
         if (typeof _openerObject.messageReceiveAdapter === "undefined") {
             _retryCounter++;
             if (_retryCounter > RETRY_AMOUNT) {
-                Y.log("_postMessageByOpener() - It fails because target frame have no window.opener.messageReceiveAdapter.", "info", MODULE_ID);
+                // Y.log("_postMessageByOpener() - It fails because target frame have no window.opener.messageReceiveAdapter.", "info", MODULE_ID);
                 appendFrame(proxyUrl + "#" + dataString); // Fallback.
                 return;
             }
@@ -239,7 +239,7 @@ YUI.add("crossframe", function (Y) {
      * @return {Y.EventTarget}
      */
     addPublisher = function (eventType, eventName) {
-        Y.log("addPublisher() is executed.", "info", MODULE_ID);
+        // Y.log("addPublisher() is executed.", "info", MODULE_ID);
         var publisher = new Y.EventTarget();
         eventName = eventName || "";
         publisher.name = eventName;
@@ -258,7 +258,7 @@ YUI.add("crossframe", function (Y) {
      * @return void
      */
     appendFrame = function (url) {
-        Y.log("appendFrame(): is executed", "info", MODULE_ID);
+        // Y.log("appendFrame(): is executed", "info", MODULE_ID);
 
         var iframeEl,
             iframeNode,
@@ -313,18 +313,18 @@ YUI.add("crossframe", function (Y) {
      * @return void
      */
     postMessage =  function (target, message, config) {
-        Y.log("postMessage(): is executed", "info", MODULE_ID);
+        // Y.log("postMessage(): is executed", "info", MODULE_ID);
         var pattern = /frames\[['"](^].)['"]\]/gi;
 
         // Check required arguments. Both target and message arguments is required.
         if (!target || !message) {
-            Y.log("You have to provide both target and message arguments.", "error", MODULE_ID);
+            // Y.log("You have to provide both target and message arguments.", "error", MODULE_ID);
             return;
         }
 
         // Check if target string is in right format.
         if (!Y.Lang.isObject(target) && !PATTERN.test(target)) {
-            Y.log("Frame string format error!\n" + target, "error", MODULE_ID);
+            // Y.log("Frame string format error!\n" + target, "error", MODULE_ID);
             return;
         }
 
@@ -397,7 +397,7 @@ YUI.add("crossframe", function (Y) {
             // By default, this library uses IE 7- opener hack to post message (It has no GET limitation).
             // However, for window.open() situation we should avoid this hack because it might cause opener object fails.
             if (target !== "opener" && !config.useProxy) {
-                Y.log("postMessage() - You are using opener hack approach.", "info", MODULE_ID);
+                // Y.log("postMessage() - You are using opener hack approach.", "info", MODULE_ID);
                 if (!_openerObject) {
                     _openerObject = {};
                     _openerObject.messageCallbackAdapter = _messageCallbackAdapter;
@@ -408,10 +408,10 @@ YUI.add("crossframe", function (Y) {
                 return;
             }
             if (!config.proxy) {
-                Y.log("You can't use Y.CrossFrame.postMessage in this legend browser without providing proxy URL", "error", MODULE_ID);
+                // Y.log("You can't use Y.CrossFrame.postMessage in this legend browser without providing proxy URL", "error", MODULE_ID);
                 return;
             }
-            Y.log("postMessage() - You are using iframe in iframe approach.", "info", MODULE_ID);
+            // Y.log("postMessage() - You are using iframe in iframe approach.", "info", MODULE_ID);
             appendFrame(config.proxy + "#" + dataString);
             break;
         case true: // HTML5's way to post message to different frames without domain security restriction
@@ -419,7 +419,7 @@ YUI.add("crossframe", function (Y) {
             try {
                 target = eval(target);
             } catch (e) {
-                Y.log(e.message, "error", MODULE_ID);
+                // Y.log(e.message, "error", MODULE_ID);
                 return;
             }
             target.postMessage(dataString, "*");
@@ -486,7 +486,7 @@ YUI.add("crossframe", function (Y) {
      * @return void
      */
     messageReceiveAdapter = function (dataString, sourceWin) {
-        Y.log("messageReceiveAdapter() is executed.", "info", MODULE_ID);
+        // Y.log("messageReceiveAdapter() is executed.", "info", MODULE_ID);
 
         // Reproduce event object.
         var evt  = {},
@@ -516,7 +516,7 @@ YUI.add("crossframe", function (Y) {
      * @static
      */
     messageReceiveEvent = (function () {
-        Y.log("messageReceiveEvent(): is executed", "info", MODULE_ID);
+        // Y.log("messageReceiveEvent(): is executed", "info", MODULE_ID);
         return addPublisher(DEFAULT_EVENT, "Cross-frame Message Publisher");
     }());
 
