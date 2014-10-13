@@ -10,7 +10,7 @@
     width: 10px;
     height: 10px;
     margin: 25px auto;
-    background: #000000;
+    background: #27205a;
     -moz-border-radius: 50px;
     -moz-animation: bubblingG 1.3s infinite alternate;
     -webkit-border-radius: 50px;
@@ -51,14 +51,14 @@
     0% {
         width: 10px;
         height: 10px;
-        background-color: #000000;
+        background-color: #27205a;
         -moz-transform: translateY(0);
     }
 
     100% {
         width: 24px;
         height: 24px;
-        background-color: #FFFFFF;
+        background-color: #f9f1e7;
         -moz-transform: translateY(-21px);
     }
 }
@@ -67,14 +67,14 @@
     0% {
         width: 10px;
         height: 10px;
-        background-color: #000000;
+        background-color: #27205a;
         -webkit-transform: translateY(0);
     }
 
     100% {
         width: 24px;
         height: 24px;
-        background-color: #FFFFFF;
+        background-color: #f9f1e7;
         -webkit-transform: translateY(-21px);
     }
 }
@@ -83,14 +83,14 @@
     0% {
         width: 10px;
         height: 10px;
-        background-color: #000000;
+        background-color: #27205a;
         -ms-transform: translateY(0);
     }
 
     100% {
         width: 24px;
         height: 24px;
-        background-color: #FFFFFF;
+        background-color: #f9f1e7;
         -ms-transform: translateY(-21px);
     }
 }
@@ -99,14 +99,14 @@
     0% {
         width: 10px;
         height: 10px;
-        background-color: #000000;
+        background-color: #27205a;
         -o-transform: translateY(0);
     }
 
     100% {
         width: 24px;
         height: 24px;
-        background-color: #FFFFFF;
+        background-color: #f9f1e7;
         -o-transform: translateY(-21px);
     }
 }
@@ -115,14 +115,14 @@
     0% {
         width: 10px;
         height: 10px;
-        background-color: #000000;
+        background-color: #27205a;
         transform: translateY(0);
     }
 
     100% {
         width: 24px;
         height: 24px;
-        background-color: #FFFFFF;
+        background-color: #f9f1e7;
         transform: translateY(-21px);
     }
 }
@@ -139,6 +139,6 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    margin-top: -50px;
-    margin-left: -100px;
+    margin-top: -25px;
+    margin-left: -40px;
 }
