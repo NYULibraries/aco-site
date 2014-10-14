@@ -533,6 +533,7 @@ ul.resources {
         font-weight: bold;
         margin-top: 0;
         margin-bottom: 0;
+        line-height: 1rem;
     }
     .link {
         margin-bottom: .3em;
@@ -545,7 +546,7 @@ ul.resources {
     }
     [lang="ar"] & {
         h3 {
-            line-height: 1.5;
+            line-height: 1rem;
             margin-bottom: .1rem;
         }
         .link {
@@ -739,7 +740,9 @@ select#browse-select {
         border: none;
     }
 }
-
+.text-center {
+    text-align: center;
+}
 .pagination {
     margin: 1em auto;
     width: auto;
