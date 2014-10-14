@@ -13,7 +13,8 @@
 
 // Core CSS
 @import "bootstrap/scaffolding";
-@import "bootstrap/type";
+
+//@import "bootstrap/type";
 
 //@import "bootstrap/code";
 //@import "bootstrap/grid";
@@ -76,36 +77,66 @@ body {
 }
 
 [lang="ar"] {
-    font-family: 'Amiri', $font-family-serif;
+    font-family: "Amiri", $font-family-serif;
     line-height: 1.7;
 }
 
 .container-fluid {
     max-width: 990px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 5%;
+    padding-right: 5%;
+    @media (min-width: $grid-float-breakpoint) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
     margin: 0px auto;
     width: 100%;
     overflow: hidden;
 }
 
-.front main h2 {
-    display: none;
+.front .col {
+    margin-top: 1em;
+    margin-top: 1rem;
 }
 
 main {
-    margin: 3em auto 6em;
     min-height: 400px;
-    h2 {
+    ul {
+        margin: 1rem 0;
+        padding: 0;
+        list-style-position: inside;
+    }
+    li {
+        padding-left: .1rem;
+        padding-right: .1rem;
+    }
+    p {
+        margin: 1rem 0;
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+    .special-thanks {
+        margin-top: 2.5rem;
+    }
+    h2.page-title {
         font-size: 2rem;
         font-weight: 300;
-        margin-bottom: 1.5rem;
         text-shadow: 0px 0px 1px white;
+        &[lang="en"] {
+            float: left;
+            clear: left;
+            margin-bottom: 0;
+        }
+        &[lang="ar"] {
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+        }
     }
     h3 {
         font-size: 1.3rem;
-        font-weight: 300;
-        margin-bottom: 1.5rem;
+        font-weight: 400;
+        margin: 2.5rem 0 .5rem;
         text-shadow: 0px 0px 1px white;
     }
     header {
@@ -122,7 +153,21 @@ main {
         padding-right: 10px;
         display: inline-block;
     }
-    .intro, .featured, .col-l, .col-r {
+    .col-r {
+        // in mobile view, add some space above arabic text
+        margin-top: 3em;
+        padding-top: 3em;
+        box-shadow: 0px -1px 0px 0px #DECCBF;
+        border-top: 1px solid #FFFFFF;
+        @media (min-width: $grid-float-breakpoint) {
+            // in desktop view, we don't need space above arabic text
+            margin-top: 0em;
+            padding-top: 0em;
+            box-shadow: none;
+            border-top: none;
+        }
+    }
+    .featured, .col-l, .col-r {
         @media (min-width: $grid-float-breakpoint) {
             width: 46%;
             &[lang="ar"] {
@@ -138,25 +183,14 @@ main {
             }
         }
     }
-    h2.page-title[lang="en"] {
-        float: left;
-        clear: left;
-    }
-    .intro {
-        margin: 0;
-    }
+    // Featured is on home page
     .featured {
-        
         h3 {
             background-color: #ECDCC8;
-            padding: 17px 25px 5px;
             text-transform: uppercase;
-            //font: normal 1.1rem / 1 $font-family-sans-serif;
             color: #6E665D;
-            /* border: 1px solid #ECDCC8; */
-            margin-bottom: 0;
+            margin: 1.5rem 0 0;
             background-size: auto 100%;
-            border-radius: 9% 10% 0% 0%/50% 50% 0% 0%;
             border-radius: 5% 5% 0% 0%/100% 100% 0% 0%;
             -webkit-background-clip: padding-box;
             -moz-background-clip: padding;
@@ -165,6 +199,7 @@ main {
         }
         &[lang="en"] h3 {
             // screen smart book
+            padding: 15px 25px 7px;
             font-family: 'Gotham SSm 4r', 'Gotham SSm A', 'Gotham SSm B', Helvetica, sans-serif;
             font-weight: 400;
             font-style: normal;
@@ -186,7 +221,7 @@ main {
             padding: 20px 25px;
             border: 1px solid #ECDCC8;
         }
-        article>ul {
+        article > ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
@@ -223,24 +258,22 @@ main {
             }
             &:last-child {
                 hr {
-                     border-bottom:none;
+                    border-bottom: none;
                 }
             }
         }
         &[lang="en"] .itemhome {
             font-family: $font-family-serif;
         }
-        &[lang="ar"] {
-            .itemhome {
-                .thumbs {
-                    float: right;
-                }
-                .meta {
-                    margin: 0 21% 0 0;
-                }
-                .title {
-                    font-size: 1.2em;
-                }
+        &[lang="ar"] .itemhome {
+            .thumbs {
+                float: right;
+            }
+            .meta {
+                margin: 0 21% 0 0;
+            }
+            .title {
+                font-size: 1.2em;
             }
         }
     }
@@ -261,7 +294,7 @@ main {
     display: table !important;
     width: 100%;
     // for mobile, they are stacked
-    >div {
+    > div {
         &[lang="en"] {
             display: table-header-group;
         }
@@ -376,7 +409,7 @@ nav.navbar.navbar-default {
         // full size
         margin-top: 0;
         @include box-shadow(0px 0px 16px 0px rgba(110, 102, 93, 0.3));
-        .nav > li:first-child> a {
+        .nav > li:first-child > a {
             padding-left: 0;
         }
     }
@@ -483,92 +516,24 @@ nav.navbar.navbar-default {
     }
 }
 
-body.subject {
-    .main h2 {
-        .subjectname {
-            display: inline-block;
-            &:first-letter {
-                text-transform: capitalize;
-            }
-        }
-    }
-    .subjectlabel {
-        font-size: 1em;
-        font-size: 1rem;
-        color: #666;
-    }
-    .main header {
-        // text-align: left;
-        //  position: relative;
-        // z-index: -20;
-        //background-color: #eee;
-   
-    }
-    .subcat-nav.navbar {
-        border-radius: 0;
-        h3 {
-            color: #666;
-            font-size: 1em;
-            font-size: 1rem;
-            font-weight: 300;
-            line-height: 22px;
-            padding: 5px 10px 5px 0;
-            margin: 0;
-            background-color: #F9F1E7;
-        }
-        .navbar-nav {
-            float: none;
-            text-align: center;
-            // background-color: #DECCBF;
-            border-bottom: 1px solid #bbb;
-            padding: 5px 5px 5px 0;
-            width: auto;
-            height: 25px;
-            overflow: visible;
-            > li > a {
-                @include box-shadow(1px 1px 3px 0px rgba(110, 102, 93, 0.3));
-                background-color: #FCF9F4;
-                border: 1px solid #bbb;
-                padding: 5px 10px;
-                margin-left: 12px;
-                &:hover {
-                    background-color: #fff;
-                }
-                &.active {
-                    @include box-shadow(inset 0px 0px 9px 1px rgba(110, 102, 93, 0.1));
-                    @include box-shadow(none);
-                    background-color: #dedede;
-                    background-color: #F9F1E7;
-                    border: 1px solid #bbb;
-                    padding: 5px 10px;
-                    margin-left: 12px;
-                    line-height: 22px;
-                    display: block;
-                    color: #555;
-                    color: #666;
-                    font-size: 1em;
-                    font-size: 1rem;
-                    font-weight: 300;
-                }
-            }
-        }
-    }
-    .item-list {
-        padding: 15px;
-        background-color: #FCF9F4;
-    }
-}
-
-.resources {
+ul.resources {
     padding-left: 0px;
     padding-right: 0px;
     list-style-type: none;
+    margin-top: .5rem;
+    li {
+        margin-top: 1.5rem;
+        &:first-child {
+            margin-top: 0em;
+        }
+    }
     h3 {
         font-size: 1em;
-        font-size: 1.1;
+        font-size: 1.1rem;
         font-weight: bold;
-        margin-bottom: .3em;
-        margin-bottom: .3rem;
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 1rem;
     }
     .link {
         margin-bottom: .3em;
@@ -581,7 +546,7 @@ body.subject {
     }
     [lang="ar"] & {
         h3 {
-            line-height: 1.5;
+            line-height: 1rem;
             margin-bottom: .1rem;
         }
         .link {
@@ -731,7 +696,7 @@ select#browse-select {
         }
     }
     .md_title {
-         font-weight: bold;
+        font-weight: bold;
     }
     .md_label {
         font-weight: bold;
@@ -775,7 +740,9 @@ select#browse-select {
         border: none;
     }
 }
-
+.text-center {
+    text-align: center;
+}
 .pagination {
     margin: 1em auto;
     width: auto;
@@ -815,15 +782,15 @@ select#browse-select {
 }
 
 .widget {
-  &.book {
-      width: 100%;
-      opacity: 0;
-  }
+    &.book {
+        width: 100%;
+        opacity: 0;
+    }
 }
 
 @import "bubbling";
 
 .hiddenSiblings {
-  display: none;
-  visibility: hidden;
+    display: none;
+    visibility: hidden;
 }

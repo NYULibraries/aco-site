@@ -1,13 +1,13 @@
 {
     "appName": "Arabic Collections Online",
-    "environment" : "local",
+    "environment" : "development",
     "development" : {
         "appUrl": "http://dev-dl-pa.home.nyu.edu/aco",
         "appRoot": "/aco",
         "sass" : {
             "build" : "inline"
           , "options" : {
-                "style" : "expanded"
+                "style" : "compressed"
               , "debugInfo" : true
               , "lineNumbers" : true
             }
@@ -32,10 +32,11 @@
         }
     },
     "local" : {
-        "appUrl" : "http://localhost:8000/aco",
+        "appUrl" : "http://localhost/aco",
         "appRoot" : "/aco",
+        "bookRoot" : "http://dlib.nyu.edu/books",
         "sass" : {
-            "build" : "inline"
+            "build" : "external"
           , "options" : {
                 "style" : "compressed"
               , "debugInfo" : true

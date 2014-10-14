@@ -1,5 +1,5 @@
 # Require any additional compass plugins here.
-require 'ninesixty'    
+#require 'ninesixty'    
 
 css_dir = "css"
 sass_dir = "sass"
