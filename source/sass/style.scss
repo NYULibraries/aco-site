@@ -101,6 +101,9 @@ body {
 
 main {
     min-height: 400px;
+    a:link,a:focus {
+        font-weight: bold;
+    }
     ul {
         margin: 1rem 0;
         padding: 0;
