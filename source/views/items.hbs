@@ -11,7 +11,8 @@
         <div><span class="md_label">Publisher:</span> {{#each sm_publisher}}<span>{{this}}</span>{{/each}}</div>                        
         <div><span class="md_label">Date of publication:</span> {{ss_pubdate}}</div>                        
         <div><span class="md_label">Subject:</span> {{#each sm_subject}}<span class="md_subject">{{this}}</span>{{/each}}</div>
-        <div><span class="md_label">Provider:</span> {{#each sm_partner}}<span>{{this}}</span>{{/each}}</div>                        
+        <div><span class="md_label">Provider:</span> {{#each sm_partner}}<span>{{this}}</span>{{/each}}</div>
+        <div><span class="md_label">Country of Publication:</span> {{ss_publocation}}</div>                            
       </div>
     </div>
     <div dir="rtl" lang="ar">
@@ -21,6 +22,7 @@
       <div dir="rtl" lang="ar"><span class="md_label">تاريخ النشر:</span> {{ss_ar_pubdate}}</div>                        
       <div class="md_subjects" dir="rtl" lang="ar"><span class="md_label">الموضوع:</span> {{#each sm_ar_subject}}<span class="md_subject">{{this}}</span>{{/each}}</div>
       <div dir="rtl" lang="ar"><span class="md_label">شريك:</span> {{#each sm_ar_partner}}<span>{{this}}</span>{{/each}}</div>  
+      <div><span class="md_label">Country of Publication:</span> {{ss_publocation}}</div>      
     </div>                      
   </div>
   {{/items}}

@@ -67,7 +67,8 @@
                  , "sm_publisher"                 
                  , "ss_pubdate"
                  , "sm_partner"
-                 , "sm_subject" 
+                 , "sm_subject"
+                 , "ss_publocation"
                  , "ss_ar_title"
                  , "sm_ar_author"
                  , "sm_ar_publisher"
@@ -78,7 +79,8 @@
                  , "ss_longlabel"
                  , "ss_ar_title"      
                  , "ss_sauthor"
-                 , "ss_ar_sauthor"              
+                 , "ss_ar_sauthor"   
+                 , "ss_ar_publocation"           
           ],
           "fq" : [
             { 
@@ -191,6 +193,7 @@
                    , "ss_pubdate"
                    , "sm_partner"
                    , "sm_subject" 
+                   , "ss_publocation"    
                    , "ss_ar_title"
                    , "sm_ar_author"
                    , "sm_ar_publisher"
@@ -201,7 +204,8 @@
                    , "ss_longlabel"
                    , "ss_ar_title"      
                    , "ss_sauthor"
-                   , "ss_ar_sauthor"              
+                   , "ss_ar_sauthor" 
+                   , "ss_ar_publocation"                 
               ],
               "fq" : [
                   { 
@@ -225,7 +229,7 @@
       "title": "Book",
       "bodyClass" : "book",
       "bookTheme": "aco" ,
-      "sourceUrl": "http://dlib.nyu.edu/books",
+      "sourceUrl": "http://dev-dl-pa.home.nyu.edu/books",
       "route": "/book/index.html"
     }
 }
