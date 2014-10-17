@@ -775,14 +775,27 @@ select#browse-select {
     }
 }
 
+/** Elements that are not meant to be seen until io its loading */
 .io-loading {
-    .resultsnum {
+    .resultsnum, 
+    #browse-select {
         position: absolute !important;
         height: 1px;
         width: 1px;
         overflow: hidden;
         clip: rect(1px 1px 1px 1px);
     }
+}
+
+.items-no-results {
+  .resultsnum, 
+  #browse-select {  
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px);
+  }
 }
 
 .widget {

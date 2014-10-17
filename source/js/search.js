@@ -504,6 +504,8 @@ YUI().use(
               , docslength = parseInt(response.response.docs.length, 10)
               , q = getParameterByName('q')
               , appRoot = Y.one('body').getAttribute('data-app');
+            
+            Y.one('body').removeClass('io-loading');            
               
             if ( numfound > 0 ) {
               
@@ -538,16 +540,18 @@ YUI().use(
                         app: { appRoot : appRoot }
                     })
                 );
+                
+                Y.one('body').removeClass('items-no-results');
 
                 args.container.setAttribute( 'data-requesterror', 0 );
 
-                Y.one('body').removeClass('io-loading');
-            
             }
             
             // no results
             else {
-          
+              
+              Y.one('body').addClass('items-no-results');
+
               node.append(noresultsTemplate());
             
             }
