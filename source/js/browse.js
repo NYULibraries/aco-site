@@ -268,44 +268,7 @@ YUI().use(
     // Sort
     Y.one('body').delegate('change', onSelectChange, '#browse-select');
     
-    /**
-     * add fx plugin to module body
+  
     
-    var content = Y.one('#bs-example-navbar-collapse-1').plug(Y.Plugin.NodeFX, {
-        from: { height: 0 },
-        to: {
-            height: function( node ) { return node.get('scrollHeight'); }
-        },
-        easing: Y.Easing.easeIn,
-        on: {
-        	end: function () {
-        		var responsiveMenu = Y.one('#bs-example-navbar-collapse-1');
-        		
-        		responsiveMenu.toggleClass('in');
-
-        	},
-        	start: function() {
-        		
-        	    var responsiveToggleButton = Y.one('.navbar-toggle');
-        	        
-        	    responsiveToggleButton.toggleClass('collapsed');
-
-        	}
-        },
-        duration: 0.5
-    });    
-
-    function onResponsiveClick( event ) {
-    	
-    	event.preventDefault();
-    	
-    	content.fx.set('reverse', !content.fx.get('reverse')); 
-        
-        content.fx.run();
-    	
-    }
-    
-    Y.one('body').delegate('click', onResponsiveClick, '.navbar-toggle');
-    */
 
 });

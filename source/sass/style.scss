@@ -30,7 +30,7 @@
 //@import "bootstrap/button-groups";
 //@import "bootstrap/input-groups";
 @import "bootstrap/navs";
-@import "bootstrap/navbar";
+@import "aconavbar";
 
 //@import "bootstrap/breadcrumbs";
 @import "bootstrap/pagination";
@@ -725,12 +725,6 @@ select#browse-select {
     }
     .container-fluid {
         max-width: none;
-    }
-    .navbar-collapse.collapse {
-        display: none;
-    }
-    .navbar-collapse.collapse.in {
-        display: block;
     }
     h1.title, .titlebar {
         // background: #5e4625;
