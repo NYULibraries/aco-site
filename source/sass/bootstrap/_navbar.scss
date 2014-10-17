@@ -311,8 +311,8 @@
   @include box-shadow($shadow);
 
   // Mixin behavior for optimum display
-  @extend .form-inline;
-
+  // modified LMH 10/16/2014
+  @extend .form-inline !optional;
   .form-group {
     @media (max-width: $grid-float-breakpoint-max) {
       margin-bottom: 5px;
