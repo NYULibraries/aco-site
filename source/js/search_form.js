@@ -1,9 +1,8 @@
-YUI().use("node", "event", 'anim', function(Y) {
+YUI().use("node", "event", function(Y) {
 
     "use strict";
 
     var body = Y.one("body");
-
     
     function onSubmit(event) {
 
@@ -19,6 +18,7 @@ YUI().use("node", "event", 'anim', function(Y) {
         }
 
     }
-  body.delegate("submit", onSubmit, "form");
+    
+    body.delegate("submit", onSubmit, "form");
  
 });
