@@ -4,25 +4,6 @@ YUI().use("node", "event", 'anim', function(Y) {
 
     var body = Y.one("body");
 
-    
-    function onSubmit(event) {
-
-        event.preventDefault();
-
-        var currentTarget = event.currentTarget
-          , input = currentTarget.one('[type="text"]')
-          , value = input.get("value");
-        
-        if ( value.length ) {
-            
-            location.href = currentTarget.get("action") + "?q=" + value.trim().replace(/\s/g, '+').toLowerCase();
-        }
-
-    }
-  
-   
-    body.delegate("submit", onSubmit, "form");
-
 
     /**
      * add fx plugin to module body
@@ -33,7 +14,7 @@ YUI().use("node", "event", 'anim', function(Y) {
         to: {
             height: 0 
         },
-        easing: Y.Easing.easeOut,
+        easing: Y.Easing.easeBoth,
         on: {
             end: function () {
                 Y.log("animation ended");
@@ -49,7 +30,7 @@ YUI().use("node", "event", 'anim', function(Y) {
                 // responsiveMenu.removeClass('collapsed');
             }
         },
-        duration: .5
+        duration: .3
     });    
 
     function onResponsiveClick( event ) {
