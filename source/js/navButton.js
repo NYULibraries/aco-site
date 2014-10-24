@@ -4,7 +4,6 @@ YUI().use("node", "event", 'anim', function(Y) {
 
     var body = Y.one("body");
 
-
     /**
      * add fx plugin to module body
     */
@@ -17,24 +16,14 @@ YUI().use("node", "event", 'anim', function(Y) {
         easing: Y.Easing.easeBoth,
         on: {
             end: function () {
-                Y.log("animation ended");
                 var responsiveToggleButton = Y.one('.navbar-toggle');
                 responsiveToggleButton.toggleClass('collapsed');
-
-                // var responsiveMenu = Y.one('.navbar-collapse');
-                //responsiveMenu.addClass('collapse');
-            },
-            start: function() {
-                 Y.log("animation started ");
-                 // var responsiveMenu = Y.one('.navbar-collapse');
-                // responsiveMenu.removeClass('collapsed');
             }
         },
         duration: .3
     });    
 
     function onResponsiveClick( event ) {
-        Y.log("click");
         event.preventDefault();
         content.fx.set('reverse', !content.fx.get('reverse')); 
         content.fx.run();

@@ -8,21 +8,22 @@
       <div lang="en">
         <div class="md_title"><span class="md_label">Title:</span> <a href="{{../app.appRoot}}/book/{{ss_identifer}}">{{ss_title}}</a></div>                
         <div><span class="md_label">Author:</span> {{#each sm_author}}<span>{{this}}</span>{{/each}}</div>                        
-        <div><span class="md_label">Publisher:</span> {{#each sm_publisher}}<span>{{this}}</span>{{/each}}</div>                        
+        <div><span class="md_label">Publisher:</span> {{#each sm_publisher}}<span>{{this}}</span>{{/each}}</div>
+        <div><span class="md_label">Place of Publication:</span> {{ss_publocation}}</div>                        
         <div><span class="md_label">Date of publication:</span> {{ss_pubdate}}</div>                        
         <div><span class="md_label">Subject:</span> {{#each sm_subject}}<span class="md_subject">{{this}}</span>{{/each}}</div>
         <div><span class="md_label">Provider:</span> {{#each sm_partner}}<span>{{this}}</span>{{/each}}</div>
-        <div><span class="md_label">Country of Publication:</span> {{ss_publocation}}</div>                            
+                                    
       </div>
     </div>
     <div dir="rtl" lang="ar">
       <div dir="rtl" lang="ar" class="md_title"><span class="md_label">العنوان:</span> <a href="{{../app.appRoot}}/book/{{ss_identifer}}">{{ss_ar_title}}</a></div>
       <div dir="rtl" lang="ar"><span class="md_label">المؤلف:</span> {{sm_ar_author}}</div>                        
-      <div dir="rtl" lang="ar"><span class="md_label">الناشر:</span> {{sm_ar_publisher}}</div>                        
+      <div dir="rtl" lang="ar"><span class="md_label">الناشر:</span> {{sm_ar_publisher}}</div>
+      <div dir="rtl" lang="ar"><span class="md_label">مكان النشر:</span> {{ss_ar_publocation}}</div>   
       <div dir="rtl" lang="ar"><span class="md_label">تاريخ النشر:</span> {{ss_ar_pubdate}}</div>                        
       <div class="md_subjects" dir="rtl" lang="ar"><span class="md_label">الموضوع:</span> {{#each sm_ar_subject}}<span class="md_subject">{{this}}</span>{{/each}}</div>
-      <div dir="rtl" lang="ar"><span class="md_label">شريك:</span> {{#each sm_ar_partner}}<span>{{this}}</span>{{/each}}</div>  
-      <div><span class="md_label">Country of Publication:</span> {{ss_publocation}}</div>      
+      <div dir="rtl" lang="ar"><span class="md_label">شريك:</span> {{#each sm_ar_partner}}<span>{{this}}</span>{{/each}}</div>       
     </div>                      
   </div>
   {{/items}}
