@@ -1,4 +1,4 @@
-/*  Bootstrap */
+//Bootstrap
 
 // Core variables and mixins
 @import "bootstrap/variables";
@@ -82,6 +82,7 @@ body {
 }
 
 .container-fluid {
+    width: 100%;
     max-width: 990px;
     padding-left: 5%;
     padding-right: 5%;
@@ -90,7 +91,6 @@ body {
         padding-right: 20px;
     }
     margin: 0px auto;
-    width: 100%;
     overflow: hidden;
 }
 
@@ -101,7 +101,7 @@ body {
 
 main {
     min-height: 400px;
-    a:link,a:focus {
+    a:link, a:focus {
         font-weight: bold;
     }
     ul {
@@ -671,6 +671,9 @@ select#browse-select {
                 padding: 20px 0;
                 clear: left;
                 text-align: right;
+                span {
+                    word-wrap: break-word;
+                }
             }
             @media (min-width: $grid-float-breakpoint) {
                 &.l-hold {
@@ -706,11 +709,22 @@ select#browse-select {
     .md_subject {
         display: block;
     }
+    .md_subject:nth-child(2) {
+        display: inline-block;
+    }
     .md_subjects {
+        // tighten space for english words on the arabic side
         line-height: 1.25;
         .md_label {
             line-height: 1.7;
         }
+    }
+    // for multiple authors
+    .md_author {
+        display: block;
+    }
+    .md_author:nth-child(2) {
+        display: inline-block;
     }
 }
 
@@ -732,7 +746,7 @@ select#browse-select {
         // background-image: -moz-linear-gradient( center top, rgb(122,98,65) 0%, rgb(107,83,50) 50%, rgb(94,70,37) 75% );
         background: #492602;
     }
-    iframe#book {
+    #book {
         border: none;
     }
 }
@@ -771,7 +785,7 @@ select#browse-select {
 
 /** Elements that are not meant to be seen until io its loading */
 .io-loading {
-    .resultsnum, 
+    .resultsnum,
     #browse-select {
         position: absolute !important;
         height: 1px;
@@ -782,14 +796,14 @@ select#browse-select {
 }
 
 .items-no-results {
-  .resultsnum, 
-  #browse-select {  
-    position: absolute !important;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    clip: rect(1px 1px 1px 1px);
-  }
+    .resultsnum,
+    #browse-select {
+        position: absolute !important;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+        clip: rect(1px 1px 1px 1px);
+    }
 }
 
 .widget {
