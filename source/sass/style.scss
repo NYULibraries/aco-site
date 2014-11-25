@@ -417,6 +417,7 @@ nav.navbar.navbar-default {
     }
     @media (max-width: $grid-float-breakpoint-max) {
         // mobile-friendly dropdown
+        border-bottom: none;
         min-height: 0;
         .container-fluid {
             overflow: visible;
@@ -438,6 +439,7 @@ nav.navbar.navbar-default {
             }
         }
         .navbar-collapse {
+            border:none;
             clear: right;
             .nav > li > a {
                 padding: 15px 20px;
@@ -728,7 +730,9 @@ select#browse-select {
     }
 }
 
-.book {
+body.book {
+    overflow-y: hidden;
+    
     .navbar {
         margin-bottom: 0;
     }
