@@ -56,7 +56,7 @@
     "bodyClass": "browse io-loading",
     "content": {
       "items": {
-        "source": "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select",
+        "source": "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select",
         "rows": 10,
         "fl": [
           "ss_thumbnail", "ss_identifer", "ss_title", "sm_author", "sm_publisher", "ss_pubdate", "sm_partner", "sm_subject", "ss_publocation", "ss_ar_title", "sm_ar_author", "sm_ar_publisher", "sm_ar_publication_date", "sm_ar_partner", "sm_ar_subject", "score", "ss_longlabel", "ss_ar_title", "ss_sauthor", "ss_ar_sauthor", "ss_ar_publocation"
@@ -66,7 +66,7 @@
           "value": "iy26sh"
         }, {
           "filter": "ss_collection_identifier",
-          "value": "7b71e702-e6b8-4f09-90c9-e5c2906f3050"
+          "value": "(7b71e702-e6b8-4f09-90c9-e5c2906f3050 OR f88f5562-2152-41a7-979f-86a6fb4149aa)"
         }, {
           "filter": "ss_language",
           "value": "en"
@@ -194,7 +194,7 @@
     "bodyClass": "search io-loading",
     "content": {
       "items": {
-        "source": "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select",
+        "source": "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select",
         "rows": 10,
         "fl": [
           "ss_thumbnail", "ss_identifer", "ss_title", "sm_author", "sm_publisher", "ss_pubdate", "sm_partner", "sm_subject", "ss_publocation", "ss_ar_title", "sm_ar_author", "sm_ar_publisher", "sm_ar_publication_date", "sm_ar_partner", "sm_ar_subject", "score", "ss_longlabel", "ss_ar_title", "ss_sauthor", "ss_ar_sauthor", "ss_ar_publocation"
@@ -204,7 +204,7 @@
           "value": "iy26sh"
         }, {
           "filter": "ss_collection_identifier",
-          "value": "7b71e702-e6b8-4f09-90c9-e5c2906f3050"
+          "value": "(7b71e702-e6b8-4f09-90c9-e5c2906f3050 OR f88f5562-2152-41a7-979f-86a6fb4149aa)"
         }, {
           "filter": "ss_language",
           "value": "en"
@@ -217,7 +217,7 @@
     "title": "Book",
     "bodyClass": "book",
     "bookTheme": "aco",
-    "sourceUrl": "http://dlib.nyu.edu/books",
+    "sourceUrl": "http://dev-dl-pa.home.nyu.edu/books",
     "route": "/book/index.html"
   }
 }

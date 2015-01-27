@@ -267,8 +267,5 @@ YUI().use(
     
     // Sort
     Y.one('body').delegate('change', onSelectChange, '#browse-select');
-    
-  
-    
 
 });
