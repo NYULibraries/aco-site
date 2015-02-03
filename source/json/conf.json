@@ -32,13 +32,13 @@
         }
     },
     "local" : {
-        "appUrl" : "http://localhost:8000/aco",
+        "appUrl" : "http://localhost/aco",
         "appRoot" : "/aco",
         "bookRoot" : "http://dev-dl-pa.home.nyu.edu/books",
         "sass" : {
             "build" : "external"
           , "options" : {
-                "style" : "compressed"
+                "style" : "expanded"
               , "debugInfo" : true
               , "lineNumbers" : true
             }

@@ -78,7 +78,7 @@ body {
 
 [lang="ar"] {
     font-family: $font-family-serif;
-    line-height: 1.7;
+    line-height: 1.6;
 }
 
 .container-fluid {
@@ -94,9 +94,17 @@ body {
     overflow: hidden;
 }
 
-.front .col {
-    margin-top: 1em;
-    margin-top: 1rem;
+.front {
+    .col {
+        margin-top: 1em;
+        margin-top: 1rem;
+    }
+    .md_subject::after {
+        content: ", ";
+    }
+    .md_subject:last-child::after {
+        content: "";
+    }
 }
 
 main {
@@ -127,13 +135,59 @@ main {
         font-weight: 300;
         text-shadow: 0px 0px 1px white;
         &[lang="en"] {
+            margin-bottom: 0;
+            margin-top: 0;
             float: left;
             clear: left;
-            margin-bottom: 0;
+            @media (min-width: $grid-float-breakpoint) {
+                margin-top: 1rem;
+            }
+            @media (max-width: 400px) {
+                display: block;
+                clear: both;
+                float: none;
+            }
         }
         &[lang="ar"] {
             line-height: 1.3;
-            margin-bottom: 1.5rem;
+            margin: 0;
+            @media (min-width: $grid-float-breakpoint) {
+                margin: 1rem 0 2rem;
+            }
+            @media (max-width: 400px) {
+                display: block;
+                clear: both;
+                float: none;
+            }
+        }
+    }
+    select#browse-select {
+        margin: .5rem 0;
+        font-size: .75em;
+        float: right;
+        @media (min-width: $grid-float-breakpoint) {
+            padding-bottom: 6px;
+            margin: 0;
+        }
+        @media (max-width: 400px) {
+            float: none;
+        }
+    }
+    .resultsnum {
+        font-size: .8em;
+        color: #666;
+        clear: left;
+        @media (max-width: $grid-float-breakpoint) {
+            float: left;
+        }
+        @media (max-width: 400px) {
+            display: block;
+            clear: both;
+            float: none;
+        }
+        white-space: nowrap;
+        .s-query {
+            font-weight: bold;
         }
     }
     h3 {
@@ -144,6 +198,7 @@ main {
     }
     header {
         @include clearfix;
+        padding-bottom: .5rem;
     }
     [lang="en"] .readmore {
         font: 0.9rem / 1.2 $font-family-sans-serif;
@@ -158,17 +213,21 @@ main {
     }
     .col-r {
         // in mobile view, add some space above arabic text
-        margin-top: 3em;
-        padding-top: 3em;
+        margin-top: 1.5rem;
+        padding: 1.5rem 0 1px;
         box-shadow: 0px -1px 0px 0px #DECCBF;
         border-top: 1px solid #FFFFFF;
+        font: normal 1rem / 1.7 $font-family-serif;
         @media (min-width: $grid-float-breakpoint) {
             // in desktop view, we don't need space above arabic text
             margin-top: 0em;
-            padding-top: 0em;
+            padding: 0.1em 0 0;
             box-shadow: none;
             border-top: none;
         }
+    }
+    .col-l {
+        font: normal 1rem / 1.5 $font-family-sans-serif;
     }
     .featured, .col-l, .col-r {
         @media (min-width: $grid-float-breakpoint) {
@@ -184,9 +243,6 @@ main {
                 clear: left;
             }
         }
-    }
-    .col-l, .col-r {
-        font: normal 1rem / 1.5 $font-family-sans-serif;
     }
     // Featured is on home page
     .featured {
@@ -236,10 +292,18 @@ main {
         }
         .itemhome {
             width: 100%;
+            height: 7rem;
             margin-bottom: 10px;
             font-size: .9em;
             transition: all 0.5s ease;
             font-family: $font-family-serif;
+            border-bottom: 1px solid #ECDCC8;
+            clear: both;
+            overflow: hidden;
+            @media (max-width: $grid-float-breakpoint) {
+                height: auto;
+                padding-bottom: 10px;
+            }
             .title {
                 font-weight: bold;
                 padding-top: .3em 0;
@@ -247,6 +311,7 @@ main {
             }
             .subjects {
                 font-size: .9em;
+                line-height: 1.25;
             }
             .thumbs {
                 float: left;
@@ -256,11 +321,11 @@ main {
                 margin: 0 0 0 21%;
             }
             hr {
-                border-bottom: 1px solid #ECDCC8;
-                border-top: none;
-                margin: 0 auto;
-                width: 90%;
-                padding: 10px 0 0 0;
+                border-bottom: 1px solid transparent;
+                // border-top: none;
+                // margin: 0 auto;
+                // width: 90%;
+                // padding: 10px 0 0 0;
                 clear: both;
             }
             &:last-child {
@@ -293,6 +358,7 @@ main {
 }
 
 .header-main {
+    // Masthead
     padding-top: 10px;
     padding-bottom: 10px;
     display: table !important;
@@ -343,8 +409,9 @@ main {
                 font-size: 1.5rem;
                 line-height: 1;
             }
-            @media (max-width: 350px) {
-                font-size: 1.1rem;
+            @media (max-width: 400px) {
+                font-size: 1rem;
+                padding-bottom: 5px;
             }
         }
         &[lang="ar"] {
@@ -519,6 +586,27 @@ nav.navbar.navbar-default {
             @include box-shadow(0px 0px 25px #fcf4ea, inset 0px 1px 1px rgba(0, 0, 0, 0.2));
         }
     }
+    @media (max-width: 400px) {
+        // mobile-friendly dropdown nav
+        padding: 0;
+        margin: 15px 20px 20px;
+        @include clearfix;
+        input[type="text"] {
+            width: 86%;
+            padding-left: 10px;
+            padding-right: 10px;
+            border: 1px solid $brand-secondary3;
+            height: 29px;
+            float: right;
+        }
+        input[type="submit"] {
+            width: 14%;
+            padding-left: 0;
+            padding-right: 0;
+            float: right;
+            min-width: 10px;
+        }
+    }
 }
 
 ul.resources {
@@ -612,20 +700,6 @@ ul.resources {
     }
 }
 
-select#browse-select {
-    float: right;
-    padding-bottom: 6px;
-    font-size: .75em;
-}
-
-.resultsnum {
-    font-size: .8em;
-    color: #666;
-    .s-query {
-        font-weight: bold;
-    }
-}
-
 .item-list {
     clear: both;
     margin-top: .5em;
@@ -680,15 +754,15 @@ select#browse-select {
             }
             @media (min-width: $grid-float-breakpoint) {
                 &.l-hold {
-                    width: 55%;
+                    width: 57%;
                     > [lang="en"] {
                         margin-left: 0;
-                        width: 75%;
+                        width: 70%;
                         border-bottom: none;
                     }
                     .thumbs {
                         float: right;
-                        width: 18%;
+                        width: 20%;
                         text-align: right;
                     }
                 }
@@ -697,7 +771,7 @@ select#browse-select {
                     margin-left: 0;
                     padding: 20px 0px 20px 5%;
                     float: right;
-                    width: 44%;
+                    width: 35%;
                     border-top: none;
                 }
             }
@@ -729,14 +803,6 @@ select#browse-select {
     .md_author:nth-child(2) {
         display: inline-block;
     }
-}
-
-.md_subject::after {
-    content: ", ";
-}
-
-.md_subject:last-child::after {
-    content: "";
 }
 
 body.book {
