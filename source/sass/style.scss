@@ -77,7 +77,7 @@ body {
 }
 
 [lang="ar"] {
-    font-family: "Amiri", $font-family-serif;
+    font-family: $font-family-serif;
     line-height: 1.7;
 }
 
@@ -182,9 +182,11 @@ main {
             &[lang="en"] {
                 float: left;
                 clear: left;
-                font: normal 1rem / 1.5 $font-family-sans-serif;
             }
         }
+    }
+    .col-l, .col-r {
+        font: normal 1rem / 1.5 $font-family-sans-serif;
     }
     // Featured is on home page
     .featured {
@@ -202,6 +204,7 @@ main {
         }
         &[lang="en"] h3 {
             // screen smart book
+            // Recently Added Titles
             padding: 15px 25px 7px;
             font-family: 'Gotham SSm 4r', 'Gotham SSm A', 'Gotham SSm B', Helvetica, sans-serif;
             font-weight: 400;
@@ -236,9 +239,10 @@ main {
             margin-bottom: 10px;
             font-size: .9em;
             transition: all 0.5s ease;
+            font-family: $font-family-serif;
             .title {
                 font-weight: bold;
-                padding-top: .3em;
+                padding-top: .3em 0;
                 font-size: 1em;
             }
             .subjects {
@@ -264,9 +268,6 @@ main {
                     border-bottom: none;
                 }
             }
-        }
-        &[lang="en"] .itemhome {
-            font-family: $font-family-serif;
         }
         &[lang="ar"] .itemhome {
             .thumbs {
@@ -439,7 +440,7 @@ nav.navbar.navbar-default {
             }
         }
         .navbar-collapse {
-            border:none;
+            border: none;
             clear: right;
             .nav > li > a {
                 padding: 15px 20px;
@@ -730,9 +731,16 @@ select#browse-select {
     }
 }
 
+.md_subject::after {
+    content: ", ";
+}
+
+.md_subject:last-child::after {
+    content: "";
+}
+
 body.book {
     overflow-y: hidden;
-    
     .navbar {
         margin-bottom: 0;
     }
