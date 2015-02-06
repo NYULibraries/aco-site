@@ -6,7 +6,7 @@
   <main class="main container-fluid" role="main">
     <header>
       {{#title}}
-        <h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}">{{{html}}}</h2>
+        <h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}"><span>{{{html}}}<span></h2>
       {{/title}}
       <select id="browse-select">
         <option data-sort-dir="asc" value="ss_longlabel">Title in English / العنوان بالانجليزية</option>
@@ -17,7 +17,7 @@
         <option data-sort-dir="asc" value="ss_ar_ssubject">Subject in Arabic /  الموضوع بالعربية</option>
         <option data-sort-dir="asc" value="ss_publocation">Place in English / بلد النشر بالانجليزية</option>
         <option data-sort-dir="asc" value="ss_ar_publocation">Place in Arabic / بلد النشر بالعربية</option>
-        <option data-sort-dir="desc" value="score" selected>Sort by relevance/ فرز حسب</option>
+        <option data-sort-dir="desc" value="score" selected>Relevance/ فرز حسب</option>
       </select>
       <div class="resultsnum">Showing  <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span> results for <span class="s-query"></span></div>
     </header>
