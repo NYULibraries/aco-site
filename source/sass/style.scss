@@ -77,7 +77,7 @@ body {
 }
 
 [lang="ar"] {
-    font-family: $font-family-serif;
+    font-family: $font-family-arabic;
     line-height: 1.6;
 }
 
@@ -97,12 +97,6 @@ body {
 .front {
     .col {
         margin-top: 1rem;
-    }
-    .md_subject::after {
-        content: ", ";
-    }
-    .md_subject:last-child::after {
-        content: "";
     }
 }
 
@@ -130,9 +124,12 @@ main {
         margin-top: 2.5rem;
     }
     h2.page-title {
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: 300;
         text-shadow: 0px 0px 1px white;
+         @media (min-width: $grid-float-breakpoint) {
+            font-size: 2rem;
+        }
         &[lang="en"] {
             margin-bottom: 1rem;
             margin-top: 0;
@@ -214,7 +211,7 @@ main {
         padding: 1.5rem 0 1px;
         box-shadow: 0px -1px 0px 0px #DECCBF;
         border-top: 1px solid #FFFFFF;
-        font: normal 1rem / 1.7 $font-family-serif;
+        font: normal 1rem / 1.7 $font-family-arabic;
         @media (min-width: $grid-float-breakpoint) {
             // in desktop view, we don't need space above arabic text
             margin-top: 0em;
@@ -290,59 +287,6 @@ main {
             padding: 0;
             clear: left;
             font-size: 1rem;
-        }
-        .itemhome {
-            width: 100%;
-            // height: 7rem;
-            margin-bottom: 10px;
-             padding-bottom: 10px;
-            font-size: 1rem;
-            transition: all 0.5s ease;
-            font-family: $font-family-serif;
-            border-bottom: 1px solid #ECDCC8;
-            clear: both;
-            overflow: hidden;
-            @media (max-width: $grid-float-breakpoint) {
-                height: auto;
-                padding-bottom: 10px;
-            }
-            .title {
-                font-weight: bold;
-                padding-top: .3rem 0;
-                font-size: 1.1rem;
-            }
-            .subjects {
-                line-height: 1.15;
-            }
-            .thumbs {
-                float: left;
-                width: 17%;
-            }
-            .meta {
-                margin: 0 0 0 21%;
-            }
-            hr {
-                border-bottom: 1px solid transparent;
-                clear: both;
-            }
-            &:last-child {
-                border-bottom: none;
-                padding-bottom: 0;
-                hr {
-                    border-bottom: none;
-                }
-            }
-        }
-        &[lang="ar"] .itemhome {
-            .thumbs {
-                float: right;
-            }
-            .meta {
-                margin: 0 21% 0 0;
-            }
-            .title {
-                font-size: 1.1rem;
-            }
         }
     }
 }
@@ -707,103 +651,172 @@ ul.resources {
     border-collapse: separate;
     border-top: 1px solid #DECCBF;
     border-bottom: 1px solid #ffffff;
+   
+}
+
+.item {
+    clear: both;
+    width: 100%;
+    overflow: hidden;
+    border-bottom: 2px solid #DECCBF;
+    //border-top: 1px solid #FCF7F0;
+    border-top: 1px solid #FFFFFF;
     font-size: 1rem;
-    .item {
-        clear: both;
-        width: 100%;
-        overflow: hidden;
-        border-bottom: 2px solid #DECCBF;
-        //border-top: 1px solid #FCF7F0;
-        border-top: 1px solid #FFFFFF;
-        font-size: 1.1rem;
-        @media (min-width: $grid-float-breakpoint) {
-            border-bottom: 1px solid #DECCBF;
-        }
-        > div {
-            &.l-hold {
+    @media (min-width: $grid-float-breakpoint) {
+        border-bottom: 1px solid #DECCBF;
+    }
+    > div {
+        &.l-hold {
+            float: left;
+            padding-top: 20px;
+            width: 100%;
+            > [lang="en"] {
+                margin-left: 19%;
+                border-bottom: 1px solid #DECCBF;
+                padding-bottom: 20px;
+            }
+            .thumbs {
+                padding: 0;
+                width: 15%;
                 float: left;
-                padding-top: 20px;
-                width: 100%;
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
+        &[lang="ar"] {
+            border-top: 1px solid #FCF7F0;
+            margin-left: 19%;
+            padding: 20px 0;
+            clear: left;
+            text-align: right;
+            span {
+                word-wrap: break-word;
+            }
+        }
+        @media (min-width: $grid-float-breakpoint) {
+            &.l-hold {
+                width: 57%;
                 > [lang="en"] {
-                    margin-left: 19%;
-                    border-bottom: 1px solid #DECCBF;
-                    padding-bottom: 20px;
+                    margin-left: 0;
+                    width: 70%;
+                    border-bottom: none;
                 }
                 .thumbs {
-                    padding: 0;
-                    width: 15%;
-                    float: left;
-                    img {
-                        width: 100%;
-                        height: auto;
-                    }
+                    float: right;
+                    width: 20%;
+                    text-align: right;
                 }
             }
             &[lang="ar"] {
-                border-top: 1px solid #FCF7F0;
-                margin-left: 19%;
-                padding: 20px 0;
-                clear: left;
-                text-align: right;
-                span {
-                    word-wrap: break-word;
-                }
-                .md_subjects {
-                    // tighten space for english words on the arabic side
-                    line-height: 1.15;
-                    .md_label {
-                        line-height: 1.7;
-                    }
-                }
-            }
-            @media (min-width: $grid-float-breakpoint) {
-                &.l-hold {
-                    width: 57%;
-                    > [lang="en"] {
-                        margin-left: 0;
-                        width: 70%;
-                        border-bottom: none;
-                    }
-                    .thumbs {
-                        float: right;
-                        width: 20%;
-                        text-align: right;
-                    }
-                }
-                &[lang="ar"] {
-                    clear: none;
-                    margin-left: 0;
-                    padding: 20px 0px 20px 5%;
-                    float: right;
-                    width: 35%;
-                    border-top: none;
-                }
+                clear: none;
+                margin-left: 0;
+                padding: 20px 0px 20px 5%;
+                float: right;
+                width: 35%;
+                border-top: none;
             }
         }
     }
+}
+
+.itemhome {
+    width: 100%;
+    // height: 7rem;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    font-size: .9rem;
+    transition: all 0.5s ease;
+    font-family: $font-family-serif;
+    border-bottom: 1px solid #ECDCC8;
+    clear: both;
+    overflow: hidden;
+    @media (max-width: $grid-float-breakpoint) {
+        height: auto;
+        padding-bottom: 10px;
+    }
     .md_title {
+        font-size: 1rem;
         font-weight: bold;
+        line-height: 1.25;
     }
+    .thumbs {
+        float: left;
+        width: 17%;
+    }
+    .meta {
+        margin: 0 0 0 21%;
+    }
+    hr {
+        border-bottom: 1px solid transparent;
+        clear: both;
+    }
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+        hr {
+            border-bottom: none;
+        }
+    }
+}
+
+[lang="ar"] .itemhome {
+    font-family: $font-family-arabic;
+    .thumbs {
+        float: right;
+    }
+    .meta {
+        margin: 0 21% 0 0;
+    }
+   .md_title {
+        font-size: 1.1rem;
+       
+    }
+    
+}
+
+.md_subjects {
+    line-height: 1.25;
+    font-family: $font-family-serif !important;
     .md_label {
-        font-weight: bold;
+        line-height: 1.7;
     }
-    .md_subject {
-        display: block;
-    }
-    .md_subject:nth-child(2) {
-        display: inline-block;
-    }
-    .md_subjects {
-        // tighten space for english words on the arabic side
-        line-height: 1.15;
-    }
-    // for multiple authors
-    .md_author {
-        display: block;
-    }
-    .md_author:nth-child(2) {
-        display: inline-block;
-    }
+}
+
+.md_partner {
+    display: inline-block;
+    font-family: $font-family-serif !important;
+}
+
+.md_title {
+    font-weight: bold;
+}
+
+.md_label {
+    font-weight: bold;
+}
+
+.front .md_subjects {
+    color: #444;
+    padding-top: .2em;
+}
+
+.md_subject::after {
+    content: ", ";
+}
+
+.md_subject:last-child::after {
+    content: "";
+}
+
+// for multiple authors
+.md_author {
+    display: block;
+}
+
+.md_author:nth-child(2) {
+    display: inline-block;
 }
 
 body.book {
@@ -857,7 +870,7 @@ body.book {
 /** Elements that are not meant to be seen until io its loading */
 .io-loading {
     .resultsnum,
-    #browse-select {
+    #browse-select, .pagination {
         position: absolute !important;
         height: 1px;
         width: 1px;
