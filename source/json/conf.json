@@ -1,6 +1,6 @@
 {
     "appName": "Arabic Collections Online",
-    "environment" : "development",
+    "environment" : "local",
     "development" : {
         "appUrl": "http://dev-dl-pa.home.nyu.edu/aco",
         "appRoot": "/aco",
