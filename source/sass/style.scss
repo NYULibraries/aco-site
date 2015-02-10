@@ -384,21 +384,6 @@ main {
     }
 }
 
-[role="search"] {
-    input[type="submit"] {
-        text-align: center;
-        background: #ecdcc8 url(/aco/images/search-icon-2x.png) no-repeat center center;
-        background-size: auto 80%;
-        text-indent: -1000em;
-        // -webkit-border-radius: 0;
-        border: 1px solid $brand-secondary3;
-        min-width: 2em;
-    }
-    input[type="text"] {
-        padding-left: 15px;
-        border: 1px solid $brand-secondary2;
-    }
-}
 
 nav.navbar.navbar-default {
     border: 0;
@@ -460,6 +445,21 @@ nav.navbar.navbar-default {
         }
     }
 }
+[role="search"] {
+    input[type="submit"] {
+        text-align: center;
+        background: #ecdcc8 url(/aco/images/search-icon-2x.png) no-repeat center center;
+        background-size: auto 80%;
+        text-indent: -1000em;
+        // -webkit-border-radius: 0;
+        border: 1px solid $brand-secondary3;
+        min-width: 2em;
+    }
+    input[type="text"] {
+        padding-left: 15px;
+        border: 1px solid $brand-secondary2;
+    }
+}
 
 .search_holder {
     border: none;
@@ -480,12 +480,12 @@ nav.navbar.navbar-default {
             padding-left: 0;
             padding-right: 0;
             float: right;
+
         }
     }
     @media (min-width: $grid-float-breakpoint) {
         input[type="submit"] {
-            -webkit-transition: background .7s;
-            transition: background .7s;
+           
             float: right;
             margin: 0px;
             padding: 1px 5px;
@@ -506,8 +506,15 @@ nav.navbar.navbar-default {
             border-right: 1px solid $brand-secondary2;
             border-bottom: 1px solid $brand-secondary2;
             border-left: none;
+            &:focus {
+                outline: none;
+            }
+           
         }
         input[type="text"] {
+             &:focus {
+                outline-color: #ff9c00;
+            }
             width: 200px;
             float: right;
             height: 30px;
@@ -515,9 +522,9 @@ nav.navbar.navbar-default {
             border-left: 1px solid $brand-secondary2;
             border-bottom: 1px solid $brand-secondary2;
             border-right: none;
-            -moz-border-radius: 0px;
-            -webkit-border-radius: 0px;
-            -khtml-border-radius: 0px;
+            -moz-border-radius: 10% / 100%;
+            -webkit-border-radius: 10% / 100%;
+            -khtml-border-radius: 10% / 100%;
             border-radius: 10% / 100%;
             // compass mixin does not work with percentages?
             //  @include border-radius(10% / 100%);
