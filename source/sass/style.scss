@@ -9,7 +9,6 @@
 @import "bootstrap/normalize";
 @import "bootstrap/print";
 
-
 // Core CSS
 @import "bootstrap/scaffolding";
 
@@ -86,6 +85,15 @@ body {
 .front {
     .col {
         margin-top: 1rem;
+        p {
+            margin: 0;
+        }
+        @media (min-width: $grid-float-breakpoint) {
+            min-height: 10em;
+        }
+    }
+    .col-l {
+        line-height: 1.6;
     }
 }
 
@@ -95,7 +103,7 @@ main {
         font-weight: bold;
     }
     ul {
-        margin: 1rem 0;
+        margin: 0;
         padding: 0;
         list-style-position: inside;
     }
@@ -116,7 +124,7 @@ main {
         font-size: 1.5rem;
         font-weight: 300;
         text-shadow: 0px 0px 1px white;
-         @media (min-width: $grid-float-breakpoint) {
+        @media (min-width: $grid-float-breakpoint) {
             font-size: 2rem;
         }
         &[lang="en"] {
@@ -141,7 +149,7 @@ main {
                 margin-left: 20px;
             }
             @media (min-width: $grid-float-breakpoint) {
-                margin: 1rem 0 2rem;
+                margin: 1rem 0 1.5rem;
             }
         }
     }
@@ -177,7 +185,8 @@ main {
     h3 {
         font-size: 1.3rem;
         font-weight: 400;
-        margin: 2.5rem 0 .5rem;
+        margin: 2.5rem 0 1rem;
+       
         text-shadow: 0px 0px 1px white;
     }
     header {
@@ -200,17 +209,16 @@ main {
         padding: 1.5rem 0 1px;
         box-shadow: 0px -1px 0px 0px #DECCBF;
         border-top: 1px solid #FFFFFF;
-        font: normal 1rem / 1.7 $font-family-arabic;
         @media (min-width: $grid-float-breakpoint) {
             // in desktop view, we don't need space above arabic text
             margin-top: 0em;
-            padding: 0.1em 0 0;
+            padding: 0 0 0;
             box-shadow: none;
             border-top: none;
         }
     }
     .col-l {
-        font: normal 1rem / 1.5 $font-family-sans-serif;
+        // font: normal 1rem / 1.5 $font-family-sans-serif;
         clear: both;
         @media (min-width: $grid-float-breakpoint) {
             clear: left;
@@ -373,7 +381,6 @@ main {
     }
 }
 
-
 nav.navbar.navbar-default {
     border: 0;
     // overridding bootstrap
@@ -434,6 +441,7 @@ nav.navbar.navbar-default {
         }
     }
 }
+
 [role="search"] {
     input[type="submit"] {
         text-align: center;
@@ -469,12 +477,10 @@ nav.navbar.navbar-default {
             padding-left: 0;
             padding-right: 0;
             float: right;
-
         }
     }
     @media (min-width: $grid-float-breakpoint) {
         input[type="submit"] {
-           
             float: right;
             margin: 0px;
             padding: 1px 5px;
@@ -498,10 +504,9 @@ nav.navbar.navbar-default {
             &:focus {
                 outline: none;
             }
-           
         }
         input[type="text"] {
-             &:focus {
+            &:focus {
                 outline-color: #ff9c00;
             }
             width: 200px;
@@ -549,10 +554,8 @@ nav.navbar.navbar-default {
 }
 
 ul.resources {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding: 0px;
     list-style-type: none;
-    margin-top: .5rem;
     li {
         margin-top: 1.5rem;
         &:first-child {
@@ -565,7 +568,7 @@ ul.resources {
         font-weight: bold;
         margin-top: 0;
         margin-bottom: 0;
-        line-height: 1.4rem;
+        line-height: 1.4;
     }
     .link {
         margin-bottom: .3em;
@@ -578,7 +581,7 @@ ul.resources {
     }
     [lang="ar"] & {
         h3 {
-            line-height: 1.4rem;
+            line-height: 1.4;
             margin-bottom: .1rem;
         }
         .link {
@@ -647,7 +650,6 @@ ul.resources {
     border-collapse: separate;
     border-top: 1px solid #DECCBF;
     border-bottom: 1px solid #ffffff;
-   
 }
 
 .item {
@@ -758,18 +760,15 @@ ul.resources {
 }
 
 [lang="ar"] .itemhome {
-    font-family: $font-family-arabic;
     .thumbs {
         float: right;
     }
     .meta {
         margin: 0 21% 0 0;
     }
-   .md_title {
+    .md_title {
         font-size: 1.1rem;
-       
     }
-    
 }
 
 .md_subjects {
@@ -866,7 +865,7 @@ body.book {
 /** Elements that are not meant to be seen until io its loading */
 .io-loading {
     .resultsnum,
-    #browse-select, .pagination {
+    #browse-select, .pagination, .footer-main {
         position: absolute !important;
         height: 1px;
         width: 1px;
