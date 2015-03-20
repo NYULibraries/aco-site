@@ -170,7 +170,7 @@
         "language_code": "en",
         "class": "col-l",
         "language_dir": "ltr",
-        "html": "<p><b>Arabic Collections Online</b> (ACO) is a publicly available digital library of public domain Arabic language content. Funded by New York University Abu Dhabi, this mass digitization project aims to expose up to 15,000 volumes from NYU and partner institutions over a period of five years. NYU and the partner institutions are contributing all types of material&mdash;literature, business, science, and more&mdash;from their Arabic language collections. ACO will provide digital access to printed books drawn from rich Arabic collections of prominent libraries.</p><p>For more information, please email us at:<br><a href=\"mailto:ACO-contact-group@nyu.edu\">ACO-contact-group@nyu.edu</a></p><h3>Contributing Partners:</h3><ul><li>American University of Beirut</li><li>Columbia University</li><li>Cornell University</li><li>New York University</li><li>Princeton University</li></ul><h3>Project Sponsors:</h3><ul><li>Virginia Danielson</li><li>David Millman</li><li>Michael Stoller</li></ul><h3>Project Manager:</h3><ul><li>Claudia Suleiman</li></ul><h3>Project Team:</h3><ul><li>Adham Alok</li><li>Guy Burak</li><li>Melitte Buchman</li><li>Heidi Frank</li><li>Laura Henze</li><li>Alysa Hornick</li><li>Carol Kassel</li><li>Alberto Ortiz Flores</li><li>Joseph Pawletko</li><li>Ekaterina Pechekhonova</li><li>Rasan Rasch</li><li>Michael Stasiak</li></ul><p class=\"special-thanks\">Special thanks to Nadaleen Templeman-Kluit, Houda El-Mimouni, and others in the UX department at NYU Libraries for their guidance.</p>"
+        "html": "<p><b>Arabic Collections Online</b> (ACO) is a publicly available digital library of public domain Arabic language content. Funded by New York University Abu Dhabi, this mass digitization project aims to expose up to 15,000 volumes from NYU and partner institutions over a period of five years. NYU and the partner institutions are contributing all types of material&mdash;literature, business, science, and more&mdash;from their Arabic language collections. ACO will provide digital access to printed books drawn from rich Arabic collections of prominent libraries.</p><p>For more information, please email us at:<br><a href=\"mailto:ACO-contact-group@nyu.edu\">ACO-contact-group@nyu.edu</a></p><h3>Contributing Partners:</h3><ul><li>American University of Beirut</li><li>Columbia University</li><li>Cornell University</li><li>New York University</li><li>Princeton University</li></ul><h3>Project Sponsors:</h3><ul><li>Virginia Danielson</li><li>David Millman</li><li>Michael Stoller</li></ul><h3>Project Manager:</h3><ul><li>Claudia Suleiman</li></ul><h3>Project Team:</h3><ul><li>Adham Alok</li><li>Guy Burak</li><li>Melitte Buchman</li><li>Heidi Frank</li><li>Laura Henze</li><li>Alysa Hornick</li><li>Carol Kassel</li><li>Alberto Ortiz Flores</li><li>Joseph Pawletko</li><li>Ekaterina Pechekhonova</li><li>Rasan Rasch</li><li>Michael Stasiak</li></ul><p class=\"special-thanks\">Special thanks to Nadaleen Templeman-Kluit, Houda El-Mimouni, and others in the UX department at NYU Libraries for their guidance.</p><p class=\"font\">This site uses the <a href=\"http://www.amirifont.org/\" target=\"_blank\">Amiri</a> Arabic font, designed by Dr. Khaled Hosny and distributed under <a href=\"http://scripts.sil.org/OFL\" target=\"_blank\">Open Font License</a>.</p>"
       }, {
         "language_code": "ar",
         "class": "col-r",
@@ -216,9 +216,9 @@
     "htmltitle": "Book",
     "title": "Book",
     "bodyClass": "book",
-    "bookTheme": "aco",
-    "sourceUrlD": "http://dev-dl-pa.home.nyu.edu/books",
-    "sourceUrl": "http://dlib.nyu.edu/books", 
+    "bookTheme": "dlts_book",
+    "sourceUrl": "http://dev-dl-pa.home.nyu.edu/books",
+    "sourceUrlP": "http://dlib.nyu.edu/books", 
     "route": "/book/index.html"
   }
 }
