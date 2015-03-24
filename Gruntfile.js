@@ -1,3 +1,5 @@
+/* jshint laxcomma: true, laxbreak: true, unused: false */
+
 module.exports = function( grunt ) {
 
     var _ = require('underscore');
