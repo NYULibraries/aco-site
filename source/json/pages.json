@@ -217,8 +217,8 @@
     "title": "Book",
     "bodyClass": "book",
     "bookTheme": "dlts_book",
-    "sourceUrl": "http://dev-dl-pa.home.nyu.edu/books",
-    "sourceUrlP": "http://dlib.nyu.edu/books", 
+    "sourceUrlDev": "http://dev-dl-pa.home.nyu.edu/books",
+    "sourceUrl": "http://dlib.nyu.edu/books", 
     "route": "/book/index.html"
   }
 }
