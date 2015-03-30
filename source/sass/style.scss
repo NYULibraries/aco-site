@@ -712,7 +712,7 @@ ul.resources {
         }
         @media (min-width: $grid-float-breakpoint) {
             &.l-hold {
-                width: 57%;
+                width: 56%;
                 > [lang="en"] {
                     margin-left: 0;
                     width: 70%;
@@ -720,7 +720,7 @@ ul.resources {
                 }
                 .thumbs {
                     float: right;
-                    width: 20%;
+                    width: 22%;
                     text-align: right;
                 }
             }
