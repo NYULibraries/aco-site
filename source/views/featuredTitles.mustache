@@ -1,0 +1,22 @@
+{{#featuredTitles}}
+<article>
+ {{#data}}
+      {{#response}}
+        {{#docs}}
+          <div class="itemhome">
+             <div class="thumbs"><a href="{{appRoot}}/book/{{ss_identifer}}"><img class="img-responsive" src="{{ss_representative_image}}" alt="" title="{{title}}"/></a></div>
+             <div class="meta">
+              <div class="md_title"><a href="{{appUrl}}/book/{{ss_identifer}}">{{sm_field_title}}</a></div>
+             
+              {{#ss_publocation}}<div><span class="md_label">Place of Publication:</span> {{ss_publocation}}</div>{{/ss_publocation}} 
+              {{#ss_pubdate}}<div><span class="md_label">Date of publication:</span> {{ss_pubdate}}</div>{{/ss_pubdate}}    
+  <div><span class="md_label">Provider:</span> {{#sm_partner}}<span>{{.}}</span>{{/sm_partner}}</div>
+              <div class="md_subjects">
+                  {{#sm_vid_Terms}}<span class="md_subject">{{.}}</span>{{/sm_vid_Terms}}</div>
+            </div>
+          </div> 
+        {{/docs}}
+      {{/response}}
+    {{/data}}
+</article>
+{{/featuredTitles}}

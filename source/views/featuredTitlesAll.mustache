@@ -1,0 +1,32 @@
+{{#featuredTitlesAll}}
+<article>
+    {{#data}} {{#response}} {{#docs}}
+    <div class="itemhome">
+        <div class="colFeatured featured" lang="en" dir="ltr">
+            <div class="thumbs">
+                <a href="{{appRoot}}/book/{{ss_identifer}}"><img class="img-responsive" src="{{ss_representative_image}}" alt="" title="{{title}}" /></a>
+            </div>
+            <div class="meta">
+                <div class="md_title"><a href="{{appUrl}}/book/{{ss_identifer}}">{{sm_field_title}}</a></div>
+                <div><span class="md_label">Publisher:</span> {{#sm_publisher}}<span>{{.}}</span>{{/sm_publisher}}</div>
+                {{#ss_publocation}}
+                <div><span class="md_label">Place of Publication:</span> {{ss_publocation}}</div>{{/ss_publocation}} {{#ss_pubdate}}
+                <div><span class="md_label">Date of publication:</span> {{ss_pubdate}}</div>{{/ss_pubdate}}
+                <div><span class="md_label">Provider:</span> {{#sm_partner}}<span>{{.}}</span>{{/sm_partner}}</div>
+                <div class="md_subjects">{{#sm_vid_Terms}}<span class="md_subject">{{.}}</span>{{/sm_vid_Terms}}</div>
+            </div>
+        </div>
+        <div class="colFeatured featured flexcol" lang="ar" dir="rtl">
+            <div class="thumbs flexcol">
+                <a href="{{appRoot}}/book/{{ss_identifer}}"><img class="img-responsive" src="{{ss_representative_image}}" alt="" title="{{title}}" /></a>
+            </div>
+            <div class="meta flexcol">
+                <div class="md_title"><a href="{{appUrl}}/book/{{ss_identifer}}">{{ss_ar_title}}</a></div>
+                <div dir="rtl" lang="ar"><span class="md_label">الناشر:</span> <span>{{#sm_ar_publisher}}{{sm_ar_publisher}} ,{{/sm_ar_publisher}}</span>{{#ss_ar_spublocation}}<span>{{ss_ar_spublocation}}</span>{{/ss_ar_spublocation}} &mdash; <span>{{ss_ar_pubdate}}</span>{{#ss_ar_pubdate}}{{/ss_ar_pubdate}}</div>
+                 <div dir="rtl" lang="ar"><span class="md_label">شريك:</span> {{#sm_ar_partner}}<span class="md_partner">{{.}}</span>{{/sm_ar_partner}}</div>
+            </div>
+        </div>
+    </div>
+    {{/docs}} {{/response}} {{/data}}
+</article>
+{{/featuredTitlesAll}}
