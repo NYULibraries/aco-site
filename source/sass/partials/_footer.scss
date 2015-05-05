@@ -1,0 +1,51 @@
+.footer-main {
+  margin: 90px auto 40px;
+  box-shadow: 0px -1px 0px 0px #DECCBF;
+  border-top: 1px solid #FFFFFF;
+  text-align: center;
+  padding-top: 40px;
+  .credits {
+    float: none;
+    clear: both;
+    text-transform: uppercase;
+    // screen smart book
+    font-family: 'Gotham SSm 4r', 'Gotham SSm A', 'Gotham SSm B', Helvetica, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: .9em;
+    font-size: .9rem;
+    line-height: 1.5;
+    padding-top: 5px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+  .logo-hold {
+    margin: 0 auto;
+  }
+  .logo {
+    display: inline-block;
+    margin: 0 30px 30px;
+    line-height: 1;
+    width: auto;
+    height: 40px;
+    a {
+      display: block;
+      width: auto;
+      height: 100%;
+    }
+    img {
+      width: auto;
+      height: 100%;
+    }
+  }
+  .partners {
+    clear: both;
+    padding: 20px 0 20px 0;
+    text-align: center;
+    font: 300 0.9rem / 1.5 $font-family-serif;
+    font-size: .9em;
+    // IE8 does not recognize rems; IE below 11 cannot see rems in font shorthand
+    font-size: .9rem;
+    color: $text-color-brown;
+  }
+}
