@@ -24,7 +24,8 @@
         "html": "<p><b>المجموعات العربيَّة على الإنترنيت</b> عبارة عن مكتبة عامَّة رقميَّة للكتب المؤلَّفة باللغة العربيَّة والتي أصبحت في المجال العام. إنَّ هذا المشروع الرَّقمي الهائل مُمَّول من قِبل جامعة نيويورك أبو ظبي، و يهدف إلى عرض ما يقارب خمسة عشرة ألف كتاب من قِبل جامعة نيويورك والجامعات الأخرى المشاركة خلال مدة خمس سنوات من العمل. <a href=\"/aco/about\" class=\"readmore\">المزيد...</a></p>"
       }],
       "featured": [{
-        "title": "Featured Titles All",
+        "titleEn": "Featured Titles",
+        "titleAr": "العناوين المضافة مؤخراً",
         "language_code": "en",
         "language_dir": "ltr",
         "widgets": ["featuredTitlesAll"]
@@ -57,17 +58,18 @@
           "ss_thumbnail", "ss_identifer", "ss_title", "sm_author", "sm_publisher", "ss_pubdate", "sm_partner", "sm_subject", "ss_publocation", "ss_ar_title", "sm_ar_author", "sm_ar_publisher", "sm_ar_publication_date", "sm_ar_partner", "sm_ar_subject", "score", "ss_longlabel", "ss_ar_title", "ss_sauthor", "ss_ar_sauthor", "ss_ar_publocation"
         ],
         "fq": [{
-          "filter": "hash",
-          "value": "iy26sh"
-        }, {
-          "filter": "sm_collection_code",
-          "value": "aco"
-        },
+            "filter": "hash",
+            "value": "iy26sh"
+          }, {
+            "filter": "sm_collection_code",
+            "value": "aco"
+          },
 
-         {
-          "filter": "ss_language",
-          "value": "(en OR und)"
-        }]
+          {
+            "filter": "ss_language",
+            "value": "(en OR und)"
+          }
+        ]
       }
     }
   },
@@ -215,7 +217,7 @@
     "bodyClass": "book",
     "bookTheme": "dlts_book",
     "sourceUrlDev": "http://dev-dl-pa.home.nyu.edu/books",
-    "sourceUrl": "http://dlib.nyu.edu/books", 
+    "sourceUrl": "http://dlib.nyu.edu/books",
     "route": "/book/index.html"
   }
 }

@@ -12,12 +12,7 @@
 // Core CSS
 @import "bootstrap/scaffolding";
 
-//@import "bootstrap/type";
 
-//@import "bootstrap/code";
-//@import "bootstrap/grid";
-//@import "bootstrap/tables";
-//@import "bootstrap/forms";
 
 //@import "bootstrap/buttons";
 
@@ -28,24 +23,12 @@
 //@import "bootstrap/button-groups";
 //@import "bootstrap/input-groups";
 @import "bootstrap/navs";
-@import "aconavbar";
+
 
 //@import "bootstrap/breadcrumbs";
 @import "bootstrap/pagination";
 
-//@import "bootstrap/pager";
-//@import "bootstrap/labels";
-//@import "bootstrap/badges";
-//@import "bootstrap/jumbotron";
-//@import "bootstrap/thumbnails";
-//@import "bootstrap/alerts";
-//@import "bootstrap/progress-bars";
-//@import "bootstrap/media";
-//@import "bootstrap/list-group";
-//@import "bootstrap/panels";
-//@import "bootstrap/responsive-embed";
-//@import "bootstrap/wells";
-//@import "bootstrap/close";
+
 
 /*  End Bootstrap */
 /*  ********************* */
@@ -57,7 +40,7 @@
 @import "partials/homepage";
 @import "partials/footer";
 @import "partials/item";
-
+@import "partials/aconavbar";
 html {
   font-size: $font-size-base;
   line-height: $line-height-base;
@@ -85,21 +68,6 @@ body {
   }
   margin: 0px auto;
   overflow: hidden;
-}
-
-.front {
-  .col {
-    margin-top: 1rem;
-    p {
-      margin: 0;
-    }
-    @media (min-width: $grid-float-breakpoint) {
-      min-height: 10em;
-    }
-  }
-  .col-l {
-    line-height: 1.6;
-  }
 }
 
 main {
@@ -178,7 +146,7 @@ main {
     font-size: .8em;
     color: #666;
     clear: left;
-    @media (max-width: $grid-float-breakpoint) {
+    @media (max-width: $grid-float-breakpoint-max) {
       float: left;
     }
     @media (max-width: 400px) {
@@ -226,7 +194,7 @@ main {
     }
   }
   .col-l {
-    // font: normal 1rem / 1.5 $font-family-sans-serif;
+  
     clear: both;
     @media (min-width: $grid-float-breakpoint) {
       clear: left;
@@ -247,7 +215,6 @@ main {
       }
     }
   }
-  // Featured is on home page
 }
 
 .header-wrapper {
