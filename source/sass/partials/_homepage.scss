@@ -13,6 +13,10 @@
   }
 }
 
+.featured {
+  clear: both;
+}
+
 .flex-container {
   padding-bottom: 50px;
 }
@@ -28,59 +32,73 @@
     -webkit-justify-content: space-between;
     justify-content: space-between;
     -ms-flex-pack: justify;
+     &:last-child {
+          
+          .itemhomeCol {
+            border-bottom: 1px solid #ECDCC8;
+          }
+        }
+        &:nth-child(2) {
+          .meta {
+            border-top: none;
+          }
+        }
   }
   ////
   margin-top: 0px;
   font-size: .9rem;
   font-family: $font-family-serif;
-  @media (max-width: $grid-float-breakpoint-max) {}
-  // height: auto;
-  // padding-bottom: 10px;
+  @media (max-width: $grid-float-breakpoint-max) {
+    border-top: 1px solid #ECDCC8;
+    box-shadow: inset 0px 1px white;
+    width: 100%;
+    overflow: hidden;
+    &.header {
+      margin-top: 50px;
+      width: auto;
+      overflow: hidden;
+      h3 {
+        padding: 5px 0;
+        margin: 0;
+        &[lang="ar"] {
+          float: right;
+        }
+        &[lang="en"] {
+          float: left;
+          padding-right: 15px;
+        }
+      }
+    }
+    .flexcol[lang="ar"] {
+      padding-top: 0;
+    }
+  }
   ////
   .flexcol {
-    // border-bottom: 1px solid #ECDCC8;
+    
     padding-bottom: 10px;
     padding-top: 10px;
-   
     &.gap {
       display: none;
     }
     &.itemhomeCol {}
-    .thumbsx {
+    > .thumbsx {
       max-width: 105px;
-      padding-top: 15px;
-      a {
-        display: block;
-        // padding: 10px;
-     
-      }
       img {
-        width: 90%;
+        width: 100%;
       }
       &[dir="rtl"] {
         display: none;
       }
       &[dir="ltr"] {
         float: left;
+        padding: 0 10px 10px 0;
       }
     }
-    .metax {
-      border-top: 1px solid #ECDCC8;
-      padding-top: 15px;
-    }
   }
-  h3.flexcol {
-    background-color: #ECDCC8;
-    text-transform: uppercase;
-    color: #6E665D;
-    margin: 1.5rem 0 0;
-    background-size: auto 100%;
-    border-radius: 5% 5% 0% 0%/100% 100% 0% 0%;
-    -webkit-background-clip: padding-box;
-    -moz-background-clip: padding;
-    background-clip: padding-box;
-    overflow: hidden;
-    padding: 10px 20px 0px;
+  h3 {
+    padding: 0;
+    margin: 0;
     &[lang="en"] {
       // screen smart book
       font-family: 'Gotham SSm 4r', 'Gotham SSm A', 'Gotham SSm B', Helvetica, sans-serif;
@@ -89,6 +107,7 @@
       font-size: 1.1em;
       font-size: 1.1rem;
       line-height: 1;
+      text-transform: uppercase;
     }
     &[lang="ar"] {
       line-height: 1.2;
@@ -96,7 +115,7 @@
   }
   @media (min-width: $grid-float-breakpoint) {
     .flexcol {
-       background-color: #FCF7F0;
+      background-color: #FCF7F0;
       -ms-flex: 1 1 auto;
       -webkit-flex: 1 1 auto;
       flex: 1 1 auto;
@@ -117,14 +136,14 @@
         padding-left: 20px;
         border-right: 1px solid #ECDCC8;
         padding-right: 20px;
+       
       }
       .thumbsx {
         max-width: 105px;
         padding-top: 15px;
+        padding: 15px 0px 10px 0;
         a {
           display: block;
-          // padding: 10px;
-       
         }
         img {
           width: 90%;
@@ -137,6 +156,24 @@
           float: left;
         }
       }
+      .meta {
+        border-top: 1px solid #ECDCC8;
+        padding-top: 15px;
+      }
+    }
+    h3 {
+      display: block;
+      background-color: #ECDCC8;
+      text-transform: uppercase;
+      color: #6E665D;
+      margin: 1.5rem 0 0;
+      background-size: auto 100%;
+      border-radius: 5% 5% 0% 0%/100% 100% 0% 0%;
+      -webkit-background-clip: padding-box;
+      -moz-background-clip: padding;
+      background-clip: padding-box;
+      overflow: hidden;
+      padding: 10px 20px 0px;
     }
   }
   .md_title {
@@ -144,23 +181,9 @@
     font-weight: bold;
     line-height: 1.25;
   }
-  [lang="ar"] & {
+  [lang="ar"] {
     .md_title {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
     }
   }
-  &:last-child {
-    .itemhomeCol {
-      border-bottom: 1px solid #ECDCC8;
-    }
-  }
-  &:nth-child(2) {
-    .metax {
-      border-top: none;
-    }
-  }
-}
-
-.featured {
-  clear: both;
 }
