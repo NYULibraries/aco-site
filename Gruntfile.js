@@ -303,38 +303,7 @@ module.exports = function( grunt ) {
     
     grunt.loadNpmTasks('grunt-contrib-watch');
     
-    // far from ideal
-    grunt.registerTask('massageDataSource', 'massageDataSource', function() {
-    	
-    	var subjects_source = grunt.file.readJSON( __dirname + '/source/json/datasources/subject.json' )
-    	  , drupal_subjects_source = grunt.file.readJSON( __dirname + '/source/json/datasources/subjectsList.json' )
-    	  , terms = subjects_source.facet_counts.facet_fields.im_field_subject
-    	  , subjects = []
-    	  , z = []
-    	  , subjects_source_map = []
-    	  , gaga = []
-          , jsonScriptTagOpen = '<script id="subjecsList" type="application/json">'
-          , jsonScriptTagClose = '</script>'     
-          
-        _.each( drupal_subjects_source , function ( subject, index ) {
-        	subjects.push( { term : subject.value, tid : subject.raw_value })
-        })
-
-        _.each( _.filter( terms, function ( term ) { return _.isString( term ) } ), function ( subject, index ) {
-
-        	 var z = _.findWhere( subjects, { tid :  subject });
-
-        	 if ( z ) {
-        	     subjects_source_map.push ( z )
-        	 }
-
-        })
-        
-   	    grunt.file.write( __dirname + '/source/views/subjectsList.mustache', jsonScriptTagOpen + JSON.stringify( subjects_source_map ) + jsonScriptTagClose  )
-   	    
-        grunt.file.write(__dirname + '/source/json/datasources/subject.json', JSON.stringify( subjects_source_map ) )   	    
-
-    })
+ 
     
     grunt.registerTask('writeHTML', 'writeHTML', function() {
     
@@ -354,6 +323,6 @@ module.exports = function( grunt ) {
 
     });
 
-    grunt.registerTask('default', ['clean', 'copy', 'curl', 'massageDataSource', 'uglify', 'sass', 'writeHTML']);
+    grunt.registerTask('default', ['clean', 'copy', 'curl',  'uglify', 'sass', 'writeHTML']);
 
 };

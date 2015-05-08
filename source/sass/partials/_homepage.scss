@@ -24,7 +24,8 @@
   font-size: .9rem;
   font-family: $font-family-serif;
   @media (max-width: $grid-float-breakpoint-max) {
-    border-top: 1px solid #ECDCC8;
+    // mobile only
+    border-top: 1px solid #DECCBF;
     box-shadow: inset 0px 1px white;
     width: 100%;
     overflow: hidden;
@@ -34,6 +35,18 @@
       overflow: hidden;
       border-top: none;
       box-shadow: none;
+      background-color: #ECDCC8;
+      padding: 0 10px 0px;
+    }
+    h3.flexcol[lang="ar"] {
+      padding-top: 9px;
+    }
+    h3.flexcol[lang="en"] {
+      line-height: 2;
+    }
+    &:last-child {
+        border-bottom: 1px solid #DECCBF;
+        box-shadow: inset 0px 1px white,  0px 1px white;
     }
   }
   ////
@@ -48,7 +61,7 @@
       max-width: 105px;
       width: 20%;
       padding-top: 0;
-      padding-bottom: 10px;
+      // padding-bottom: 10px;
       img {
         width: 100%;
       }
@@ -80,8 +93,8 @@
       font-style: normal;
       font-size: 1.1em;
       font-size: 1.1rem;
-      line-height: 1;
-      text-transform: uppercase;
+      // line-height: 2;
+      // text-transform: uppercase;
       float: left;
       padding-right: 15px;
     }
@@ -106,7 +119,7 @@
         border-bottom: 1px solid #ECDCC8;
       }
     }
-    &:nth-child(2) {
+    &:nth-child(2) .flexcol {
       .meta {
         border-top: none;
       }
@@ -116,6 +129,8 @@
       -ms-flex: 1 1 auto;
       -webkit-flex: 1 1 auto;
       flex: 1 1 auto;
+      padding-top: 0;
+      padding-bottom: 10px;
       &.gap {
         display: block;
         -ms-flex: 1 0 10%;
@@ -152,6 +167,7 @@
       display: block;
       background-color: #ECDCC8;
       text-transform: uppercase;
+      line-height: 1;
       margin: 1.5rem 0 0;
       background-size: auto 100%;
       border-radius: 5% 5% 0% 0%/100% 100% 0% 0%;
@@ -162,14 +178,24 @@
       padding: 10px 20px 0px;
     }
   }
+  .md_publisher span:only-of-type {
+    display: none;
+  }
+  .md_publisher span.md_label + span + span::before {
+    // background-color: red;
+    content: ", ";
+  }
+  .md_publisher span.md_label + span + span + span::before {
+    content: ", ";
+  }
   .md_title {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: bold;
     line-height: 1.25;
   }
   [lang="ar"] {
     .md_title {
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
   }
 }
