@@ -1,6 +1,5 @@
 .front {
   .col {
-    
     p {
       margin: 0;
     }
@@ -60,6 +59,7 @@
     .flexcol[lang="en"] {
       .thumbs {
         // padding-bottom: 10px;
+     
       }
     }
   }
@@ -79,21 +79,21 @@
         width: 100%;
       }
     }
-  }
-  .flexcol[lang="en"] {
-    //padding-top: 0;
-    .thumbs {
-      float: left;
-      padding-right: 10px;
-       padding-bottom: 10px;
+    &[lang="en"] {
+      //padding-top: 0;
+      .thumbs {
+        float: left;
+        padding-right: 10px;
+        padding-bottom: 10px;
+      }
     }
-  }
-  .flexcol[lang="ar"] {
-    //padding-top: 0;
-    .thumbs {
-      float: right;
-      padding-left: 10px;
-      display: none;
+    &[lang="ar"] {
+      //padding-top: 0;
+      .thumbs {
+        float: right;
+        padding-left: 10px;
+        display: none;
+      }
     }
   }
   h3.flexcol {
@@ -174,6 +174,11 @@
       .meta {
         border-top: 1px solid #ECDCC8;
         padding-top: 15px;
+      }
+      &[lang="en"] {
+        .meta {
+          margin-left: 20%;
+        }
       }
     }
     h3.flexcol {
