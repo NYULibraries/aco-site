@@ -13,23 +13,11 @@
             }
         },
         "curl" : {
-             "recentlyAddedTitlesEN" : {
-                "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=sm_collection_code:aco&fq=!ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5&&sort=ds_changed%20desc",
-                "dest" : "source/json/datasources/recentlyAddedTitlesEN.json"
-            },
-             "recentlyAddedTitlesAR" : {
-                "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=sm_collection_code:aco&fq=ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5&sort=ds_changed%20desc",
-                "dest" : "source/json/datasources/recentlyAddedTitlesAR.json"
-            },
-            "subject" : {
-        	    "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=sm_collection_code:aco&rows=0&facet=true&facet.field=im_field_subject",
-                "dest" : "source/json/datasources/subject.json"
-            },
-            "drupalSubjecs" : {
-               "src" : "http://alpha-user:dlts2010@dev-dl-pa.home.nyu.edu/books/sources/field/field_subject",
-        	   "dest" : "source/json/datasources/subjectsList.json"
+            "featuredTitlesAll" : {
+                "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=sm_collection_code:aco&fq=!ss_language:ar&fq=(ss_identifer:cornell_aco000014+OR+ss_identifer:cornell_aco000034+OR+ss_identifer:cornell_aco000037+OR+ss_identifer:cornell_aco000177+OR+ss_identifer:columbia_aco000071+OR+ss_identifer:columbia_aco000078+OR+ss_identifer:columbia_aco000084+OR+ss_identifer:columbia_aco000103+OR+ss_identifer:nyu_aco000248+OR+ss_identifer:nyu_aco000262+OR+ss_identifer:nyu_aco000391+OR+ss_identifer:nyu_aco000398)&sort=ss_identifer%20desc",
+                "dest" : "source/json/datasources/featuredTitlesAll.json"
             }
-        }
+        }      
     },
     "local" : {
         "appUrl" : "http://localhost/aco",
@@ -44,21 +32,10 @@
             }
         },
         "curl" : {
-            "recentlyAddedTitlesEN" : {
-                "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=sm_collection_code:aco&fq=!ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5&&sort=ds_changed%20desc",
-                "dest" : "source/json/datasources/recentlyAddedTitlesEN.json"
-            },
-            "recentlyAddedTitlesAR" : {
-                "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=sm_collection_code:aco&fq=ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5&sort=ds_changed%20desc",
-                "dest" : "source/json/datasources/recentlyAddedTitlesAR.json"
-            },
-            "subject" : {
-        	    "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=sm_collection_code:aco&rows=0&facet=true&facet.field=im_field_subject",
-                "dest" : "source/json/datasources/subject.json"
-            },
-            "drupalSubjecs" : {
-               "src" : "http://alpha-user:dlts2010@dev-dl-pa.home.nyu.edu/books/sources/field/field_subject",
-        	   "dest" : "source/json/datasources/subjectsList.json"
+            
+            "featuredTitlesAll" : {
+                "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=sm_collection_code:aco&fq=!ss_language:ar&fq=(ss_identifer:cornell_aco000014+OR+ss_identifer:cornell_aco000034+OR+ss_identifer:cornell_aco000037+OR+ss_identifer:cornell_aco000177+OR+ss_identifer:columbia_aco000071+OR+ss_identifer:columbia_aco000078+OR+ss_identifer:columbia_aco000084+OR+ss_identifer:columbia_aco000103+OR+ss_identifer:nyu_aco000248+OR+ss_identifer:nyu_aco000262+OR+ss_identifer:nyu_aco000391+OR+ss_identifer:nyu_aco000398)&sort=ss_identifer%20desc",
+                "dest" : "source/json/datasources/featuredTitlesAll.json"
             }
         }      
     },
@@ -71,22 +48,11 @@
                 "style" : "compressed"
             }
         },        
-        "curl" : {
-            "recentlyAddedTitlesEN" : {
-                "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=sm_collection_code:aco&fq=!ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5&&sort=ds_changed%20desc",
-                "dest" : "source/json/datasources/recentlyAddedTitlesEN.json"
-            },
-            "recentlyAddedTitlesAR" : {
-                "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=sm_collection_code:aco&fq=ss_language:ar&fl=ss_embedded,title,type,ss_collection_identifier,ss_identifer,ss_representative_image,teaser,sm_field_author,sm_field_title,ss_language,sm_field_publication_date_text,sm_field_publication_location,sm_field_publisher,sm_vid_Terms,tm_vid_1_names,sm_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_location,sm_ar_subjects,sm_ar_publication_date,sm_ar_partner,sm_field_partner&rows=5&sort=ds_changed%20desc",
-                "dest" : "source/json/datasources/recentlyAddedTitlesAR.json"
-            },
-            "subject" : {
-        	    "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=hash:iy26sh&fq=sm_collection_code:aco&facet=true&facet.field=im_field_subject",
-                "dest" : "source/json/datasources/subject.json"
-            },
-            "drupalSubjecs" : {
-               "src" : "http://dlib.nyu.edu/books/sources/field/field_subject",
-        	   "dest" : "source/json/datasources/subjectsList.json"
+       "curl" : {
+            
+            "featuredTitlesAll" : {
+                "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=sm_collection_code:aco&fq=!ss_language:ar&fq=(ss_identifer:cornell_aco000014+OR+ss_identifer:cornell_aco000034+OR+ss_identifer:cornell_aco000037+OR+ss_identifer:cornell_aco000177+OR+ss_identifer:columbia_aco000071+OR+ss_identifer:columbia_aco000078+OR+ss_identifer:columbia_aco000084+OR+ss_identifer:columbia_aco000103+OR+ss_identifer:nyu_aco000248+OR+ss_identifer:nyu_aco000262+OR+ss_identifer:nyu_aco000391+OR+ss_identifer:nyu_aco000398)&sort=ss_identifer%20desc",
+                "dest" : "source/json/datasources/featuredTitlesAll.json"
             }
         }      
     }        

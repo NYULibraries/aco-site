@@ -102,5 +102,24 @@
         "sourceType" : "json",
         "source" : "source/json/datasources/recentlyAddedTitlesAR.json"               
       }
+  },
+  "featuredTitles" : {
+      "en" : {
+        "title" : "Featured Titles",
+        "sourceType" : "json",
+        "source" : "source/json/datasources/featuredTitlesEN.json"
+      },
+      "ar" : {
+        "title" : "Featured Titles",
+        "sourceType" : "json",
+        "source" : "source/json/datasources/featuredTitlesAR.json"               
+      }
+  },
+  "featuredTitlesAll" : {
+     "en" : {
+        "title" : "Featured Titles All",
+        "sourceType" : "json",
+        "source" : "source/json/datasources/featuredTitlesAll.json"
+      }
   }
 }
