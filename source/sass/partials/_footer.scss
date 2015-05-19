@@ -37,15 +37,9 @@
       width: auto;
       height: 100%;
     }
-  }
-  .partners {
-    clear: both;
-    padding: 20px 0 20px 0;
-    text-align: center;
-    font: 300 0.9rem / 1.5 $font-family-serif;
-    font-size: .9em;
-    // IE8 does not recognize rems; IE below 11 cannot see rems in font shorthand
-    font-size: .9rem;
-    color: $text-color-brown;
+    @media (max-width: 400px) {
+      margin: 0 0px 30px;
+      width: 100%;
+    }
   }
 }
