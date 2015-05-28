@@ -16,15 +16,15 @@
       </div>
     </div>
     <div dir="rtl" lang="ar">
-      <div dir="rtl" lang="ar" class="md_title"><span class="md_label">العنوان:</span> <span><a href="{{../app.appRoot}}/book/{{ss_identifer}}">{{ss_ar_title}}</a></span></div>
-      <div class="md_authors" dir="rtl" lang="ar"><span class="md_label">الكاتب:</span>  
+      <div class="md_title" dir="rtl" lang="ar" ><span class="md_label">العنوان:</span> <span><a href="{{../app.appRoot}}/book/{{ss_identifer}}">{{ss_ar_title}}</a></span></div>
+      <div class="md_authors"><span class="md_label">الكاتب:</span>  
       {{#each sm_ar_author}}<span class="md_author">{{this}}</span>{{/each}}
 </div> 
-      <div dir="rtl" lang="ar"><span class="md_label">الناشر:</span> <span>{{sm_ar_publisher}}</span></div>
-      <div dir="rtl" lang="ar"><span class="md_label">مكان النشر:</span> <span>{{ss_ar_publocation}}</span></div>   
-      <div dir="rtl" lang="ar"><span class="md_label">تاريخ النشر:</span> <span>{{ss_ar_pubdate}}</span></div>                        
-      <div class="md_subjects" dir="rtl" lang="ar"><span class="md_label">الموضوع:</span> {{#each sm_ar_subject}}<span class="md_subject">{{this}}</span>{{/each}}</div>
-      <div dir="rtl" lang="ar"><span class="md_label">شريك:</span> {{#each sm_ar_partner}}<span class="md_partner">{{this}}</span>{{/each}}</div>       
+      <div dir="rtl" lang="ar" class="md_publisher"><span class="md_label">الناشر:</span> <span>{{sm_ar_publisher}}</span></div>
+      <div class="md_publocation"><span class="md_label">مكان النشر:</span> <span>{{ss_ar_publocation}}</span></div>   
+      <div dir="rtl" lang="ar" class="md_pubdate"><span class="md_label">تاريخ النشر:</span> <span>{{ss_pubdate}}</span></div>                        
+      <div dir="rtl" lang="ar" class="md_subjects" ><span class="md_label">الموضوع:</span> {{#each sm_ar_subject}}<span class="md_subject">{{this}}</span>{{/each}}</div>
+      <div dir="rtl" lang="ar"  class="md_partner" ><span class="md_label">شريك:</span> {{#each sm_ar_partner}}<span class="md_partner">{{this}}</span>{{/each}}</div>       
     </div>                      
   </div>
   {{/items}}
