@@ -1,117 +1,114 @@
-
-
 .item-list {
-    clear: both;
-    margin-top: .5em;
-    font-family: $font-family-serif;
-    width: 100%;
-    border-collapse: separate;
-    border-top: 1px solid #DECCBF;
-    border-bottom: 1px solid #ffffff;
+  clear: both;
+  margin-top: .5em;
+  font-family: $font-family-serif;
+  width: 100%;
+  border-collapse: separate;
+  border-top: 1px solid #DECCBF;
+  border-bottom: 1px solid #ffffff;
 }
 
 .item {
-    clear: both;
-    width: 100%;
-    overflow: hidden;
-    border-bottom: 2px solid #DECCBF;
-    //border-top: 1px solid #FCF7F0;
-    border-top: 1px solid #FFFFFF;
-    font-size: 1rem;
-    @media (min-width: $grid-float-breakpoint) {
+  clear: both;
+  width: 100%;
+  overflow: hidden;
+  border-bottom: 2px solid #DECCBF;
+  //border-top: 1px solid #FCF7F0;
+  border-top: 1px solid #FFFFFF;
+  font-size: 1rem;
+  @media (min-width: $grid-float-breakpoint) {
+    border-bottom: 1px solid #DECCBF;
+  }
+  > div {
+    &.l-hold {
+      float: left;
+      padding-top: 20px;
+      width: 100%;
+      > [lang="en"] {
+        margin-left: 19%;
         border-bottom: 1px solid #DECCBF;
+        padding-bottom: 20px;
+      }
+      .thumbs {
+        padding: 0;
+        width: 15%;
+        float: left;
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
     }
-    > div {
-        &.l-hold {
-            float: left;
-            padding-top: 20px;
-            width: 100%;
-            > [lang="en"] {
-                margin-left: 19%;
-                border-bottom: 1px solid #DECCBF;
-                padding-bottom: 20px;
-            }
-            .thumbs {
-                padding: 0;
-                width: 15%;
-                float: left;
-                img {
-                    width: 100%;
-                    height: auto;
-                }
-            }
-        }
-        &[lang="ar"] {
-            border-top: 1px solid #FCF7F0;
-            margin-left: 19%;
-            padding: 20px 0;
-            clear: left;
-            text-align: right;
-            span {
-                word-wrap: break-word;
-            }
-        }
-        @media (min-width: $grid-float-breakpoint) {
-            &.l-hold {
-                width: 56%;
-                > [lang="en"] {
-                    margin-left: 0;
-                    width: 70%;
-                    border-bottom: none;
-                }
-                .thumbs {
-                    float: right;
-                    width: 22%;
-                    text-align: right;
-                }
-            }
-            &[lang="ar"] {
-                clear: none;
-                margin-left: 0;
-                padding: 20px 0px 20px 5%;
-                float: right;
-                width: 35%;
-                border-top: none;
-            }
-        }
+    &[lang="ar"] {
+      border-top: 1px solid #FCF7F0;
+      margin-left: 19%;
+      padding: 20px 0;
+      clear: left;
+      text-align: right;
+      span {
+        word-wrap: break-word;
+      }
     }
+    @media (min-width: $grid-float-breakpoint) {
+      &.l-hold {
+        width: 56%;
+        > [lang="en"] {
+          margin-left: 0;
+          width: 70%;
+          border-bottom: none;
+        }
+        .thumbs {
+          float: right;
+          width: 22%;
+          text-align: right;
+        }
+      }
+      &[lang="ar"] {
+        clear: none;
+        margin-left: 0;
+        padding: 20px 0px 20px 0;
+        float: right;
+        width: 35%;
+        border-top: none;
+      }
+    }
+  }
 }
 
-
-.md_subjects {
-    //line-height: 1.25;
-    //font-family: $font-family-serif !important;
-    .md_label {
-       // line-height: 1.7;
-    }
+[lang="ar"] .md_subjects {
+  line-height: 1.25;
+  font-family: $font-family-serif !important;
+  .md_label {
+    line-height: 1.7;
+  }
 }
 
 .md_partner {
-    display: inline-block;
-   // font-family: $font-family-serif !important;
+  display: inline-block;
+   font-family: $font-family-serif !important;
 }
 
 .md_title {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .md_label {
-    font-weight: bold;
+  font-weight: bold !important;
 }
 
 .md_subject::after {
-    content: ", ";
+  content: ", ";
 }
 
 .md_subject:last-child::after {
-    content: "";
+  content: "";
 }
 
 // for multiple authors
 .md_author {
-    display: block;
+  display: block;
 }
 
 .md_author:nth-child(2) {
-    display: inline-block;
+  display: inline-block;
 }

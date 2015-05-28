@@ -10,19 +10,13 @@
 @import "bootstrap/print";
 
 // Core CSS
-@import "bootstrap/scaffolding";
-
-//@import "bootstrap/buttons";
+@import "partials/scaffolding";
 
 // Components
 @import "bootstrap/component-animations";
 
-//@import "bootstrap/dropdowns";
-//@import "bootstrap/button-groups";
-//@import "bootstrap/input-groups";
 @import "bootstrap/navs";
 
-//@import "bootstrap/breadcrumbs";
 @import "bootstrap/pagination";
 
 /*  End Bootstrap */
@@ -46,11 +40,14 @@ body {
   font-size: $font-size-base;
   line-height: $line-height-base;
   font-family: $font-family-sans-serif;
+  color: $text-color;
+  background-color: $body-bg;
 }
 
 [lang="ar"] {
   font-family: $font-family-arabic;
   line-height: 1.6;
+  
 }
 
 .container-fluid {
