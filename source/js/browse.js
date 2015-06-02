@@ -1,3 +1,6 @@
+/* jshint laxcomma: true, laxbreak: true, unused: false */
+
+
 YUI().use(
     'node'
   , 'event'
@@ -37,7 +40,7 @@ YUI().use(
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
           , results = regex.exec(location.search);
 
-        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }      
 
     /**
@@ -97,6 +100,7 @@ YUI().use(
     function onFailure( response, args ) {
     	
         // mover a onFailure
+      if ( args !== undefined ) {
         var data = args.container.getData()
           , requestError = data.requesterror;
           
@@ -116,6 +120,11 @@ YUI().use(
         else {
         	Y.log('onFailure: there was a problem with this request');
         }
+      } else {
+          Y.one('body').removeClass('io-loading');
+          Y.one('body').addClass('data-request-failure');
+         
+      }
     }
 
     function onTimeout() {
@@ -191,14 +200,16 @@ YUI().use(
               })
             );
             
-            args.container.setAttribute( 'data-requesterror', 0 );
+            node.setAttribute( 'data-requesterror', 0 );
 
             Y.one('body').removeClass('io-loading');
+            Y.one('body').addClass('data-success');
 
         }
 
         catch (e) {
-
+          Y.one('body').removeClass('io-loading');
+          Y.one('body').addClass('data-request-error');
         }
 
     }
@@ -210,7 +221,7 @@ YUI().use(
           , sortData = Y.one('#browse-select :checked')
           , sortBy = sortData.get('value')
           , sortDir = sortData.getAttribute( "data-sort-dir" )
-          , data = options.container.getData()
+          , data = ( options.container !== undefined) ? options.container.getData() : null
           , source = ( data.source ) ? data.source : null
           , fl = ( data.fl ) ? data.fl : '*'
           , rows = ( data.rows ) ? data.rows : 10
