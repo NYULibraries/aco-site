@@ -68,7 +68,7 @@ module.exports = function( grunt ) {
 
                        menus[menu.weight] = {
                             label : menu.label
-                         ,  route : pages[index].route.replace('/index.html', '')
+                         ,  route : pages[index].route.replace('/index.html', '/')
                          ,  page : index
                          ,  weight : menu.weight
                         };
@@ -108,7 +108,9 @@ module.exports = function( grunt ) {
             source.discovery = conf.discovery;
 
             source.appName = conf.appName;
-            
+            source.appOGDescription = conf.appOGDescription;
+            source.appOGImage = conf.appOGImage;
+            source.appOGUrl = conf.appOGUrl;
             source.appUrl = conf[environment].appUrl;
             
             source.partners = widgets.partners;  
