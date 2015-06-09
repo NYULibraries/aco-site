@@ -54,7 +54,7 @@
         "source": "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select",
         "rows": 10,
         "fl": [
-          "ss_thumbnail", "ss_identifer", "ss_title", "sm_author", "sm_publisher", "ss_pubdate", "sm_partner", "sm_subject", "ss_publocation", "ss_ar_title", "sm_ar_author", "sm_ar_publisher", "sm_ar_publication_date", "sm_ar_partner", "sm_ar_subject", "score", "ss_longlabel", "ss_ar_title", "ss_sauthor", "ss_ar_sauthor", "ss_ar_publocation", "ds_created"
+          "ss_thumbnail", "zs_image_medium", "ss_identifer", "ss_title", "sm_author", "sm_publisher", "ss_pubdate", "sm_partner", "sm_subject", "ss_publocation", "ss_ar_title", "sm_ar_author", "sm_ar_publisher", "sm_ar_publication_date", "sm_ar_partner", "sm_ar_subject", "score", "ss_longlabel", "ss_ar_title", "ss_sauthor", "ss_ar_sauthor", "ss_ar_publocation", "ds_created"
         ],
         "fq": [{
             "filter": "hash",
@@ -215,7 +215,7 @@
         "source": "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select",
         "rows": 10,
         "fl": [
-          "ss_thumbnail", "ss_representative_image", "ss_identifer", "ss_title", "sm_author", "sm_publisher", "ss_pubdate", "sm_partner", "sm_subject", "ss_publocation", "ss_ar_title", "sm_ar_author", "sm_ar_publisher", "sm_ar_publication_date", "sm_ar_partner", "sm_ar_subject", "score", "ss_longlabel", "ss_ar_title", "ss_sauthor", "ss_ar_sauthor", "ss_ar_publocation"
+          "ss_thumbnail", "zs_image_medium", "ss_representative_image", "ss_identifer", "ss_title", "sm_author", "sm_publisher", "ss_pubdate", "sm_partner", "sm_subject", "ss_publocation", "ss_ar_title", "sm_ar_author", "sm_ar_publisher", "sm_ar_publication_date", "sm_ar_partner", "sm_ar_subject", "score", "ss_longlabel", "ss_ar_title", "ss_sauthor", "ss_ar_sauthor", "ss_ar_publocation"
         ],
         "fq": [{
           "filter": "hash",
