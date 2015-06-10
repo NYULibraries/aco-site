@@ -98,7 +98,7 @@
         "source" : "source/json/datasources/recentlyAddedTitlesEN.json"
       },
       "ar" : {
-        "title" : "ًعناوين مضافة مؤخرا",
+        "title" : "ًمن العناوين المعروضة",
         "sourceType" : "json",
         "source" : "source/json/datasources/recentlyAddedTitlesAR.json"               
       }
