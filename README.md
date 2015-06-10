@@ -8,7 +8,7 @@ Make sure you have http://nodejs.org and http://gruntjs.com
 ### Installation
 
 ```bash
-$ git clone https://github.com/dismorfo/aco-site.git
+$ git clone https://github.com/NYULibraries/aco-site.git
 ```
 
 ### Install dependencies
