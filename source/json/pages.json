@@ -24,7 +24,7 @@
       }],
       "featured": [{
         "titleEn": "Featured Titles",
-        "titleAr": "العناوين المضافة مؤخراً",
+        "titleAr": "من العناوين المعروضة",
         "language_code": "en",
         "language_dir": "ltr",
         "widgets": ["featuredTitlesAll"]
