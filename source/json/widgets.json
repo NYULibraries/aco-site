@@ -1,125 +1,46 @@
 {
-    "partners" : [
-      {
-        "id" : "nyu",
-        "name" : "New York University",
-        "logo" : "images/logos/nyu_short_color.png",
-        "url" : "http://www.nyu.edu/"            
-      },
-      {
-        "id" : "nyuad",
-        "name" : "New York University Abu Dhabi",
-        "logo" : "images/logos/nyuad.png",
-        "url" : "http://www.nyu.edu/"      
-      },    
-      {
-        "id" : "columbia",
-        "name" : "Columbia University in the City of New York",
-        "logo" : "images/logos/columbia.png",
-        "url" : "http://www.columbia.edu/"
-      },        
-      {
-        "id" : "cornell",
-        "name" : "Cornell University",
-        "logo" : "images/logos/cornell.png",
-        "url" : "http://www.cornell.edu/"
-      },    
-      {
-        "id" : "princeton",
-        "name" : "Princeton University",
-        "logo" : "images/logos/princeton.png",
-        "url" : "https://www.princeton.edu/"
-      },    
-      {
-        "id" : "aub",
-        "name" : "American University of Beirut",
-        "logo" : "images/logos/aub.png",
-        "url" : "http://www.aub.edu.lb/"
-      }    
-    ],
-    "subjects" : {
-      "en" : {
-        "title" : "Filter by subject",
-        "sourceType" : "json",
-        "source" : "source/json/datasources/subject.json"
-      }
-    },
-    "featuredSubjects" : {
-      "en" : {
-        "title" : "Featured Subjects",
-        "sourceType" : "local",
-        "data": [
-            {
-                "tid" : "hadith",
-                "term" : "Hadith-- Dictionaries"
-            },
-            {
-                "tid" : "arabic_language",
-                "term" : "Arabic language-- Dictionaries"
-            },
-            {
-                "tid" : "homer",
-                "term" : "Homer"
-            },
-            {
-                "tid" : "bustani",
-                "term" : "Bustānī"
-            }                          
-        ]
-      },
-      "ar" : {
-        "title" : "ًعناوين مضافة مؤخرا",
-        "sourceType" : "local",
-        "data": [
-            {
-                "tid" : "hadith",
-                "term" : "Hadith-- Dictionaries"
-            },
-            {
-                "tid" : "arabic_language",
-                "term" : "Arabic language-- Dictionaries"
-            },
-            {
-                "tid" : "homer",
-                "term" : "Homer"
-            },
-            {
-                "tid" : "bustani",
-                "term" : "Bustānī"
-            }                          
-        ]
-      }
-    },
-
-    "recentlyAddedTitles" : {
-      "en" : {
-        "title" : "Recently Added Titles",
-        "sourceType" : "json",
-        "source" : "source/json/datasources/recentlyAddedTitlesEN.json"
-      },
-      "ar" : {
-        "title" : "ًمن العناوين المعروضة",
-        "sourceType" : "json",
-        "source" : "source/json/datasources/recentlyAddedTitlesAR.json"               
-      }
+  "partners": [{
+    "id": "nyu",
+    "name": "New York University",
+    "logo": "images/logos/nyu_short_color.png",
+    "url": "http://www.nyu.edu/"
+  }, {
+    "id": "nyuad",
+    "name": "New York University Abu Dhabi",
+    "logo": "images/logos/nyuad.png",
+    "url": "http://www.nyu.edu/"
+  }, {
+    "id": "columbia",
+    "name": "Columbia University in the City of New York",
+    "logo": "images/logos/columbia.png",
+    "url": "http://www.columbia.edu/"
+  }, {
+    "id": "cornell",
+    "name": "Cornell University",
+    "logo": "images/logos/cornell.png",
+    "url": "http://www.cornell.edu/"
+  }, {
+    "id": "princeton",
+    "name": "Princeton University",
+    "logo": "images/logos/princeton.png",
+    "url": "https://www.princeton.edu/"
+  }, {
+    "id": "aub",
+    "name": "American University of Beirut",
+    "logo": "images/logos/aub.png",
+    "url": "http://www.aub.edu.lb/"
+  }],
+  "subjects": {
+    "en": {
+      "title": "Filter by subject",
+      "sourceType": "json",
+      "source": "source/json/datasources/subject.json"
+    }
   },
-  "featuredTitles" : {
-      "en" : {
-        "title" : "Featured Titles",
-        "sourceType" : "json",
-        "source" : "source/json/datasources/featuredTitlesEN.json"
-      },
-      "ar" : {
-        "title" : "Featured Titles",
-        "sourceType" : "json",
-        "source" : "source/json/datasources/featuredTitlesAR.json"               
-      }
-  },
-  "featuredTitlesAll" : {
-     "en" : {
-        "title" : "Featured Titles All",
-        "sourceType" : "json",
-        "source" : "source/json/datasources/featuredTitlesAll.json"
-      }
+  "featuredTitlesAll": {
+    "en": {
+      "sourceType": "json",
+      "source": "source/json/datasources/featuredTitlesAll.json"
+    }
   }
 }
