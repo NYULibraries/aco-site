@@ -271,7 +271,7 @@ module.exports = function( grunt ) {
 	  return {
 	      options : {
 	        banner : '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-	        compress : true,
+	        compress : {},
 	        preserveComments : false
 	      },
 	      my_target: {
