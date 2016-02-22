@@ -30,6 +30,7 @@
 @import "partials/footer";
 @import "partials/item";
 @import "partials/aconavbar";
+@import "partials/searchresultspage";
 
 html {
   font-size: $font-size-base;
@@ -47,7 +48,6 @@ body {
 [lang="ar"] {
   font-family: $font-family-arabic;
   line-height: 1.6;
-  
 }
 
 .container-fluid {

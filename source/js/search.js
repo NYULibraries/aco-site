@@ -5,6 +5,7 @@ YUI().use(
   , 'jsonp'
   , 'router'    
   , 'gallery-paginator'
+  , 'anim'
   , function (Y) {
 
     'use strict';
@@ -632,5 +633,43 @@ YUI().use(
 
     // Sort
     Y.one('body').delegate('change', onSelectChange, '#browse-select');    
+
+//// toggle about this 
+
+
+  
+
+    /**
+     * add fx plugin to module body
+    */
+    var content = Y.one('.about-info-content').plug(Y.Plugin.NodeFX, {
+         from: { height: function( node ) { 
+              return node.get('scrollHeight');}},
+        to: { height: 0  },
+        easing: Y.Easing.easeBoth,
+        on: {
+           start: function () {
+              var aboutlink = Y.all('.aboutinfo-link');
+               aboutlink.removeClass('aboutinfo-link-available');
+                aboutlink.toggleClass('open');
+            },
+            end: function () {
+                var aboutlink = Y.all('.aboutinfo-link');
+               
+                aboutlink.addClass('aboutinfo-link-available');
+            }
+        },
+        duration: .5
+    });    
+
+    function onAboutSearchClick( event ) {
+        event.preventDefault();
+        content.fx.set('reverse', !content.fx.get('reverse')); 
+        content.fx.run();
+       
+    }
+    
+    Y.one('body').delegate('click', onAboutSearchClick, '.aboutinfo-link-available');
+
 
 })
