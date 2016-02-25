@@ -1,0 +1,42 @@
+{
+
+  "partners": [
+    {
+      "id": "isaw",
+      "name": "INSTITUTE FOR THE STUDY OF THE ANCIENT WORLD",
+      "logo": "images/logos/nyu_short_color.png",
+      "url": "http://isaw.nyu.edu/"
+    },
+    {
+      "id": "dlts",
+      "name": "DIGITAL LIBRARY TECHNOLOGY SERVICES",
+      "logo": "images/logos/nyuad.png",
+      "url": "http://dlib.nyu.edu/"
+    }
+  ],
+  
+  "newsItem" : {
+      "title": "News Item",
+      "sourceType": "json",
+      "source": "source/json/datasources/isawBlog.json"
+  },
+  
+  "recentlyAddedTitles" : {
+      "title": "Recently Added Titles",
+      "sourceType": "json",
+      "source": "source/json/datasources/recentlyAddedTitles.json"
+  },
+  
+  "featuredCIAA" : {  
+      "title": "Newsletter: Circle of Inner Asian Art",
+      "sourceType": "json",
+      "source": "source/json/datasources/featuredCIAA.json"
+  },
+  
+  "featuredBrill" : {  
+    "title": "Featured Provider: KONINKLIJKE BRILL NV",
+    "sourceType": "json",
+    "source": "source/json/datasources/featuredBrill.json"
+  }
+  
+}

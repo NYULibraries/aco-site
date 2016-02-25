@@ -35,13 +35,13 @@
     {{#content}}
       {{#items}}
         <div 
-          class="widget" 
+          class="widget items" 
           data-name="items" 
-          data-rows="{{ rows }}"
-          data-source="{{ source }}"
-          data-fl="{{ fl }}"   
+          data-rows="{{rows}}"
+          data-source="{{source}}"
+          data-fl="{{fl}}"
           {{#fq}}
-          data-fq-{{ filter }}="{{ value }}"
+          data-fq-{{filter}}="{{value}}"
           {{/fq}}
           data-script='{ "js" : [ "search.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" }, { "template" : "noresults.hbs", "id" : "noresults" } ] }'
         ></div>

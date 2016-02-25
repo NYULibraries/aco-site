@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>{{> head }}</head>
-<body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{ bodyClass }}">
+<body data-app="{{appUrl}}" data-appRoot="{{appRoot}}" class="{{bodyClass}}">
   {{> header }}
   <main class="main container-fluid" role="main">
     <header>
@@ -24,11 +24,11 @@
     {{#content}}
       {{#items}}
         <div 
-          class="widget" 
+          class="widget items" 
           data-name="items" 
-          data-rows="{{ rows }}"
-          data-source="{{ source }}"
-          data-fl="{{ fl }}"
+          data-rows="{{rows}}"
+          data-source="{{source}}"
+          data-fl="{{fl}}"
           {{#fq}}
           data-fq-{{ filter }}="{{ value }}"
           {{/fq}}

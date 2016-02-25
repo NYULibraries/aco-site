@@ -1,46 +1,52 @@
-{
-  "partners": [{
-    "id": "nyu",
-    "name": "New York University",
-    "logo": "images/logos/nyu_short_color.png",
-    "url": "http://www.nyu.edu/"
-  }, {
-    "id": "nyuad",
-    "name": "New York University Abu Dhabi",
-    "logo": "images/logos/nyuad.png",
-    "url": "http://www.nyu.edu/"
-  }, {
-    "id": "columbia",
-    "name": "Columbia University in the City of New York",
-    "logo": "images/logos/columbia.png",
-    "url": "http://www.columbia.edu/"
-  }, {
-    "id": "cornell",
-    "name": "Cornell University",
-    "logo": "images/logos/cornell.png",
-    "url": "http://www.cornell.edu/"
-  }, {
-    "id": "princeton",
-    "name": "Princeton University",
-    "logo": "images/logos/princeton.png",
-    "url": "https://www.princeton.edu/"
-  }, {
-    "id": "aub",
-    "name": "American University of Beirut",
-    "logo": "images/logos/aub.png",
-    "url": "http://www.aub.edu.lb/"
-  }],
-  "subjects": {
-    "en": {
-      "title": "Filter by subject",
-      "sourceType": "json",
-      "source": "source/json/datasources/subject.json"
-    }
+{  
+  "partners": {
+    "title": "Partners",
+    "sourceType": "local",
+    "data" : [
+      {
+        "id": "nyu",
+        "name": "New York University",
+        "logo": "images/logos/nyu_short_color.png",
+        "url": "http://www.nyu.edu/"
+      },
+      {
+        "id": "nyuad",
+        "name": "New York University Abu Dhabi",
+        "logo": "images/logos/nyuad.png",
+        "url": "http://www.nyu.edu/"
+      }, 
+      {
+        "id": "columbia",
+        "name": "Columbia University in the City of New York",
+        "logo": "images/logos/columbia.png",
+        "url": "http://www.columbia.edu/"
+      },
+      {
+        "id": "cornell",
+        "name": "Cornell University",
+        "logo": "images/logos/cornell.png",
+        "url": "http://www.cornell.edu/"
+      }, 
+      {
+        "id": "princeton",
+        "name": "Princeton University",
+        "logo": "images/logos/princeton.png",
+        "url": "https://www.princeton.edu/"
+      }, 
+      {
+        "id": "aub",
+        "name": "American University of Beirut",
+        "logo": "images/logos/aub.png",
+        "url": "http://www.aub.edu.lb/"
+      }
+    ]
   },
-  "featuredTitlesAll": {
-    "en": {
-      "sourceType": "json",
-      "source": "source/json/datasources/featuredTitlesAll.json"
-    }
+  "featuredTitlesAll": {  
+    "titleEn": "Featured Titles",
+    "titleAr": "من العناوين المعروضة",
+    "language_code" : "en",
+    "language_dir": "ltr",
+    "sourceType": "json",
+    "source": "source/json/datasources/featuredTitlesAll.json"
   }
 }

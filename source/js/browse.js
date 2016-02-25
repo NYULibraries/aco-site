@@ -1,6 +1,4 @@
-/* jshint laxcomma: true, laxbreak: true, unused: false */
-
-
+/* jshint laxcomma: true */
 YUI().use(
     'node'
   , 'event'
@@ -10,14 +8,27 @@ YUI().use(
   , 'gallery-paginator'
   , 'anim'
   , function (Y) {
-	
+  
     'use strict';
-
     var itemsTemplateSource = Y.one('#items').getHTML()
       , itemsTemplate = Y.Handlebars.compile(itemsTemplateSource)
       , router = new Y.Router()
       , transactions = [];
+    function HandlebarsHelpers ( ) {
+      function json ( context, options ) {
+    	return options.fn ( JSON.parse ( context ) );
+      }
+      function speakingurl ( context, options ) {
+    	return window.getSlug ( this.label ) ;
+      }
+     return { 
+       json : json,
+    	speakingurl : speakingurl
+     } ;
+    }
     
+    Y.Object.each ( HandlebarsHelpers() , function ( helper , key ) { Y.Handlebars.registerHelper ( key , helper ) } ) ;
+
     function getRoute () {
 
         var pageQueryString = getParameterByName('page')
@@ -32,7 +43,20 @@ YUI().use(
         return route;
 
     }
-      
+
+    function getRouteChangedParameters () {
+
+        // when filter or sort is changed, we should go back to the first page
+        var sortQueryString = getParameterByName('sort')
+          , route = router.getPath();
+
+        if ( sortQueryString ) {
+            route = route + '&sort=' + sortQueryString;
+        }
+    
+        return route;
+
+    }
     function getParameterByName(name) {
         
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -42,30 +66,6 @@ YUI().use(
 
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }      
-
-    /**
-     *
-     * Unused until subject page its available
-     * 
-
-     var subjectsList = Y.one('#subjecsList')
-       , subjects = JSON.parse(subjectsList.get('innerHTML'))
-    
-    function findById(tid) {
-        for ( var i = 0; i < subjects.length; i++) {
-            if (subjects[i].tid == tid) {
-                return subjects[i];
-            }
-        }
-    }
-
-    Y.Handlebars.registerHelper('subject', function (value) {
-        var subject = findById ( value );
-        if (subject) {
-            return '<a href="' + appRoot + '/subject?tid=' + subject.tid + '">' + subject.term + '</a>';
-        }
-    });
-    */
 
     router.route( router.getPath(), function ( req ) {
 
@@ -83,24 +83,36 @@ YUI().use(
             start = ( page * rows ) - rows;
         }
         
-    	initRequest ( {
-		    container : node
-	      , start : start
-	      , page : page
-    	  , rows : rows
-    	  , sort : sort
-		} );
+      initRequest ( {
+        container : node
+        , start : start
+        , page : page
+        , rows : rows
+        , sort : sort
+    } );
         
     });
     
     function onSelectChange( ) {
-        router.replace( getRoute() );
+      
+      
+      Y.all('#browse-select option').each(function(node) { 
+        /* reset all option text */ 
+        var t = node.get("text");
+        t = t.replace("Sorting by", "Sort by");
+        node.set("text", t);
+      });
+      var t2 = Y.one("#browse-select option:checked").get("text");
+      t2 = t2.replace("Sort by", "Sorting by");
+      Y.one("#browse-select option:checked").set("text", t2);
+      
+      router.replace( getRouteChangedParameters() );
+     
     }
     
     function onFailure( response, args ) {
-    	
+      
         // mover a onFailure
-      if ( args !== undefined ) {
         var data = args.container.getData()
           , requestError = data.requesterror;
           
@@ -112,19 +124,14 @@ YUI().use(
             requestError = parseInt(requestError, 10) + 1;
             args.container.setAttribute( 'data-requesterror', requestError );                
         }
-    	
+      
         /** there try 3 more times before giving up */
         if ( requestError < 3 ) {
             router.replace( getRoute () );
         }
         else {
-        	Y.log('onFailure: there was a problem with this request');
+          Y.log('onFailure: there was a problem with this request');
         }
-      } else {
-          Y.one('body').removeClass('io-loading');
-          Y.one('body').addClass('data-request-failure');
-         
-      }
     }
 
     function onTimeout() {
@@ -132,17 +139,17 @@ YUI().use(
     }
     
     function update ( state ) {
-	
-    	this.setPage( state.page, true );
-		
-	    this.setRowsPerPage( state.rowsPerPage, true );
-	    	
-	    router.save( router.getPath() + '?page=' + state.page );
+  
+      this.setPage( state.page, true );
+      this.setRowsPerPage( state.rowsPerPage, true );
+      this.setTotalRecords( state.totalRecords, true );
+      router.save( router.getPath() + '?page=' + state.page );
 
     }
     
     function initPaginator( page, totalRecords, rowsPerPage ) {
         
+        Y.one('#paginator').empty();
         var paginatorConfiguration = {
                 totalRecords: totalRecords
               , rowsPerPage: rowsPerPage
@@ -152,13 +159,15 @@ YUI().use(
           , paginator = new Y.Paginator( paginatorConfiguration );
 
         paginator.on( 'changeRequest', update );
-               
-        paginator.render('#paginator');
+          
+        if (totalRecords > rowsPerPage) {
+          paginator.render('#paginator');
+        }
 
     }    
 
     function onSuccess ( response, args ) {
-
+    	
         try {
             
             var node = args.container
@@ -171,58 +180,42 @@ YUI().use(
               , startNode = resultsnum.one('.start')
               , docslengthNode = resultsnum.one('.docslength')
               , docslength = parseInt(response.response.docs.length, 10)
-              , appRoot = Y.one('body').getAttribute('data-app');
+              , appRoot = Y.one('body').getAttribute('data-app')
+              , rows = args.rows;
               
-            // first transaction; enable paginator
-            if ( transactions.length < 1 ) {
-            	initPaginator( page , numfound, docslength );
-            }
-
-            // store called to avoid making the request multiple times
-            transactions.push ( this.url );
-
+            /* Re-init pagination each time, since number of results changes */
+            initPaginator( page , numfound, rows );
             node.setAttribute( 'data-numFound', numfound );
-
             node.setAttribute( 'data-start', start );
-
             node.setAttribute( 'data-docsLength', docslength );
-            
             startNode.set( 'innerHTML', displayStart );
-
             docslengthNode.set( 'innerHTML', start + docslength );
-            
             numfoundNode.set( 'innerHTML', numfound );
-
             node.append(
               itemsTemplate({
                 items : response.response.docs,
                 app: { appRoot : appRoot }
               })
             );
-            
-            node.setAttribute( 'data-requesterror', 0 );
-
+            args.container.setAttribute( 'data-requesterror', 0 );
             Y.one('body').removeClass('io-loading');
-            Y.one('body').addClass('data-success');
-
         }
 
-        catch (e) {
-          Y.one('body').removeClass('io-loading');
-          Y.one('body').addClass('data-request-error');
+        catch ( e ) {
+        	Y.log( 'onSuccess error' )
+        	Y.log( e )
         }
 
     }
 
     function initRequest ( options ) {
-    
         var start = 0
           , page = 0
           , sortData = Y.one('#browse-select :checked')
           , sortBy = sortData.get('value')
           , sortDir = sortData.getAttribute( "data-sort-dir" )
-          , data = ( options.container !== undefined) ? options.container.getData() : null
-          , source = ( data.source ) ? data.source : null
+          , data = options.container.getData()
+          , source = Y.one('.widget.items').getAttribute('data-source')
           , fl = ( data.fl ) ? data.fl : '*'
           , rows = ( data.rows ) ? data.rows : 10
           , fq = [];
@@ -232,12 +225,13 @@ YUI().use(
         /** find all data-fq and push the value into fq Array*/
         for ( var prop in data ) {
             if ( data.hasOwnProperty( prop ) ) {
-          	    if ( prop.match('fq-') ) {
-          	    	fq.push( prop.replace('fq-', '') + ':' + data[prop] );
-        	    }
+                if ( prop.match('fq-') ) {
+                  fq.push( prop.replace('fq-', '') + ':' + data[prop] );
+              }
             }
         }
-
+     
+       
         if ( options.page ) {
             page = parseInt( options.page, 10 );
         }
@@ -261,7 +255,7 @@ YUI().use(
                + "&sort=" + sortBy + "%20" + sortDir;
 
         options.container.empty();
-
+        
         Y.jsonp( source, {
             on: {
                 success: onSuccess,
@@ -276,7 +270,7 @@ YUI().use(
     
     router.replace( getRoute () );
     
-    // Sort
+    // Sorting dropdown 
     Y.one('body').delegate('change', onSelectChange, '#browse-select');
 
 });
