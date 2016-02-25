@@ -193,20 +193,22 @@ main {
     clear: both;
     @media (min-width: $grid-float-breakpoint) {
       clear: left;
+      width: 46%;
+      &[lang="en"] {
+        float: left;
+        clear: left;
+      }
     }
   }
-  .col-l, .col-r {
+  .col-r {
     @media (min-width: $grid-float-breakpoint) {
       width: 46%;
       &[lang="ar"] {
         float: right;
         // There is a clear:right bug in IE
         // clear: right;
-     
-      }
-      &[lang="en"] {
-        float: left;
-        clear: left;
+        // improves baseline lining up
+        padding-top: 2px;
       }
     }
   }
@@ -278,6 +280,10 @@ main {
       }
     }
     &[lang="ar"] {
+      /* tweaking the baseline */
+      @media (min-width: $grid-float-breakpoint) {
+        margin-bottom: -3px;
+      }
       a {
         letter-spacing: normal;
         font-style: normal;
