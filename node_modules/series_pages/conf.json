@@ -1,0 +1,37 @@
+{
+
+  "page": {
+    "bodyClass": "series_page",
+    "content": {
+      "items": {
+        "sources" : [ "discovery" ] ,
+        "rows": 12,
+        "fl": [
+            "*"
+        ],
+        "fq": [
+          { "filter": "sm_collection_code", "value": "aco" }
+        ]
+      }
+    }
+  },
+  
+  "production" : {
+    "request" : {
+      "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select",
+      "dest" : "series_pages.json"
+    }
+  },
+  
+  "*" : {
+    "request" : {
+      "series" : {
+        "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select",
+        "dest" : "series_pages.json"
+      }
+    },
+    "sources" : {
+      "discovery" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select/"
+    }
+  }
+}
