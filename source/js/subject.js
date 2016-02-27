@@ -90,15 +90,9 @@ YUI().use(
     }
     
     function update ( state ) {
-    	
-    	Y.log(state)
-	
     	this.setPage( state.page, true )
-		
 	    this.setRowsPerPage(state.rowsPerPage, true)
-	    	
 	    router.save( router.getPath() + '?page=' + state.page )
-
     }
     
     function initPaginator( page, totalRecords, rowsPerPage ) {

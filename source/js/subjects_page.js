@@ -75,8 +75,7 @@ YUI().use(
   
   function onSelectChange ( ) {
   	var select = Y.one('#browse-select') ;
-	  var data = this.getData() ;
-	  Y.log(data)
+	var data = this.getData() ;
   	var checked = this.one('option:checked') ;
     Y.all('#browse-select option').each ( function ( node ) {
         node.set( "text", data["inactive"] + " " + node.getAttribute("data-label") ) ; 
