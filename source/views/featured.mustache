@@ -30,28 +30,52 @@
           <div class="md_subjects"><span class="md_label">Subjects: </span>
             {{#each zm_subject}}
                 {{#json this}}
-                  <a class="md_subject" href="{{../../../../../../../../appUrl}}/subjects/{{tid}}">{{name}}</a>
+                  <a class="md_subject" href="{{../../../../../../../../../appUrl}}/subjects/{{tid}}">{{name}}</a>
                 {{/json}}
             {{/each}}
           </div>
           {{/if}}
-          <div><span class="md_label">Provider:</span> {{#sm_provider_label}}<span>{{.}}</span>{{/sm_provider_label}}</div>
+          <div class="md_partner">
+            <span class="md_label">Provider:</span>
+            {{#each zm_partner}}
+              {{#json this}}
+                <a class="md_provider" data-code="{{code}}" data-id="{{nid}}" href="{{../../../../../../../../appUrl}}/providers/{{nid}}">{{name}}</a>
+              {{/json}}
+            {{/each}}
+          </div>          
         </div>
       </div>
-        <div class="gap flexcol">&nbsp;</div>
-        <div class="itemhomeCol flexcol" lang="ar" dir="rtl">
-          <div class="thumbs" lang="ar" dir="rtl"><a href="{{../../../../../../appUrl}}/book/{{ss_book_identifier}}/1"><img src="{{ss_representative_image}}" alt="{{ss_ar_title_long}}"/></a></div>
-          <div class="meta" lang="ar" dir="rtl">
-            <div class="md_title"  dir="rtl" lang="ar"><a href="{{../../../../../../appUrl}}/book/{{ss_book_identifier}}">{{ss_ar_title_long}}</a></div>
-              {{#ss_ar_sauthor}}
-                {{#sm_ar_author}} 
-                  <div class="md_authors" dir="rtl" lang="ar"><span class="md_label">الكاتب:</span> <span>{{.}}</span></div>
-                {{/sm_ar_author}}
-              {{/ss_ar_sauthor}}
-              <div class="md_publisher" dir="rtl" lang="ar"><span class="md_label">الناشر</span> <span>{{#sm_ar_publisher}}<span>{{.}}</span>{{/sm_ar_publisher}}</span> {{#ss_ar_spublocation}}<span>{{ss_ar_spublocation}}</span>{{/ss_ar_spublocation}}{{#ss_ar_pubdate}}<span>{{ss_ar_pubdate}}</span>{{/ss_ar_pubdate}}</div>
+      <div class="gap flexcol">&nbsp;</div>
+      <div class="itemhomeCol flexcol" lang="ar" dir="rtl">
+        <div class="thumbs" lang="ar" dir="rtl"><a href="{{../../../../../../appUrl}}/book/{{ss_book_identifier}}/1?lang=ar"><img src="{{ss_representative_image}}" alt="{{ss_ar_title_long}}"/></a></div>
+        <div class="meta" lang="ar" dir="rtl">          
+          <div class="md_title" dir="rtl" lang="ar">
+            <span class="md_label">العنوان:</span>  
+            <span><a href="{{../../../../../../appUrl}}/book/{{ss_book_identifier}}/1?lang=ar">{{ss_ar_title_long}}</a></span>
+          </div>
+          {{#if sm_ar_author}}
+            {{#each sm_ar_author}}
+              <div class="md_authors" dir="rtl" lang="ar">
+                <span class="md_label">الكاتب:</span> <span>{{this}}</span>
+              </div>      
+            {{/each}}
+          {{/if}}
+          {{#if sm_ar_publisher}}
+            <div class="md_publisher" dir="rtl" lang="ar"> 
+              <span class="md_label">الناشر</span> 
+              {{#each sm_ar_publisher}}
+                <span>{{this}}</span>
+              {{/each}}
+              {{#if ../ss_ar_publication_location}}
+                <span class="publoc">{{../ss_ar_publication_location}}</span>
+              {{/if}}
+              {{#if ../ss_publication_date_text}}
+                <span class="pubdate">{{../ss_publication_date_text}}</span>
+              {{/if}}
             </div>
+          {{/if}}
         </div>
-    </div>
+      </div>
       {{/docs}} {{/response}} {{/data}} 
     {{/featuredTitlesAll}}
   </div>
