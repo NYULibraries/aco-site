@@ -58,6 +58,7 @@ YUI().use(
     Y.on('windowresize', resizeBookView);
     Y.on('button:button-fullscreen:on', hideSiblings);
     Y.on('button:button-fullscreen:off', showSiblings);
+    
     Y.on('openlayers:change', function(data) {
       router.save('/book/' + widget.getAttribute('data-identifier') + '/' + data.sequence);
     });
@@ -69,9 +70,9 @@ YUI().use(
 	      router.replace(route);
 	}
   });
-    
+
   Y.Global.on("crossframe:message", function(o, data) {
-    var message = JSON.parse(data.message);      
+    var message = JSON.parse(data.message);
     Y.fire(message.fire, message.data);
   });
   
