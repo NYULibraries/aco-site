@@ -384,15 +384,7 @@ YUI().use(
 		} );
     });
     function onSelectChange( ) {
-      Y.all('#browse-select option').each(function(node) { 
-        /* reset all option text */ 
-        var t = node.get("text");
-        t = t.replace("Sorting by", "Sort by");
-        node.set("text", t);
-      });
-      var t2 = Y.one("#browse-select option:checked").get("text");
-      t2 = t2.replace("Sort by", "Sorting by");
-      Y.one("#browse-select option:checked").set("text", t2);
+     
       router.replace( getRoute() );
     }
     function onFailure( response, args ) {

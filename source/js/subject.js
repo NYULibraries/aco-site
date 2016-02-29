@@ -169,7 +169,11 @@ YUI().use(
         }
 
     }
-    
+    function onSelectChange( ) {
+      
+      router.replace( getRouteChangedParameters() );
+     
+    }
     function initRequest ( options ) {
     
         var rows = 10
@@ -271,5 +275,8 @@ YUI().use(
     }  
     
     router.save( router.getPath() + '?tid=' + tid ) 
+
+     // Sorting dropdown 
+    Y.one('body').delegate('change', onSelectChange, '#browse-select');
 
 })
