@@ -12,28 +12,37 @@
     {{#data}} {{#response}} {{#docs}}
     <div class="flexrow">
       <div class="itemhomeCol flexcol" lang="en" dir="ltr">
-        <div class="thumbs"><a href="{{../../../../../../appUrl}}/book/{{ss_book_identifier}}/1" title="{{ss_title_long}}"><img src="{{ss_representative_image}}" alt="{{ss_title_long}}"></a></div>
+        <div class="thumbs">
+          <a href="{{../../../../../../appUrl}}/book/{{ss_book_identifier}}/1" title="{{ss_title_long}}">
+            <img src="{{ss_representative_image}}" alt="{{ss_title_long}}" title="{{ss_title_long}}" />
+          </a>
+        </div>
         <div class="meta" lang="en" dir="ltr">
-          <div class="md_title"><a href="{{../../../../../../appUrl}}/book/{{ss_book_identifier}}/1">{{ss_title_long}}</a></div>
+          <div class="md_title">
+            <a href="{{../../../../../../appUrl}}/book/{{ss_book_identifier}}/1">{{ss_title_long}}</a>
+          </div>
           {{#sm_author}}
-            <div class="md_author"><span class="md_label">Author:</span> <span>{{.}}</span></div>
+            <div class="md_author">
+              <span class="md_label">Author:</span> 
+              <span>{{.}}</span>
+            </div>
           {{/sm_author}}
           {{#sm_publisher}}
-          <div class="md_publisher">
-            <span class="md_label">Publisher:</span> 
-            <span>{{.}}</span>
-            <span class="publoc">{{../ss_publication_location}}</span>
-            <span class="pubdate">{{../ss_publication_date_text}}</span>
-          </div>
+            <div class="md_publisher">
+              <span class="md_label">Publisher:</span> 
+              <span>{{.}}</span>
+              <span class="publoc">{{../ss_publication_location}}</span>
+              <span class="pubdate">{{../ss_publication_date_text}}</span>
+            </div>
           {{/sm_publisher}}
           {{#if zm_subject}}
-          <div class="md_subjects"><span class="md_label">Subjects: </span>
-            {{#each zm_subject}}
+            <div class="md_subjects"><span class="md_label">Subjects: </span>
+              {{#each zm_subject}}
                 {{#json this}}
                   <a class="md_subject" href="{{../../../../../../../../../appUrl}}/subjects/{{tid}}">{{name}}</a>
                 {{/json}}
-            {{/each}}
-          </div>
+              {{/each}}
+            </div>
           {{/if}}
           <div class="md_partner">
             <span class="md_label">Provider:</span>
@@ -47,7 +56,9 @@
       </div>
       <div class="gap flexcol">&nbsp;</div>
       <div class="itemhomeCol flexcol" lang="ar" dir="rtl">
-        <div class="thumbs" lang="ar" dir="rtl"><a href="{{../../../../../../appUrl}}/book/{{ss_book_identifier}}/1?lang=ar"><img src="{{ss_representative_image}}" alt="{{ss_ar_title_long}}"/></a></div>
+        <div class="thumbs" lang="ar" dir="rtl">
+          <a href="{{../../../../../../appUrl}}/book/{{ss_book_identifier}}/1?lang=ar"><img src="{{ss_representative_image}}" alt="{{ss_ar_title_long}}"/></a>
+        </div>
         <div class="meta" lang="ar" dir="rtl">          
           <div class="md_title" dir="rtl" lang="ar">
             <span class="md_label">العنوان:</span>  
@@ -75,6 +86,8 @@
             </div>
           {{/if}}
         </div>
+      </div>
+      
       </div>
       {{/docs}} {{/response}} {{/data}} 
     {{/featuredTitlesAll}}
