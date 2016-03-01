@@ -1,3 +1,7 @@
+.search_holder input[type="text"]:focus {
+  outline-color: #ff9c00;
+}
+
 input[type="submit"] {
   background: #ecdcc8 url(/aco/images/search-icon-2x.png) no-repeat center center;
   background-size: auto 80%;
@@ -62,9 +66,9 @@ input[type="text"] {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  -webkit-flex-flow: row wrap;
-  flex-flow: row wrap;
-  -ms-flex-wrap: wrap;
+  -webkit-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  -ms-flex-wrap: nowrap;
   // width: 100%;
   @media (min-width: $grid-float-breakpoint) {
     width: 260px;
