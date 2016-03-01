@@ -1,0 +1,10 @@
+{
+  "sass" : {
+    "build" : "inline",
+    "options" : {
+      "style" : "compressed", 
+      "debugInfo" : false,
+      "lineNumbers" : false
+    }
+  }
+}

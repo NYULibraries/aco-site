@@ -1,0 +1,6 @@
+{
+  "subjects": {
+    "callback" : "subjects",
+    "route": "/subjects/index.html"
+  }
+}

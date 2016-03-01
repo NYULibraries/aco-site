@@ -1,3 +1,4 @@
+/* jshint laxcomma: true */
 YUI().use(
     'node'
   , 'event'
@@ -7,77 +8,48 @@ YUI().use(
   , 'gallery-paginator'
   , 'anim'
   , function (Y) {
-
     'use strict';
-
     var itemsTemplateSource = Y.one('#items').getHTML()
       , itemsTemplate = Y.Handlebars.compile(itemsTemplateSource)
       , nrSource = Y.one('#noresults').getHTML()
       , noresultsTemplate = Y.Handlebars.compile(nrSource)
       , router = new Y.Router()
-      , transactions = [];      
-
+      , transactions = [];    
+    function HandlebarsHelpers () {
+      function json ( context, options ) {
+        return options.fn ( JSON.parse ( context ) );
+      }
+      function speakingurl ( context, options ) {
+        return window.getSlug ( this.label ) ;
+      }
+      return { 
+        json : json,
+      	speakingurl : speakingurl
+       } ;
+      }
+  Y.Object.each ( HandlebarsHelpers() , function ( helper , key ) { Y.Handlebars.registerHelper ( key , helper ) } ) ;
     function getRoute () {
-
         var pageQueryString = getParameterByName('page')
           , sortQueryString = getParameterByName('sort')
           , qQueryString = getParameterByName('q')
           , page = ( pageQueryString ) ? pageQueryString : 1
           , q = ( qQueryString ) ? qQueryString : ''
           , route = router.getPath() + '?q=' + q + '&page=' + page;
-        
         // throw error if q is empty?
-
         if ( sortQueryString ) {
             route = route + '&sort=' + sortQueryString;
         }
-        
         return route;
-
     }
-    
     function getParameterByName(name) {
-        
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
           , results = regex.exec(location.search);
-
         return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
-    
-    /**  
-    
-    Unused until subject page is available
-
-    var = subjectsList = Y.one('#subjecsList')
-        , subjects = JSON.parse(subjectsList.get('innerHTML'))
-
-    function findById ( tid ) {
-        for ( var i = 0; i < subjects.length; i++) {
-    	    if (subjects[i].tid == tid) {
-    	        return subjects[i];
-    	    }
-    	}
-    }
-    	    
-    Y.Handlebars.registerHelper('subject', function (value) {
-    	
-        var subject = findById ( value );
-        
-    	if (subject) {
-    	    return '<a href="' + appRoot + '/subject?tid=' + subject.tid + '">' + subject.term + '</a>';
-    	}
-
-    });
-    
-    */
-
     function removeQueryDiacritics( str ) {
-    
-        var diacriticsMap = {};
-
-        var replacementList = [
+      var diacriticsMap = {};
+      var replacementList = [
       {
         base: ' ',
         chars: "\u00A0",
@@ -374,33 +346,20 @@ YUI().use(
         chars: "\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763",
       }
     ];
-
         for (var i = 0; i < replacementList.length; i += 1) {
-
             var chars = replacementList[i].chars;
-            
             for (var j = 0; j < chars.length; j += 1) {
                 diacriticsMap[chars[j]] = replacementList[i].base;
             }
-
         }
-
         function removeDiacritics(str) {
-
             return str.replace(/[^\u0000-\u007e]/g, function(c) {
-
                 return diacriticsMap[c] || c;
-
             });
-
         }
-        
-        return removeDiacritics( str )
-    
+        return removeDiacritics( str );
     }    
-
     router.route( router.getPath(), function ( req ) {
-    
         var node = Y.one('[data-name="items"]')
           , data = node.getData()
           , rows = ( req.query.rows ) ? req.query.rows : ( ( data.rows ) ? data.rows : 10 ) 
@@ -408,17 +367,13 @@ YUI().use(
           , page = ( req.query.page ) ? parseInt( req.query.page, 10 ) : 0
           , query = ( req.query.q ) ? req.query.q : ''
           , start =  0;          
-          
         Y.one('.search_holder [name="q"]').set('value', query);
-        
         if ( page <= 1 ) {
             start = 0;
         }
-        
         else {
             start = ( page * rows ) - rows;
         }
-
     	initRequest ( {
 		    container : node
 	      , start : start
@@ -427,19 +382,15 @@ YUI().use(
     	  , sort : sort
 	      , q : removeQueryDiacritics ( query )
 		} );
-        
     });
-    
     function onSelectChange( ) {
-        router.replace( getRoute() );
+     
+      router.replace( getRoute() );
     }
-    
     function onFailure( response, args ) {
-    	
         // mover a onFailure
         var data = args.container.getData()
           , requestError = data.requesterror;
-          
         if ( !requestError ) {
             args.container.setAttribute( 'data-requesterror', 1 );
             requestError = 1;
@@ -448,7 +399,6 @@ YUI().use(
             requestError = parseInt(requestError, 10) + 1;
             args.container.setAttribute( 'data-requesterror', requestError );                
         }
-    	
         /** there try 3 more times before giving up */
         if ( requestError < 3 ) {
             router.replace( getRoute () );
@@ -457,41 +407,30 @@ YUI().use(
         	Y.log('onFailure: there was a problem with this request');
         }
     }
-    
     function onTimeout() {
         onFailure();
     }
-    
     function update ( state ) {
-    	
-    	this.setPage( state.page, true )
-		
-	    this.setRowsPerPage(state.rowsPerPage, true)
-	    
+    	this.setPage( state.page, true );
+	    this.setRowsPerPage(state.rowsPerPage, true);
 	    router.save( router.getPath() + '?q=' + getParameterByName('q') + '&page=' + state.page );
-
     }
-    
     function initPaginator( page, totalRecords, rowsPerPage ) {
-        
+        Y.one('#paginator').empty();
         var paginatorConfiguration = {
                 totalRecords: totalRecords
               , rowsPerPage: rowsPerPage
               , initialPage : page
               , template: '{FirstPageLink} {PageLinks} {NextPageLink}'        
             }
-          , paginator = new Y.Paginator( paginatorConfiguration )
-
-        paginator.on( 'changeRequest', update )
-               
-        paginator.render('#paginator')
-
-    }    
-
+          , paginator = new Y.Paginator( paginatorConfiguration );
+        paginator.on( 'changeRequest', update );
+        if (totalRecords > rowsPerPage) {
+          paginator.render('#paginator');
+        }
+    } 
     function onSuccess ( response, args ) {
-
         try {
-        
             var node = args.container
               , resultsnum = Y.one('.resultsnum')
               , querytextNode = Y.one('.s-query')
@@ -505,35 +444,23 @@ YUI().use(
               , docslength = parseInt(response.response.docs.length, 10)
               , q = getParameterByName('q')
               , appRoot = Y.one('body').getAttribute('data-app');
-            
             Y.one('body').removeClass('io-loading');            
-              
+            if (q) { 
+              querytextNode.set('innerHTML', q);
+            }
             if ( numfound > 0 ) {
-              
                 // first transaction; enable paginator
                 if ( transactions.length < 1 ) {
                     initPaginator( page , numfound, docslength );
                 }
-
                 // store called to avoid making the request multiple times
                 transactions.push ( this.url );
-
                 node.setAttribute( "data-numFound", numfound );
-
                 node.setAttribute( "data-start", start );
-
                 node.setAttribute( "data-docsLength", docslength );
-            
                 startNode.set( 'innerHTML', displayStart );
-
                 docslengthNode.set('innerHTML', start + docslength );
-            
                 numfoundNode.set('innerHTML', numfound);
-            
-                if ( q ) { 
-                    querytextNode.set('innerHTML', q);
-                }
-
                 // render HTML and append to container
                 node.append(
                     itemsTemplate({
@@ -541,45 +468,29 @@ YUI().use(
                         app: { appRoot : appRoot }
                     })
                 );
-                
                 Y.one('body').removeClass('items-no-results');
-
                 args.container.setAttribute( 'data-requesterror', 0 );
-
             }
-            
             // no results
             else {
-              
               Y.one('body').addClass('items-no-results');
-
               node.append(noresultsTemplate());
-            
             }
-
         }
-
-        catch (e) {
-
-        }
-
+        catch (e) {}
     }
-    
     function initRequest ( options ) {
-    
         var start = 0
           , page = 0
           , sortData = Y.one('#browse-select :checked')
           , sortBy = sortData.get('value')
           , sortDir = sortData.getAttribute( "data-sort-dir" )
           , data = options.container.getData()
-          , source = ( data.source ) ? data.source : null
+          , source = Y.one('.widget.items').getAttribute('data-source')
           , fl = ( data.fl ) ? data.fl : '*'
           , rows = ( data.rows ) ? data.rows : 10
           , fq = [];
-
       Y.one('body').addClass('io-loading');
-      
       /** find all data-fq and push the value into fq Array*/
       for ( var prop in data ) {
           if ( data.hasOwnProperty( prop ) ) {
@@ -588,19 +499,15 @@ YUI().use(
       	    }
           }
       }
-
       if ( options.page ) {
           page = parseInt( options.page, 10 );
       }
-
       if ( options.start ) {
           start = parseInt( options.start, 10 );
       }
-
       if ( options.rows ) {
           rows = parseInt( options.rows, 10 );
       }
-      
       source = source 
              + "?"
              + "wt=json"
@@ -610,13 +517,10 @@ YUI().use(
              + "&rows=" + rows
              + "&start=" + start
              + "&sort=" + sortBy + "%20" + sortDir;
-
-        if ( options.q ) {
+        if (options.q) {
         	source = source + '&q=' + options.q;
         }
-                           
-        options.container.empty()
-
+        options.container.empty();
         Y.jsonp( source, {
             on: {
                 success: onSuccess,
@@ -626,19 +530,10 @@ YUI().use(
             args: options,
             timeout: 3000
         });
-    
     }
-
-    router.replace( getRoute () );
-
+    router.replace(getRoute());
     // Sort
-    Y.one('body').delegate('change', onSelectChange, '#browse-select');    
-
-//// toggle about this 
-
-
-  
-
+    Y.one('body').delegate('change', onSelectChange, '#browse-select');
     /**
      * add fx plugin to module body
     */
@@ -661,15 +556,11 @@ YUI().use(
         },
         duration: .5
     });    
-
     function onAboutSearchClick( event ) {
         event.preventDefault();
         content.fx.set('reverse', !content.fx.get('reverse')); 
         content.fx.run();
        
     }
-    
     Y.one('body').delegate('click', onAboutSearchClick, '.aboutinfo-link-available');
-
-
-})
+});

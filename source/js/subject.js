@@ -90,15 +90,9 @@ YUI().use(
     }
     
     function update ( state ) {
-    	
-    	Y.log(state)
-	
     	this.setPage( state.page, true )
-		
 	    this.setRowsPerPage(state.rowsPerPage, true)
-	    	
 	    router.save( router.getPath() + '?page=' + state.page )
-
     }
     
     function initPaginator( page, totalRecords, rowsPerPage ) {
@@ -175,7 +169,11 @@ YUI().use(
         }
 
     }
-    
+    function onSelectChange( ) {
+      
+      router.replace( getRouteChangedParameters() );
+     
+    }
     function initRequest ( options ) {
     
         var rows = 10
@@ -277,5 +275,8 @@ YUI().use(
     }  
     
     router.save( router.getPath() + '?tid=' + tid ) 
+
+     // Sorting dropdown 
+    Y.one('body').delegate('change', onSelectChange, '#browse-select');
 
 })

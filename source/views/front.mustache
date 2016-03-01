@@ -3,21 +3,19 @@
   <head>
     {{> head }}
   </head>
-  <body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{bodyClass}}">
+  <body data-app="{{appUrl}}" data-appRoot="{{appRoot}}" class="{{bodyClass}}">
     {{> header }}
     <main class="main container-fluid" role="main">
-     
       {{#content}}
       {{#intro}}
         <div class="col {{class}}" lang="{{language_code}}" dir="{{language_dir}}">
           {{{html}}}
         </div>
       {{/intro}}
-      {{> featured }}
+      {{> featured ..}}
       {{/content}}    
-    
     </main>
     {{> footer }}
-    {{{ closure }}}
+    {{{closure}}}
   </body>
 </html>

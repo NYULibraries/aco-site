@@ -85,7 +85,8 @@
 
 .md_partner {
   display: inline-block;
-   font-family: $font-family-serif !important;
+  font-family: $font-family-serif !important;
+  white-space: nowrap;
 }
 
 .md_title {

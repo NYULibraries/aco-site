@@ -1,5 +1,11 @@
 <div class="logo-hold">
-  {{#partners}}
-    <div class="logo {{id}}"><a href="{{url}}"><img src="{{appUrl}}/{{logo}}" alt="" title="{{name}}"></a></div>
-  {{/partners}}
+  {{#widgets}}
+    {{#partners}}
+      {{#data}}
+        <div class="logo {{id}}">
+          <a href="{{url}}"><img src="{{../../../appUrl}}/{{logo}}" title="{{name}}" alt="{{name}}"></a>
+        </div>
+      {{/data}}
+    {{/partners}}
+  {{/widgets}}
 </div>

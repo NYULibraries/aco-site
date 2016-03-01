@@ -1,62 +1,11 @@
 {
-    "appName": "Arabic Collections Online",
-    "appOGDescription": "Arabic Collections Online is a publicly available digital library of public domain Arabic language content. Funded by New York University Abu Dhabi, this project aims to expose 15,000 volumes from NYU and partner institutions over a period of five years.",
-    "appOGImage": [{"path":"images/booklarge.png"}],
-    "appOGUrl": "http://dlib.nyu.edu/aco/",
-    "environment" : "development",
-    "development" : {
-        "appUrl": "http://dev-dl-pa.home.nyu.edu/aco",
-        "appRoot": "/aco",
-        "sass" : {
-            "build" : "internal"
-          , "options" : {
-                "style" : "compressed"
-              , "debugInfo" : false
-              , "lineNumbers" : false
-            }
-        },
-        "curl" : {
-            "featuredTitlesAll" : {
-                "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=sm_collection_code:aco&fq=!ss_language:ar&fq=(ss_identifer:cornell_aco000014+OR+ss_identifer:cornell_aco000034+OR+ss_identifer:cornell_aco000037+OR+ss_identifer:cornell_aco000177+OR+ss_identifer:columbia_aco000071+OR+ss_identifer:columbia_aco000078+OR+ss_identifer:columbia_aco000084+OR+ss_identifer:columbia_aco000103+OR+ss_identifer:nyu_aco000248+OR+ss_identifer:nyu_aco000262+OR+ss_identifer:nyu_aco000391+OR+ss_identifer:nyu_aco000398)&sort=ss_identifer%20desc",
-                "dest" : "source/json/datasources/featuredTitlesAll.json"
-            }
-        }      
-    },
-    "local" : {
-        "appUrl" : "http://localhost/aco",
-        "appRoot" : "/aco",
-        "bookRoot" : "http://dl-pa.home.nyu.edu/books",
-        "sass" : {
-            "build" : "external"
-          , "options" : {
-                "style" : "expanded"
-              , "debugInfo" : false
-              , "lineNumbers" : true
-            }
-        },
-        "curl" : {
-            
-            "featuredTitlesAll" : {
-                "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=sm_collection_code:aco&fq=!ss_language:ar&fq=(ss_identifer:cornell_aco000014+OR+ss_identifer:cornell_aco000034+OR+ss_identifer:cornell_aco000037+OR+ss_identifer:cornell_aco000177+OR+ss_identifer:columbia_aco000071+OR+ss_identifer:columbia_aco000078+OR+ss_identifer:columbia_aco000084+OR+ss_identifer:columbia_aco000103+OR+ss_identifer:nyu_aco000248+OR+ss_identifer:nyu_aco000262+OR+ss_identifer:nyu_aco000391+OR+ss_identifer:nyu_aco000398)&sort=ss_identifer%20desc",
-                "dest" : "source/json/datasources/featuredTitlesAll.json"
-            }
-        }      
-    },
-    "production" : {
-        "appUrl": "http://dlib.nyu.edu/aco",
-        "appRoot": "/aco",
-        "sass" : {
-            "build" : "inline"
-          , "options" : {
-                "style" : "compressed"
-            }
-        },        
-       "curl" : {
-            
-            "featuredTitlesAll" : {
-                "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select?wt=json&fq=sm_collection_code:aco&fq=!ss_language:ar&fq=(ss_identifer:cornell_aco000014+OR+ss_identifer:cornell_aco000034+OR+ss_identifer:cornell_aco000037+OR+ss_identifer:cornell_aco000177+OR+ss_identifer:columbia_aco000071+OR+ss_identifer:columbia_aco000078+OR+ss_identifer:columbia_aco000084+OR+ss_identifer:columbia_aco000103+OR+ss_identifer:nyu_aco000248+OR+ss_identifer:nyu_aco000262+OR+ss_identifer:nyu_aco000391+OR+ss_identifer:nyu_aco000398)&sort=ss_identifer%20desc",
-                "dest" : "source/json/datasources/featuredTitlesAll.json"
-            }
-        }      
-    }        
+  "appName": "Arabic Collections Online",
+  "appOGDescription": "Arabic Collections Online is a publicly available digital library of public domain Arabic language content. Funded by New York University Abu Dhabi, this project aims to expose 15,000 volumes from NYU and partner institutions over a period of five years.",
+  "appOGImage": [{"path":"images/booklarge.png"}],
+  "appOGUrl": "http://stage-dl-pa.home.nyu.edu/aco",
+  "collectionCode": "aco",
+  "appUrl": "http://stage-dl-pa.home.nyu.edu/aco",
+  "appUrlx": "http://localhost/aco/",
+  "appRoot": "/aco",
+  "discovery": "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/stage/select/"
 }

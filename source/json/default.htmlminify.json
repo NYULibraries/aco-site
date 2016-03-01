@@ -1,0 +1,10 @@
+{
+  "htmlminify" : {
+    "removeOptionalTags" : "true", 
+    "removeComments" : "true", 
+    "conservativeCollapse" : "true", 
+    "removeAttributeQuotes" : "true", 
+    "removeRedundantAttributes" : "true", 
+    "collapseWhitespace" : "true"
+  }
+}

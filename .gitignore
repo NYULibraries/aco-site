@@ -40,3 +40,34 @@ source/json/datasources/*.json
 node_modules
 
 design/*
+
+ALBERTO 
+
+.out
+.DS_Store
+
+build
+build/*
+node_modules/*
+backups/*
+
+source/json/conf.json
+source/json/sass.json
+source/json/htmlminify.json
+source/json/js.json
+source/json/compass.json
+
+source/yuiTabTest.html
+source/json/datasources/*
+
+# Ignore Eclipse conf files
+.project
+.buildpath
+.settings/*
+
+# project sub modules
+!node_modules/grunt-contrib-writeHTML
+!node_modules/series
+!node_modules/series_pages
+!node_modules/subjects
+!node_modules/subjects_pages

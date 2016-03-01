@@ -1,0 +1,7 @@
+{
+  "appName": "Application/Site name",
+  "collectionCode": "collection code, e.g., awdl",
+  "appUrl": "http://example.com",
+  "appRoot": "/",
+  "discovery": "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select/"
+}
