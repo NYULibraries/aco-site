@@ -6,7 +6,7 @@ input[type="submit"] {
   -ms-flex: 0 1 50px;
   -webkit-flex: 0 1 50px;
   flex: 0 1 50px;
-  height: 32px;
+  height: 30px;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   -khtml-border-radius: 0px;
@@ -29,7 +29,7 @@ input[type="submit"] {
 input[type="text"] {
   padding: 0 20px;
   border: 1px solid $brand-secondary3;
-  height: 32px;
+  height: 30px;
   @include box-shadow(inset 0px 1px 1px rgba(0, 0, 0, 0.2));
   -ms-flex: 1 1 auto;
   -webkit-flex: 1 1 auto;
@@ -67,7 +67,7 @@ input[type="text"] {
   -ms-flex-wrap: wrap;
   // width: 100%;
   @media (min-width: $grid-float-breakpoint) {
-    width: 320px;
+    width: 260px;
     margin: 0;
   }
 }
