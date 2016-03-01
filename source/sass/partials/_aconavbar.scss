@@ -52,6 +52,7 @@
   @media (min-width: $grid-float-breakpoint) {
     width: auto;
     height: auto;
+    overflow-x: hidden;
     &[style] {
       height: auto !important;
     }
@@ -156,9 +157,6 @@
         padding-bottom: $navbar-padding-vertical;
       }
     }
-    &.navbar-right:last-child {
-      margin-right: -$navbar-padding-horizontal;
-    }
   }
 }
 
@@ -180,8 +178,6 @@
 // our navbars.
 
 .navbar-form {
-  margin-left: -$navbar-padding-horizontal;
-  margin-right: -$navbar-padding-horizontal;
   padding: 10px $navbar-padding-horizontal;
   border-top: 1px solid transparent;
   border-bottom: 1px solid transparent;
@@ -202,9 +198,6 @@
     padding-bottom: 0;
     @include box-shadow(none);
     // Outdent the form if last child to line up with content down the page
-    &.navbar-right:last-child {
-      margin-right: -$navbar-padding-horizontal;
-    }
   }
 }
 
