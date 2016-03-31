@@ -52,6 +52,7 @@ node_modules/*
 backups/*
 
 source/json/conf.json
+source/json/curl.json
 source/json/sass.json
 source/json/htmlminify.json
 source/json/js.json
@@ -71,3 +72,6 @@ source/json/datasources/*
 !node_modules/series_pages
 !node_modules/subjects
 !node_modules/subjects_pages
+
+
+
