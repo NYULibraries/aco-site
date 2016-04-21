@@ -73,5 +73,6 @@ source/json/datasources/*
 !node_modules/subjects
 !node_modules/subjects_pages
 
+source/json/conf.json
 
 
