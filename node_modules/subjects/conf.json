@@ -1,0 +1,18 @@
+{
+  "page": {
+    "bodyClass": "subjects",
+    "title" : "Browse by subjects"
+  },
+  "*" : {
+    "request" : {
+      "drupal_subjects" : {
+        "src" : "http://alpha-user:dlts2010@stage-dl-pa.home.nyu.edu/viewer/sources/field/field_subject",
+        "dest" : "drupal_subjects"
+      },
+      "subjects" : {
+        "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/stage/select?wt=json&fq=sm_collection_code:aco&rows=0&facet=true&facet.field=im_field_subject",
+        "dest" : "subjects.json"
+      }      
+    }
+  }
+}

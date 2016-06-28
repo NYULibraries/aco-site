@@ -10,7 +10,7 @@
       "language_dir": "rtl",
       "html": "&nbsp;"
     }],
-    "route": "/404/index.html",
+    "route": "/404.html",
     "bodyClass": "notfound",
     "content": {
       "main": [{
