@@ -5,6 +5,7 @@
     "data" : [
       {
         "id": "nyu",
+        "x" : "x",
         "name": "New York University",
         "logo": "images/logos/nyu_short_color.png",
         "url": "http://www.nyu.edu/"
