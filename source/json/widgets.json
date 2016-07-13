@@ -39,6 +39,12 @@
         "name": "American University of Beirut",
         "logo": "images/logos/aub.png",
         "url": "http://www.aub.edu.lb/"
+      }, 
+      {
+        "id": "auc",
+        "name": "The American University in Cairo",
+        "logo": "images/logos/auc.png",
+        "url": "http://www.aucegypt.edu/"
       }
     ]
   },
