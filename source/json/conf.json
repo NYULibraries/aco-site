@@ -4,8 +4,8 @@
   "appOGImage": [{"path":"images/booklarge.png"}],
   "appOGUrl": "http://stage-dl-pa.home.nyu.edu/aco",
   "collectionCode": "aco",
-  "appUrl": "http://stage-dl-pa.home.nyu.edu/aco",
-  "appUrlx": "http://localhost/aco/",
+  "appUrlx": "http://stage-dl-pa.home.nyu.edu/aco",
+  "appUrl": "http://localhost/aco/",
   "appRoot": "/aco",
   "discovery": "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/stage/select/"
 }
