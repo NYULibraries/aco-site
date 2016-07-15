@@ -7,10 +7,11 @@ input[type="submit"] {
   background-size: auto 80%;
   text-indent: -1000em;
   border: 1px solid $brand-secondary3;
-  -ms-flex: 0 1 50px;
+  -ms-flex: 1 0 50px;
   -webkit-flex: 0 1 50px;
   flex: 0 1 50px;
   height: 30px;
+  min-width: 50px;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   -khtml-border-radius: 0px;
@@ -71,7 +72,7 @@ input[type="text"] {
   -ms-flex-wrap: nowrap;
   // width: 100%;
   @media (min-width: $grid-float-breakpoint) {
-    width: 260px;
+    //max-width: 260px;
     margin: 0;
   }
 }
