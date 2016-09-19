@@ -1,7 +1,14 @@
 YUI().use(
-  'node', 'anim', 'crossframe', 'router', 'event-resize',
+  'node', 'anim', 'crossframe', 'router', 'event-resize', 'querystring-parse',
   function (Y) {
     'use strict';
+
+    var params = { 'lang' : 'en' };
+
+    if (window.location.search.length){
+      params = Y.QueryString.parse(window.location.search.replace(/\?/i, ''))
+    }
+
     var body = Y.one('body'),
       widget = Y.one('.widget.book'),
       appRoot = body.getAttribute("data-appRoot");
@@ -10,9 +17,9 @@ YUI().use(
       var siblings = widget.siblings(),
         viewport = Y.DOM.viewportRegion(),
         availableHeight = viewport.height;
-      // Push the iframe down 5px to make up for the 5 pixels 
+      // Push the iframe down 5px to make up for the 5 pixels
       // space created by the curved corners of the browser?
-      // Not elegant but to consider. 
+      // Not elegant but to consider.
      // availableHeight += 5;
       siblings.each(function(node) {
         availableHeight = availableHeight - node.get('offsetHeight');
@@ -48,7 +55,7 @@ YUI().use(
         page = (request.params.page) ? request.params.page : 1;
       widget.setAttribute('data-identifier', identifier);
       if (request.src === 'replace') {
-        src = src + '/books/' + request.params.identifier + '/' + page + '?embed=1';
+        src = src + '/books/' + request.params.identifier + '/' + page + '?embed=1&lang=' + params.lang;
         widget.set('src', src);
       }
     }
@@ -56,13 +63,15 @@ YUI().use(
     var router = new Y.Router({ root: appRoot, routes: [{ path: '/book/:identifier/:page', callbacks: requestReplaceLoadBook }, { path: '/book/:identifier', callbacks: requestReplaceLoadBook }]});
 
     Y.on('windowresize', resizeBookView);
+
     Y.on('button:button-fullscreen:on', hideSiblings);
+
     Y.on('button:button-fullscreen:off', showSiblings);
-    
+
     Y.on('openlayers:change', function(data) {
       router.save('/book/' + widget.getAttribute('data-identifier') + '/' + data.sequence);
     });
-    
+
   Y.on('change:option:multivolume', function(data) {
 	var parts = data.url.split('/');
 	if (parts[3]) {
@@ -75,7 +84,9 @@ YUI().use(
     var message = JSON.parse(data.message);
     Y.fire(message.fire, message.data);
   });
-  
+
+  Y.log(router.getPath());
+
   widget.on('load', function() {
       var anim = new Y.Anim({
         node: this,
