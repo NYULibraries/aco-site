@@ -55,5 +55,13 @@
     "language_dir": "ltr",
     "sourceType": "json",
     "source": "source/json/datasources/featuredTitlesAll.json"
+  },
+  "frontCountId": {  
+    "sourceType": "json",
+    "source": "source/json/datasources/frontCountId.json"
+  },
+   "subjectCount": {  
+    "sourceType": "json",
+    "source": "source/json/datasources/subjectCount.json"
   }
 }
