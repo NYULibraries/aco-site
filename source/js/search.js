@@ -54,6 +54,9 @@ YUI().use(
         base: ' ',
         chars: "\u00A0",
       }, {
+        base: '',
+        chars: "\u0301\u0304\u02BB",
+      }, {
         base: '0',
         chars: "\u07C0",
       }, {

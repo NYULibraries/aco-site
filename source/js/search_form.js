@@ -14,7 +14,7 @@ YUI().use("node", "event", function(Y) {
         
         if ( value.length ) {
             
-            location.href = currentTarget.get("action") + "?q=" + value.trim().replace(/\s/g, '+').toLowerCase();
+            location.href = currentTarget.get("action") + "?q=" + value.trim().replace(/\s/g, '+').toLowerCase().replace(/\u02BB/g,"").replace(/[\u0300-\u036f]/g,"");
         }
 
     }
