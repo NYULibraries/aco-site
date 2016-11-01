@@ -7,5 +7,5 @@
   "appUrl": "http://stage-dl-pa.home.nyu.edu/aco",
   "appUrlx": "http://localhost/aco/",
   "appRoot": "/aco",
-  "discovery": "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/stage/select/"
+  "discovery": "http://discovery.dlib.nyu.edu:8080/solr3_discovery/viewer/select/"
 }

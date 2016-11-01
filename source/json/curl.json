@@ -1,15 +1,15 @@
 {
   "curl" : {
     "featuredTitlesAll" : {
-      "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/stage/select?wt=json&fq=sm_collection_code:aco&fq=ss_language:en&fq=(ss_book_identifier:cornell_aco000014+OR+ss_book_identifier:cornell_aco000034+OR+ss_book_identifier:cornell_aco000037+OR+ss_book_identifier:cornell_aco000177+OR+ss_book_identifier:columbia_aco000071+OR+ss_book_identifier:columbia_aco000078+OR+ss_book_identifier:columbia_aco000084+OR+ss_book_identifier:columbia_aco000103+OR+ss_book_identifier:nyu_aco000248+OR+ss_book_identifier:nyu_aco000262+OR+ss_book_identifier:nyu_aco000391+OR+ss_book_identifier:nyu_aco000398)&sort=ss_book_identifier%20desc&fl=*",
+      "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/viewer/select?wt=json&fq=sm_collection_code:aco&fq=ss_language:en&fq=(ss_book_identifier:cornell_aco000014+OR+ss_book_identifier:cornell_aco000034+OR+ss_book_identifier:cornell_aco000037+OR+ss_book_identifier:cornell_aco000177+OR+ss_book_identifier:columbia_aco000071+OR+ss_book_identifier:columbia_aco000078+OR+ss_book_identifier:columbia_aco000084+OR+ss_book_identifier:columbia_aco000103+OR+ss_book_identifier:nyu_aco000248+OR+ss_book_identifier:nyu_aco000262+OR+ss_book_identifier:nyu_aco000391+OR+ss_book_identifier:nyu_aco000398)&sort=ss_book_identifier%20desc&fl=*",
       "dest" : "source/json/datasources/featuredTitlesAll.json"      
     },
     "frontCount" : {
-      "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/stage/select?wt=json&fq=sm_collection_code:aco&fq=ss_language:en&fl=id",
+      "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/viewer/select?wt=json&fq=sm_collection_code:aco&fq=ss_language:en&fl=id",
       "dest" : "source/json/datasources/frontCountId.json"      
     },
     "subjectCount" : {
-      "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/stage/select?wt=json&json.nl=arrmap&fq=sm_collection_code:aco&rows=0&facet=true&facet.limit=-1&facet.mincount=1&facet.field=im_field_subject",
+      "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/viewer/select?wt=json&json.nl=arrmap&fq=sm_collection_code:aco&rows=0&facet=true&facet.limit=-1&facet.mincount=1&facet.field=im_field_subject",
       "dest" : "source/json/datasources/subjectCount.json"      
     }
   }
