@@ -54,9 +54,6 @@ YUI().use(
         base: ' ',
         chars: "\u00A0",
       }, {
-        base: '',
-        chars: "\u0301\u0304\u02BB",
-      }, {
         base: '0',
         chars: "\u07C0",
       }, {
@@ -355,12 +352,15 @@ YUI().use(
                 diacriticsMap[chars[j]] = replacementList[i].base;
             }
         }
+        function removeCombinedDiacritics (str) {
+            return str.replace(/\u02BB/g,'').replace(/[\u0300-\u036f]/g,'');
+           }
         function removeDiacritics(str) {
             return str.replace(/[^\u0000-\u007e]/g, function(c) {
                 return diacriticsMap[c] || c;
             });
         }
-        return removeDiacritics( str );
+        return removeCombinedDiacritics(removeDiacritics( str ));
     }    
     router.route( router.getPath(), function ( req ) {
         var node = Y.one('[data-name="items"]')
