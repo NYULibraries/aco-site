@@ -1,34 +1,134 @@
 {
-  "about": {
-    "htmltitle": "About",
-    "title": [{
-      "language_code": "en",
-      "language_dir": "ltr",
-      "html": "About"
-    }, {
-      "language_code": "ar",
-      "language_dir": "rtl",
-      "html": "عن هذا المشروع"
-    }],
-    "menu": [{
-      "context": "navbar",
-      "label": "About",
-      "weight": 1
-    }],
-    "route": "/about/index.html",
-    "bodyClass": "page about",
-    "content": {
-      "main": [{
-        "language_code": "en",
-        "class": "col-l",
-        "language_dir": "ltr",
-        "html": "<p><b>Arabic Collections Online</b> (ACO) is a publicly available digital library of public domain Arabic language content. Funded by New York University Abu Dhabi, this mass digitization project aims to expose up to 15,000 volumes from NYU and partner institutions. These institutions are contributing all types of material&mdash;literature, business, science, and more&mdash;from their Arabic language collections. ACO  provides digital access to printed books drawn from rich Arabic collections of prominent libraries.</p><p>For more information, please email us at:<br><a href=\"mailto:ACO-contact-group@nyu.edu\">ACO-contact-group@nyu.edu</a></p><h3>Contributing Partners:</h3><ul><li>American University of Beirut</li><li>American University in Cairo</li><li>Columbia University</li><li>Cornell University</li><li>New York University</li><li>Princeton University</li></ul><h3>Project Sponsors:</h3><ul><li>Virginia Danielson</li><li>Carol Mandel</li><li>David Millman</li><li>Michael Stoller</li></ul><h3 class=\"advisoryboard\">Advisory Board</h3><ul><li>Marilyn Booth, Khalid bin Abdullah Al Saud Professor of the Contemporary Arab World, Magdalen College, Oxford University</li><li>Roberta Dougherty, Librarian for Middle East Studies, Yale University</li><li>Beshara Doumani, Joukowsky Family Professor of Modern Middle East History, Brown University</li><li>James L. Gelvin, Professor of History, UCLA</li><li>David Hirsch, Jewish and Middle Eastern Studies Bibliographer, UCLA</li><li>Charles Kurzman, Professor of Sociology, University of North Carolina</li><li>Zachary Lockman, Professor of Middle Eastern and Islamic Studies and History, New York University (ex officio)</li></ul><h3>Project Manager:</h3><ul><li>Claudia Suleiman</li></ul><h3>Project Team:</h3><ul><li>Adham Alok</li><li>Guy Burak</li><li>Melitte Buchman</li><li>Heidi Frank</li><li>Laura Henze</li><li>Alysa Hornick</li><li>Carol Kassel</li><li>Alberto Ortiz Flores</li><li>Joseph Pawletko</li><li>Ekaterina Pechekhonova</li><li>Rasan Rasch</li><li>Michael Stasiak</li></ul><p class=\"special-thanks\">Special thanks to Nadaleen Templeman-Kluit, Houda El-Mimouni, and others in the UX department at NYU Libraries for their guidance.</p><p class=\"fontmaker\">This site uses the <a href=\"http://www.amirifont.org/\" target=\"_blank\">Amiri</a> Arabic font, designed by Dr. Khaled Hosny and distributed under <a href=\"http://scripts.sil.org/OFL\" target=\"_blank\">Open Font License</a>.</p>"
-      }, {
-        "language_code": "ar",
-        "class": "col-r",
-        "language_dir": "rtl",
-        "html": "<p><b>المجموعات العربيَّة على الإنترنيت</b> هي عبارة عن مكتبة عامَّة رقميَّة للكتب المؤلَّفة باللغة العربيَّة والتي أصبحت في المجال العام. إنَّ هذا المشروع الرَّقمي الهائل مُمَّول من قِبل جامعة نيويورك أبو ظبي، ويهدف إلى عرض ما يقارب خمسة عشرة ألف كتاب من قِبل جامعة نيويورك والجامعات الأخرى المشاركة. إنَّ هذه المؤسسات ستقدم أنواع مختلفة من الكتب في مجالات الأدب والتجارة والعلوم وغيرها من مقتنياتها من الكتب العربيَّة. المجموعات العربيَّة على الإنترنيت توفّر إمكانية الوصول الإلكتروني إلى كتب مطبوعة مستمدَّة من مجموعات قيِّمة من مكتبات هامة.</p><p>لمزيد من المعلومات، يرجى مراسلتنا على العنوان التالي:<br><a href=\"mailto:ACO-contact-group@nyu.edu\">ACO-contact-group@nyu.edu</a></p><h3 class=\"contributingpartners\"> الجامعات الأعضاء المشاركة</h3><ul>  <li>الجامعة الأمريكية في بيروت</li> <li>الجامعة الأمريكية بالقاهرة </li> <li>جامعة كولومبيا</li>  <li>جامعة كورنيل</li>  <li>جامعة نيويورك</li>  <li>جامعة برينستون</li></ul><!-- project sponsors --><h3 class=\"projectsponsors\">رعاة المشروع</h3><ul><li> فيرجينيا دانيلسون</li><li>كارول ماندِل</li><li>ديفيد ميلمان</li><li>مايكل ستولر</li></ul><h3 class=\"advisoryboard\">المجلس الاستشاري لموقع المجموعات العربية على الانترنت</h3><ul><li>مارِلين بوث، أستاذ في قسم خالد بن عبداللّه آل سعود للعالم العربي المعاصر، كليّة ماچدالِن، جامعة أكسفورد </li><li>روبرتا دُوِرتي، امين مكتبة دراسات الشرق الاوسط، جامعة ييل</li><li>بشارة ضوماني، أستاذ دراسات الشرق الاوسط المعاصر في كلّية عائلة جوكَوسكي، جامعة براون</li><li>جيمس ل.چِلڤن، أستاذ التاريخ، جامعة كاليفورنيا</li><li>ديڤيد هيرش، مُراجع الدراسات اليهوديّة والشرق اوسطيّة، جامعة كاليفورنيا</li><li>تشارلز كُرزمَن، أستاذ علم الاجتماع، جامعة نورث كارولَينا</li><li>زاكَري لكْمَن، أستاذ دراسات الشرق الاوسط ودراسات وتاريخ الإسلام (بصفة رسمية)، جامعة نيويورك</li></ul><!-- project manager --><h3 class=\"projectmanager\">مدير المشروع</h3><ul><li>كلوديا سليمان </li></ul><!-- project team --><h3>أفراد طاقم المشروع</h3><ul><li>أدهم العك</li>  <li>جاي بوراك</li>  <li>ميليت بكمان</li>  <li>هايدي فرانك</li>  <li>لورا هينز</li><li>أليسا هورنيك</li>  <li>كارول كاسيل</li>  <li>البيرتواورتيزفلوريس</li>  <li>جوزيف باولتيكو</li>  <li>ايكتارينا بيكانوفا</li>  <li>رازان راسش</li>  <li>مايكل ستاسيك</li></ul><p class=\"special-thanks\">شكر خاص لمساعدة نادالين تمبلمان-كلوت، هدى الميموني وغيرهم من فريق ' تجربة المستخدم '  في مكتبات جامعة نيويورك.</p></ul><p class=\"fontmaker\">يستخدم هذا الموقع الخط العربي <a href=\"http://www.amirifont.org/\" target=\"_blank\">ألاميري</a> الذي صممه الدكتور خالد حسيني.  يوزع الخط ألاميري تحت <a href=\"http://scripts.sil.org/OFL\" target=\"_blank\">رخصة الخطوط المفتوحة</a>.</p>"
-      }]
+    "about": {
+        "htmltitle": "About",
+        "title": [{
+            "language_code": "en",
+            "language_dir": "ltr",
+            "html": "About"
+        }, {
+            "language_code": "ar",
+            "language_dir": "rtl",
+            "html": "عن هذا المشروع"
+        }],
+        "menu": [{
+            "context": "navbar",
+            "label": "About",
+            "weight": 1
+        }],
+        "route": "/about/index.html",
+        "bodyClass": "page about",
+        "content": {
+            "main": [{
+                "language_code": "en",
+                "class": "col-l",
+                "language_dir": "ltr",
+                "html": "<h2>What is the purpose of the project?</h2><p>ACO aims to digitize, preserve, and provide free open access to a wide variety of Arabic language books in subjects such as literature, philosophy, law, religion, and more. Important Arabic language content is not widely available on the web, and ACO aims to ensure global access to a rich Arabic library collection. Many older Arabic books are out-of-print, in fragile condition, and are otherwise rare materials that are in danger of being lost. ACO will ensure that this content will be saved digitally for future generations.</p>"
+            }, {
+                "language_code": "ar",
+                "class": "col-r",
+                "language_dir": "rtl",
+                "html": "<h2>ما هو هدف هذا المشروع؟ </h2><p>يهدف مشروع المجموعات العربية على الإنترنت إلى رقمنة وحفظ وتوفير الولوج المفتوح لمجموعة واسعة من كتب في اللغة العربية في مواضيع الأدب والفلسفة والقانون والدين وغيرها.حالياً، العديد من المحتويات المهمّ ة في اللغة العربية ليست متوفِّ رة على نطاق واسع على الإنترنت.مشروع المجموعات العربية على الإنترنت يضمن الولوج العالمي لمكتبة رقميّ ة غنيّ ة بمجموعتها العربية. العديد من الكتب العربية القديمة النافذة من الطباعة، وسهلة التفتت، أصبحت نادرة ومُ عرّ ضة لخطر الضياع.مشروع المجموعات العربية على الإنترنت يضمن حِ فظ هذه الكتب رقمياًّ لأجيال المستقبل. </p>"
+            }, {
+                "language_code": "en",
+                "class": "col-l",
+                "language_dir": "ltr",
+                "sequence": "3",
+                "html": "<h2>Which institutions are involved in the project?</h2><p>ACO contributing partners are New York University, Princeton, Cornell, Columbia, American University in Cairo, and American University of Beirut.</p>"
+            }, {
+                "language_code": "ar",
+                "class": "col-r",
+                "language_dir": "rtl",
+                "sequence": "3",
+                "html": "<h2>ما هي المؤسسات المشاركة في المشروع؟</h2><p>المساهمون المشاركون في المشروع جامعة نيويورك، جامعة پرنستون، جامعة كورنيل، جامعة كولومبيا، الجامعة الأمريكية بالقاهرة، الجامعة الأمريكية في بيروت.</p>"
+            }, {
+                "language_code": "en",
+                "class": "col-l",
+                "language_dir": "ltr",
+                "sequence": "4",
+                "html": "<h2>Who does the project serve?</h2><p>ACO can be used by anyone, anywhere in the world, who is interested in Arabic language works. Specifically, the target audience is for students, scholars, academics, researchers, librarians, and general interest readers.</p>"
+            }, {
+                "language_code": "ar",
+                "class": "col-r",
+                "language_dir": "rtl",
+                "sequence": "4",
+                "html": "<h2>من يخدم هذا المشروع؟</h2><p>باستطاعة أي شخص مهتم  بأعمال في اللغة العربية، أن يستخدم الموقع الإلكتروني للمجموعات العربية على الإنترنت من أي مكان في العالم.  على وجه التحديد، الجمهور المستهدَف هو الطلاب، العلماء، الأكاديميين، الباحثين، أمناء المكتبات، والقراء.</p>"
+            }, {
+                "language_code": "en",
+                "class": "col-l",
+                "language_dir": "ltr",
+                "sequence": "5",
+                "html": "<h2>What are the standards used for digitization?</h2><p>All digital imaging is performed using the highest standards. Image master files must be produced as TIFF-6, uncompressed, CIE RGB-embedded, 24-bit color (3 channels of 8-bit color), 400ppi for all items. The 24-chip X-rite Color Checker (formerly known as the Macbeth Color Checker) is used to ensure the quality of the images.</p>"
+            }, {
+                "language_code": "ar",
+                "class": "col-r",
+                "language_dir": "rtl",
+                "sequence": "5",
+                "html": "<h2>ما هي المواصفات المستخدمة في الرقمنة؟</h2><p>التصوير الرقمي يتبع أعلى معايير الرقمنة.  يتم إنتاج النسخ الأصلية بالتركيبة المعيارية التالية:</p><ul><li>TIFF-6 غير مدمج </li><li>CIE RGB متضمن </li><li>24-bit color (8-bit color ٹلاٹ قنوات)</li><li>ويُستخدم لضمان جودة الصورة مُدقِّق اللون التالي:</li><li>The 24-ship X-rite (Macbeth المعروف سابقاً بمحقق الالوان)</li></ul>"
+            }, {
+                "language_code": "en",
+                "class": "col-l",
+                "language_dir": "ltr",
+                "sequence": "6",
+                "html": "<h2>How are items selected for digitization?</h2><p>All out-of-copyright books from NYU and partner institutions are selected for ACO. These titles, in turn, have been collected over centuries by subject specialists at each respective institution for their academic quality and relevance to intellectual and literary inquiry. </p>"
+            }, {
+                "language_code": "ar",
+                "class": "col-r",
+                "language_dir": "rtl",
+                "sequence": "6",
+                "html": "<h2>كيف تم  اختيار العناوين للرقمنة؟</h2><p>جميع العناوين المختارة لهذا المشروع، من جامعة نيويورك وشركائها، هي خارجة عن حقوق الطبع والنشر.  تم جمع هذه العناوين  عبر العديد من القرون من قبل متخصصين من كل جامعة مشاركة لجودتها الأكاديمية وأهميتها في التحقيق الفكري والأدبي.</p>"
+            }, {
+                "language_code": "en",
+                "class": "col-l",
+                "language_dir": "ltr",
+                "sequence": "7",
+                "html": "<h2>What are ACO’s copyright guidelines?</h2><p>NYU has researched copyright requirements and restrictions for each of the countries of publication and believes the materials displayed on this site are all in the public domain. However, if you believe that you are the copyright owner of any material displayed here, please see our <a href=\"http://dlib.nyu.edu/aco/takedownpolicy/\">takedown policy</a>.</p>"
+            }, {
+                "language_code": "ar",
+                "class": "col-r",
+                "language_dir": "rtl",
+                "sequence": "7",
+                "html": "<h2>ما هي  إرشادات حقوق الطبع والنشر لهذا المشروع ؟</h2><p>لقد بحثت جامعة نيويورك متطلبات حقوق التأليف والنشر، والقيود المفروضة على كل من بلدان النشر. ونعتقد أن جميع المواد التي يتم عرضها على هذا الموقع هي في المجال العام. ومع ذلك، إذا كنت تعتقد أنك صاحب حقوق الطبع والنشر لأي من المواد المعروضة هنا، يرجى الاطلاع على <a href=\"http://dlib.nyu.edu/aco/takedownpolicy/\">سياسة إنهاء الخدمة لدينا</a>.</p>"
+            }, {
+                "language_code": "en",
+                "class": "col-l",
+                "language_dir": "ltr",
+                "sequence": "8",
+                "html": "<h2>Have more questions? </h2><p>For more information, please contact us at: ACO-contact-group@nyu.edu</p>"
+            }, {
+                "language_code": "ar",
+                "class": "col-r",
+                "language_dir": "rtl",
+                "sequence": "8",
+                "html": "<h2>هل لديك المزيد من الأسئلة؟</h2><p>لمزيد من المعلومات، يرجى الاتصال بنا على العنوان التالي: ACO-contact-group@nyu.edu</p>"
+            }, {
+                "language_code": "en",
+                "class": "col-l",
+                "language_dir": "ltr",
+                "sequence": "9",
+                "html": "<h2>ACO Advisory Board</h2><ul><li>Marilyn Booth, Khalid bin Abdullah Al Saud Professor of the Contemporary Arab World, Magdalen College, Oxford University </li><li>Virginia Danielson, Director of NYU Abu Dhabi Library</li><li>Roberta Dougherty, Librarian for Middle East Studies, Yale University</li><li>Beshara Doumani, Joukowsky Family Professor of Modern Middle East History, Brown University</li><li>James L. Gelvin, Professor of History, UCLA</li><li>David Hirsch, Jewish and Middle Eastern Studies Bibliographer, UCLA</li><li>Charles Kurzman, Professor of Sociology, University of North Carolina</li><li>Zachary Lockman, Professor of Middle Eastern and Islamic Studies and History, New York University (ex officio)</li><li>Carol Mandel, Dean of the NYU Division of Libraries</li></ul>"
+            }, {
+                "language_code": "ar",
+                "class": "col-r",
+                "language_dir": "rtl",
+                "sequence": "9",
+                "html": "<h2>ACO Advisory Board</h2><ul><li>مارِلين بوث، أستاذ في قسم خالد بن عبداللّه آل سعود للعالم العربي المعاصر، كليّة ماچدالِن، جامعة أكسفورد</li><li>ڤرجينيا دانيلسون، مدير  مكتبة جامعة نيويورك أبوظبي</li><li>روبرتا دُوِرتي، أمين مكتبة دراسات الشرق الأوسط، جامعة ييل</li><li>بشارة دوماني، أستاذ  تاريخ الشرق الأوسط المعاصر في كلّية عائلة جوكَوسكي، جامعة براون</li><li>جيمس ل.چِلڤن، أستاذ التاريخ، جامعة كاليفورنيا</li><li>  ديڤيد هيرش، مُراجع الدراسات اليهوديّة والشرق اوسطيّة، جامعة كاليفورنيا</li><li>تشارلز كُرزمَن، أستاذ علم الاجتماع، جامعة نورث كارولَينا</li><li>زاكَري لكْمَن، أستاذ دراسات الشرق الأوسط ودراسات وتاريخ الإسلام (بصفة رسمية)، جامعة نيويورك</li><li>كارول مانديل،عميد قسم جامعة نيويورك للمكتبات</li></ul>"
+            }, {
+                "language_code": "en",
+                "class": "col-l",
+                "language_dir": "ltr",
+                "sequence": "10",
+                "html": "<h2>Project Management</h2><p>ACO is managed by the libraries of NYU Abu Dhabi and NYU New York. ACO technical operations and this site are managed by NYU Libraries Digital Library Technology Services.</p>"
+            }, {
+                "language_code": "ar",
+                "class": "col-r",
+                "language_dir": "rtl",
+                "sequence": "10",
+                "html": "<h2>إدارة المشروع</h2><p>يدير مشروع المجموعات العربية على الإنترنت جامعة نيويورك في أبوظبي وجامعة نيويورك في نيويورك . اما افراد طاقم المشروع المسؤولون عن انشاء هذا الموقع الإلكتروني، فهم أعضاء فريق الخدمات التكنولوجية للمكتبات الرقمية في مكتبات جامعة نيويورك.</p>"
+            }],
+            "frontCount": [{
+                "id": "frontCountId",
+                "widgets": ["frontCountId"]
+            }]
+        }
     }
-  }
 }
