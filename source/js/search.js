@@ -352,12 +352,15 @@ YUI().use(
                 diacriticsMap[chars[j]] = replacementList[i].base;
             }
         }
+        function removeCombinedDiacritics (str) {
+            return str.replace(/\u02BB/g,'').replace(/[\u0300-\u036f]/g,'');
+           }
         function removeDiacritics(str) {
             return str.replace(/[^\u0000-\u007e]/g, function(c) {
                 return diacriticsMap[c] || c;
             });
         }
-        return removeDiacritics( str );
+        return removeCombinedDiacritics(removeDiacritics( str ));
     }    
     router.route( router.getPath(), function ( req ) {
         var node = Y.one('[data-name="items"]')
