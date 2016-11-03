@@ -4,3 +4,28 @@
     line-height: 1.5;
   }
 }
+
+@media (min-width: 768px) {
+  .about {
+    main {
+      h3 {
+        font-size: 1.4rem;
+        margin-top: 1.5rem;
+        font-weight: 700;
+      }
+      .col-l[lang="en"] {
+        clear: both;
+      }
+      .special-thanks {
+        margin-top: 2.5rem;
+      }
+      .fontmaker {
+        font-size: .9rem;
+        margin-top: 2.5rem;
+      }
+      ul {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
