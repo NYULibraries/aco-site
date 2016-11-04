@@ -39,7 +39,7 @@
                 "class": "col-r",
                 "language_dir": "rtl",
                 "sequence": "3",
-                "html": "<h3>ما هي المؤسسات المشاركة في المشروع؟</h3><p>المساهمون المشاركون في المشروع جامعة نيويورك، جامعة پرنستون، جامعة كورنيل، جامعة كولومبيا، الجامعة الأمريكية بالقاهرة، الجامعة الأمريكية في بيروت.</p>"
+                "html": "<h3>ما هي المؤسسات المشاركة في المشروع؟</h3><p> المساهمون المشاركون في المشروع: <a href=\"http://www.nyu.edu/\">جامعة نيويورك</a>، <a href=\"https://www.princeton.edu/main/\">جامعة پرنستون</a>، <a href=\"https://www.cornell.edu/\">جامعة كورنيل</a>،<a href=\"http://www.columbia.edu/\"> جامعة كولومبيا</a>، <a href=\"http://www.aucegypt.edu/\">الجامعة الأمريكية بالقاهرة</a>، <a href=\"http://www.aub.edu.lb/main/Pages/index.aspx\">الجامعة الأمريكية في بيروت</a>.</p>"
             }, {
                 "language_code": "en",
                 "class": "col-l",
@@ -93,13 +93,13 @@
                 "class": "col-l",
                 "language_dir": "ltr",
                 "sequence": "8",
-                "html": "<h3>Have more questions? </h3><p>For more information, please contact us at: ACO-contact-group@nyu.edu</p>"
+                "html": "<h3>Have more questions? </h3><p>For more information, please contact us at: <a class=\"email-link\" href=\"mailto:ACO-contact-group@nyu.edu\">ACO-contact-group@nyu.edu</a></p>"
             }, {
                 "language_code": "ar",
                 "class": "col-r",
                 "language_dir": "rtl",
                 "sequence": "8",
-                "html": "<h3>هل لديك المزيد من الأسئلة؟</h3><p>لمزيد من المعلومات، يرجى الاتصال بنا على العنوان التالي: ACO-contact-group@nyu.edu</p>"
+                "html": "<h3>هل لديك المزيد من الأسئلة؟</h3><p>لمزيد من المعلومات، يرجى الاتصال بنا على العنوان التالي: <a class=\"email-link\" href=\"mailto:ACO-contact-group@nyu.edu\">ACO-contact-group@nyu.edu</a></p>"
             }, {
                 "language_code": "en",
                 "class": "col-l",
