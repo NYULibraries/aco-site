@@ -16,9 +16,7 @@
       .col-l[lang="en"] {
         clear: both;
       }
-      .special-thanks {
-        margin-top: 2.5rem;
-      }
+    
       .fontmaker {
         font-size: .9rem;
         margin-top: 2.5rem;
@@ -29,7 +27,9 @@
     }
   }
 }
-
+.special-thanks {
+        margin-top: 2.5rem;
+}
 .email-link {
   white-space: nowrap;
 }
