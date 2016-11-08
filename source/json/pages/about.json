@@ -117,13 +117,13 @@
                 "class": "col-l",
                 "language_dir": "ltr",
                 "sequence": "10",
-                "html": "<h3>Project Management</h3><p>ACO is managed by the libraries of NYU Abu Dhabi and NYU New York. ACO technical operations and this site are managed by NYU Libraries Digital Library Technology Services.</p>"
+                "html": "<h3>Project Management</h3><p>ACO is managed by the libraries of NYU Abu Dhabi and NYU New York. ACO technical operations and this site are managed by NYU Libraries Digital Library Technology Services. <a href=\"/aco/team\">Read more about the project team.</a></p>"
             }, {
                 "language_code": "ar",
                 "class": "col-r",
                 "language_dir": "rtl",
                 "sequence": "10",
-                "html": "<h3>إدارة المشروع</h3><p>يدير مشروع المجموعات العربية على الإنترنت جامعة نيويورك في أبوظبي وجامعة نيويورك في نيويورك . اما افراد طاقم المشروع المسؤولون عن انشاء هذا الموقع الإلكتروني، فهم أعضاء فريق الخدمات التكنولوجية للمكتبات الرقمية في مكتبات جامعة نيويورك.</p>"
+                "html": "<h3>إدارة المشروع</h3><p>يدير مشروع المجموعات العربية على الإنترنت جامعة نيويورك في أبوظبي وجامعة نيويورك في نيويورك . اما افراد طاقم المشروع المسؤولون عن انشاء هذا الموقع الإلكتروني، فهم أعضاء فريق الخدمات التكنولوجية للمكتبات الرقمية في مكتبات جامعة نيويورك.<a href=\"/aco/team\">للمزيد عن فريق المشروع</a></p>"
             },
             {
                 "language_code": "en",
