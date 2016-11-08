@@ -9,19 +9,6 @@
     "route": "/index.html",
     "bodyClass": "front",
     "content": {
-      "intro": [{
-        "title": "Welcome to Arabic Collections Online!",
-        "language_code": "en",
-        "class": "col-l",
-        "language_dir": "ltr",
-        "html": "<p><b>Arabic Collections Online</b> (ACO) is a publicly available digital library of public domain Arabic language content. Funded by New York University Abu Dhabi, this mass digitization project aims to expose up to 15,000 volumes from NYU and partner institutions.&nbsp; <a href=\"/aco/about/\" class=\"readmore\">READ&nbsp;MORE…</a></p>"
-      }, {
-      "title": "مرحبا بكم في المجموعات العربية على الانترنت!",
-      "language_code": "ar",
-      "class": "col-r",
-      "language_dir": "rtl",
-      "html": "<p><b>المجموعات العربيَّة على الإنترنيت</b> عبارة عن مكتبة عامَّة رقميَّة للكتب المؤلَّفة باللغة العربيَّة والتي أصبحت في المجال العام. إنَّ هذا المشروع الرَّقمي الهائل مُمَّول من قِبل جامعة نيويورك أبو ظبي، و يهدف إلى عرض ما يقارب خمسة عشرة ألف كتاب من قِبل جامعة نيويورك والجامعات الأخرى المشاركة.&nbsp; <a href=\"/aco/about/\" class=\"readmore\">المزيد...</a></p>"
-      }],
       "featured": [
         {
           "id" : "featuredTitlesAll",
