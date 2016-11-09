@@ -3,8 +3,8 @@
     "htmltitle": "Book",
     "title": "Book",
     "bodyClass": "book",
-    "sourceUrlDev": "http://stage-dl-pa.home.nyu.edu/viewer",
-    "sourceUrl": "http://stage-dl-pa.home.nyu.edu/viewer",
+    "sourceUrlDev": "http://dev-sites.dlib.nyu.edu/viewer",
+    "sourceUrl": "http://dev-sites.dlib.nyu.edu/viewer",
     "route": "/book/index.html"
   }
 }
