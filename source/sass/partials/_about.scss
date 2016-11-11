@@ -1,6 +1,30 @@
 .about {
   main .col-r[lang="ar"] {
     font-size: 17px;
-    line-height: 1.5;
   }
+}
+
+@media (min-width: 768px) {
+  .about {
+    main {
+      .col-l[lang="en"] {
+        clear: both;
+      }
+      .fontmaker {
+        font-size: .9rem;
+        margin-top: 2.5rem;
+      }
+      ul {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
+.special-thanks {
+  margin-top: 2.5rem !important;
+}
+
+.email-link {
+  white-space: nowrap;
 }
