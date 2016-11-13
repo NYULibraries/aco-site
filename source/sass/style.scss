@@ -1,29 +1,33 @@
 //Bootstrap
-
 // Core variables and mixins
 @import "bootstrap/variables";
 @import "bootstrap-variables";
 @import "bootstrap/mixins";
-
 // Reset and dependencies
 @import "bootstrap/normalize";
 @import "bootstrap/print";
-
 // Core CSS
 @import "partials/scaffolding";
-
 // Components
 @import "bootstrap/component-animations";
-
 @import "bootstrap/navs";
-
 @import "bootstrap/pagination";
 
 /*  End Bootstrap */
+
+
 /*  ********************* */
+
+
 /*  ********************* */
+
+
 /*  ********************* */
+
+
 /*  ********************* */
+
+
 /*  Start ACO Styles */
 
 @import "partials/homepage";
@@ -32,7 +36,6 @@
 @import "partials/aconavbar";
 @import "partials/searchresultspage";
 @import "partials/search";
-@import "partials/about";
 html {
   font-size: $font-size-base;
   line-height: $line-height-base;
@@ -66,7 +69,8 @@ body {
 
 main {
   min-height: 400px;
-  a:link, a:focus {
+  a:link,
+  a:focus {
     font-weight: bold;
   }
   ul {
@@ -84,22 +88,12 @@ main {
       margin-top: 0;
     }
   }
-  .special-thanks {
-    margin-top: 2.5rem;
-  }
-  .fontmaker {
-    font-size: .9rem;
-    margin-top: 2.5rem;
-  }
   h2.page-title {
     font-size: 1.5rem;
     font-weight: 300;
     text-shadow: 0px 0px 1px white;
-    @media (min-width: $grid-float-breakpoint) {
-      font-size: 2rem;
-    }
+    margin: 0 0 1rem 0;
     &[lang="en"] {
-      margin-bottom: 1rem;
       margin-top: 0;
       float: left;
       clear: left;
@@ -112,9 +106,6 @@ main {
       }
     }
     &[lang="ar"] {
-      line-height: 1.5;
-      margin: 0;
-      margin-bottom: 1rem;
       span {
         display: inline-block;
         margin-left: 20px;
@@ -122,6 +113,9 @@ main {
       @media (min-width: $grid-float-breakpoint) {
         margin: 1rem 0 1.5rem;
       }
+    }
+    @media (min-width: $grid-float-breakpoint) {
+      font-size: 2rem;
     }
   }
   select#browse-select {
@@ -156,8 +150,11 @@ main {
   h3 {
     font-size: 1.3rem;
     font-weight: 400;
-    margin: 2.5rem 0 1rem;
+    margin: 1rem 0 1rem;
     text-shadow: 0px 0px 1px white;
+    @media (max-width: $grid-float-breakpoint-max) {
+      margin: 2rem 0 1rem;
+    }
   }
   header {
     @include clearfix;
@@ -178,10 +175,10 @@ main {
   // }
   .col-r {
     // in mobile view, add some space above arabic text
-    margin-top: 1.5rem;
-    padding: 1.5rem 0 1px;
-    box-shadow: 0px -1px 0px 0px #DECCBF;
-    border-top: 1px solid #FFFFFF;
+    // margin-top: 1.5rem;
+    // padding: 1.5rem 0 1px;
+    // box-shadow: 0px -1px 0px 0px #DECCBF;
+    // border-top: 1px solid #FFFFFF;
     @media (min-width: $grid-float-breakpoint) {
       // in desktop view, we don't need space above arabic text
       margin-top: 0em;
@@ -193,11 +190,9 @@ main {
   .col-l {
     clear: both;
     @media (min-width: $grid-float-breakpoint) {
-      clear: left;
       width: 46%;
       &[lang="en"] {
         float: left;
-        clear: left;
       }
     }
   }
@@ -208,8 +203,6 @@ main {
         float: right;
         // There is a clear:right bug in IE
         // clear: right;
-        // improves baseline lining up
-        padding-top: 2px;
       }
     }
   }
@@ -243,7 +236,8 @@ main {
     // full width, horizontally arranged
     padding-top: 40px;
     padding-bottom: 40px;
-    > div[lang="en"], > div[lang="ar"] {
+    > div[lang="en"],
+    > div[lang="ar"] {
       display: table-cell;
       vertical-align: bottom;
     }
@@ -309,7 +303,6 @@ main {
       text-shadow: 1px 0px 0px #FF9C00, -1px 0px 0px #FF9C00, 0px 1px 0px #FF9C00, 0px -1px 0px #FF9C00;
       text-shadow: 0px 0px 1px #fff, 1px 0px 0px #FF9C00;
       // text-shadow: 1px 0px 0px #0000ff, -1px 0px 0px #FF9C00, 0px 1px 0px #0000ff, 0px -1px 0px #FF9C00;
-   
     }
   }
 }
@@ -327,7 +320,8 @@ nav.navbar.navbar-default {
     font-style: normal;
     transition: all .4s;
   }
-  .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  .navbar-nav > li > a:hover,
+  .navbar-default .navbar-nav > li > a:focus {
     background-color: transparent;
     color: #FF9C00;
     @include box-shadow(inset 0px -4px 0px 0px #ff9c00);
@@ -412,8 +406,6 @@ ul.resources {
   }
 }
 
-
-
 body.book {
   overflow-y: hidden;
   .navbar {
@@ -422,7 +414,8 @@ body.book {
   .container-fluid {
     max-width: none;
   }
-  h1.title, .titlebar {
+  h1.title,
+  .titlebar {
     background: #492602;
   }
   #book {
@@ -437,7 +430,9 @@ body.book {
 .pagination {
   margin: 1em auto;
   width: auto;
-  .yui3-paginator-first, .yui3-paginator-next, .yui3-paginator-page {
+  .yui3-paginator-first,
+  .yui3-paginator-next,
+  .yui3-paginator-page {
     display: inline-block;
     padding: 5px;
     padding: 6px 12px;
@@ -462,10 +457,14 @@ body.book {
   }
 }
 
+
 /** Elements that are not meant to be seen until io its loading */
+
 .io-loading {
   .resultsnum,
-  #browse-select, .pagination, .footer-main {
+  #browse-select,
+  .pagination,
+  .footer-main {
     position: absolute !important;
     height: 1px;
     width: 1px;
@@ -493,8 +492,9 @@ body.book {
 }
 
 @import "bubbling";
-
 .hiddenSiblings {
   display: none;
   visibility: hidden;
 }
+
+@import "partials/about";

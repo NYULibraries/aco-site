@@ -5,7 +5,6 @@
     "data" : [
       {
         "id": "nyu",
-        "x" : "x",
         "name": "New York University",
         "logo": "images/logos/nyu_short_color.png",
         "url": "http://www.nyu.edu/"
@@ -55,5 +54,13 @@
     "language_dir": "ltr",
     "sourceType": "json",
     "source": "source/json/datasources/featuredTitlesAll.json"
+  },
+  "frontCountId": {  
+    "sourceType": "json",
+    "source": "source/json/datasources/frontCountId.json"
+  },
+   "subjectCount": {  
+    "sourceType": "json",
+    "source": "source/json/datasources/subjectCount.json"
   }
 }
