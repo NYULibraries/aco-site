@@ -32,13 +32,18 @@ YUI().use(
         var pageQueryString = getParameterByName('page')
           , sortQueryString = getParameterByName('sort')
           , qQueryString = getParameterByName('q')
+          , fqProvider = getParameterByName('provider')
           , page = ( pageQueryString ) ? pageQueryString : 1
           , q = ( qQueryString ) ? qQueryString : ''
           , route = router.getPath() + '?q=' + q + '&page=' + page;
         // throw error if q is empty?
-        if ( sortQueryString ) {
-            route = route + '&sort=' + sortQueryString;
+        if ( fqProvider ) {
+            route += '&provider=' + fqProvider;
         }
+        if ( sortQueryString ) {
+            route += '&sort=' + sortQueryString;
+        }
+        Y.log("getRoute route is " + route );
         return route;
     }
     function getParameterByName(name) {
@@ -369,6 +374,7 @@ YUI().use(
           , sort = ( req.query.sort ) ? req.query.sort : ( ( data.sort ) ? data.sort : Y.one('#browse-select').get('value') )           
           , page = ( req.query.page ) ? parseInt( req.query.page, 10 ) : 0
           , query = ( req.query.q ) ? req.query.q : ''
+          , provider = ( req.query.provider  ) ? req.query.provider : ''
           , start =  0;          
         Y.one('.search_holder [name="q"]').set('value', query);
         if ( page <= 1 ) {
@@ -377,14 +383,15 @@ YUI().use(
         else {
             start = ( page * rows ) - rows;
         }
-    	initRequest ( {
-		    container : node
-	      , start : start
-	      , page : page
-    	  , rows : rows
-    	  , sort : sort
-	      , q : removeQueryDiacritics ( query )
-		} );
+      	initRequest ( {
+  		    container : node
+  	      , start : start
+  	      , page : page
+      	  , rows : rows
+      	  , sort : sort
+  	      , q : removeQueryDiacritics ( query )
+          , provider: provider
+  		  } );
     });
     function onSelectChange( ) {
      
@@ -416,7 +423,11 @@ YUI().use(
     function update ( state ) {
     	this.setPage( state.page, true );
 	    this.setRowsPerPage(state.rowsPerPage, true);
-	    router.save( router.getPath() + '?q=' + getParameterByName('q') + '&page=' + state.page );
+      var newPath = router.getPath() ;
+      newPath += '?q=' + getParameterByName('q') ;
+      newPath +=  (getParameterByName('provider') ? '&provider=' + getParameterByName('provider') : "");
+      newPath +=  '&page=' + state.page  ;
+	    router.save(newPath);
     }
     function initPaginator( page, totalRecords, rowsPerPage ) {
         Y.one('#paginator').empty();
@@ -502,6 +513,15 @@ YUI().use(
       	    }
           }
       }
+      for ( var x in options ) {
+        if ( options.hasOwnProperty( x ) ) {
+          Y.log("options x is " + x + "  :  " + options[x]);
+          if ( x.match('provider') && (options[x]) ) {
+            fq.push( 'sm_provider_code:' + options[x] );
+          }
+        }
+      }
+
       if ( options.page ) {
           page = parseInt( options.page, 10 );
       }
