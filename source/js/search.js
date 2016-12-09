@@ -513,15 +513,17 @@ YUI().use(
       	    }
           }
       }
-      for ( var x in options ) {
-        if ( options.hasOwnProperty( x ) ) {
-          Y.log("options x is " + x + "  :  " + options[x]);
-          if ( x.match('provider') && (options[x]) ) {
-            fq.push( 'sm_provider_code:' + options[x] );
-          }
-        }
+      // for ( var x in options ) {
+      //   if ( options.hasOwnProperty( x ) ) {
+      //     Y.log("options x is " + x + "  :  " + options[x]);
+      //     if ( x.match('provider') && (options[x]) ) {
+      //       fq.push( 'sm_provider_code:' + options[x] );
+      //     }
+      //   }
+      // }
+      if ( options.provider ) {
+         fq.push( 'sm_provider_code:' + options.provider );
       }
-
       if ( options.page ) {
           page = parseInt( options.page, 10 );
       }
