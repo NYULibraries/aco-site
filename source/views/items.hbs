@@ -7,7 +7,8 @@
       </div>
       <div lang="en">
         <div class="md_title"><span class="md_label">Title:</span> <a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">{{ss_title_long}}</a></div>                
-        <div class="md_authors"><span class="md_label">Author:</span> {{#each sm_author}}<span  class="md_author">{{this}}</span>{{/each}}</div>                        
+        <div class="md_authors"><span class="md_label">Author:</span> {{#each sm_author}}<a  class="md_author" href='/aco/search/?q=&page=1&author="{{this}}"'>{{this}}</a>{{/each}}
+        </div>                        
         <div><span class="md_label">Publisher:</span> {{#each sm_publisher}}<span>{{this}}</span>{{/each}}</div>
         <div><span class="md_label">Place of Publication:</span> {{ss_publocation}}</div>                        
         <div><span class="md_label">Date of Publication:</span> {{ss_pubdate}}</div>                        
