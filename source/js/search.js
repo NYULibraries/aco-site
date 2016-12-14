@@ -33,12 +33,16 @@ YUI().use(
           , sortQueryString = getParameterByName('sort')
           , qQueryString = getParameterByName('q')
           , fqProvider = getParameterByName('provider')
+          , fqAuthor = getParameterByName('author')
           , page = ( pageQueryString ) ? pageQueryString : 1
           , q = ( qQueryString ) ? qQueryString : ''
           , route = router.getPath() + '?q=' + q + '&page=' + page;
         // throw error if q is empty?
         if ( fqProvider ) {
             route += '&provider=' + fqProvider;
+        }
+          if ( fqAuthor ) {
+            route += '&author=' + fqAuthor;
         }
         if ( sortQueryString ) {
             route += '&sort=' + sortQueryString;
@@ -47,9 +51,11 @@ YUI().use(
         return route;
     }
     function getParameterByName(name) {
+       Y.log("getParameterByName " + name );
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
           , results = regex.exec(location.search);
+           Y.log("getParameterByName " + results );
         return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
     function removeQueryDiacritics( str ) {
@@ -375,6 +381,7 @@ YUI().use(
           , page = ( req.query.page ) ? parseInt( req.query.page, 10 ) : 0
           , query = ( req.query.q ) ? req.query.q : ''
           , provider = ( req.query.provider  ) ? req.query.provider : ''
+          , author = ( req.query.author  ) ? req.query.author : ''
           , start =  0;          
         Y.one('.search_holder [name="q"]').set('value', query);
         if ( page <= 1 ) {
@@ -391,6 +398,7 @@ YUI().use(
       	  , sort : sort
   	      , q : removeQueryDiacritics ( query )
           , provider: provider
+          , author: author
   		  } );
     });
     function onSelectChange( ) {
@@ -426,7 +434,9 @@ YUI().use(
       var newPath = router.getPath() ;
       newPath += '?q=' + getParameterByName('q') ;
       newPath +=  (getParameterByName('provider') ? '&provider=' + getParameterByName('provider') : "");
+      newPath +=  (getParameterByName('author') ? '&author=' + getParameterByName('author') : "");
       newPath +=  '&page=' + state.page  ;
+      Y.log("update " + newPath );
 	    router.save(newPath);
     }
     function initPaginator( page, totalRecords, rowsPerPage ) {
@@ -509,6 +519,7 @@ YUI().use(
       for ( var prop in data ) {
           if ( data.hasOwnProperty( prop ) ) {
         	    if ( prop.match('fq-') ) {
+                 Y.log("data[prop]: " + data[prop] );
         	    	fq.push( prop.replace('fq-', '') + ':' + data[prop] );
       	    }
           }
@@ -523,6 +534,10 @@ YUI().use(
       // }
       if ( options.provider ) {
          fq.push( 'sm_provider_code:' + options.provider );
+      }
+      if ( options.author ) {
+        Y.log("options.author : " + options.author  );
+         fq.push( 'sm_author:' + options.author );
       }
       if ( options.page ) {
           page = parseInt( options.page, 10 );
@@ -545,6 +560,7 @@ YUI().use(
         if (options.q) {
         	source = source + '&q=' + options.q;
         }
+        Y.log("source " + source);
         options.container.empty();
         Y.jsonp( source, {
             on: {
