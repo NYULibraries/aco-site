@@ -19,6 +19,6 @@ YUI().use("node", "event", function(Y) {
 
     }
     
-    body.delegate("submit", onSubmit, "form");
+    body.delegate("submit", onSubmit, "form.simple");
  
 });

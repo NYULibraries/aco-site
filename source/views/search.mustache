@@ -4,6 +4,10 @@
 <body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{ bodyClass }}">
   {{> header }}
   <main class="main container-fluid" role="main">
+
+    {{> search_form_adv }}
+
+
     <header>
       {{#title}}
         <h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}"><span>{{{html}}}<span></h2>
