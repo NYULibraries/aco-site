@@ -1,8 +1,32 @@
-YUI().use("node", "event", function(Y) {
+YUI().use("node", 'anim', "event", function(Y) {
 
     "use strict";
 
     var body = Y.one("body");
+
+    var contentForm = Y.one('.filter-content').plug(Y.Plugin.NodeFX, {
+        from: {
+            height: function(node) {
+                return node.get('scrollHeight');
+            }
+        },
+        to: { height: 0 },
+        easing: Y.Easing.easeBoth,
+        on: {
+            start: function() {
+                var filterlink = Y.all('.addafilter-link');
+                filterlink.removeClass('addafilter-link-available');
+                filterlink.toggleClass('open');
+            },
+            end: function() {
+                var filterlink = Y.all('.addafilter-link');
+
+                filterlink.addClass('addafilter-link-available');
+            }
+        },
+        duration: .5
+    });
+
 
     function onSubmit(event) {
 
@@ -13,21 +37,30 @@ YUI().use("node", "event", function(Y) {
             whichField1 = currentTarget.one('.group1 .field-select').get("value"),
             whichScope1 = currentTarget.one('.group1 .scope-select').get("value"),
             value1 = input1.get("value"),
-            cleanedValue1 = value1.trim().replace(/\s/g, '+').toLowerCase(),
-            input2 = currentTarget.one('.group2 [type="text"]'),
+            cleanedValue1 = value1.trim().replace(/\s/g, '+').toLowerCase();
+        var destinationString = whichField1 + "=" + cleanedValue1;
+        var input2 = currentTarget.one('.group2 [type="text"]'),
             whichField2 = currentTarget.one('.group2 .field-select').get("value"),
             whichScope2 = currentTarget.one('.group2 .scope-select').get("value"),
             value2 = input2.get("value"),
-            cleanedValue2 = value2.trim().replace(/\s/g, '+').toLowerCase(),
-            destinationString = whichField1 + "=" + cleanedValue1;
-        destinationString += "&" + whichField2 + "=" + cleanedValue2;
-
-        Y.log("Zounds! a nascent advanced search destinationString is " + destinationString);
+            cleanedValue2 = value2.trim().replace(/\s/g, '+').toLowerCase();
+        if (cleanedValue2) {
+            destinationString += "&" + whichField2 + "=" + cleanedValue2;
+        }
+        Y.log("Zounds! DestinationString is " + destinationString);
         location.href = currentTarget.get("action") + "?" + destinationString;
 
 
     }
 
+    function onAddFilterClick(event) {
+        //Y.log("onAddFilterClick");
+        event.preventDefault();
+        var formsetToClone = Y.one('.group1 fieldset');
+        contentForm.fx.set('reverse', !contentForm.fx.get('reverse'));
+        contentForm.fx.run();
+    }
+    body.delegate('click', onAddFilterClick, '.addafilter-link-available');
     body.delegate("submit", onSubmit, "form.advanced");
 
 });
