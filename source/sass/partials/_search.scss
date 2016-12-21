@@ -2,67 +2,68 @@
   outline-color: #ff9c00;
 }
 
-input[type="submit"] {
-  background: #ecdcc8 url(/aco/images/search-icon-2x.png) no-repeat center center;
-  background-size: auto 80%;
-  text-indent: -1000em;
-  border: 1px solid $brand-secondary3;
-  -ms-flex: 1 0 50px;
-  -webkit-flex: 0 1 50px;
-  flex: 0 1 50px;
-  height: 30px;
-  min-width: 50px;
-  -moz-border-radius: 0px;
-  -webkit-border-radius: 0px;
-  -khtml-border-radius: 0px;
-  border-radius: 0px;
-  // @include box-shadow(inset 0px 1px 1px rgba(0, 0, 0, 0.2));
-  &:focus {
-    z-index: 1000;
-    outline-style: none;
-    outline-width: 0px;
-    background-color: darken(#ecdcc8, 8%);
+.simple {
+  input[type="submit"] {
+    background: #ecdcc8 url(/aco/images/search-icon-2x.png) no-repeat center center;
+    background-size: auto 80%;
+    text-indent: -1000em;
+    border: 1px solid $brand-secondary3;
+    -ms-flex: 1 0 50px;
+    -webkit-flex: 0 1 50px;
+    flex: 0 1 50px;
+    height: 30px;
+    min-width: 50px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -khtml-border-radius: 0px;
+    border-radius: 0px;
+    // @include box-shadow(inset 0px 1px 1px rgba(0, 0, 0, 0.2));
+    &:focus {
+      z-index: 1000;
+      outline-style: none;
+      outline-width: 0px;
+      background-color: darken(#ecdcc8, 8%);
+    }
+    @media (min-width: $grid-float-breakpoint) {
+      border-radius: 20px / 30px;
+      border-top-left-radius: 0em;
+      border-bottom-left-radius: 0px;
+      @include box-shadow(inset 0px 1px 0px rgba(0, 0, 0, 0.1));
+    }
   }
-  @media (min-width: $grid-float-breakpoint) {
-    border-radius: 20px / 30px;
-    border-top-left-radius: 0em;
-    border-bottom-left-radius: 0px;
-    @include box-shadow(inset 0px 1px 0px rgba(0, 0, 0, 0.1));
+  input[type="text"] {
+    padding: 0 20px;
+    border: 1px solid $brand-secondary3;
+    height: 30px;
+    @include box-shadow(inset 0px 1px 1px rgba(0, 0, 0, 0.2));
+    -ms-flex: 1 1 auto;
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -khtml-border-radius: 0px;
+    border-radius: 0px;
+    &:focus {
+      z-index: 1000;
+    }
+    @media (min-width: $grid-float-breakpoint) {
+      border-top: 1px solid $brand-secondary2;
+      border-left: 1px solid $brand-secondary2;
+      border-bottom: 1px solid $brand-secondary2;
+      border-right: none;
+      -moz-border-radius: 10% / 100%;
+      -webkit-border-radius: 10% / 100%;
+      -khtml-border-radius: 10% / 100%;
+      border-radius: 10% / 100%;
+      // compass mixin does not work with percentages?
+      //  @include border-radius(10% / 100%);
+      border-top-right-radius: 0em;
+      border-bottom-right-radius: 0em;
+    }
   }
 }
 
-input[type="text"] {
-  padding: 0 20px;
-  border: 1px solid $brand-secondary3;
-  height: 30px;
-  @include box-shadow(inset 0px 1px 1px rgba(0, 0, 0, 0.2));
-  -ms-flex: 1 1 auto;
-  -webkit-flex: 1 1 auto;
-  flex: 1 1 auto;
-  -moz-border-radius: 0px;
-  -webkit-border-radius: 0px;
-  -khtml-border-radius: 0px;
-  border-radius: 0px;
-  &:focus {
-    z-index: 1000;
-  }
-  @media (min-width: $grid-float-breakpoint) {
-    border-top: 1px solid $brand-secondary2;
-    border-left: 1px solid $brand-secondary2;
-    border-bottom: 1px solid $brand-secondary2;
-    border-right: none;
-    -moz-border-radius: 10% / 100%;
-    -webkit-border-radius: 10% / 100%;
-    -khtml-border-radius: 10% / 100%;
-    border-radius: 10% / 100%;
-    // compass mixin does not work with percentages?
-    //  @include border-radius(10% / 100%);
-    border-top-right-radius: 0em;
-    border-bottom-right-radius: 0em;
-  }
-}
-
-[role="search"] {
+[role="search"].simple {
   margin: 0 15px;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -75,4 +76,87 @@ input[type="text"] {
     //max-width: 260px;
     margin: 0;
   }
+}
+
+body.search .search_holder {
+  display: none;
+}
+
+[role="search"].advanced {
+  border: 2px solid #DECCBF;
+  background-color: #efe5d9;
+  padding: 20px;
+  margin: 15px 0;
+  div.fieldset {
+    margin-bottom: 15px;
+    border: none;
+    padding: 0;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -ms-flex-wrap: nowrap;
+    justify-content: space-between;
+    div {
+      flex: 1 0 auto;
+      width: auto;
+      min-width: 100px;
+      &.select-style {
+        margin-right: 3%;
+        width: 97%;
+        select {
+          width: 100%;
+        }
+      }
+      &.input-hold {
+        //text-align: right;
+      }
+    }
+  }
+  input[type=text] {
+    padding: 5px 10px;
+    border: 1px solid #DECCBF;
+    border-radius: 3px;
+  }
+  .add {
+    float: left;
+    a {
+      font-size: .85rem;
+    }
+  }
+  .submit-search {
+    margin-left: 50px;
+    padding: 5px 25px;
+  }
+}
+
+
+/* http://codepen.io/gnclmorais/pen/cHkqt/ */
+
+.select-style {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #DECCBF;
+  // width: 120px;
+  border-radius: 3px;
+  overflow: hidden;
+  background-color: #f7f5f2;
+  background: #f7f5f2 url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
+}
+
+.select-style select {
+  padding: 5px 8px;
+  // width: 130%;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.select-style select:focus {
+  outline: none;
 }
