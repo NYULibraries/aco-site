@@ -7,10 +7,10 @@
       </div>
       <div lang="en">
         <div class="md_title"><span class="md_label">Title:</span> <a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">{{ss_title_long}}</a></div>                
-        <div class="md_authors"><span class="md_label">Author:</span> {{#each sm_author}}<a  class="md_author" href='/aco/search/?q=&page=1&author="{{this}}"'>{{this}}</a>{{/each}}
+        <div class="md_authors"><span class="md_label">Author:</span> {{#each sm_author}}<a class="md_author" href='/aco/search/?author="{{this}}"'>{{this}}</a>{{/each}}
         </div>                        
-        <div><span class="md_label">Publisher:</span> {{#each sm_publisher}}<a  class="md_publisher" href='/aco/search/?q=&page=1&publisher="{{this}}"'><span>{{this}}</span></a>{{/each}}</div>
-        <div><span class="md_label">Place of Publication:</span> {{ss_publocation}}</div>                        
+        <div><span class="md_label">Publisher:</span> {{#each sm_publisher}}<a  class="md_publisher" href='/aco/search/?publisher="{{this}}"'><span>{{this}}</span></a>{{/each}}</div>
+        <div><span class="md_label">Place of Publication:</span> <a  class="md_pubplace" href='/aco/search/?pubplace="{{ss_publocation}}"'>{{ss_publocation}}</a></div>                        
         <div><span class="md_label">Date of Publication:</span> {{ss_pubdate}}</div>                        
         <div class="md_subjects">
           <span class="md_label">Subject:</span>
@@ -37,11 +37,11 @@
       </div>
       <div class="md_authors">
         <span class="md_label">الكاتب:</span> 
-        {{#each sm_ar_author}}<span class="md_author">{{this}}</span>{{/each}}
+        {{#each sm_ar_author}}<a class="md_author" href='/aco/search/?author="{{this}}"'><span class="md_author">{{this}}</span></a>{{/each}}
       </div>
-      <div class="md_publisher"><span class="md_label">الناشر:</span> <span>{{sm_ar_publisher}}</span></div>
+      <div class="md_publisher"><span class="md_label">الناشر:</span>  {{#each sm_ar_publisher}}<a  class="md_publisher" href='/aco/search/?publisher="{{this}}"'><span>{{this}}</span></a>{{/each}}</div>
       <div class="md_publocation">
-        <span class="md_label">مكان النشر:</span> <span>{{ss_ar_publication_location}}</span>
+        <span class="md_label">مكان النشر:</span> <a  class="md_pubplace" href='/aco/search/?pubplace="{{ss_ar_publication_location}}"'><span>{{ss_ar_publication_location}}</span></a>
       </div>  
       <div class="md_pubdate"><span class="md_label">تاريخ النشر:</span> <span dir="ltr" lang="en" >{{ss_pubdate}}</span></div>                        
       <div class="md_subjects" ><span class="md_label">الموضوع:</span> 
