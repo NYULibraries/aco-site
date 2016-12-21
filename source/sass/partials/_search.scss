@@ -83,7 +83,7 @@ body.search .search_holder {
 }
 
 [role="search"].advanced {
-  border: 2px solid #DECCBF;
+  border: 1px solid #DECCBF;
   background-color: #efe5d9;
   padding: 20px;
   margin: 15px 0;
@@ -101,7 +101,7 @@ body.search .search_holder {
     div {
       flex: 1 0 auto;
       width: auto;
-      min-width: 100px;
+     
       &.select-style {
         margin-right: 3%;
         width: 97%;
@@ -112,22 +112,35 @@ body.search .search_holder {
       &.input-hold {
         //text-align: right;
       }
+      &.submit-hold {
+        //text-align: right;
+        flex: 0 0 auto;
+      }
     }
   }
   input[type=text] {
     padding: 5px 10px;
     border: 1px solid #DECCBF;
     border-radius: 3px;
+    margin-right: 3%;
+    width: 97%;
   }
   .add {
-    float: left;
+    // float: left;
     a {
       font-size: .85rem;
     }
   }
   .submit-search {
-    margin-left: 50px;
+    //margin-left: 50px;
     padding: 5px 25px;
+    border: 1px solid #DECCBF;
+    border-radius: 3px;
+    background-color: #DECCBF;
+    background: transparent url(/aco/images/search-icon-2x.png) no-repeat center center;
+    background-size: auto 80%;
+    text-indent: -1000em;
+    border: 1px solid #DECCBF;
   }
 }
 
