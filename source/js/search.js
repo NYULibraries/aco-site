@@ -8,7 +8,8 @@ YUI().use(
             nrSource = Y.one('#noresults').getHTML(),
             noresultsTemplate = Y.Handlebars.compile(nrSource),
             router = new Y.Router(),
-            transactions = [];
+            transactions = [],
+            QueryString = Y.QueryString.parse(window.location.search.substring(1));
 
         function HandlebarsHelpers() {
             function json(context, options) {
@@ -23,52 +24,29 @@ YUI().use(
                 speakingurl: speakingurl
             };
         }
-        Y.Object.each(HandlebarsHelpers(), function(helper, key) { Y.Handlebars.registerHelper(key, helper) });
+        Y.Object.each(HandlebarsHelpers(), function(helper, key) { Y.Handlebars.registerHelper(key, helper); });
 
         function getRoute() {
-            var pageQueryString = getParameterByName('page'),
-                sortQueryString = getParameterByName('sort'),
-                qQueryString = getParameterByName('q'),
-                fqProvider = getParameterByName('provider'),
-                fqPublisher = getParameterByName('publisher'),
-                fqAuthor = getParameterByName('author'),
-                page = (pageQueryString) ? pageQueryString : 1,
-                q = (qQueryString) ? qQueryString : '',
-                route = router.getPath() + '?q=' + q + '&page=' + page,
-                routeX = router.getPath() + '?'  ;
-            // throw error if q is empty?
 
-            var QueryString = Y.QueryString.parse(window.location.search.substring(1));
-            Y.log("&&&&&&&&&&&&     QueryString  " + QueryString);
-            for (var x in QueryString) {
-                if (QueryString.hasOwnProperty(x)) {
-                    Y.log("QueryString " + x + " is  " + QueryString[x]);
-                    routeX += '&' + x + '=' + QueryString[x];
-                }
-            }
-             Y.log("&&&&&&&&&&&&     routeX  " + routeX + "    directly access" + QueryString.provider);
-            if (fqProvider) {
-                route += '&provider=' + fqProvider;
-            }
-            if (fqAuthor) {
-                route += '&author=' + fqAuthor;
-            }
-            if (fqPublisher) {
-                route += '&publisher=' + fqPublisher;
-            }
-            if (sortQueryString) {
-                route += '&sort=' + sortQueryString;
-            }
-            Y.log("getRoute route is " + route);
+            var pageQueryString = QueryString.page,
+                sortQueryString = QueryString.sort,
+                qQueryString = QueryString.q,
+                q = (qQueryString) ? qQueryString : '',
+                route = router.getPath() + '?';
+
+            var newString = Y.QueryString.stringify(QueryString);
+
+            route += newString;
+            Y.log("getRoute: route  " + route);
             return route;
         }
 
         function getParameterByName(name) {
-            Y.log("getParameterByName " + name);
+            // Y.log("getParameterByName " + name);
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
             var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
                 results = regex.exec(location.search);
-            Y.log("getParameterByName " + results);
+            // Y.log("getParameterByName " + results);
             return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         }
 
@@ -396,9 +374,11 @@ YUI().use(
                 query = (req.query.q) ? req.query.q : '',
                 provider = (req.query.provider) ? req.query.provider : '',
                 author = (req.query.author) ? req.query.author : '',
+                title = (req.query.title) ? req.query.title : '',
                 publisher = (req.query.publisher) ? req.query.publisher : '',
+                pubplace = (req.query.pubplace) ? req.query.pubplace : '',
                 start = 0;
-            Y.one('.search_holder [name="q"]').set('value', query);
+
             if (page <= 1) {
                 start = 0;
             } else {
@@ -413,7 +393,9 @@ YUI().use(
                 q: removeQueryDiacritics(query),
                 provider: provider,
                 author: author,
-                publisher: publisher
+                title: title,
+                publisher: publisher,
+                pubplace: pubplace
             });
         });
 
@@ -446,14 +428,21 @@ YUI().use(
         }
 
         function updateFormElements() {
-            var q1 = getParameterByName('q');
-            Y.log("updateFormElements " + q1);
-            var pro1 = getParameterByName('provider');
-            // newValTxt.set("value", "");
-            Y.one('.group1 .q1').set('value', q1);
-            Y.one('.group2 .q2').set('value', pro1);
-            var selectField2 = Y.one('.group2 .field-select');
-            selectField2.query('option[value=foo]').set('selected', true);
+            var i = 1;
+            for (var x in QueryString) {
+                if (QueryString.hasOwnProperty(x)) {
+                    var thisValueBox = Y.one('.group' + i + ' .q' + i);
+                    if (thisValueBox) {
+                        Y.one('.group' + i + ' .q' + i).set('value', QueryString[x]);
+                    }
+                    var selectField = Y.one('.group' + i + ' .field-select');
+                    if (selectField) {
+                        selectField.set('value', x);
+                    }
+                    Y.log(i + " updateFormElements QueryString " + x + " is  " + QueryString[x]);
+                    i++;
+                }
+            }
 
         }
 
@@ -461,11 +450,12 @@ YUI().use(
             this.setPage(state.page, true);
             this.setRowsPerPage(state.rowsPerPage, true);
             var newPath = router.getPath();
-            newPath += '?q=' + getParameterByName('q');
+            newPath += '?q=' + QueryString.q;
             newPath += (getParameterByName('provider') ? '&provider=' + getParameterByName('provider') : "");
             newPath += (getParameterByName('author') ? '&author=' + getParameterByName('author') : "");
             newPath += (getParameterByName('publisher') ? '&publisher=' + getParameterByName('publisher') : "");
-            newPath += '&page=' + state.page;
+            newPath += (getParameterByName('title') ? '&title=' + getParameterByName('title') : "");
+            newPath += (state.page > 1 ? '&page=' + state.page : "");
             Y.log("update " + newPath);
             router.save(newPath);
         }
@@ -499,20 +489,34 @@ YUI().use(
                     startNode = resultsnum.one('.start'),
                     docslengthNode = resultsnum.one('.docslength'),
                     docslength = parseInt(response.response.docs.length, 10),
-                    q = getParameterByName('q'),
-                    pS = getParameterByName('provider'),
+                    q = QueryString.q,
+                    pS = QueryString.provider,
+                    aS = QueryString.author,
+                    pubS = QueryString.publisher,
+                    pubplaceS = QueryString.pubplace,
                     appRoot = Y.one('body').getAttribute('data-app'),
+                    ADescribeSearch = [],
                     stringToDescribeSearch = "";
                 Y.one('body').removeClass('io-loading');
                 if (q) {
-                    stringToDescribeSearch += q;
-
+                    ADescribeSearch.push(q);
                 }
                 if (pS) {
-                    stringToDescribeSearch += "Provider = " + pS;
-
+                    ADescribeSearch.push(" Provider = " + pS);
                 }
-                querytextNode.set('innerHTML', stringToDescribeSearch);
+                if (aS) {
+                    ADescribeSearch.push(" Author = " + aS);
+                }
+                if (pubS) {
+                    ADescribeSearch.push(" Publisher = " + pubS);
+                }
+                if (pubplaceS) {
+                    ADescribeSearch.push(" Place of Publication = " + pubplaceS);
+                }
+                stringToDescribeSearch = ADescribeSearch.join((" and "));
+                if (querytextNode) {
+                    querytextNode.set('innerHTML', stringToDescribeSearch);
+                }
                 if (numfound > 0) {
                     // first transaction; enable paginator
                     if (transactions.length < 1) {
@@ -560,29 +564,26 @@ YUI().use(
             for (var prop in data) {
                 if (data.hasOwnProperty(prop)) {
                     if (prop.match('fq-')) {
-                        Y.log("data[prop]: " + data[prop]);
+                        //Y.log("data[prop]: " + data[prop]);
                         fq.push(prop.replace('fq-', '') + ':' + data[prop]);
                     }
                 }
             }
-            // for ( var x in options ) {
-            //   if ( options.hasOwnProperty( x ) ) {
-            //     Y.log("options x is " + x + "  :  " + options[x]);
-            //     if ( x.match('provider') && (options[x]) ) {
-            //       fq.push( 'sm_provider_code:' + options[x] );
-            //     }
-            //   }
-            // }
-            if (options.provider) {
-                fq.push('sm_provider_code:' + options.provider);
+
+            if (options.title) {
+                fq.push('label:' + options.title);
             }
             if (options.author) {
-                Y.log("options.author : " + options.author);
-                fq.push('sm_author:' + options.author);
+                fq.push('(sm_author:' + options.author + ' OR ' + 'sm_ar_author:' + options.author + ')');
+            }
+            if (options.pubplace) {
+                fq.push('(ss_publication_location:' + options.pubplace + ' OR ' + 'ss_ar_publication_location:' + options.pubplace + ')');
             }
             if (options.publisher) {
-                Y.log("options.publisher : " + options.publisher);
-                fq.push('sm_publisher:' + options.publisher);
+                fq.push('(sm_publisher:' + options.publisher + ' OR ' + 'sm_ar_publisher:' + options.publisher + ')');
+            }
+            if (options.provider) {
+                fq.push('sm_provider_code:' + options.provider);
             }
             if (options.page) {
                 page = parseInt(options.page, 10);
@@ -644,6 +645,11 @@ YUI().use(
             content.fx.run();
 
         }
+
+
         updateFormElements();
         Y.one('body').delegate('click', onAboutSearchClick, '.aboutinfo-link-available');
+
+
+
     });
