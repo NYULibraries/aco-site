@@ -369,7 +369,7 @@ YUI().use(
             var node = Y.one('[data-name="items"]'),
                 data = node.getData(),
                 rows = (req.query.rows) ? req.query.rows : ((data.rows) ? data.rows : 10),
-                sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : Y.one('#browse-select').get('value')),
+                sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : Y.one('.sort-select').get('value')),
                 page = (req.query.page) ? parseInt(req.query.page, 10) : 0,
                 query = (req.query.q) ? req.query.q : '',
                 provider = (req.query.provider) ? req.query.provider : '',
@@ -384,6 +384,7 @@ YUI().use(
             } else {
                 start = (page * rows) - rows;
             }
+            Y.log(" sort " + sort);
             initRequest({
                 container: node,
                 start: start,
@@ -401,6 +402,12 @@ YUI().use(
 
         function onSelectChange() {
 
+            var sortData = Y.one('.sort-select :checked'),
+                sortBy = sortData.get('value'),
+                sortDir = sortData.getAttribute("data-sort-dir"),
+                sortString = sortBy + "%20" + sortDir;
+            QueryString = Y.QueryString.parse(window.location.search.substring(1));
+            QueryString.sort = sortString;
             router.replace(getRoute());
         }
 
@@ -430,7 +437,7 @@ YUI().use(
         function updateFormElements() {
             var i = 1;
             for (var x in QueryString) {
-                if (QueryString.hasOwnProperty(x)) {
+                if (QueryString.hasOwnProperty(x) && x !== "sort") {
                     var thisValueBox = Y.one('.group' + i + ' .q' + i);
                     if (thisValueBox) {
                         Y.one('.group' + i + ' .q' + i).set('value', QueryString[x]);
@@ -446,9 +453,14 @@ YUI().use(
 
         }
 
+
         function update(state) {
             this.setPage(state.page, true);
             this.setRowsPerPage(state.rowsPerPage, true);
+            Y.log("Function update " + state);
+
+            // QueryString = Y.QueryString.parse(window.location.search.substring(1));
+            //  Y.log("QueryString.page " = QueryString.page);
             var newPath = router.getPath();
             newPath += '?q=' + QueryString.q;
             newPath += (getParameterByName('provider') ? '&provider=' + getParameterByName('provider') : "");
@@ -645,11 +657,6 @@ YUI().use(
             content.fx.run();
 
         }
-
-
         updateFormElements();
         Y.one('body').delegate('click', onAboutSearchClick, '.aboutinfo-link-available');
-
-
-
     });
