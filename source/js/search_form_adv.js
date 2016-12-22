@@ -4,7 +4,8 @@ YUI().use("node", 'anim', "event", function(Y) {
 
     var body = Y.one("body");
 
-    var contentForm = Y.one('.filter-content').plug(Y.Plugin.NodeFX, {
+
+    var contentFormClose = Y.one('.filter-content').plug(Y.Plugin.NodeFX, {
         from: {
             height: function(node) {
                 return node.get('scrollHeight');
@@ -16,12 +17,38 @@ YUI().use("node", 'anim', "event", function(Y) {
             start: function() {
                 var filterlink = Y.all('.addafilter-link');
                 filterlink.removeClass('addafilter-link-available');
-                filterlink.toggleClass('open');
+
+
             },
             end: function() {
                 var filterlink = Y.all('.addafilter-link');
-
+                //  filterlink.toggleClass('open');
                 filterlink.addClass('addafilter-link-available');
+            }
+        },
+        duration: .5
+    });
+
+
+    var addLinkHide = Y.one('.addafilter-link').plug(Y.Plugin.NodeFX, {
+        from: {
+            height: function(node) {
+                return node.get('scrollHeight');
+            }
+        },
+        to: { height: 0 },
+        easing: Y.Easing.easeBoth,
+        on: {
+            start: function() {
+                var filterlink = Y.all('.addafilter-link');
+                filterlink.toggleClass('open');
+                // filterlink.removeClass('addafilter-link-available');
+
+            },
+            end: function() {
+                // var filterlink = Y.all('.addafilter-link');
+                //filterlink.toggleClass('open');
+                //  filterlink.addClass('addafilter-link-available');
             }
         },
         duration: .5
@@ -54,13 +81,31 @@ YUI().use("node", 'anim', "event", function(Y) {
     }
 
     function onAddFilterClick(event) {
-        //Y.log("onAddFilterClick");
+        Y.log("onAddFilterClick");
         event.preventDefault();
-        var formsetToClone = Y.one('.group1 fieldset');
-        contentForm.fx.set('reverse', !contentForm.fx.get('reverse'));
-        contentForm.fx.run();
+        //  var formsetToClone = Y.one('.group1 fieldset');
+        //   addLinkHide.fx.set('reverse', false);
+        //addLinkHide.fx.run();
+        var filterlink = Y.all('.addafilter-link');
+        filterlink.toggleClass('open');
+        contentFormClose.fx.set('reverse', true);
+        contentFormClose.fx.run();
+
+
+    }
+
+    function onRemoveFilterClick(event) {
+        event.preventDefault();
+        //var formsetToClone = Y.one('.group1 fieldset');
+        var filterlink = Y.all('.addafilter-link');
+        filterlink.removeClass('open');
+        contentFormClose.fx.set('reverse', false);
+        contentFormClose.fx.run();
+        // addLinkHide.fx.set('reverse', true);
+ // addLinkHide.fx.run();
     }
     body.delegate('click', onAddFilterClick, '.addafilter-link-available');
+    body.delegate('click', onRemoveFilterClick, '.remove-filter');
     body.delegate("submit", onSubmit, "form.advanced");
 
 });

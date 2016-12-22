@@ -1,6 +1,6 @@
 <div class="search_holder_advanced widget" data-name="search_form" data-script='{ "js" : [ "search_form_adv.min.js" ] }'>
     <form class="advanced" method="get" action="{{ appUrl }}/search" role="search">
-        <div class="filter-content" style="height:0; overflow:hidden">
+        <div class="filter-content" style="height:0; overflow:hidden;">
             <div class="fieldset group2">
                 <div class="select-hold">
                     <div class="select-style">
@@ -24,6 +24,9 @@
                 </div>
                 <div class="input-hold">
                     <input class="q2" name="q2" type="text" placeholder="search  /  ابحث" title="Enter the terms you wish to search for.">
+                </div>
+                <div class="remove-filter">
+                    <input type="button" class="remove-filter" value="x">
                 </div>
             </div>
         </div>
@@ -52,9 +55,9 @@
                 <input class="q1" name="q1" type="text" placeholder="search  /  ابحث" title="Enter the terms you wish to search for.">
             </div>
             <div class="submit-hold">
-                <input type="submit"  class="submit-search">
+                <input type="submit" class="submit-search">
             </div>
         </div>
-        <div class="add"><a href="#" class="addafilter-link-available">Add a filter / أضِف فلتر</a></div>
+        <div class="add"><a href="#" class="addafilter-link addafilter-link-available">Add a filter / أضِف فلتر</a></div>
     </form>
 </div>

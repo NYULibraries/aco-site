@@ -101,7 +101,6 @@ body.search .search_holder {
     div {
       flex: 1 0 auto;
       width: auto;
-     
       &.select-style {
         margin-right: 3%;
         width: 97%;
@@ -115,6 +114,26 @@ body.search .search_holder {
       &.submit-hold {
         //text-align: right;
         flex: 0 0 auto;
+      }
+      &.remove-filter {
+        //text-align: right;
+        flex: 0 0 auto;
+        input {
+          padding: 5px 10px;
+          border: none;
+          // border-radius: 3px;
+          background-color: transparent;
+          // background: transparent url(/aco/images/search-icon-2x.png) no-repeat center center;
+          background-size: auto 80%;
+          //  text-indent: -1000em;
+          border: none;
+          width: 50px;
+          color: gray;
+          text-align: left;
+          &:hover {
+            color: red;
+          }
+        }
       }
     }
   }
@@ -141,6 +160,20 @@ body.search .search_holder {
     background-size: auto 80%;
     text-indent: -1000em;
     border: 1px solid #DECCBF;
+  }
+  .addafilter-link {
+    //height: auto;
+    max-height: 50px;
+    display: block;
+    transition: max-height .5s, opacity .5s;
+    opacity: 1;
+  }
+  .add {
+    overflow: hidden;
+  }
+  .addafilter-link.open {
+    max-height: 0;
+    opacity: 0;
   }
 }
 
