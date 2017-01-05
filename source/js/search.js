@@ -437,7 +437,7 @@ YUI().use(
         function updateFormElements() {
             var i = 1;
             for (var x in QueryString) {
-                if (QueryString.hasOwnProperty(x) && x !== "sort") {
+                if (QueryString.hasOwnProperty(x) && x !== "sort" && x !== "page") {
                     var thisValueBox = Y.one('.group' + i + ' .q' + i);
                     if (thisValueBox) {
                         Y.one('.group' + i + ' .q' + i).set('value', QueryString[x]);
@@ -457,17 +457,12 @@ YUI().use(
         function update(state) {
             this.setPage(state.page, true);
             this.setRowsPerPage(state.rowsPerPage, true);
-            Y.log("Function update " + state);
-
-            // QueryString = Y.QueryString.parse(window.location.search.substring(1));
-            //  Y.log("QueryString.page " = QueryString.page);
-            var newPath = router.getPath();
-            newPath += '?q=' + QueryString.q;
-            newPath += (getParameterByName('provider') ? '&provider=' + getParameterByName('provider') : "");
-            newPath += (getParameterByName('author') ? '&author=' + getParameterByName('author') : "");
-            newPath += (getParameterByName('publisher') ? '&publisher=' + getParameterByName('publisher') : "");
-            newPath += (getParameterByName('title') ? '&title=' + getParameterByName('title') : "");
-            newPath += (state.page > 1 ? '&page=' + state.page : "");
+            Y.log("Function update page " + state.page + " rowsPerPage " + state.rowsPerPage);
+            QueryString = Y.QueryString.parse(window.location.search.substring(1));
+            QueryString.page = state.page ? state.page : 1;
+            var newPath = router.getPath() + '?';
+            var newString = Y.QueryString.stringify(QueryString);
+            newPath += newString;
             Y.log("update " + newPath);
             router.save(newPath);
         }
