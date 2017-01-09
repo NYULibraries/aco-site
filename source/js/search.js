@@ -9,6 +9,7 @@ YUI().use(
             noresultsTemplate = Y.Handlebars.compile(nrSource),
             router = new Y.Router(),
             transactions = [],
+            scopeIs = "contains",
             QueryString = Y.QueryString.parse(window.location.search.substring(1));
 
         function HandlebarsHelpers() {
@@ -39,15 +40,6 @@ YUI().use(
             route += newString;
             Y.log("getRoute: route  " + route);
             return route;
-        }
-
-        function getParameterByName(name) {
-            // Y.log("getParameterByName " + name);
-            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(location.search);
-            // Y.log("getParameterByName " + results);
-            return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         }
 
         function removeQueryDiacritics(str) {
@@ -384,7 +376,7 @@ YUI().use(
             } else {
                 start = (page * rows) - rows;
             }
-            Y.log(" sort " + sort);
+
             initRequest({
                 container: node,
                 start: start,
@@ -392,11 +384,12 @@ YUI().use(
                 rows: rows,
                 sort: sort,
                 q: removeQueryDiacritics(query),
-                provider: provider,
-                author: author,
-                title: title,
-                publisher: publisher,
-                pubplace: pubplace
+                provider: removeQueryDiacritics(provider),
+                author: removeQueryDiacritics(author),
+                title: removeQueryDiacritics(title),
+                publisher: removeQueryDiacritics(publisher),
+                pubplace: removeQueryDiacritics(pubplace),
+
             });
         });
 
@@ -435,18 +428,46 @@ YUI().use(
         }
 
         function updateFormElements() {
-            var i = 1;
+            var i = 1,
+                cleanstring,
+                str,
+                // leading and ending asterisks
+                re1 = /(^[*])(.*)([*]$)/i,
+                // leading and ending quotes
+                re2 = /(^["])(.*)(["]$)/i,
+                found;
             for (var x in QueryString) {
                 if (QueryString.hasOwnProperty(x) && x !== "sort" && x !== "page") {
                     var thisValueBox = Y.one('.group' + i + ' .q' + i);
                     if (thisValueBox) {
-                        Y.one('.group' + i + ' .q' + i).set('value', QueryString[x]);
+                        str = QueryString[x];
+                        found = str.match(re1);
+                        if (found) {
+                            // for clarity, even though it should already have this value
+                            scopeIs = "contains";
+                            str = found[2];
+                        } else {
+                            found = str.match(re2);
+                            if (found) {
+                                // Y.log(found);
+                                scopeIs = "equals";
+                                str = found[2];
+                            }
+                        }
+                        cleanstring = removeSOLRcharacters(str);
+                        Y.one('.group' + i + ' .q' + i).set('value', cleanstring);
                     }
+
                     var selectField = Y.one('.group' + i + ' .field-select');
                     if (selectField) {
                         selectField.set('value', x);
                     }
-                    Y.log(i + " updateFormElements QueryString " + x + " is  " + QueryString[x]);
+                    var scopeField = Y.one('.group' + i + ' .scope-select');
+                    if (scopeField) {
+                        scopeField.set('value', scopeIs);
+                    }
+                    Y.log("Scope is " + scopeIs);
+                    Y.log(i + " updateFormElements cleanstring " + x + " is  " + cleanstring[x]);
                     i++;
                 }
             }
@@ -482,6 +503,11 @@ YUI().use(
             }
         }
 
+        function removeSOLRcharacters(str) {
+            var outString = str.replace(/[*".]/gi, '');
+            return outString;
+        }
+
         function onSuccess(response, args) {
             updateFormElements();
             try {
@@ -509,16 +535,16 @@ YUI().use(
                     ADescribeSearch.push(q);
                 }
                 if (pS) {
-                    ADescribeSearch.push(" Provider = " + pS);
+                    ADescribeSearch.push(" Provider " + scopeIs + " " + pS);
                 }
                 if (aS) {
-                    ADescribeSearch.push(" Author = " + aS);
+                    ADescribeSearch.push(" Author " + scopeIs + " " + aS);
                 }
                 if (pubS) {
-                    ADescribeSearch.push(" Publisher = " + pubS);
+                    ADescribeSearch.push(" Publisher " + scopeIs + " " + pubS);
                 }
                 if (pubplaceS) {
-                    ADescribeSearch.push(" Place of Publication = " + pubplaceS);
+                    ADescribeSearch.push(" Place of Publication " + scopeIs + " " + pubplaceS);
                 }
                 stringToDescribeSearch = ADescribeSearch.join((" and "));
                 if (querytextNode) {
@@ -576,22 +602,28 @@ YUI().use(
                     }
                 }
             }
+            for (var w in options) {
+                if (options.hasOwnProperty(w)) {
+                    Y.log("options[w]: " + w + "  " + options[w]);
+                }
+            }
 
             if (options.title) {
-                fq.push('label:' + options.title);
+                fq.push('(iass_longlabel:' + options.title + ' OR ' + 'iass_ar_longlabel:' + options.title + ')');
             }
             if (options.author) {
-                fq.push('(sm_author:' + options.author + ' OR ' + 'sm_ar_author:' + options.author + ')');
+                fq.push('(iass_author:' + options.author + ' OR ' + 'iass_ar_author:' + options.author + ')');
             }
             if (options.pubplace) {
-                fq.push('(ss_publication_location:' + options.pubplace + ' OR ' + 'ss_ar_publication_location:' + options.pubplace + ')');
+                fq.push('(ss_spublocation:' + options.pubplace + ' OR ' + 'ss_ar_publication_location:' + options.pubplace + ')');
             }
             if (options.publisher) {
                 fq.push('(sm_publisher:' + options.publisher + ' OR ' + 'sm_ar_publisher:' + options.publisher + ')');
             }
             if (options.provider) {
-                fq.push('sm_provider_code:' + options.provider);
+                fq.push('(sm_provider_label:' + options.provider + ' OR ' + 'sm_ar_provider_label:' + options.provider + ')');
             }
+
             if (options.page) {
                 page = parseInt(options.page, 10);
             }
