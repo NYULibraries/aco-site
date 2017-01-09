@@ -11,7 +11,8 @@
         </div>                        
         <div><span class="md_label">Publisher:</span> {{#each sm_publisher}}<a  class="md_publisher" href='/aco/search/?publisher="{{this}}"'><span>{{this}}</span></a>{{/each}}</div>
         <div><span class="md_label">Place of Publication:</span> <a  class="md_pubplace" href='/aco/search/?pubplace="{{ss_publocation}}"'>{{ss_publocation}}</a></div>                        
-        <div><span class="md_label">Date of Publication:</span> {{ss_pubdate}}</div>                        
+        <div><span class="md_label">Date of Publication:</span> {{ss_pubdate}}</div>  
+        <div><span class="md_label">Sort Date of Publication:</span> {{iass_pubyear}}</div>                             
         <div class="md_subjects">
           <span class="md_label">Subject:</span>
           {{#each zm_subject}}

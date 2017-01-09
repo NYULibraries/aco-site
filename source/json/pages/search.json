@@ -25,6 +25,7 @@
           "ss_uri", 
           "sm_publisher", 
           "ss_pubdate", 
+          "iass_pubyear", 
           "sm_collection_partner_label",          
           "zm_subject",
           "zm_partner",
