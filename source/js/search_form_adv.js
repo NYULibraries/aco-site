@@ -17,8 +17,6 @@ YUI().use("node", 'anim', "event", function(Y) {
             start: function() {
                 var filterlink = Y.all('.addafilter-link');
                 filterlink.removeClass('addafilter-link-available');
-
-
             },
             end: function() {
                 var filterlink = Y.all('.addafilter-link');
@@ -63,9 +61,17 @@ YUI().use("node", 'anim', "event", function(Y) {
             input1 = currentTarget.one('.group1 [type="text"]'),
             whichField1 = currentTarget.one('.group1 .field-select').get("value"),
             whichScope1 = currentTarget.one('.group1 .scope-select').get("value"),
-            value1 = input1.get("value"),
-            cleanedValue1 = value1.trim().replace(/\s/g, '+').toLowerCase();
-        var destinationString = whichField1 + "=" + cleanedValue1;
+            value1 = input1.get("value");
+            value1 = value1.trim().replace(/\s/g, '+').toLowerCase();
+        Y.log("whichScope1 " + whichScope1);
+        if (whichScope1 == "contains" && (whichField1 != 'q')) {
+            
+            value1 = "*" + value1 + "*";
+        }
+        if (whichScope1 == "equals" ) {
+            value1 = '"' + value1 + '"';
+        }
+        var destinationString = whichField1 + "=" + value1;
         var input2 = currentTarget.one('.group2 [type="text"]'),
             whichField2 = currentTarget.one('.group2 .field-select').get("value"),
             whichScope2 = currentTarget.one('.group2 .scope-select').get("value"),
@@ -102,7 +108,7 @@ YUI().use("node", 'anim', "event", function(Y) {
         contentFormClose.fx.set('reverse', false);
         contentFormClose.fx.run();
         // addLinkHide.fx.set('reverse', true);
- // addLinkHide.fx.run();
+        // addLinkHide.fx.run();
     }
     body.delegate('click', onAddFilterClick, '.addafilter-link-available');
     body.delegate('click', onRemoveFilterClick, '.remove-filter');
