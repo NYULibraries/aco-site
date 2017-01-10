@@ -440,6 +440,7 @@ YUI().use(
                 if (QueryString.hasOwnProperty(x) && x !== "sort" && x !== "page") {
                     var thisValueBox = Y.one('.group' + i + ' .q' + i);
                     if (thisValueBox) {
+                        Y.log("QueryString[x] " + QueryString[x]);
                         str = QueryString[x];
                         found = str.match(re1);
                         if (found) {
@@ -448,6 +449,7 @@ YUI().use(
                             str = found[2];
                         } else {
                             found = str.match(re2);
+                            Y.log("QueryString[x] " + QueryString[x] + "  found " + found);
                             if (found) {
                                 // Y.log(found);
                                 scopeIs = "equals";
@@ -467,7 +469,7 @@ YUI().use(
                         scopeField.set('value', scopeIs);
                     }
                     Y.log("Scope is " + scopeIs);
-                    Y.log(i + " updateFormElements cleanstring " + x + " is  " + cleanstring[x]);
+                    Y.log(i + " updateFormElements cleanstring " + x + " is  " + cleanstring);
                     i++;
                 }
             }
@@ -504,12 +506,15 @@ YUI().use(
         }
 
         function removeSOLRcharacters(str) {
-            var outString = str.replace(/[*".]/gi, '');
+            var outString = str.replace(/[*"]/gi, '');
+            Y.log(" removeSOLRcharacters returning " + outString);
             return outString;
         }
 
         function onSuccess(response, args) {
-            updateFormElements();
+            Y.log("Success ");
+            // updateFormElements();
+
             try {
                 var node = args.container,
                     resultsnum = Y.one('.resultsnum'),
@@ -524,6 +529,7 @@ YUI().use(
                     docslength = parseInt(response.response.docs.length, 10),
                     q = QueryString.q,
                     pS = QueryString.provider,
+                    tS = QueryString.title,
                     aS = QueryString.author,
                     pubS = QueryString.publisher,
                     pubplaceS = QueryString.pubplace,
@@ -531,16 +537,25 @@ YUI().use(
                     ADescribeSearch = [],
                     stringToDescribeSearch = "";
                 Y.one('body').removeClass('io-loading');
+
+                Y.log("Success " + aS);
                 if (q) {
                     ADescribeSearch.push(q);
                 }
+                if (tS) {
+                    tS = removeSOLRcharacters(tS)
+                    ADescribeSearch.push("Title " + scopeIs + " " + tS);
+                }
                 if (pS) {
+                    pS = removeSOLRcharacters(pS)
                     ADescribeSearch.push(" Provider " + scopeIs + " " + pS);
                 }
                 if (aS) {
+                    aS = removeSOLRcharacters(aS)
                     ADescribeSearch.push(" Author " + scopeIs + " " + aS);
                 }
                 if (pubS) {
+                    pubS = removeSOLRcharacters(pubS)
                     ADescribeSearch.push(" Publisher " + scopeIs + " " + pubS);
                 }
                 if (pubplaceS) {
@@ -550,6 +565,7 @@ YUI().use(
                 if (querytextNode) {
                     querytextNode.set('innerHTML', stringToDescribeSearch);
                 }
+                Y.log("numfound " + numfound);
                 if (numfound > 0) {
                     // first transaction; enable paginator
                     if (transactions.length < 1) {
@@ -575,10 +591,13 @@ YUI().use(
                 }
                 // no results
                 else {
+                    Y.log("nothing found ");
                     Y.one('body').addClass('items-no-results');
                     node.append(noresultsTemplate());
                 }
-            } catch (e) {}
+            } catch (e) {
+                Y.log("Error: " + e);
+            }
         }
 
         function initRequest(options) {
@@ -589,6 +608,7 @@ YUI().use(
                 sortDir = sortData.getAttribute("data-sort-dir"),
                 data = options.container.getData(),
                 source = Y.one('.widget.items').getAttribute('data-source'),
+                qs = "",
                 fl = (data.fl) ? data.fl : '*',
                 rows = (data.rows) ? data.rows : 10,
                 fq = [];
@@ -633,11 +653,15 @@ YUI().use(
             if (options.rows) {
                 rows = parseInt(options.rows, 10);
             }
-            source = source + "?" + "wt=json" + "&json.wrf=callback={callback}" + "&fl=" + fl + "&fq=" + fq.join("&fq=") + "&rows=" + rows + "&start=" + start + "&sort=" + sortBy + "%20" + sortDir;
+            qs = "?" + "wt=json" + "&json.wrf=callback={callback}" + "&fl=*" + "&fq=" + fq.join("&fq=") + "&rows=" + rows + "&start=" + start + "&sort=" + sortBy + "%20" + sortDir;
             if (options.q) {
-                source = source + '&q=' + options.q;
+                qs = qs + '&q=' + options.q;
             }
-            Y.log("source " + source);
+
+            Y.log("qs " + qs);
+            source = source + qs;
+
+
             options.container.empty();
             Y.jsonp(source, {
                 on: {
