@@ -2,6 +2,10 @@
   outline-color: #ff9c00;
 }
 
+input:focus {
+  outline-color: #ff9c00;
+}
+
 .simple {
   input[type="submit"] {
     background: #ecdcc8 url(/aco/images/search-icon-2x.png) no-repeat center center;
@@ -88,7 +92,7 @@ body.search .search_holder {
   padding: 20px;
   margin: 15px 0;
   div.fieldset {
-    margin-bottom: 15px;
+   // margin-bottom: 15px;
     border: none;
     padding: 0;
     display: -ms-flexbox;
@@ -144,6 +148,9 @@ body.search .search_holder {
     border-radius: 3px;
     margin-right: 3%;
     width: 97%;
+    &:focus {
+      outline-color: #ff9c00;
+    }
   }
   .add {
     // float: left;
@@ -187,23 +194,21 @@ body.search .search_holder {
   border: 1px solid #DECCBF;
   // width: 120px;
   border-radius: 3px;
-  overflow: hidden;
+  overflow: visible;
   background-color: #f7f5f2;
   background: #f7f5f2 url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
-}
-
-.select-style select {
-  padding: 5px 8px;
-  // width: 130%;
-  border: none;
-  box-shadow: none;
-  background-color: transparent;
-  background-image: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.select-style select:focus {
-  outline: none;
+  select {
+    padding: 5px 8px;
+    // width: 130%;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    &:focus {
+      outline-color: #ff9c00;
+    }
+  }
 }
