@@ -513,7 +513,7 @@ YUI().use(
 
         function onSuccess(response, args) {
             Y.log("Success ");
-            // updateFormElements();
+            updateFormElements();
 
             try {
                 var node = args.container,
