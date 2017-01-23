@@ -384,11 +384,11 @@ YUI().use(
                 rows: rows,
                 sort: sort,
                 q: removeQueryDiacritics(query),
-                provider: removeQueryDiacritics(provider),
-                author: removeQueryDiacritics(author),
-                title: removeQueryDiacritics(title),
-                publisher: removeQueryDiacritics(publisher),
-                pubplace: removeQueryDiacritics(pubplace),
+                provider: removeQueryDiacritics(provider).toLowerCase(),
+                author: removeQueryDiacritics(author).toLowerCase(),
+                title: removeQueryDiacritics(title).toLowerCase(),
+                publisher: removeQueryDiacritics(publisher).toLowerCase(),
+                pubplace: removeQueryDiacritics(pubplace).toLowerCase(),
 
             });
         });
@@ -512,7 +512,7 @@ YUI().use(
         }
 
         function onSuccess(response, args) {
-            Y.log("Success ");
+            Y.log("onSuccess call. ");
             updateFormElements();
 
             try {
@@ -538,24 +538,23 @@ YUI().use(
                     stringToDescribeSearch = "";
                 Y.one('body').removeClass('io-loading');
 
-                Y.log("Success " + aS);
                 if (q) {
                     ADescribeSearch.push(q);
                 }
                 if (tS) {
-                    tS = removeSOLRcharacters(tS)
+                    tS = removeSOLRcharacters(tS);
                     ADescribeSearch.push("Title " + scopeIs + " " + tS);
                 }
                 if (pS) {
-                    pS = removeSOLRcharacters(pS)
+                    pS = removeSOLRcharacters(pS);
                     ADescribeSearch.push(" Provider " + scopeIs + " " + pS);
                 }
                 if (aS) {
-                    aS = removeSOLRcharacters(aS)
+                    aS = removeSOLRcharacters(aS);
                     ADescribeSearch.push(" Author " + scopeIs + " " + aS);
                 }
                 if (pubS) {
-                    pubS = removeSOLRcharacters(pubS)
+                    pubS = removeSOLRcharacters(pubS);
                     ADescribeSearch.push(" Publisher " + scopeIs + " " + pubS);
                 }
                 if (pubplaceS) {
@@ -658,7 +657,7 @@ YUI().use(
                 qs = qs + '&q=' + options.q;
             }
 
-            Y.log("qs " + qs);
+            Y.log("! **** Sending to Solr: " + qs);
             source = source + qs;
 
 
