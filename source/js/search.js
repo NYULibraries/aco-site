@@ -43,6 +43,7 @@ YUI().use(
         }
 
         function removeQueryDiacritics(str) {
+            Y.log(" removeQueryDiacritics not yet processed: " + str);
             var diacriticsMap = {};
             var replacementList = [{
                 base: ' ',
@@ -347,7 +348,7 @@ YUI().use(
             }
 
             function removeCombinedDiacritics(str) {
-                return str.replace(/\u02BB/g, '').replace(/[\u0300-\u036f]/g, '');
+                return str.replace(/\u02BB/g, '').replace(/[\u0300-\u036f]/g, '').replace(/[\,|\[|]|\.|}|\{]/g, '');
             }
 
             function removeDiacritics(str) {
@@ -355,6 +356,7 @@ YUI().use(
                     return diacriticsMap[c] || c;
                 });
             }
+            Y.log(" removeQueryDiacritics processed: " + removeCombinedDiacritics(removeDiacritics(str)));
             return removeCombinedDiacritics(removeDiacritics(str));
         }
         router.route(router.getPath(), function(req) {
