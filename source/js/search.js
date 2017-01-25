@@ -368,6 +368,7 @@ YUI().use(
                 author = (req.query.author) ? req.query.author : '',
                 title = (req.query.title) ? req.query.title : '',
                 publisher = (req.query.publisher) ? req.query.publisher : '',
+                subject = (req.query.subject) ? req.query.subject : '',
                 pubplace = (req.query.pubplace) ? req.query.pubplace : '',
                 start = 0;
 
@@ -388,6 +389,7 @@ YUI().use(
                 author: removeQueryDiacritics(author).toLowerCase(),
                 title: removeQueryDiacritics(title).toLowerCase(),
                 publisher: removeQueryDiacritics(publisher).toLowerCase(),
+                subject: removeQueryDiacritics(subject).toLowerCase(),
                 pubplace: removeQueryDiacritics(pubplace).toLowerCase(),
 
             });
@@ -532,6 +534,7 @@ YUI().use(
                     tS = QueryString.title,
                     aS = QueryString.author,
                     pubS = QueryString.publisher,
+                    subS = QueryString.subject,
                     pubplaceS = QueryString.pubplace,
                     appRoot = Y.one('body').getAttribute('data-app'),
                     ADescribeSearch = [],
@@ -557,7 +560,12 @@ YUI().use(
                     pubS = removeSOLRcharacters(pubS);
                     ADescribeSearch.push(" Publisher " + scopeIs + " " + pubS);
                 }
+                if (subS) {
+                    subS = removeSOLRcharacters(subS);
+                    ADescribeSearch.push(" Subject " + scopeIs + " " + subS);
+                }
                 if (pubplaceS) {
+                    pubplaceS = removeSOLRcharacters(pubplaceS);
                     ADescribeSearch.push(" Place of Publication " + scopeIs + " " + pubplaceS);
                 }
                 stringToDescribeSearch = ADescribeSearch.join((" and "));
@@ -637,10 +645,13 @@ YUI().use(
                 fq.push('(ss_spublocation:' + options.pubplace + ' OR ' + 'ss_ar_publication_location:' + options.pubplace + ')');
             }
             if (options.publisher) {
-                fq.push('(sm_publisher:' + options.publisher + ' OR ' + 'sm_ar_publisher:' + options.publisher + ')');
+                fq.push('(sm_spublisher:' + options.publisher + ' OR ' + 'sm_ar_publisher:' + options.publisher + ')');
             }
             if (options.provider) {
-                fq.push('(sm_provider_label:' + options.provider + ' OR ' + 'sm_ar_provider_label:' + options.provider + ')');
+                fq.push('(sm_sprovider:' + options.provider + ' OR ' + 'sm_ar_provider_label:' + options.provider + ')');
+            }
+            if (options.subject) {
+                fq.push('(sm_ssubject:' + options.subject + ')');
             }
 
             if (options.page) {
@@ -657,7 +668,7 @@ YUI().use(
                 qs = qs + '&q=' + options.q;
             }
 
-            Y.log("! **** Sending to Solr: " + qs);
+            Y.log("**** Sending to Solr: " + qs);
             source = source + qs;
 
 
