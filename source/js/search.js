@@ -650,7 +650,7 @@ YUI().use(
                 fq.push('(sm_spublisher:' + options.publisher + ' OR ' + 'sm_ar_publisher:' + options.publisher + ')');
             }
             if (options.provider) {
-                fq.push('(sm_sprovider:' + options.provider + ' OR ' + 'sm_ar_provider_label:' + options.provider + ')');
+                fq.push('(sm_sprovider_label:' + options.provider + ' OR ' + 'sm_ar_provider_label:' + options.provider + ')');
             }
             if (options.subject) {
                 fq.push('(sm_ssubject:' + options.subject + ')');
