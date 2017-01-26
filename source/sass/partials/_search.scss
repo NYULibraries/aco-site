@@ -92,51 +92,56 @@ body.search .search_holder {
   padding: 20px;
   margin: 15px 0;
   div.fieldset {
-   // margin-bottom: 15px;
+    // margin-bottom: 15px;
     border: none;
     padding: 0;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    -webkit-flex-flow: row nowrap;
-    flex-flow: row nowrap;
-    -ms-flex-wrap: nowrap;
+    // only mobile 
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -ms-flex-wrap: wrap;
     justify-content: space-between;
     div {
       flex: 1 0 auto;
       width: auto;
+      &.select-hold {
+        flex: 0 0 49%;
+      }
       &.select-style {
-        margin-right: 3%;
-        width: 97%;
+        width: 100%;
         select {
           width: 100%;
         }
       }
       &.input-hold {
-        //text-align: right;
-        min-width: 300px;
+        margin-top: 5px;
       }
       &.submit-hold {
-        //text-align: right;
         flex: 0 0 auto;
+        margin-top: 5px;
       }
-      &.remove-filter {
-        //text-align: right;
-        flex: 0 0 auto;
-        input {
-          padding: 5px 10px;
-          border: none;
-          // border-radius: 3px;
-          background-color: transparent;
-          // background: transparent url(/aco/images/search-icon-2x.png) no-repeat center center;
-          background-size: auto 80%;
-          //  text-indent: -1000em;
-          border: none;
-          width: 50px;
-          color: gray;
-          text-align: left;
-          &:hover {
-            color: red;
+      @media (min-width: $grid-float-breakpoint) {
+        // Desktop display 
+        -webkit-flex-flow: row nowrap;
+        flex-flow: row nowrap;
+        -ms-flex-wrap: nowrap;
+        &.input-hold {
+          min-width: 200px;
+          margin-top: 0px;
+        }
+        &.submit-hold {
+          margin-top: 0px;
+        }
+        &.select-hold {
+          flex: 1 0 auto;
+        }
+        &.select-style {
+          margin-right: 3%;
+          width: 97%;
+          select {
+            width: 100%;
           }
         }
       }
@@ -146,8 +151,9 @@ body.search .search_holder {
     padding: 5px 10px;
     border: 1px solid #DECCBF;
     border-radius: 3px;
-    margin-right: 3%;
+    // margin-right: 3%;
     width: 97%;
+    box-shadow: inset 1px 1px 1px rgba(0, 0, 0, .1);
     &:focus {
       outline-color: #ff9c00;
     }
@@ -159,15 +165,18 @@ body.search .search_holder {
     }
   }
   .submit-search {
-    //margin-left: 50px;
     padding: 5px 25px;
     border: 1px solid #DECCBF;
     border-radius: 3px;
-    background-color: #DECCBF;
-    background: transparent url(/aco/images/search-icon-2x.png) no-repeat center center;
+    background: #DECCBF url(/aco/images/search-icon-2x.png) no-repeat center center;
     background-size: auto 80%;
     text-indent: -1000em;
     border: 1px solid #DECCBF;
+    //box-shadow: 1px 1px 2px rgba(#222222, .3);
+  }
+  .submit-search:hover {
+    border: 1px solid darken(#DECCBF, 6%);
+    box-shadow: inset 0px 0px 3px darken(#DECCBF, 6%);
   }
   .addafilter-link {
     //height: auto;
@@ -196,10 +205,9 @@ body.search .search_holder {
   border-radius: 3px;
   overflow: visible;
   background-color: #f7f5f2;
-  background: #f7f5f2 url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
+  background: #f7f5f2 url("/aco/images/arrowdown.gif") no-repeat 95% 50%;
   select {
     padding: 5px 8px;
-    // width: 130%;
     border: none;
     box-shadow: none;
     background-color: transparent;
