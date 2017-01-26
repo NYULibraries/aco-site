@@ -19,7 +19,7 @@
     "bodyClass": "browse",
     "content": {
       "items": {
-        "source": "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/stage/select",
+        "source": "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select",
         "rows": 10,
         "fl": [
           "ss_representative_image", 
