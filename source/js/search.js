@@ -43,7 +43,7 @@ YUI().use(
         }
 
         function removeQueryDiacritics(str) {
-            Y.log(" removeQueryDiacritics not yet processed: " + str);
+            //Y.log(" removeQueryDiacritics not yet processed: " + str);
             var diacriticsMap = {};
             var replacementList = [{
                 base: ' ',
@@ -356,7 +356,7 @@ YUI().use(
                     return diacriticsMap[c] || c;
                 });
             }
-            Y.log(" removeQueryDiacritics processed: " + removeCombinedDiacritics(removeDiacritics(str)));
+           // Y.log(" removeQueryDiacritics processed: " + removeCombinedDiacritics(removeDiacritics(str)));
             return removeCombinedDiacritics(removeDiacritics(str));
         }
         router.route(router.getPath(), function(req) {
@@ -631,11 +631,11 @@ YUI().use(
                     }
                 }
             }
-            for (var w in options) {
-                if (options.hasOwnProperty(w)) {
-                    Y.log("options[w]: " + w + "  " + options[w]);
-                }
-            }
+            // for (var w in options) {
+            //     if (options.hasOwnProperty(w)) {
+            //         Y.log("options[w]: " + w + "  " + options[w]);
+            //     }
+            // }
 
             if (options.title) {
                 fq.push('(iass_longlabel:' + options.title + ' OR ' + 'iass_ar_longlabel:' + options.title + ')');
