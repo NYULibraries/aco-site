@@ -59,7 +59,7 @@
         }
         .thumbs {
           float: right;
-          width: 22%;
+          width: 20%;
           text-align: right;
         }
       }
@@ -68,19 +68,23 @@
         margin-left: 0;
         padding: 20px 0px 20px 0;
         float: right;
-        width: 35%;
+        width: 37%;
         border-top: none;
+        line-height: 1.9;
       }
     }
   }
 }
 
 [lang="ar"] .md_subjects {
-  line-height: 1.25;
   font-family: $font-family-serif !important;
-  .md_label {
-    line-height: 1.7;
-  }
+  line-height: 1.25;
+  margin: .65rem 0;
+}
+
+[lang="en"] .md_subjects {
+  line-height: 1.25;
+  margin: .15rem 0;
 }
 
 .md_partner {
@@ -90,26 +94,38 @@
 }
 
 .md_title {
-  font-weight: bold;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  margin-bottom: 5px;
+  a:link, a:visited {
+    font-weight: normal;
+    font-size: 1.3rem;
+  }
 }
 
 .md_label {
   font-weight: bold !important;
 }
 
-.md_subject::after {
-  content: ", ";
-}
-
-.md_subject:last-child::after {
-  content: "";
+span.one_subject {
+  &::after {
+    content: ", ";
+    margin-right: .2em;
+  }
+  &:last-child::after {
+    content: "";
+    margin-right: 0em;
+  }
 }
 
 // for multiple authors
-.md_author {
-  display: block;
-}
-
-.md_author:nth-child(2) {
-  display: inline-block;
+span.one_author {
+  &::after {
+    content: ", ";
+    margin-right: .2em;
+  }
+  &:last-child::after {
+    content: "";
+    margin-right: 0em;
+  }
 }

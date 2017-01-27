@@ -6,8 +6,8 @@
         <a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1"><img class="img-responsive" src="{{ss_representative_image}}" alt="" title="{{ss_title_long}}"/></a>
       </div>
       <div lang="en">
-        <div class="md_title"><span class="md_label">Title:</span> <a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">{{ss_title_long}}</a></div>                
-        <div class="md_authors"><span class="md_label">Author:</span> {{#each sm_author}}<a class="md_author" href='/aco/search/?author="{{this}}"'>{{this}}</a>{{/each}}
+        <div class="md_title"><a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">{{ss_title_long}}</a></div>                
+        <div class="md_authors"><span class="md_label">Author:</span> {{#each sm_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author="{{this}}"'>{{this}}</a></span>{{/each}}
         </div>                        
         <div><span class="md_label">Publisher:</span> {{#each sm_publisher}}<a  class="md_publisher" href='/aco/search/?publisher="{{this}}"'><span>{{this}}</span></a>{{/each}}</div>
         <div><span class="md_label">Place of Publication:</span> <a  class="md_pubplace" href='/aco/search/?pubplace="{{ss_publocation}}"'>{{ss_publocation}}</a></div>                        
@@ -16,8 +16,8 @@
         <div class="md_subjects">
           <span class="md_label">Subject:</span>
           {{#each zm_subject}}
-            {{#json this}}
-              <a class="md_subject" href="{{../../../app.appRoot}}/subjects/{{tid}}">{{name}}</a>
+            {{#json this}}<span class="one_subject">
+              <a class="md_subject" href="{{../../../app.appRoot}}/subjects/{{tid}}">{{name}}</a></span>
             {{/json}}
           {{/each}}        
         </div>
@@ -32,13 +32,12 @@
       </div>
     </div>
     <div dir="rtl" lang="ar">
-      <div class="md_title" dir="rtl" lang="ar">
-        <span class="md_label">العنوان:</span>  
+      <div class="md_title" dir="rtl" lang="ar"> 
         <span><a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1?lang=ar">{{ss_ar_title_long}}</a></span>
       </div>
       <div class="md_authors">
         <span class="md_label">الكاتب:</span> 
-        {{#each sm_ar_author}}<a class="md_author" href='/aco/search/?author="{{this}}"'><span class="md_author">{{this}}</span></a>{{/each}}
+        {{#each sm_ar_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author="{{this}}"'>{{this}}</a></span>{{/each}}
       </div>
       <div class="md_publisher"><span class="md_label">الناشر:</span>  {{#each sm_ar_publisher}}<a  class="md_publisher" href='/aco/search/?publisher="{{this}}"'><span>{{this}}</span></a>{{/each}}</div>
       <div class="md_publocation">
@@ -47,8 +46,8 @@
       <div class="md_pubdate"><span class="md_label">تاريخ النشر:</span> <span dir="ltr" lang="en" >{{ss_pubdate}}</span></div>                        
       <div class="md_subjects" ><span class="md_label">الموضوع:</span> 
         {{#each zm_subject}}
-          {{#json this}}
-            <a class="md_subject" href="{{../../../app.appRoot}}/subjects/{{tid}}">{{name}}</a>
+          {{#json this}}<span class="one_subject">
+            <a class="md_subject" href="{{../../../app.appRoot}}/subjects/{{tid}}">{{name}}</a></span>
           {{/json}}
         {{/each}}  
       </div>
