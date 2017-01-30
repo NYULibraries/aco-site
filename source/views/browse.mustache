@@ -6,20 +6,29 @@
 <body data-app="{{appUrl}}" data-appRoot="{{appRoot}}" class="{{bodyClass}}">
     {{> header }}
     <main class="main container-fluid" role="main">
-        <header>
+        <header class="results-header">
             {{#title}}
             <h2 class="page-title" lang="{{language_code}}" dir="{{language_dir}}"><span>{{{html}}}</span></h2> {{/title}}
-            <select id="browse-select">
-                <option data-sort-dir="desc" value="ds_created">Recently added / وضِعت مؤخراً</option>
-                <option data-sort-dir="asc" value="ss_longlabel">Title in English / العنوان بالانجليزية</option>
-                <option data-sort-dir="asc" value="ss_ar_title">Title in Arabic / العنوان بالعربية</option>
-                <option data-sort-dir="asc" value="ss_sauthor">Author in English / الكاتب بالانجليزية</option>
-                <option data-sort-dir="asc" value="ss_ar_sauthor">Author in Arabic / الكاتب بالعربية</option>
-                <option data-sort-dir="asc" value="ss_ssubject">Subject in English / الموضوع بالانجليزية</option>
-                <option data-sort-dir="asc" value="ss_publocation">Place in English / بلد النشر بالانجليزية</option>
-                <option data-sort-dir="asc" value="ss_ar_publocation">Place in Arabic / بلد النشر بالعربية</option>
-                <option data-sort-dir="asc" value="iass_pubyear">Date of Publication</option>
-            </select>
+            <div class="select-style sort-select">
+                <select id="browse-select">
+                    <option data-sort-dir="desc" value="ds_created">Recently added / وضِعت مؤخراً</option>
+                    <option data-sort-dir="asc" value="ss_longlabel">Title in English / العنوان بالانجليزية</option>
+                    <option data-sort-dir="asc" value="ss_ar_title">Title in Arabic / العنوان بالعربية</option>
+                    <option data-sort-dir="asc" value="ss_sauthor">Author in English / الكاتب بالانجليزية</option>
+                    <option data-sort-dir="asc" value="ss_ar_sauthor">Author in Arabic / الكاتب بالعربية</option>
+                    <option data-sort-dir="asc" value="ss_ssubject">Subject in English / الموضوع بالانجليزية</option>
+                    <option data-sort-dir="asc" value="ss_publocation">Place in English / بلد النشر بالانجليزية</option>
+                    <option data-sort-dir="asc" value="ss_ar_publocation">Place in Arabic / بلد النشر بالعربية</option>
+                    <option data-sort-dir="asc" value="iass_pubyear">Date of Publication</option>
+                </select>
+            </div>
+             <div class="select-style rpp-select">
+                <select>
+                    <option value="10" selected>10 per page</option>
+                    <option value="20">20 per page</option>
+                    <option value="40">40</option>
+                </select>
+            </div>
             <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
         </header>
         {{#content}} {{#items}}

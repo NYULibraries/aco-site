@@ -86,11 +86,25 @@ body.search .search_holder {
   display: none;
 }
 
+input:focus,
+select:focus,
+a:focus {
+  outline-color: #ff9c00;
+}
+
 [role="search"].advanced {
   border: 1px solid #DECCBF;
   background-color: #efe5d9;
   padding: 20px;
   margin: 15px 0;
+  @media (max-width: 500px) {
+    background-color: transparent;
+    padding: 0 0 20px 0;
+    border: none;
+    box-shadow: inset 0px -1px 0px #DECCBF;
+    border-bottom: 1px solid white;
+    margin: 15px 0 40px;
+  }
   div.fieldset {
     // margin-bottom: 15px;
     border: none;
@@ -113,6 +127,12 @@ body.search .search_holder {
         width: 100%;
         select {
           width: 100%;
+        }
+      }
+      @media (max-width: 500px) {
+        &.select-hold {
+          flex: 1 1 80%;
+          margin-bottom: 10px;
         }
       }
       &.input-hold {
@@ -140,9 +160,6 @@ body.search .search_holder {
         &.select-style {
           margin-right: 3%;
           width: 97%;
-          select {
-            width: 100%;
-          }
         }
       }
     }
@@ -194,6 +211,26 @@ body.search .search_holder {
   }
 }
 
+.results-header {
+  .sort-select {
+    min-width: 15rem;
+  }
+  .rpp-select {
+    min-width: 7rem;
+    margin-right: 10px;
+  }
+  .select-style {
+    float: right;
+    select {
+      font-size: .75em;
+      @media (min-width: $grid-float-breakpoint) {
+        padding-bottom: 6px;
+        margin: 0;
+      }
+    }
+  }
+}
+
 
 /* http://codepen.io/gnclmorais/pen/cHkqt/ */
 
@@ -207,6 +244,7 @@ body.search .search_holder {
   background-color: #f7f5f2;
   background: #f7f5f2 url("/aco/images/arrowdown.gif") no-repeat 95% 50%;
   select {
+    width: 100%;
     padding: 5px 8px;
     border: none;
     box-shadow: none;

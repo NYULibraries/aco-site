@@ -79,7 +79,8 @@
     line-height: 1.25;
     margin: .65rem 0;
   }
-  [lang="en"] .md_subjects, [lang="en"] .md_authors {
+  [lang="en"] .md_subjects,
+  [lang="en"] .md_authors {
     line-height: 1.25;
     margin: .15rem 0;
   }
@@ -94,7 +95,7 @@
     margin-bottom: 5px;
     a:link,
     a:visited {
-      // font-weight: normal;
+      font-weight: normal;
       font-size: 1.3rem;
     }
   }
