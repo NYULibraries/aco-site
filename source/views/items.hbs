@@ -9,10 +9,10 @@
         <div class="md_title"><a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">{{ss_title_long}}</a></div>                
         <div class="md_authors"><span class="md_label">Author:</span> {{#each sm_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author="{{this}}"'>{{this}}</a></span>{{/each}}
         </div>                        
-        <div><span class="md_label">Publisher:</span> {{#each sm_publisher}}<a  class="md_publisher" href='/aco/search/?publisher="{{this}}"'><span>{{this}}</span></a>{{/each}}</div>
-        <div><span class="md_label">Place of Publication:</span> <a  class="md_pubplace" href='/aco/search/?pubplace="{{ss_publocation}}"'>{{ss_publocation}}</a></div>                        
-        <div><span class="md_label">Date of Publication:</span> {{ss_pubdate}}</div>  
-        <div><span class="md_label">Sort Date of Publication:</span> {{iass_pubyear}}</div>                             
+        <div class="md_publisher"><span class="md_label">Publisher:</span> {{#each sm_publisher}}<a  class="md_publisher" href='/aco/search/?publisher="{{this}}"'><span>{{this}}</span></a>{{/each}}</div>
+        <div class="md_pubplace"><span class="md_label">Place of Publication:</span> <a  class="md_pubplace" href='/aco/search/?pubplace="{{ss_publocation}}"'>{{ss_publocation}}</a></div>                        
+        <div class="md_pubdate"><span class="md_label">Date of Publication:</span> {{ss_pubdate}}</div>  
+        <div class="md_pubdate_sort"><span class="md_label">Sort Date of Publication:</span> {{iass_pubyear}}</div>                             
         <div class="md_subjects">
           <span class="md_label">Subject:</span>
           {{#each zm_subject}}
