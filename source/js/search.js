@@ -28,15 +28,8 @@ YUI().use(
         Y.Object.each(HandlebarsHelpers(), function(helper, key) { Y.Handlebars.registerHelper(key, helper); });
 
         function getRoute() {
-
-            var pageQueryString = QueryString.page,
-                sortQueryString = QueryString.sort,
-                qQueryString = QueryString.q,
-                q = (qQueryString) ? qQueryString : '',
-                route = router.getPath() + '?';
-
+            var route = router.getPath() + '?';
             var newString = Y.QueryString.stringify(QueryString);
-
             route += newString;
             Y.log("getRoute: route  " + route);
             return route;
@@ -362,8 +355,8 @@ YUI().use(
         router.route(router.getPath(), function(req) {
             var node = Y.one('[data-name="items"]'),
                 data = node.getData(),
-                rows = (req.query.rows) ? req.query.rows : ((data.rows) ? data.rows : 10),
-                sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : Y.one('.sort-select').get('value')),
+                rpp = (req.query.rpp) ? req.query.rpp : ((data.rpp) ? data.rpp : Y.one('#rpp-select-el').get('value')),
+                sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : Y.one('#sort-select-el').get('value')),
                 page = (req.query.page) ? parseInt(req.query.page, 10) : 0,
                 query = (req.query.q) ? req.query.q : '',
                 provider = (req.query.provider) ? req.query.provider : '',
@@ -377,14 +370,14 @@ YUI().use(
             if (page <= 1) {
                 start = 0;
             } else {
-                start = (page * rows) - rows;
+                start = (page * rpp) - rpp;
             }
 
             initRequest({
                 container: node,
                 start: start,
                 page: page,
-                rows: rows,
+                rpp: rpp,
                 sort: sort,
                 q: removeQueryDiacritics(query),
                 provider: removeQueryDiacritics(provider).toLowerCase(),
@@ -397,14 +390,24 @@ YUI().use(
             });
         });
 
-        function onSelectChange() {
+        function onSelectChangeSort() {
 
-            var sortData = Y.one('.sort-select :checked'),
+            var sortData = Y.one('#sort-select-el :checked'),
                 sortBy = sortData.get('value'),
                 sortDir = sortData.getAttribute("data-sort-dir"),
                 sortString = sortBy + "%20" + sortDir;
             QueryString = Y.QueryString.parse(window.location.search.substring(1));
             QueryString.sort = sortString;
+            router.replace(getRoute());
+        }
+
+        function onSelectChangeRpp() {
+            Y.log(" onSelectChangeRpp ");
+            var rppData = Y.one('#rpp-select-el :checked'),
+                rppNum = rppData.get('value');
+            QueryString = Y.QueryString.parse(window.location.search.substring(1));
+            QueryString.rpp = rppNum;
+            Y.log(" QueryString.rpp " + QueryString.rpp);
             router.replace(getRoute());
         }
 
@@ -441,7 +444,7 @@ YUI().use(
                 re2 = /(^["])(.*)(["]$)/i,
                 found;
             for (var x in QueryString) {
-                if (QueryString.hasOwnProperty(x) && x !== "sort" && x !== "page") {
+                if (QueryString.hasOwnProperty(x) && x !== "sort" && x !== "page" && x !== "rpp") {
                     var thisValueBox = Y.one('.group' + i + ' .q' + i);
                     if (thisValueBox) {
                         Y.log("QueryString[x] " + QueryString[x]);
@@ -612,14 +615,14 @@ YUI().use(
         function initRequest(options) {
             var start = 0,
                 page = 0,
-                sortData = Y.one('#browse-select :checked'),
+                sortData = Y.one('#sort-select-el :checked'),
                 sortBy = sortData.get('value'),
                 sortDir = sortData.getAttribute("data-sort-dir"),
                 data = options.container.getData(),
                 source = Y.one('.widget.items').getAttribute('data-source'),
                 qs = "",
                 fl = (data.fl) ? data.fl : '*',
-                rows = (data.rows) ? data.rows : 10,
+                rpp = (data.rpp) ? data.rpp : 10,
                 fq = [];
             Y.one('body').addClass('io-loading');
             /** find all data-fq and push the value into fq Array*/
@@ -641,7 +644,7 @@ YUI().use(
                 fq.push('(iass_longlabel:' + options.title + ' OR ' + 'iass_ar_longlabel:' + options.title + ')');
             }
             if (options.author) {
-                fq.push('(iass_author:' + options.author + ' OR ' + 'iass_ar_author:' + options.author + ')');
+                fq.push('(sm_sauthor:' + options.author + ' OR ' + 'sm_sauthor:' + options.author + ')');
             }
             if (options.pubplace) {
                 fq.push('(ss_spublocation:' + options.pubplace + ' OR ' + 'ss_ar_publication_location:' + options.pubplace + ')');
@@ -662,10 +665,10 @@ YUI().use(
             if (options.start) {
                 start = parseInt(options.start, 10);
             }
-            if (options.rows) {
-                rows = parseInt(options.rows, 10);
+            if (options.rpp) {
+                rpp = parseInt(options.rpp, 10);
             }
-            qs = "?" + "wt=json" + "&json.wrf=callback={callback}" + "&fl=*" + "&fq=" + fq.join("&fq=") + "&rows=" + rows + "&start=" + start + "&sort=" + sortBy + "%20" + sortDir;
+            qs = "?" + "wt=json" + "&json.wrf=callback={callback}" + "&fl=*" + "&fq=" + fq.join("&fq=") + "&rows=" + rpp + "&start=" + start + "&sort=" + sortBy + "%20" + sortDir;
             if (options.q) {
                 qs = qs + '&q=' + options.q;
             }
@@ -687,7 +690,8 @@ YUI().use(
         }
         router.replace(getRoute());
         // Sort
-        Y.one('body').delegate('change', onSelectChange, '#browse-select');
+        Y.one('body').delegate('change', onSelectChangeSort, '#sort-select-el');
+        Y.one('body').delegate('change', onSelectChangeRpp, '#rpp-select-el');
         /**
          * add fx plugin to module body
          */

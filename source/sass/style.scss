@@ -118,18 +118,7 @@ main {
       font-size: 2rem;
     }
   }
-  select#browse-select {
-    margin: .5rem 0;
-    font-size: .75em;
-    float: right;
-    @media (min-width: $grid-float-breakpoint) {
-      padding-bottom: 6px;
-      margin: 0;
-    }
-    @media (max-width: 400px) {
-      float: none;
-    }
-  }
+
   .resultsnum {
     font-size: .8em;
     color: #666;
