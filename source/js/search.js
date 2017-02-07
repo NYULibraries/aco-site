@@ -341,7 +341,7 @@ YUI().use(
             }
 
             function removeCombinedDiacritics(str) {
-                return str.replace(/\u02BB/g, '').replace(/[\u0300-\u036f]/g, '').replace(/[\,|\[|]|\.|}|\{]/g, '');
+                return str.replace(/\u02BB/g, '').replace(/[\u0300-\u036f]/g, '').replace(/[\,\.\[\]\{\}|]/g, '');
             }
 
             function removeDiacritics(str) {
