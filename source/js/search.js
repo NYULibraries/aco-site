@@ -349,14 +349,14 @@ YUI().use(
                     return diacriticsMap[c] || c;
                 });
             }
-           // Y.log(" removeQueryDiacritics processed: " + removeCombinedDiacritics(removeDiacritics(str)));
+            // Y.log(" removeQueryDiacritics processed: " + removeCombinedDiacritics(removeDiacritics(str)));
             return removeCombinedDiacritics(removeDiacritics(str));
         }
         router.route(router.getPath(), function(req) {
             var node = Y.one('[data-name="items"]'),
                 data = node.getData(),
-                rpp = (req.query.rpp) ? req.query.rpp : ((data.rpp) ? data.rpp : Y.one('#rpp-select-el').get('value')),
-                sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : Y.one('#sort-select-el').get('value')),
+                rpp = (req.query.rpp) ? req.query.rpp : ((data.rpp) ? data.rpp : "10"),
+                sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : "ds_created asc"),
                 page = (req.query.page) ? parseInt(req.query.page, 10) : 0,
                 query = (req.query.q) ? req.query.q : '',
                 provider = (req.query.provider) ? req.query.provider : '',
@@ -372,22 +372,28 @@ YUI().use(
             } else {
                 start = (page * rpp) - rpp;
             }
+            Y.log("good morning, query " + query);
+            if (query) {
+                initRequest({
+                    container: node,
+                    start: start,
+                    page: page,
+                    rpp: rpp,
+                    sort: sort,
+                    q: removeQueryDiacritics(query),
+                    provider: removeQueryDiacritics(provider).toLowerCase(),
+                    author: removeQueryDiacritics(author).toLowerCase(),
+                    title: removeQueryDiacritics(title).toLowerCase(),
+                    publisher: removeQueryDiacritics(publisher).toLowerCase(),
+                    subject: removeQueryDiacritics(subject).toLowerCase(),
+                    pubplace: removeQueryDiacritics(pubplace).toLowerCase(),
 
-            initRequest({
-                container: node,
-                start: start,
-                page: page,
-                rpp: rpp,
-                sort: sort,
-                q: removeQueryDiacritics(query),
-                provider: removeQueryDiacritics(provider).toLowerCase(),
-                author: removeQueryDiacritics(author).toLowerCase(),
-                title: removeQueryDiacritics(title).toLowerCase(),
-                publisher: removeQueryDiacritics(publisher).toLowerCase(),
-                subject: removeQueryDiacritics(subject).toLowerCase(),
-                pubplace: removeQueryDiacritics(pubplace).toLowerCase(),
-
-            });
+                });
+            } else {
+                Y.log("where query");
+                node.append(noresultsTemplate());
+                Y.one('body').removeClass('io-loading');
+            }
         });
 
         function onSelectChangeSort() {
@@ -520,8 +526,6 @@ YUI().use(
 
         function onSuccess(response, args) {
             Y.log("onSuccess call. ");
-            updateFormElements();
-
             try {
                 var node = args.container,
                     resultsnum = Y.one('.resultsnum'),
@@ -579,12 +583,6 @@ YUI().use(
                 }
                 Y.log("numfound " + numfound);
                 if (numfound > 0) {
-                    // first transaction; enable paginator
-                    if (transactions.length < 1) {
-                        initPaginator(page, numfound, docslength);
-                    }
-                    // store called to avoid making the request multiple times
-                    transactions.push(this.url);
                     node.setAttribute("data-numFound", numfound);
                     node.setAttribute("data-start", start);
                     node.setAttribute("data-docsLength", docslength);
@@ -598,6 +596,15 @@ YUI().use(
                             app: { appRoot: appRoot }
                         })
                     );
+                    // first transaction; enable paginator, update the new form elements, delegate events to the new form elements
+                    if (transactions.length < 1) {
+                        initPaginator(page, numfound, docslength);
+                        updateFormElements();
+                        Y.one('body').delegate('change', onSelectChangeSort, '#sort-select-el');
+                        Y.one('body').delegate('change', onSelectChangeRpp, '#rpp-select-el');
+                    }
+                    // store called to avoid making the request multiple times
+                    transactions.push(this.url);
                     Y.one('body').removeClass('items-no-results');
                     args.container.setAttribute('data-requesterror', 0);
                 }
@@ -613,16 +620,24 @@ YUI().use(
         }
 
         function initRequest(options) {
+
+            for (var w in options) {
+                if (options.hasOwnProperty(w)) {
+                    Y.log("options[w]: " + w + "  " + options[w]);
+                }
+            }
+
             var start = 0,
                 page = 0,
-                sortData = Y.one('#sort-select-el :checked'),
-                sortBy = sortData.get('value'),
-                sortDir = sortData.getAttribute("data-sort-dir"),
+                // sortData = Y.one('#sort-select-el :checked'),
+                sortBy = options['sort'],
+                //sortDir = sortData.getAttribute("data-sort-dir"),
+                // sortDir = (options['sort']) ? "%20" + options['sort'] : "%20" + 'asc',
                 data = options.container.getData(),
                 source = Y.one('.widget.items').getAttribute('data-source'),
                 qs = "",
                 fl = (data.fl) ? data.fl : '*',
-                rpp = (data.rpp) ? data.rpp : 10,
+                rpp = options['rpp'],
                 fq = [];
             Y.one('body').addClass('io-loading');
             /** find all data-fq and push the value into fq Array*/
@@ -668,7 +683,7 @@ YUI().use(
             if (options.rpp) {
                 rpp = parseInt(options.rpp, 10);
             }
-            qs = "?" + "wt=json" + "&json.wrf=callback={callback}" + "&fl=*" + "&fq=" + fq.join("&fq=") + "&rows=" + rpp + "&start=" + start + "&sort=" + sortBy + "%20" + sortDir;
+            qs = "?" + "wt=json" + "&json.wrf=callback={callback}" + "&fl=*" + "&fq=" + fq.join("&fq=") + "&rows=" + rpp + "&start=" + start + "&sort=" + sortBy;
             if (options.q) {
                 qs = qs + '&q=' + options.q;
             }
@@ -689,9 +704,7 @@ YUI().use(
             });
         }
         router.replace(getRoute());
-        // Sort
-        Y.one('body').delegate('change', onSelectChangeSort, '#sort-select-el');
-        Y.one('body').delegate('change', onSelectChangeRpp, '#rpp-select-el');
+
         /**
          * add fx plugin to module body
          */

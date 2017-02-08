@@ -1,3 +1,27 @@
+      <header class="results-header">
+       <div class="select-style sort-select">
+                <select id="sort-select-el">
+                    <option data-sort-dir="desc" value="score" selected>Relevance/ فرز حسب</option>
+                    <option data-sort-dir="asc" value="ss_longlabel">Title in English / العنوان بالانجليزية</option>
+                    <option data-sort-dir="asc" value="ss_ar_title">Title in Arabic / العنوان بالعربية</option>
+                    <option data-sort-dir="asc" value="ss_sauthor">Author in English / االمؤلف بالانجليزية</option>
+                    <option data-sort-dir="asc" value="ss_ar_sauthor">Author in Arabic / المؤلف بالعربية</option>
+                    <option data-sort-dir="asc" value="ss_ssubject">Subject in English / الموضوع بالانجليزية</option>
+                    <option data-sort-dir="asc" value="ss_publocation">Place in English / بلد النشر بالانجليزية</option>
+                    <option data-sort-dir="asc" value="iass_pubyear">Date of Publication</option>
+                    <option data-sort-dir="asc" value="ss_ar_publocation">Place in Arabic / بلد النشر بالعربية</option>
+                    <option data-sort-dir="desc" value="ds_created">Recently added / وضِعت مؤخراً</option>
+                </select>
+            </div>
+            <div class="select-style rpp-select">
+                <select id="rpp-select-el">
+                    <option value="10" selected>10 per page</option>
+                    <option value="20">20 per page</option>
+                    <option value="40">40 per page</option>
+                </select>
+            </div>
+</header>
+
 <div class="item-list">
   {{#items}}
   <div class="item">
