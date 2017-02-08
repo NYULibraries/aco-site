@@ -7,6 +7,9 @@ YUI().use(
             itemsTemplate = Y.Handlebars.compile(itemsTemplateSource),
             nrSource = Y.one('#noresults').getHTML(),
             noresultsTemplate = Y.Handlebars.compile(nrSource),
+            slSource = Y.one('#searchlanding').getHTML(),
+
+            searchlandingTemplate = Y.Handlebars.compile(slSource),
             router = new Y.Router(),
             transactions = [],
             scopeIs = "contains",
@@ -372,7 +375,6 @@ YUI().use(
             } else {
                 start = (page * rpp) - rpp;
             }
-            Y.log("good morning, query " + query);
             if (query) {
                 initRequest({
                     container: node,
@@ -390,8 +392,8 @@ YUI().use(
 
                 });
             } else {
-                Y.log("where query");
-                node.append(noresultsTemplate());
+                Y.log("No query - let's consider this the landing page");
+                node.append(searchlandingTemplate());
                 Y.one('body').removeClass('io-loading');
             }
         });
@@ -602,6 +604,44 @@ YUI().use(
                         updateFormElements();
                         Y.one('body').delegate('change', onSelectChangeSort, '#sort-select-el');
                         Y.one('body').delegate('change', onSelectChangeRpp, '#rpp-select-el');
+
+                        ///////////////
+
+                        /**
+                         * add fx plugin to module body
+                         */
+                        var content = Y.one('.about-info-content').plug(Y.Plugin.NodeFX, {
+                            from: {
+                                height: function(node) {
+                                    return node.get('scrollHeight');
+                                }
+                            },
+                            to: { height: 0 },
+                            easing: Y.Easing.easeBoth,
+                            on: {
+                                start: function() {
+                                    var aboutlink = Y.all('.aboutinfo-link');
+                                    aboutlink.removeClass('aboutinfo-link-available');
+                                    aboutlink.toggleClass('open');
+                                },
+                                end: function() {
+                                    var aboutlink = Y.all('.aboutinfo-link');
+
+                                    aboutlink.addClass('aboutinfo-link-available');
+                                }
+                            },
+                            duration: .5
+                        });
+
+                        function onAboutSearchClick(event) {
+                            event.preventDefault();
+                            content.fx.set('reverse', !content.fx.get('reverse'));
+                            content.fx.run();
+
+                        }
+
+                        /////////////
+                        Y.one('body').delegate('click', onAboutSearchClick, '.aboutinfo-link-available');
                     }
                     // store called to avoid making the request multiple times
                     transactions.push(this.url);
@@ -705,38 +745,6 @@ YUI().use(
         }
         router.replace(getRoute());
 
-        /**
-         * add fx plugin to module body
-         */
-        var content = Y.one('.about-info-content').plug(Y.Plugin.NodeFX, {
-            from: {
-                height: function(node) {
-                    return node.get('scrollHeight');
-                }
-            },
-            to: { height: 0 },
-            easing: Y.Easing.easeBoth,
-            on: {
-                start: function() {
-                    var aboutlink = Y.all('.aboutinfo-link');
-                    aboutlink.removeClass('aboutinfo-link-available');
-                    aboutlink.toggleClass('open');
-                },
-                end: function() {
-                    var aboutlink = Y.all('.aboutinfo-link');
-
-                    aboutlink.addClass('aboutinfo-link-available');
-                }
-            },
-            duration: .5
-        });
-
-        function onAboutSearchClick(event) {
-            event.preventDefault();
-            content.fx.set('reverse', !content.fx.get('reverse'));
-            content.fx.run();
-
-        }
         updateFormElements();
-        Y.one('body').delegate('click', onAboutSearchClick, '.aboutinfo-link-available');
+
     });
