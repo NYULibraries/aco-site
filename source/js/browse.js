@@ -23,7 +23,7 @@ YUI().use(
             };
         }
 
-        Y.Object.each(HandlebarsHelpers(), function(helper, key) { Y.Handlebars.registerHelper(key, helper) });
+        Y.Object.each(HandlebarsHelpers(), function(helper, key) { Y.Handlebars.registerHelper(key, helper); });
 
         function getRoute() {
             var route = router.getPath() + '?';
@@ -144,40 +144,45 @@ YUI().use(
             try {
 
                 var node = args.container,
-                    resultsnum = Y.one('.resultsnum'),
-                    querytextNode = Y.one('.s-query'),
+
                     page = (args.page) ? args.page : 1,
                     numfound = parseInt(response.response.numFound, 10),
 
-                    numfoundNode = resultsnum.one('.numfound'),
+
                     start = parseInt(response.response.start, 10),
                     displayStart = (start < 1) ? 1 : (start + 1),
-                    startNode = resultsnum.one('.start'),
-                    docslengthNode = resultsnum.one('.docslength'),
+
                     docslength = parseInt(response.response.docs.length, 10),
-                    appRoot = Y.one('body').getAttribute('data-app');;
+                    appRoot = Y.one('body').getAttribute('data-app');
 
 
 
                 node.setAttribute('data-numFound', numfound);
                 node.setAttribute('data-start', start);
                 node.setAttribute('data-docsLength', docslength);
-                startNode.set('innerHTML', displayStart);
-                docslengthNode.set('innerHTML', start + docslength);
-                numfoundNode.set('innerHTML', numfound);
+
 
                 Y.log("numfound " + numfound);
                 if (numfound > 0) {
                     // first transaction; enable paginator
-                    if (transactions.length < 1) {
-                        initPaginator(page, numfound, docslength);
-                    }
+
                     node.append(
                         itemsTemplate({
                             items: response.response.docs,
                             app: { appRoot: appRoot }
                         })
                     );
+                    var resultsnum = Y.one('.resultsnum'),
+                        querytextNode = Y.one('.s-query'),
+                        numfoundNode = resultsnum.one('.numfound'),
+                        startNode = resultsnum.one('.start'),
+                        docslengthNode = resultsnum.one('.docslength');
+                    startNode.set('innerHTML', displayStart);
+                    docslengthNode.set('innerHTML', start + docslength);
+                    numfoundNode.set('innerHTML', numfound);
+                    if (transactions.length < 1) {
+                        initPaginator(page, numfound, docslength);
+                    }
                 }
 
                 args.container.setAttribute('data-requesterror', 0);

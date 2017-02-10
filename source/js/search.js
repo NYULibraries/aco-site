@@ -8,12 +8,12 @@ YUI().use(
             nrSource = Y.one('#noresults').getHTML(),
             noresultsTemplate = Y.Handlebars.compile(nrSource),
             slSource = Y.one('#searchlanding').getHTML(),
-
             searchlandingTemplate = Y.Handlebars.compile(slSource),
             router = new Y.Router(),
             transactions = [],
             scopeIs = "contains",
-            QueryString = Y.QueryString.parse(window.location.search.substring(1));
+            initialQs = window.location.search.substring(1),
+            QueryString = Y.QueryString.parse(initialQs);
 
         function HandlebarsHelpers() {
             function json(context, options) {
@@ -355,27 +355,29 @@ YUI().use(
             // Y.log(" removeQueryDiacritics processed: " + removeCombinedDiacritics(removeDiacritics(str)));
             return removeCombinedDiacritics(removeDiacritics(str));
         }
-        router.route(router.getPath(), function(req) {
-            var node = Y.one('[data-name="items"]'),
-                data = node.getData(),
-                rpp = (req.query.rpp) ? req.query.rpp : ((data.rpp) ? data.rpp : "10"),
-                sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : "ds_created asc"),
-                page = (req.query.page) ? parseInt(req.query.page, 10) : 0,
-                query = (req.query.q) ? req.query.q : '',
-                provider = (req.query.provider) ? req.query.provider : '',
-                author = (req.query.author) ? req.query.author : '',
-                title = (req.query.title) ? req.query.title : '',
-                publisher = (req.query.publisher) ? req.query.publisher : '',
-                subject = (req.query.subject) ? req.query.subject : '',
-                pubplace = (req.query.pubplace) ? req.query.pubplace : '',
-                start = 0;
 
-            if (page <= 1) {
-                start = 0;
-            } else {
-                start = (page * rpp) - rpp;
-            }
-            if (query) {
+        if (initialQs !== "") {
+            router.route(router.getPath(), function(req) {
+                var node = Y.one('[data-name="items"]'),
+                    data = node.getData(),
+                    rpp = (req.query.rpp) ? req.query.rpp : ((data.rpp) ? data.rpp : "10"),
+                    sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : "ds_created asc"),
+                    page = (req.query.page) ? parseInt(req.query.page, 10) : 0,
+                    query = (req.query.q) ? req.query.q : '',
+                    provider = (req.query.provider) ? req.query.provider : '',
+                    author = (req.query.author) ? req.query.author : '',
+                    title = (req.query.title) ? req.query.title : '',
+                    publisher = (req.query.publisher) ? req.query.publisher : '',
+                    subject = (req.query.subject) ? req.query.subject : '',
+                    pubplace = (req.query.pubplace) ? req.query.pubplace : '',
+                    start = 0;
+
+                if (page <= 1) {
+                    start = 0;
+                } else {
+                    start = (page * rpp) - rpp;
+                }
+
                 initRequest({
                     container: node,
                     start: start,
@@ -391,12 +393,18 @@ YUI().use(
                     pubplace: removeQueryDiacritics(pubplace).toLowerCase(),
 
                 });
-            } else {
-                Y.log("No query - let's consider this the landing page");
-                node.append(searchlandingTemplate());
-                Y.one('body').removeClass('io-loading');
-            }
-        });
+
+            });
+        } else {
+            Y.log("Search Landing page");
+
+            //     var itemsTemplateSource = Y.one('#items').getHTML(),
+            // itemsTemplate = Y.Handlebars.compile(itemsTemplateSource),
+
+            var node = Y.one('[data-name="items"]');
+            node.append(searchlandingTemplate());
+            Y.one('body').removeClass('io-loading');
+        }
 
         function onSelectChangeSort() {
 
@@ -530,15 +538,17 @@ YUI().use(
             Y.log("onSuccess call. ");
             try {
                 var node = args.container,
-                    resultsnum = Y.one('.resultsnum'),
-                    querytextNode = Y.one('.s-query'),
+                    // resultsnum = Y.one('.resultsnum'),
+                    // querytextNode = Y.one('.s-query'),
+                    // numfoundNode = resultsnum.one('.numfound'),
+                    //   startNode = resultsnum.one('.start'),
+                    // docslengthNode = resultsnum.one('.docslength'),
                     page = (args.page) ? args.page : 1,
                     numfound = parseInt(response.response.numFound, 10),
-                    numfoundNode = resultsnum.one('.numfound'),
+
                     start = parseInt(response.response.start, 10),
                     displayStart = (start < 1) ? 1 : (start + 1),
-                    startNode = resultsnum.one('.start'),
-                    docslengthNode = resultsnum.one('.docslength'),
+
                     docslength = parseInt(response.response.docs.length, 10),
                     q = QueryString.q,
                     pS = QueryString.provider,
@@ -580,17 +590,10 @@ YUI().use(
                     ADescribeSearch.push(" Place of Publication " + scopeIs + " " + pubplaceS);
                 }
                 stringToDescribeSearch = ADescribeSearch.join((" and "));
-                if (querytextNode) {
-                    querytextNode.set('innerHTML', stringToDescribeSearch);
-                }
+
                 Y.log("numfound " + numfound);
                 if (numfound > 0) {
-                    node.setAttribute("data-numFound", numfound);
-                    node.setAttribute("data-start", start);
-                    node.setAttribute("data-docsLength", docslength);
-                    startNode.set('innerHTML', displayStart);
-                    docslengthNode.set('innerHTML', start + docslength);
-                    numfoundNode.set('innerHTML', numfound);
+
                     // render HTML and append to container
                     node.append(
                         itemsTemplate({
@@ -605,6 +608,23 @@ YUI().use(
                         Y.one('body').delegate('change', onSelectChangeSort, '#sort-select-el');
                         Y.one('body').delegate('change', onSelectChangeRpp, '#rpp-select-el');
 
+                        var resultsnum = Y.one('.resultsnum'),
+                            querytextNode = Y.one('.s-query'),
+                            numfoundNode = resultsnum.one('.numfound'),
+                            startNode = resultsnum.one('.start'),
+                            docslengthNode = resultsnum.one('.docslength');
+
+                        ///
+                        node.setAttribute("data-numFound", numfound);
+                        node.setAttribute("data-start", start);
+                        node.setAttribute("data-docsLength", docslength);
+                        startNode.set('innerHTML', displayStart);
+                        docslengthNode.set('innerHTML', start + docslength);
+                        if (querytextNode) {
+                            querytextNode.set('innerHTML', stringToDescribeSearch);
+                        }
+
+                        numfoundNode.set('innerHTML', numfound);
                         ///////////////
 
                         /**
