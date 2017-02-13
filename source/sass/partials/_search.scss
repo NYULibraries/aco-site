@@ -1,6 +1,4 @@
-.search_holder input[type="text"]:focus {
-  outline-color: #ff9c00;
-}
+
 
 input:focus {
   outline-color: #ff9c00;
@@ -82,8 +80,11 @@ input:focus {
   }
 }
 
-body.search .search_holder {
-  display: none;
+body.search {
+  main header {
+    padding-bottom: 0;
+  }
+ 
 }
 
 input:focus,
@@ -96,7 +97,7 @@ a:focus {
   border: 1px solid #DECCBF;
   background-color: #efe5d9;
   padding: 20px;
-  margin: 15px 0;
+  margin: 0 0 15px 0;
   @media (max-width: 500px) {
     background-color: transparent;
     padding: 0 0 20px 0;
