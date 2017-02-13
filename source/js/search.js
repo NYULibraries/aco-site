@@ -7,7 +7,7 @@ YUI().use(
             itemsTemplate = Y.Handlebars.compile(itemsTemplateSource),
             nrSource = Y.one('#noresults').getHTML(),
             noresultsTemplate = Y.Handlebars.compile(nrSource),
-            slSource = Y.one('#searchlanding').getHTML(),
+            slSource = Y.one('#searchtips').getHTML(),
             searchlandingTemplate = Y.Handlebars.compile(slSource),
             router = new Y.Router(),
             transactions = [],
@@ -458,8 +458,26 @@ YUI().use(
                 re1 = /(^[*])(.*)([*]$)/i,
                 // leading and ending quotes
                 re2 = /(^["])(.*)(["]$)/i,
+                re3 = /(.*)\%20(.*)/i,
                 found;
             for (var x in QueryString) {
+
+                if (QueryString.hasOwnProperty(x) && x == "rpp") {
+                    Y.log("QueryString[x] RPP " + QueryString[x]);
+                    var rppselect = Y.one('#rpp-select-el');
+                    if (rppselect) {
+                        rppselect.set('value', QueryString[x]);
+                    }
+                } else if (QueryString.hasOwnProperty(x) && x == "sort") {
+                    Y.log("QueryString[x] sort " + QueryString[x]);
+                    var sortselect = Y.one('#sort-select-el');
+                    str = QueryString[x];
+                    found = str.match(re3);
+                    //  Y.log("@@@   1" + found[0] + " 2 " +  + " 3 " + found[2]);
+                    if (sortselect) {
+                        sortselect.set('value', found[1]);
+                    }
+                }
                 if (QueryString.hasOwnProperty(x) && x !== "sort" && x !== "page" && x !== "rpp") {
                     var thisValueBox = Y.one('.group' + i + ' .q' + i);
                     if (thisValueBox) {
@@ -548,7 +566,7 @@ YUI().use(
 
                     start = parseInt(response.response.start, 10),
                     displayStart = (start < 1) ? 1 : (start + 1),
-
+                    rpp = QueryString.rpp,
                     docslength = parseInt(response.response.docs.length, 10),
                     q = QueryString.q,
                     pS = QueryString.provider,
@@ -591,7 +609,7 @@ YUI().use(
                 }
                 stringToDescribeSearch = ADescribeSearch.join((" and "));
 
-                Y.log("numfound " + numfound);
+                Y.log("The number of results found: numfound " + numfound);
                 if (numfound > 0) {
 
                     // render HTML and append to container
@@ -601,35 +619,28 @@ YUI().use(
                             app: { appRoot: appRoot }
                         })
                     );
-                    // first transaction; enable paginator, update the new form elements, delegate events to the new form elements
-                    if (transactions.length < 1) {
-                        initPaginator(page, numfound, docslength);
-                        updateFormElements();
-                        Y.one('body').delegate('change', onSelectChangeSort, '#sort-select-el');
-                        Y.one('body').delegate('change', onSelectChangeRpp, '#rpp-select-el');
+                    updateFormElements();
 
-                        var resultsnum = Y.one('.resultsnum'),
-                            querytextNode = Y.one('.s-query'),
-                            numfoundNode = resultsnum.one('.numfound'),
-                            startNode = resultsnum.one('.start'),
-                            docslengthNode = resultsnum.one('.docslength');
+                    var resultsnum = Y.one('.resultsnum'),
+                        querytextNode = Y.one('.s-query'),
+                        numfoundNode = resultsnum.one('.numfound'),
+                        startNode = resultsnum.one('.start'),
+                        docslengthNode = resultsnum.one('.docslength');
 
-                        ///
-                        node.setAttribute("data-numFound", numfound);
-                        node.setAttribute("data-start", start);
-                        node.setAttribute("data-docsLength", docslength);
-                        startNode.set('innerHTML', displayStart);
-                        docslengthNode.set('innerHTML', start + docslength);
-                        if (querytextNode) {
-                            querytextNode.set('innerHTML', stringToDescribeSearch);
-                        }
-
-                        numfoundNode.set('innerHTML', numfound);
-                        ///////////////
-
-                        /**
-                         * add fx plugin to module body
-                         */
+                    ///
+                    node.setAttribute("data-numFound", numfound);
+                    node.setAttribute("data-start", start);
+                    node.setAttribute("data-docsLength", docslength);
+                    startNode.set('innerHTML', displayStart);
+                    docslengthNode.set('innerHTML', start + docslength);
+                    if (querytextNode) {
+                        querytextNode.set('innerHTML', stringToDescribeSearch);
+                    }
+                    numfoundNode.set('innerHTML', numfound);
+                    var aboutInfoBox = function onAboutSearchClick(event) {
+                        Y.log("clicked about link");
+                        event.preventDefault();
+                        /*   add fx plugin to module body */
                         var content = Y.one('.about-info-content').plug(Y.Plugin.NodeFX, {
                             from: {
                                 height: function(node) {
@@ -646,22 +657,21 @@ YUI().use(
                                 },
                                 end: function() {
                                     var aboutlink = Y.all('.aboutinfo-link');
-
                                     aboutlink.addClass('aboutinfo-link-available');
                                 }
                             },
                             duration: .5
                         });
+                        content.fx.set('reverse', !content.fx.get('reverse'));
+                        content.fx.run();
 
-                        function onAboutSearchClick(event) {
-                            event.preventDefault();
-                            content.fx.set('reverse', !content.fx.get('reverse'));
-                            content.fx.run();
-
-                        }
-
-                        /////////////
-                        Y.one('body').delegate('click', onAboutSearchClick, '.aboutinfo-link-available');
+                    };
+                    Y.one('body').delegate('click', aboutInfoBox, '.aboutinfo-link-available');
+                    // first transaction; enable paginator, update the new form elements, delegate events to the new form elements
+                    if (transactions.length < 1) {
+                        initPaginator(page, numfound, docslength);
+                        Y.one('body').delegate('change', onSelectChangeSort, '#sort-select-el');
+                        Y.one('body').delegate('change', onSelectChangeRpp, '#rpp-select-el');
                     }
                     // store called to avoid making the request multiple times
                     transactions.push(this.url);
@@ -680,24 +690,14 @@ YUI().use(
         }
 
         function initRequest(options) {
-
-            for (var w in options) {
-                if (options.hasOwnProperty(w)) {
-                    Y.log("options[w]: " + w + "  " + options[w]);
-                }
-            }
-
             var start = 0,
                 page = 0,
-                // sortData = Y.one('#sort-select-el :checked'),
-                sortBy = options['sort'],
-                //sortDir = sortData.getAttribute("data-sort-dir"),
-                // sortDir = (options['sort']) ? "%20" + options['sort'] : "%20" + 'asc',
+                sortBy = options.sort,
+                rpp = options.rpp,
                 data = options.container.getData(),
                 source = Y.one('.widget.items').getAttribute('data-source'),
                 qs = "",
                 fl = (data.fl) ? data.fl : '*',
-                rpp = options['rpp'],
                 fq = [];
             Y.one('body').addClass('io-loading');
             /** find all data-fq and push the value into fq Array*/
@@ -764,7 +764,5 @@ YUI().use(
             });
         }
         router.replace(getRoute());
-
-        updateFormElements();
 
     });
