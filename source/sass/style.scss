@@ -118,20 +118,16 @@ main {
       font-size: 2rem;
     }
   }
-
   .resultsnum {
     font-size: .8em;
     color: #666;
-    clear: left;
-    @media (max-width: $grid-float-breakpoint-max) {
-      float: left;
-    }
+    float: left;
+    padding-top: 10px;
     @media (max-width: 400px) {
       display: block;
       clear: both;
       float: none;
     }
-    white-space: nowrap;
     .s-query {
       font-weight: bold;
     }
