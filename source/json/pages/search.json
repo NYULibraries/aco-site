@@ -10,11 +10,6 @@
       "language_dir": "rtl",
       "html": "نتائج البحث"
     }],
-    "menu": [{
-      "context": "navbar",
-      "label": "Search",
-      "weight": 4
-    }],
     "route": "/search/index.html",
     "bodyClass": "search io-loading",
     "content": {

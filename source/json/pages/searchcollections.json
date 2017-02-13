@@ -1,0 +1,21 @@
+{
+  "searchcollections": {
+    "htmltitle": "Search Collections",
+    "title": [{
+      "language_code": "en",
+      "language_dir": "ltr",
+      "html": "Search Collections"
+    }, {
+      "language_code": "ar",
+      "language_dir": "rtl",
+      "html": "نتائج البحث"
+    }],
+    "menu": [{
+      "context": "navbar",
+      "label": "Search",
+      "weight": 4
+    }],
+    "route": "/searchcollections/index.html",
+    "bodyClass": "search"
+  }
+}

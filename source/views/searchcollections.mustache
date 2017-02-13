@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+
+<head>{{> head }}</head>
+
+<body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{ bodyClass }}">
+    {{> header }}
+    <main class="main container-fluid" role="main">
+        <header class="results-header">
+            {{#title}}
+            <h2 class="page-title" lang="{{language_code}}" dir="{{language_dir}}"><span>{{{html}}}<span></h2> {{/title}}
+        </header>
+        {{> search_form_adv }} {{> searchtips }} 
+    </main>
+    {{> footer }} {{{ closure }}}
+</body>
+
+</html>
