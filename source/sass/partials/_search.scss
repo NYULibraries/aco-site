@@ -1,4 +1,11 @@
-
+.browse {
+  .aboutinfo {
+    display: none;
+  }
+  .resultsfor {
+    display: none;
+  }
+}
 
 input:focus {
   outline-color: #ff9c00;
@@ -84,7 +91,6 @@ body.search {
   main header {
     padding-bottom: 0;
   }
- 
 }
 
 input:focus,

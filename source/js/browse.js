@@ -36,8 +36,8 @@ YUI().use(
         router.route(router.getPath(), function(req) {
             var node = Y.one('[data-name="items"]'),
                 data = node.getData(),
-                rpp = (req.query.rpp) ? req.query.rpp : ((data.rpp) ? data.rpp : Y.one('#rpp-select-el').get('value')),
-                sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : Y.one('#sort-select-el').get('value')),
+                rpp = (req.query.rpp) ? req.query.rpp : ((data.rpp) ? data.rpp : "10"),
+                sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : "ds_created asc"),
                 page = (req.query.page) ? parseInt(req.query.page, 10) : 0,
                 start = 0;
 
@@ -105,6 +105,32 @@ YUI().use(
             onFailure();
         }
 
+        function updateFormElements() {
+            var str,
+                rppselect,
+                sortselect,
+                found,
+                re3 = /(.*)\%20(.*)/i;
+            for (var x in QueryString) {
+
+                if (QueryString.hasOwnProperty(x) && x == "rpp") {
+                    Y.log("QueryString[x] RPP " + QueryString[x]);
+                    rppselect = Y.one('#rpp-select-el');
+                    if (rppselect) {
+                        rppselect.set('value', QueryString[x]);
+                    }
+                } else if (QueryString.hasOwnProperty(x) && x == "sort") {
+                    Y.log("QueryString[x] sort " + QueryString[x]);
+                    sortselect = Y.one('#sort-select-el');
+                    str = QueryString[x];
+                    found = str.match(re3);
+                    //  Y.log("@@@   1" + found[0] + " 2 " +  + " 3 " + found[2]);
+                    if (sortselect) {
+                        sortselect.set('value', found[1]);
+                    }
+                }
+            }
+        }
 
         function update(state) {
             this.setPage(state.page, true);
@@ -172,6 +198,7 @@ YUI().use(
                             app: { appRoot: appRoot }
                         })
                     );
+                    updateFormElements();
                     var resultsnum = Y.one('.resultsnum'),
                         querytextNode = Y.one('.s-query'),
                         numfoundNode = resultsnum.one('.numfound'),
@@ -182,6 +209,9 @@ YUI().use(
                     numfoundNode.set('innerHTML', numfound);
                     if (transactions.length < 1) {
                         initPaginator(page, numfound, docslength);
+                        // Sorting dropdown 
+                        Y.one('body').delegate('change', onSelectChangeSort, '#sort-select-el');
+                        Y.one('body').delegate('change', onSelectChangeRpp, '#rpp-select-el');
                     }
                 }
 
@@ -194,11 +224,15 @@ YUI().use(
         }
 
         function initRequest(options) {
+
+            for (var w in options) {
+                if (options.hasOwnProperty(w)) {
+                    Y.log("options[w]: " + w + "  " + options[w]);
+                }
+            }
             var start = 0,
                 page = 0,
-                sortData = Y.one('#sort-select-el :checked'),
-                sortBy = sortData.get('value'),
-                sortDir = sortData.getAttribute("data-sort-dir"),
+                sortBy = options.sort,
                 data = options.container.getData(),
                 source = Y.one('.widget.items').getAttribute('data-source'),
                 fl = (data.fl) ? data.fl : '*',
@@ -230,7 +264,7 @@ YUI().use(
                 rpp = parseInt(options.rpp, 10);
             }
 
-            source = source + "?" + "wt=json" + "&json.wrf=callback={callback}" + "&fl=" + fl + "&fq=" + fq.join("&fq=") + "&rows=" + rpp + "&start=" + start + "&sort=" + sortBy + "%20" + sortDir;
+            source = source + "?" + "wt=json" + "&json.wrf=callback={callback}" + "&fl=" + fl + "&fq=" + fq.join("&fq=") + "&rows=" + rpp + "&start=" + start + "&sort=" + sortBy;
 
             options.container.empty();
 
@@ -248,8 +282,6 @@ YUI().use(
 
         router.replace(getRoute());
 
-        // Sorting dropdown 
-        Y.one('body').delegate('change', onSelectChangeSort, '#sort-select-el');
-        Y.one('body').delegate('change', onSelectChangeRpp, '#rpp-select-el');
+
 
     });
