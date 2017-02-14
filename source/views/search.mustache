@@ -13,7 +13,7 @@
           
         </header>
         {{#content}} {{#items}}
-        <div class="widget items" data-name="items" data-rows="{{rows}}" data-source="{{source}}" data-fl="{{fl}}" {{#fq}} data-fq-{{filter}}="{{value}}" {{/fq}} data-script='{ "js" : [ "search.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" }, { "template" : "noresults.hbs", "id" : "noresults" } , { "template" : "searchtips.hbs", "id" : "searchtips" }] }'></div>
+        <div class="widget items" data-name="items" data-rows="{{rows}}" data-source="{{source}}" data-fl="{{fl}}" {{#fq}} data-fq-{{filter}}="{{value}}" {{/fq}} data-script='{ "js" : [ "search.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" }, { "template" : "noresults.hbs", "id" : "noresults" } , { "template" : "searchtips.mustache", "id" : "searchtips" }] }'></div>
         <div class="text-center">
             <div id="paginator" class="pagination"></div>
         </div>

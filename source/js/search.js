@@ -396,11 +396,7 @@ YUI().use(
 
             });
         } else {
-            Y.log("Search Landing page");
-
-            //     var itemsTemplateSource = Y.one('#items').getHTML(),
-            // itemsTemplate = Y.Handlebars.compile(itemsTemplateSource),
-
+            Y.log("No initial query: Search Landing page");
             var node = Y.one('[data-name="items"]');
             node.append(searchlandingTemplate());
             Y.one('body').removeClass('io-loading');
@@ -640,6 +636,10 @@ YUI().use(
                     var aboutInfoBox = function onAboutSearchClick(event) {
                         Y.log("clicked about link");
                         event.preventDefault();
+                        /* add the mustache content into the dropdown */
+                        var node = Y.one('.about-info-content');
+                        node.get('childNodes').remove();
+                        node.append(searchlandingTemplate());
                         /*   add fx plugin to module body */
                         var content = Y.one('.about-info-content').plug(Y.Plugin.NodeFX, {
                             from: {
@@ -683,6 +683,7 @@ YUI().use(
                     Y.log("nothing found ");
                     Y.one('body').addClass('items-no-results');
                     node.append(noresultsTemplate());
+                    node.append(searchlandingTemplate());
                 }
             } catch (e) {
                 Y.log("Error: " + e);
