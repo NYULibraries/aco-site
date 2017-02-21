@@ -477,16 +477,17 @@ YUI().use(
                 if (QueryString.hasOwnProperty(x) && x !== "sort" && x !== "page" && x !== "rpp") {
                     var thisValueBox = Y.one('.group' + i + ' .q' + i);
                     if (thisValueBox) {
-                        Y.log("QueryString[x] " + QueryString[x]);
+
                         str = QueryString[x];
                         found = str.match(re1);
+                        Y.log("QueryString[x] " + str + "  found " + found);
+                        // if this has leading and ending asteriskss
                         if (found) {
                             // for clarity, even though it should already have this value
                             scopeIs = "contains";
                             str = found[2];
                         } else {
                             found = str.match(re2);
-                            Y.log("QueryString[x] " + QueryString[x] + "  found " + found);
                             if (found) {
                                 // Y.log(found);
                                 scopeIs = "equals";
@@ -682,6 +683,7 @@ YUI().use(
                 else {
                     Y.log("nothing found ");
                     Y.one('body').addClass('items-no-results');
+                     updateFormElements();
                     node.append(noresultsTemplate());
                     node.append(searchlandingTemplate());
                 }
