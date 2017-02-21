@@ -722,7 +722,7 @@ YUI().use(
                 fq.push('(iass_longlabel:' + options.title + ' OR ' + 'iass_ar_longlabel:' + options.title + ')');
             }
             if (options.author) {
-                fq.push('(sm_sauthor:' + options.author + ' OR ' + 'sm_sauthor:' + options.author + ')');
+                fq.push('(sm_sauthor:' + options.author + ' OR ' + 'sm_ar_sauthor:' + options.author + ')');
             }
             if (options.pubplace) {
                 fq.push('(ss_spublocation:' + options.pubplace + ' OR ' + 'ss_ar_publication_location:' + options.pubplace + ')');
