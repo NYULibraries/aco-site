@@ -16,7 +16,7 @@
       "weight": 2
     }],
     "route": "/resources/index.html",
-    "bodyClass": "page",
+    "bodyClass": "page resources",
     "content": {
       "main": [{
         "language_code": "en",
