@@ -43,12 +43,22 @@
       </div>
       <div lang="en">
         <div class="md_title"><a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">{{ss_title_long}}</a></div>                
-        <div class="md_authors"><span class="md_label">Author:</span> {{#each sm_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author="{{this}}"'>{{this}}</a></span>{{/each}}
+        <div class="md_authors"><span class="md_label">Author:</span> 
+        {{ifempty sm_author "n.a."}}
+        {{#each sm_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author="{{this}}"'>{{this}}</a></span>{{/each}}
         </div>                        
-        <div class="md_publisher"><span class="md_label">Publisher:</span> {{#each sm_publisher}}<a  class="md_publisher" href='/aco/search/?publisher="{{this}}"'><span>{{this}}</span></a>{{/each}}</div>
-        <div class="md_pubplace"><span class="md_label">Place of Publication:</span> <a  class="md_pubplace" href='/aco/search/?pubplace=*{{ss_publocation}}*'>{{ss_publocation}}</a></div>                        
-        <div class="md_pubdate"><span class="md_label">Date of Publication:</span> {{ss_pubdate}}</div>  
-        <div class="md_pubdate_sort"><span class="md_label">Date of Publication, sortable:</span> {{iass_pubyear}}</div>                             
+        <div class="md_publisher"><span class="md_label">Publisher:</span>  
+        {{ifempty sm_publisher "n.p."}}
+        {{#each sm_publisher}}<a  class="md_publisher" href='/aco/search/?publisher="{{this}}"'><span>{{this}}</span></a>{{/each}}</div>
+        <div class="md_pubplace"><span class="md_label">Place of Publication:</span> 
+         {{ifempty ss_publocation "n.p."}}
+         <a  class="md_pubplace" href='/aco/search/?pubplace=*{{ss_publocation}}*'>{{ss_publocation}}</a></div>                        
+        <div class="md_pubdate"><span class="md_label">Date of Publication:</span>
+         {{ifempty ss_pubdate "n.d."}}
+         {{ss_pubdate}}</div>  
+        <div class="md_pubdate_sort"><span class="md_label">Date of Publication, sortable:</span> {{iass_pubyear}}</div>  
+       
+        {{#if zm_subject}}                           
         <div class="md_subjects">
           <span class="md_label">Subject:</span>
           {{#each zm_subject}}
@@ -57,6 +67,8 @@
             {{/json}}
           {{/each}}        
         </div>
+         {{/if}}
+
         <div class="md_partner">
           <span class="md_label">Provider:</span>
           {{#each zm_partner}}
@@ -73,13 +85,21 @@
       </div>
       <div class="md_authors">
         <span class="md_label">الكاتب:</span> 
+         {{ifempty sm_ar_author "n.a."}}
         {{#each sm_ar_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author="{{this}}"'>{{this}}</a></span>{{/each}}
       </div>
-      <div class="md_publisher"><span class="md_label">الناشر:</span>  {{#each sm_ar_publisher}}<a  class="md_publisher" href='/aco/search/?publisher="{{this}}"'><span>{{this}}</span></a>{{/each}}</div>
+      <div class="md_publisher"><span class="md_label">الناشر:</span>  
+        {{ifempty sm_ar_publisher "n.p."}}
+        {{#each sm_ar_publisher}}<a  class="md_publisher" href='/aco/search/?publisher="{{this}}"'><span>{{this}}</span></a>{{/each}}</div>
+
       <div class="md_publocation">
-        <span class="md_label">مكان النشر:</span> <a  class="md_pubplace" href='/aco/search/?pubplace=*{{ss_ar_publication_location}}*'><span>{{ss_ar_publication_location}}</span></a>
+        <span class="md_label">مكان النشر:</span> 
+         {{ifempty ss_ar_publication_location "n.p."}}
+         <a  class="md_pubplace" href='/aco/search/?pubplace=*{{ss_ar_publication_location}}*'><span>{{ss_ar_publication_location}}</span></a>
       </div>  
-      <div class="md_pubdate"><span class="md_label">تاريخ النشر:</span> <span dir="ltr" lang="en" >{{ss_pubdate}}</span></div>                        
+      <div class="md_pubdate"><span class="md_label">تاريخ النشر:</span> 
+      {{ifempty ss_pubdate "n.d."}}
+      <span dir="ltr" lang="en" >{{ss_pubdate}}</span></div>                        
     
   
     </div>                      

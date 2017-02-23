@@ -3,6 +3,34 @@ YUI().use(
     'node', 'event', 'handlebars', 'jsonp', 'router', 'gallery-paginator', 'anim', 'querystring',
     function(Y) {
         'use strict';
+
+        function HandlebarsHelpers() {
+            function json(context, options) {
+                return options.fn(JSON.parse(context));
+            }
+
+            function speakingurl(context, options) {
+                return window.getSlug(this.label);
+            }
+
+            function ifempty(fieldtocheck, defaultvalue) {
+                Y.log("inside ifempty " + fieldtocheck);
+                if (fieldtocheck) {
+                    return;
+                } else {
+                    return defaultvalue;
+                }
+               // return "" ? fieldtocheck : defaultvalue;
+
+            }
+            return {
+                ifempty: ifempty,
+                json: json,
+                speakingurl: speakingurl
+            };
+        }
+        Y.Object.each(HandlebarsHelpers(), function(helper, key) { Y.Handlebars.registerHelper(key, helper); });
+
         var itemsTemplateSource = Y.one('#items').getHTML(),
             itemsTemplate = Y.Handlebars.compile(itemsTemplateSource),
             nrSource = Y.one('#noresults').getHTML(),
@@ -14,21 +42,6 @@ YUI().use(
             scopeIs = "contains",
             initialQs = window.location.search.substring(1),
             QueryString = Y.QueryString.parse(initialQs);
-
-        function HandlebarsHelpers() {
-            function json(context, options) {
-                return options.fn(JSON.parse(context));
-            }
-
-            function speakingurl(context, options) {
-                return window.getSlug(this.label);
-            }
-            return {
-                json: json,
-                speakingurl: speakingurl
-            };
-        }
-        Y.Object.each(HandlebarsHelpers(), function(helper, key) { Y.Handlebars.registerHelper(key, helper); });
 
         function getRoute() {
             var route = router.getPath() + '?';
@@ -645,7 +658,7 @@ YUI().use(
                         var content = Y.one('.about-info-content').plug(Y.Plugin.NodeFX, {
                             from: {
                                 height: function(node) {
-                                    return node.get('scrollHeight');
+                                    return node.get('scrollHeight') + 90;
                                 }
                             },
                             to: { height: 0 },
@@ -655,6 +668,7 @@ YUI().use(
                                     var aboutlink = Y.all('.aboutinfo-link');
                                     aboutlink.removeClass('aboutinfo-link-available');
                                     aboutlink.toggleClass('open');
+                                    node.toggleClass('open');
                                 },
                                 end: function() {
                                     var aboutlink = Y.all('.aboutinfo-link');
@@ -683,7 +697,7 @@ YUI().use(
                 else {
                     Y.log("nothing found ");
                     Y.one('body').addClass('items-no-results');
-                     updateFormElements();
+                    updateFormElements();
                     node.append(noresultsTemplate());
                     node.append(searchlandingTemplate());
                 }
