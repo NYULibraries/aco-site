@@ -17,7 +17,20 @@ YUI().use(
             function speakingurl(context, options) {
                 return window.getSlug(this.label);
             }
+
+            function ifempty(fieldtocheck, defaultvalue) {
+                Y.log("inside ifempty " + fieldtocheck);
+                if (fieldtocheck) {
+                    return;
+                } else {
+                    return defaultvalue;
+                }
+                // return "" ? fieldtocheck : defaultvalue;
+
+            }
+
             return {
+                ifempty: ifempty,
                 json: json,
                 speakingurl: speakingurl
             };
@@ -192,7 +205,7 @@ YUI().use(
                 if (numfound > 0) {
                     // first transaction; enable paginator
 
-                    node.append(
+                    node.empty().append(
                         itemsTemplate({
                             items: response.response.docs,
                             app: { appRoot: appRoot }

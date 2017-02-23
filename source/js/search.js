@@ -623,7 +623,7 @@ YUI().use(
                 if (numfound > 0) {
 
                     // render HTML and append to container
-                    node.append(
+                    node.empty().append(
                         itemsTemplate({
                             items: response.response.docs,
                             app: { appRoot: appRoot }
