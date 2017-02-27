@@ -14,7 +14,7 @@ YUI().use(
             }
 
             function ifempty(fieldtocheck, defaultvalue) {
-                Y.log("inside ifempty " + fieldtocheck);
+                
                 if (fieldtocheck) {
                     return;
                 } else {
@@ -658,7 +658,7 @@ YUI().use(
                         var content = Y.one('.about-info-content').plug(Y.Plugin.NodeFX, {
                             from: {
                                 height: function(node) {
-                                    return node.get('scrollHeight') + 90;
+                                    return node.get('scrollHeight');
                                 }
                             },
                             to: { height: 0 },
@@ -668,11 +668,11 @@ YUI().use(
                                     var aboutlink = Y.all('.aboutinfo-link');
                                     aboutlink.removeClass('aboutinfo-link-available');
                                     aboutlink.toggleClass('open');
-                                    node.toggleClass('open');
                                 },
                                 end: function() {
                                     var aboutlink = Y.all('.aboutinfo-link');
                                     aboutlink.addClass('aboutinfo-link-available');
+                                    node.toggleClass('open');
                                 }
                             },
                             duration: .5

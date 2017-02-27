@@ -74,14 +74,18 @@
   overflow: hidden;
   height: auto;
   clear: both;
-  &.open {
+  .inner {
     border: 1px solid #deccbf;
     padding: 10px 30px 30px;
     background-color: #fcf7f0;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
     margin-bottom: 80px;
+    overflow: auto;
     p {
       margin-top: .5rem !important;
+    }
+    div {
+      margin-bottom: 25px;
     }
   }
 }

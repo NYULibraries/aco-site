@@ -293,6 +293,7 @@ $navbar-default-bg: $brand-primary;
 // Navbar links
 $navbar-default-link-color: #cbcace;
 // $navbar-default-link-hover-color:          #333
+$navbar-default-link-hover-color: $input-border-focus;
 $navbar-default-link-hover-bg: $navbar-default-bg;
 $navbar-default-link-active-color: $navbar-default-link-color;
 // $navbar-default-link-active-bg:            darken($navbar-default-bg, 6.5%)
