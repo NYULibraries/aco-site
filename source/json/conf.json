@@ -5,7 +5,7 @@
   "appOGUrl": "http://dev-dl-pa.home.nyu.edu/aco",
   "collectionCode": "aco",
   "appUrl": "http://dev-dl-pa.home.nyu.edu/aco",
-  "appUrllocal": "http://localhost/aco",
+  "appUrlx": "http://localhost/aco",
   "appRoot": "/aco",
   "discovery": "http://discovery.dlib.nyu.edu:8080/solr3_discovery/viewer/select/"
 }
