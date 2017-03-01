@@ -626,7 +626,7 @@ YUI().use(
                     var sortselect = Y.one('#sort-select-el');
                     str = QueryString[x];
                     found = str.match(re3);
-                    //  Y.log("@@@   1" + found[0] + " 2 " +  + " 3 " + found[2]);
+                   
                     if (sortselect)
                     {
                         sortselect.set('value', found[1]);
@@ -691,7 +691,7 @@ YUI().use(
             var newPath = router.getPath() + '?';
             var newString = Y.QueryString.stringify(QueryString);
             newPath += newString;
-            Y.log("Sate update " + newPath);
+            Y.log("Save update " + newPath);
             router.save(newPath);
         }
 
@@ -721,7 +721,8 @@ YUI().use(
 
         function onSuccess(response, args)
         {
-            Y.log("onSuccess call. ");
+            updateFormElements();
+            Y.log("onSuccess call. scopeIs " + scopeIs);
             try
             {
                 var node = args.container,
