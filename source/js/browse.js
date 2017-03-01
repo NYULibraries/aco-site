@@ -6,6 +6,7 @@ YUI().use(
         var itemsTemplateSource = Y.one('#items').getHTML(),
             itemsTemplate = Y.Handlebars.compile(itemsTemplateSource),
             router = new Y.Router(),
+            defaultSort = 'ds_created',
             transactions = [],
             QueryString = Y.QueryString.parse(window.location.search.substring(1));
 
@@ -19,7 +20,7 @@ YUI().use(
             }
 
             function ifempty(fieldtocheck, defaultvalue) {
-                Y.log("inside ifempty " + fieldtocheck);
+               // Y.log("inside ifempty " + fieldtocheck);
                 if (fieldtocheck) {
                     return;
                 } else {
@@ -50,10 +51,10 @@ YUI().use(
             var node = Y.one('[data-name="items"]'),
                 data = node.getData(),
                 rpp = (req.query.rpp) ? req.query.rpp : ((data.rpp) ? data.rpp : "10"),
-                sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : "ds_created asc"),
+                sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : "ds_created desc"),
                 page = (req.query.page) ? parseInt(req.query.page, 10) : 0,
                 start = 0;
-
+                Y.log("Sort is " + sort);
             if (page <= 1) {
                 start = 0;
             } else {
@@ -140,6 +141,7 @@ YUI().use(
                     //  Y.log("@@@   1" + found[0] + " 2 " +  + " 3 " + found[2]);
                     if (sortselect) {
                         sortselect.set('value', found[1]);
+                          Y.log("@@@   1" + found[0] + " 2 " + found[1] + " 3 " + found[2]);
                     }
                 }
             }
@@ -179,7 +181,7 @@ YUI().use(
         }
 
         function onSuccess(response, args) {
-
+              Y.log("onSuccess call. ");
             try {
 
                 var node = args.container,
@@ -211,6 +213,7 @@ YUI().use(
                             app: { appRoot: appRoot }
                         })
                     );
+               
                     updateFormElements();
                     var resultsnum = Y.one('.resultsnum'),
                         querytextNode = Y.one('.s-query'),
@@ -222,6 +225,11 @@ YUI().use(
                     numfoundNode.set('innerHTML', numfound);
                     if (transactions.length < 1) {
                         initPaginator(page, numfound, docslength);
+                   
+                        var sortselect = Y.one('#sort-select-el');
+                        if (sortselect) { 
+                            sortselect.set('value', defaultSort); 
+                         }
                         // Sorting dropdown 
                         Y.one('body').delegate('change', onSelectChangeSort, '#sort-select-el');
                         Y.one('body').delegate('change', onSelectChangeRpp, '#rpp-select-el');
