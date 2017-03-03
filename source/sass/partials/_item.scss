@@ -107,26 +107,28 @@
   .md_label {
     font-weight: bold !important;
   }
-  span.one_subject {
-    &::after {
-      content: ", ";
-      margin-right: .2em;
-    }
-    &:last-child::after {
-      content: "";
-      margin-right: 0em;
-    }
+}
+
+span.one_subject {
+  &::after {
+    content: ", ";
+    margin-right: .2em;
   }
-  // for multiple authors
-  span.one_author {
-    &::after {
-      content: ", ";
-      margin-right: .2em;
-    }
-    &:last-child::after {
-      content: "";
-      margin-right: 0em;
-    }
+  &:last-child::after {
+    content: "";
+    margin-right: 0em;
+  }
+}
+
+// for multiple authors
+span.one_author {
+  &::after {
+    content: ", ";
+    margin-right: .2em;
+  }
+  &:last-child::after {
+    content: "";
+    margin-right: 0em;
   }
 }
 

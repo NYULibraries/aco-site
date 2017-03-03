@@ -85,7 +85,7 @@
       // line-height: 2;
       // text-transform: uppercase;
       // float: left;
-      padding-right: 15px;
+      // padding-right: 15px;
     }
   }
   @media (max-width: $grid-float-breakpoint-max) {
@@ -184,21 +184,7 @@
       // text-transform: uppercase;
       line-height: 1;
       margin: 0;
-      padding: 10px 20px 5px;
-    }
-  }
-  // add commas only when needed
-  .md_publisher {
-    span {
-      display: inline-block;
-    }
-    span.md_label {
-      &+ span + span::before {
-        content: ", ";
-      }
-      &+ span + span + span::before {
-        content: ", ";
-      }
+      padding: 10px 30px 5px;
     }
   }
   .md_title {
@@ -211,5 +197,11 @@
       font-weight: normal;
       padding-bottom: 2px;
     }
+  }
+}
+
+.itemhome {
+  .flexcol [lang="ar"] {
+    line-height: 1.7;
   }
 }

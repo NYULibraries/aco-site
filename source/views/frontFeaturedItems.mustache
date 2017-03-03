@@ -9,7 +9,7 @@
             </div>
             {{#if sm_publisher}}
             <div class="md_publisher">
-                <span class="md_label">Publisher:</span> {{ifempty sm_publisher "n.p."}}{{#each sm_publisher}}<span><a  class="md_publisher" href='/aco/search/?publisher="{{this}}"'>{{this}}</a></span>{{/each}}</div> {{/if}} {{#if ss_publocation}}
+                <span class="md_label">Publisher:</span> {{#each sm_publisher}}{{ifempty this "n.p."}}<span><a  class="md_publisher" href='/aco/search/?publisher="{{this}}"'>{{this}}</a></span>{{/each}}</div> {{/if}} {{#if ss_publocation}}
             <div class="md_pubplace">
                 <span class="md_label">Place of Publication:</span>
                 <span class="publoc"><a  class="md_pubplace" href='/aco/search/?pubplace="{{ss_publocation}}"'>{{ss_publocation}}</a></span></div>
@@ -17,7 +17,7 @@
             <div class="md_pubdate"><span class="md_label">Date of Publication:</span> <span class="pubdate">{{ss_pubdate}}</span></div>
             {{/if}} {{#if zm_subject}}
             <div class="md_subjects"><span class="md_label">Subjects: </span> {{#each zm_subject}} {{#json this}}
-                <a class="md_subject" href='/aco/search/?subject="{{name}}"'>{{name}}</a> {{/json}} {{/each}}
+               <span class="one_subject"><a class="md_subject" href='/aco/search/?subject="{{name}}"'>{{name}}</a></span> {{/json}} {{/each}}
             </div>
             {{/if}}
             <div class="md_partner">
