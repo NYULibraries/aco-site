@@ -52,7 +52,7 @@
         {{#each sm_publisher}}<a  class="md_publisher" href='/aco/search/?publisher="{{this}}"'><span>{{this}}</span></a>{{/each}}</div>
         <div class="md_pubplace"><span class="md_label">Place of Publication:</span> 
          {{ifempty ss_publocation "n.p."}}
-         <a  class="md_pubplace" href='/aco/search/?pubplace=*{{ss_publocation}}*'>{{ss_publocation}}</a></div>                        
+         <a  class="md_pubplace" href='/aco/search/?pubplace="{{ss_publocation}}"'>{{ss_publocation}}</a></div>                        
         <div class="md_pubdate"><span class="md_label">Date of Publication:</span>
          {{ifempty ss_pubdate "n.d."}}
          {{ss_pubdate}}</div>  
@@ -63,7 +63,7 @@
           <span class="md_label">Subject:</span>
           {{#each zm_subject}}
             {{#json this}}<span class="one_subject">
-              <a class="md_subject" href="{{../../../app.appRoot}}/subjects/{{tid}}">{{name}}</a></span>
+              <a class="md_subject" href='/aco/search/?subject="{{name}}"'>{{name}}</a></span>
             {{/json}}
           {{/each}}        
         </div>
@@ -73,7 +73,7 @@
           <span class="md_label">Provider:</span>
           {{#each zm_partner}}
             {{#json this}}
-              <a class="md_provider" data-code="{{code}}" data-id="{{nid}}" href="{{../../../app.appRoot}}/providers/{{nid}}">{{name}}</a>
+              <a class="md_provider" data-code="{{code}}" data-id="{{nid}}" href='{{../../../app.appRoot}}/search/?provider="{{name}}"'>{{name}}</a>
             {{/json}}
           {{/each}}
         </div>        
@@ -95,7 +95,7 @@
       <div class="md_publocation">
         <span class="md_label">مكان النشر:</span> 
          {{ifempty ss_ar_publication_location "n.p."}}
-         <a  class="md_pubplace" href='/aco/search/?pubplace=*{{ss_ar_publication_location}}*'><span>{{ss_ar_publication_location}}</span></a>
+         <a  class="md_pubplace" href='/aco/search/?pubplace="{{ss_ar_publication_location}}"'><span>{{ss_ar_publication_location}}</span></a>
       </div>  
       <div class="md_pubdate"><span class="md_label">تاريخ النشر:</span> 
       {{ifempty ss_pubdate "n.d."}}
