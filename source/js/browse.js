@@ -10,24 +10,29 @@ YUI().use(
             transactions = [],
             QueryString = Y.QueryString.parse(window.location.search.substring(1));
 
-        function HandlebarsHelpers() {
-            function json(context, options) {
+        function HandlebarsHelpers()
+        {
+            function json(context, options)
+            {
                 return options.fn(JSON.parse(context));
             }
 
-            function speakingurl(context, options) {
+            function speakingurl(context, options)
+            {
                 return window.getSlug(this.label);
             }
 
-            function ifempty(fieldtocheck, defaultvalue) {
-               // Y.log("inside ifempty " + fieldtocheck);
-                if (fieldtocheck) {
+            function ifempty(fieldtocheck, defaultvalue)
+            {
+                // Y.log("inside ifempty " + fieldtocheck);
+                if (fieldtocheck)
+                {
                     return;
-                } else {
+                }
+                else
+                {
                     return defaultvalue;
                 }
-                // return "" ? fieldtocheck : defaultvalue;
-
             }
 
             return {
@@ -37,9 +42,13 @@ YUI().use(
             };
         }
 
-        Y.Object.each(HandlebarsHelpers(), function(helper, key) { Y.Handlebars.registerHelper(key, helper); });
+        Y.Object.each(HandlebarsHelpers(), function(helper, key)
+        {
+            Y.Handlebars.registerHelper(key, helper);
+        });
 
-        function getRoute() {
+        function getRoute()
+        {
             var route = router.getPath() + '?';
             var newString = Y.QueryString.stringify(QueryString);
             route += newString;
@@ -47,21 +56,26 @@ YUI().use(
             return route;
         }
 
-        router.route(router.getPath(), function(req) {
+        router.route(router.getPath(), function(req)
+        {
             var node = Y.one('[data-name="items"]'),
                 data = node.getData(),
                 rpp = (req.query.rpp) ? req.query.rpp : ((data.rpp) ? data.rpp : "10"),
                 sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : "ds_created desc"),
                 page = (req.query.page) ? parseInt(req.query.page, 10) : 0,
                 start = 0;
-                Y.log("Sort is " + sort);
-            if (page <= 1) {
+            Y.log("Sort is " + sort);
+            if (page <= 1)
+            {
                 start = 0;
-            } else {
+            }
+            else
+            {
                 start = (page * rpp) - rpp;
             }
 
-            initRequest({
+            initRequest(
+            {
                 container: node,
                 start: start,
                 page: page,
@@ -72,8 +86,9 @@ YUI().use(
         });
 
 
-        function onSelectChangeSort() {
-            Y.log(" onSelectChangeSort " + onSelectChangeSort);
+        function onSelectChangeSort()
+        {
+            Y.log(" onSelectChangeSort ");
             var sortData = Y.one('#sort-select-el :checked'),
                 sortBy = sortData.get('value'),
                 sortDir = sortData.getAttribute("data-sort-dir"),
@@ -83,7 +98,8 @@ YUI().use(
             router.replace(getRoute());
         }
 
-        function onSelectChangeRpp() {
+        function onSelectChangeRpp()
+        {
 
             var rppData = Y.one('#rpp-select-el :checked'),
                 rppNum = rppData.get('value');
@@ -93,61 +109,78 @@ YUI().use(
             router.replace(getRoute());
         }
 
-        function onFailure(response, args) {
+        function onFailure(response, args)
+        {
 
             // mover a onFailure
             var data = args.container.getData(),
                 requestError = data.requesterror;
 
-            if (!requestError) {
+            if (!requestError)
+            {
                 args.container.setAttribute('data-requesterror', 1);
                 requestError = 1;
-            } else {
+            }
+            else
+            {
                 requestError = parseInt(requestError, 10) + 1;
                 args.container.setAttribute('data-requesterror', requestError);
             }
 
             /** there try 3 more times before giving up */
-            if (requestError < 3) {
+            if (requestError < 3)
+            {
                 router.replace(getRoute());
-            } else {
+            }
+            else
+            {
                 Y.log('onFailure: there was a problem with this request');
             }
         }
 
-        function onTimeout() {
+        function onTimeout()
+        {
             onFailure();
         }
 
-        function updateFormElements() {
+        function updateFormElements()
+        {
             var str,
                 rppselect,
                 sortselect,
                 found,
                 re3 = /(.*)\%20(.*)/i;
-            for (var x in QueryString) {
 
-                if (QueryString.hasOwnProperty(x) && x == "rpp") {
+
+            for (var x in QueryString)
+            {
+
+                if (QueryString.hasOwnProperty(x) && x == "rpp")
+                {
                     Y.log("QueryString[x] RPP " + QueryString[x]);
                     rppselect = Y.one('#rpp-select-el');
-                    if (rppselect) {
+                    if (rppselect)
+                    {
                         rppselect.set('value', QueryString[x]);
                     }
-                } else if (QueryString.hasOwnProperty(x) && x == "sort") {
+                }
+                else if (QueryString.hasOwnProperty(x) && x == "sort")
+                {
                     Y.log("QueryString[x] sort " + QueryString[x]);
                     sortselect = Y.one('#sort-select-el');
                     str = QueryString[x];
                     found = str.match(re3);
-                    //  Y.log("@@@   1" + found[0] + " 2 " +  + " 3 " + found[2]);
-                    if (sortselect) {
+                    if (sortselect)
+                    {
                         sortselect.set('value', found[1]);
-                          Y.log("@@@   1" + found[0] + " 2 " + found[1] + " 3 " + found[2]);
+                        // Y.log("1" + found[0] + " 2 " + found[1] + " 3 " + found[2]);
                     }
                 }
             }
         }
 
-        function update(state) {
+        function update(state)
+        {
             this.setPage(state.page, true);
             this.setRowsPerPage(state.rowsPerPage, true);
             Y.log("Function update page " + state.page + " rowsPerPage " + state.rowsPerPage);
@@ -161,7 +194,8 @@ YUI().use(
         }
 
 
-        function initPaginator(page, totalRecords, rowsPerPage) {
+        function initPaginator(page, totalRecords, rowsPerPage)
+        {
 
             Y.one('#paginator').empty();
             var paginatorConfiguration = {
@@ -174,15 +208,18 @@ YUI().use(
 
             paginator.on('changeRequest', update);
 
-            if (totalRecords > rowsPerPage) {
+            if (totalRecords > rowsPerPage)
+            {
                 paginator.render('#paginator');
             }
 
         }
 
-        function onSuccess(response, args) {
-              Y.log("onSuccess call. ");
-            try {
+        function onSuccess(response, args)
+        {
+            Y.log("onSuccess call. ");
+            try
+            {
 
                 var node = args.container,
 
@@ -204,16 +241,21 @@ YUI().use(
 
 
                 Y.log("numfound " + numfound);
-                if (numfound > 0) {
+                if (numfound > 0)
+                {
                     // first transaction; enable paginator
 
                     node.empty().append(
-                        itemsTemplate({
+                        itemsTemplate(
+                        {
                             items: response.response.docs,
-                            app: { appRoot: appRoot }
+                            app:
+                            {
+                                appRoot: appRoot
+                            }
                         })
                     );
-               
+
                     updateFormElements();
                     var resultsnum = Y.one('.resultsnum'),
                         querytextNode = Y.one('.s-query'),
@@ -223,32 +265,40 @@ YUI().use(
                     startNode.set('innerHTML', displayStart);
                     docslengthNode.set('innerHTML', start + docslength);
                     numfoundNode.set('innerHTML', numfound);
-                    if (transactions.length < 1) {
+                    if (transactions.length < 1)
+                    {
                         initPaginator(page, numfound, docslength);
-                   
+
                         var sortselect = Y.one('#sort-select-el');
-                        if (sortselect) { 
-                            sortselect.set('value', defaultSort); 
-                         }
+                        if (sortselect)
+                        {
+                            sortselect.set('value', defaultSort);
+                        }
                         // Sorting dropdown 
                         Y.one('body').delegate('change', onSelectChangeSort, '#sort-select-el');
                         Y.one('body').delegate('change', onSelectChangeRpp, '#rpp-select-el');
                     }
+                    transactions.push(this.url);
                 }
 
                 args.container.setAttribute('data-requesterror', 0);
                 Y.one('body').removeClass('io-loading');
-            } catch (e) {
+            }
+            catch (e)
+            {
                 Y.log("Error: " + e);
             }
 
         }
 
-        function initRequest(options) {
+        function initRequest(options)
+        {
 
-            for (var w in options) {
-                if (options.hasOwnProperty(w)) {
-                    Y.log("options[w]: " + w + "  " + options[w]);
+            for (var w in options)
+            {
+                if (options.hasOwnProperty(w))
+                {
+                    //  Y.log("options[w]: " + w + "  " + options[w]);
                 }
             }
             var start = 0,
@@ -263,25 +313,31 @@ YUI().use(
             Y.one('body').addClass('io-loading');
 
             /** find all data-fq and push the value into fq Array*/
-            for (var prop in data) {
-                if (data.hasOwnProperty(prop)) {
-                    if (prop.match('fq-')) {
+            for (var prop in data)
+            {
+                if (data.hasOwnProperty(prop))
+                {
+                    if (prop.match('fq-'))
+                    {
                         fq.push(prop.replace('fq-', '') + ':' + data[prop]);
                     }
                 }
             }
 
 
-            if (options.page) {
+            if (options.page)
+            {
                 page = parseInt(options.page, 10);
             }
 
 
-            if (options.start) {
+            if (options.start)
+            {
                 start = parseInt(options.start, 10);
             }
 
-            if (options.rpp) {
+            if (options.rpp)
+            {
                 rpp = parseInt(options.rpp, 10);
             }
 
@@ -289,8 +345,10 @@ YUI().use(
 
             options.container.empty();
 
-            Y.jsonp(source, {
-                on: {
+            Y.jsonp(source,
+            {
+                on:
+                {
                     success: onSuccess,
                     failure: onFailure,
                     timeout: onTimeout

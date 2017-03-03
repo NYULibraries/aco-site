@@ -12,14 +12,8 @@ YUI().use(
                 return options.fn(JSON.parse(context));
             }
 
-            function speakingurl(context, options)
-            {
-                return window.getSlug(this.label);
-            }
-
             function ifempty(fieldtocheck, defaultvalue)
             {
-
                 if (fieldtocheck)
                 {
                     return;
@@ -28,13 +22,10 @@ YUI().use(
                 {
                     return defaultvalue;
                 }
-                // return "" ? fieldtocheck : defaultvalue;
-
             }
             return {
                 ifempty: ifempty,
                 json: json,
-                speakingurl: speakingurl
             };
         }
         Y.Object.each(HandlebarsHelpers(), function(helper, key)
@@ -626,7 +617,7 @@ YUI().use(
                     var sortselect = Y.one('#sort-select-el');
                     str = QueryString[x];
                     found = str.match(re3);
-                   
+
                     if (sortselect)
                     {
                         sortselect.set('value', found[1]);
@@ -872,10 +863,11 @@ YUI().use(
                         Y.one('body').delegate('change', onSelectChangeSort, '#sort-select-el');
                         Y.one('body').delegate('change', onSelectChangeRpp, '#rpp-select-el');
                         var sortselect = Y.one('#sort-select-el');
-                        if (sortselect) { 
-                            sortselect.set('value', defaultSort); 
-                         }
-                       
+                        if (sortselect)
+                        {
+                            sortselect.set('value', defaultSort);
+                        }
+
 
                     }
                     // store called to avoid making the request multiple times
