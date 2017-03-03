@@ -36,6 +36,7 @@
           "sm_ar_publication_date", 
           "sm_ar_partner", 
           "sm_ar_subject",
+          "sm_ar_sauthor",
           "ss_longlabel", 
           "ss_sauthor", 
           "ss_ar_sauthor", 

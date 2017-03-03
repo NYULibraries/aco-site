@@ -43,6 +43,7 @@
           "ss_longlabel", 
           "ss_sauthor", 
           "ss_ar_sauthor", 
+          "sm_ar_sauthor", 
           "ss_ar_publocation", 
           "ss_ar_publication_location",
           "ds_created",
