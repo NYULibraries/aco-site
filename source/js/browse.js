@@ -1,14 +1,10 @@
 /* jshint laxcomma: true */
 YUI().use(
     'node', 'event', 'handlebars', 'jsonp', 'router', 'gallery-paginator', 'anim', 'querystring',
-    function(Y) {
+    function(Y)
+    {
         'use strict';
-        var itemsTemplateSource = Y.one('#items').getHTML(),
-            itemsTemplate = Y.Handlebars.compile(itemsTemplateSource),
-            router = new Y.Router(),
-            defaultSort = 'ds_created',
-            transactions = [],
-            QueryString = Y.QueryString.parse(window.location.search.substring(1));
+
 
         function HandlebarsHelpers()
         {
@@ -46,6 +42,13 @@ YUI().use(
         {
             Y.Handlebars.registerHelper(key, helper);
         });
+
+        var itemsTemplateSource = Y.one('#items').getHTML(),
+            itemsTemplate = Y.Handlebars.compile(itemsTemplateSource),
+            router = new Y.Router(),
+            defaultSort = 'ds_created',
+            transactions = [],
+            QueryString = Y.QueryString.parse(window.location.search.substring(1));
 
         function getRoute()
         {

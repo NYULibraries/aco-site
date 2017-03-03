@@ -42,7 +42,7 @@ YUI().use(
             router = new Y.Router(),
             transactions = [],
             defaultSort = "score",
-            scopeIs = "contains",
+            scopeIs = "equals",
             initialQs = window.location.search.substring(1),
             QueryString = Y.QueryString.parse(initialQs);
 
@@ -635,7 +635,7 @@ YUI().use(
                         // if this has leading and ending asteriskss
                         if (found)
                         {
-                            // for clarity, even though it should already have this value
+                            // for clarity
                             scopeIs = "contains";
                             str = found[2];
                         }
