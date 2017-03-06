@@ -20,8 +20,7 @@ YUI().use(
 
             function ifempty(fieldtocheck, defaultvalue)
             {
-                // Y.log("inside ifempty " + fieldtocheck);
-                if (fieldtocheck)
+                 if (fieldtocheck)
                 {
                     return;
                 }
