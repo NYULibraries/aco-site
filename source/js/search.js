@@ -4,6 +4,89 @@ YUI().use(
     function(Y)
     {
         'use strict';
+        Y.Object.each(new HandlebarsHelpers(), function(helper, key)
+        {
+            Y.Handlebars.registerHelper(key, helper);
+        });
+
+        var itemsTemplateSource = Y.one('#items').getHTML(),
+            itemsTemplate = Y.Handlebars.compile(itemsTemplateSource),
+            nrSource = Y.one('#noresults').getHTML(),
+            noresultsTemplate = Y.Handlebars.compile(nrSource),
+            slSource = Y.one('#searchtips').getHTML(),
+            searchlandingTemplate = Y.Handlebars.compile(slSource),
+            router = new Y.Router(),
+            transactions = [],
+            defaultRpp = "10",
+            defaultSort = "score",
+            defaultScope = "equals",
+            initialQs = window.location.search.substring(1),
+            QueryString = Y.QueryString.parse(initialQs);
+
+        if (initialQs !== "")
+        {
+            router.route(router.getPath(), function(req)
+            {
+                var node = Y.one('[data-name="items"]'),
+                    data = node.getData(),
+                    rpp = (req.query.rpp) ? req.query.rpp : ((data.rpp) ? data.rpp : defaultRpp),
+                    sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : "ds_created asc"),
+                    page = (req.query.page) ? parseInt(req.query.page, 10) : 0,
+                    query = (req.query.q) ? req.query.q : '',
+                    scopeIs = (req.query.scope) ? req.query.scope : defaultScope,
+                    provider = (req.query.provider) ? req.query.provider : '',
+                    author = (req.query.author) ? req.query.author : '',
+                    title = (req.query.title) ? req.query.title : '',
+                    publisher = (req.query.publisher) ? req.query.publisher : '',
+                    subject = (req.query.subject) ? req.query.subject : '',
+                    pubplace = (req.query.pubplace) ? req.query.pubplace : '',
+                    start = 0;
+                //Y.log(" scopeIs is scopeIs = " + scopeIs);
+                if (page <= 1)
+                {
+                    start = 0;
+                }
+                else
+                {
+                    start = (page * rpp) - rpp;
+                }
+
+                initRequest(
+                {
+                    container: node,
+                    start: start,
+                    page: page,
+                    rpp: rpp,
+                    sort: sort,
+                    scopeIs: scopeIs,
+                    q: removeQueryDiacritics(query),
+                    provider: removeQueryDiacritics(provider).toLowerCase(),
+                    author: removeQueryDiacritics(author).toLowerCase(),
+                    title: removeQueryDiacritics(title).toLowerCase(),
+                    publisher: removeQueryDiacritics(publisher).toLowerCase(),
+                    subject: removeQueryDiacritics(subject).toLowerCase(),
+                    pubplace: removeQueryDiacritics(pubplace).toLowerCase(),
+
+                });
+
+            });
+        }
+        else
+        {
+            Y.log("No initial query: Search Landing page");
+            var node = Y.one('[data-name="items"]');
+            node.append(searchlandingTemplate());
+            Y.one('body').removeClass('io-loading');
+        }
+
+        function getRoute()
+        {
+            var route = router.getPath() + '?';
+            var newString = Y.QueryString.stringify(QueryString);
+            route += newString;
+            Y.log("getRoute: route  " + route);
+            return route;
+        }
 
         function HandlebarsHelpers()
         {
@@ -27,32 +110,6 @@ YUI().use(
                 ifempty: ifempty,
                 json: json,
             };
-        }
-        Y.Object.each(HandlebarsHelpers(), function(helper, key)
-        {
-            Y.Handlebars.registerHelper(key, helper);
-        });
-
-        var itemsTemplateSource = Y.one('#items').getHTML(),
-            itemsTemplate = Y.Handlebars.compile(itemsTemplateSource),
-            nrSource = Y.one('#noresults').getHTML(),
-            noresultsTemplate = Y.Handlebars.compile(nrSource),
-            slSource = Y.one('#searchtips').getHTML(),
-            searchlandingTemplate = Y.Handlebars.compile(slSource),
-            router = new Y.Router(),
-            transactions = [],
-            defaultSort = "score",
-            scopeIs = "equals",
-            initialQs = window.location.search.substring(1),
-            QueryString = Y.QueryString.parse(initialQs);
-
-        function getRoute()
-        {
-            var route = router.getPath() + '?';
-            var newString = Y.QueryString.stringify(QueryString);
-            route += newString;
-            Y.log("getRoute: route  " + route);
-            return route;
         }
 
         function removeQueryDiacritics(str)
@@ -477,59 +534,7 @@ YUI().use(
             return removeCombinedDiacritics(removeDiacritics(str));
         }
 
-        if (initialQs !== "")
-        {
-            router.route(router.getPath(), function(req)
-            {
-                var node = Y.one('[data-name="items"]'),
-                    data = node.getData(),
-                    rpp = (req.query.rpp) ? req.query.rpp : ((data.rpp) ? data.rpp : "10"),
-                    sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : "ds_created asc"),
-                    page = (req.query.page) ? parseInt(req.query.page, 10) : 0,
-                    query = (req.query.q) ? req.query.q : '',
-                    provider = (req.query.provider) ? req.query.provider : '',
-                    author = (req.query.author) ? req.query.author : '',
-                    title = (req.query.title) ? req.query.title : '',
-                    publisher = (req.query.publisher) ? req.query.publisher : '',
-                    subject = (req.query.subject) ? req.query.subject : '',
-                    pubplace = (req.query.pubplace) ? req.query.pubplace : '',
-                    start = 0;
 
-                if (page <= 1)
-                {
-                    start = 0;
-                }
-                else
-                {
-                    start = (page * rpp) - rpp;
-                }
-
-                initRequest(
-                {
-                    container: node,
-                    start: start,
-                    page: page,
-                    rpp: rpp,
-                    sort: sort,
-                    q: removeQueryDiacritics(query),
-                    provider: removeQueryDiacritics(provider).toLowerCase(),
-                    author: removeQueryDiacritics(author).toLowerCase(),
-                    title: removeQueryDiacritics(title).toLowerCase(),
-                    publisher: removeQueryDiacritics(publisher).toLowerCase(),
-                    subject: removeQueryDiacritics(subject).toLowerCase(),
-                    pubplace: removeQueryDiacritics(pubplace).toLowerCase(),
-
-                });
-
-            });
-        }
-        else
-        {
-            Y.log("No initial query: Search Landing page");
-            var node = Y.one('[data-name="items"]');
-            node.append(searchlandingTemplate());
-            Y.one('body').removeClass('io-loading');
-        }
 
         function onSelectChangeSort()
         {
@@ -587,17 +592,18 @@ YUI().use(
 
         function updateFormElements()
         {
+            Y.log("lmh updateFormElements()");
             var i = 1,
                 cleanstring,
                 str,
                 // leading and ending asterisks
-                re1 = /(^[*])(.*)([*]$)/i,
+                // re1 = /(^[*])(.*)([*]$)/i,
                 // leading and ending quotes
-                re2 = /(^["])(.*)(["]$)/i,
+                //re2 = /(^["])(.*)(["]$)/i,
+                // spaces
                 re3 = /(.*)\%20(.*)/i,
                 found;
 
-            // default values 
 
             for (var x in QueryString)
             {
@@ -611,59 +617,40 @@ YUI().use(
                         rppselect.set('value', QueryString[x]);
                     }
                 }
+                else if (QueryString.hasOwnProperty(x) && x === "scope")
+                {
+                    Y.log("QueryString[x] scope " + QueryString[x]);
+                    var scopeselect = Y.one('.scope-select');
+                    if (scopeselect)
+                    {
+                       scopeselect.set('value', QueryString[x]);
+                    }
+                }
                 else if (QueryString.hasOwnProperty(x) && x == "sort")
                 {
                     Y.log("QueryString[x] sort " + QueryString[x]);
                     var sortselect = Y.one('#sort-select-el');
                     str = QueryString[x];
                     found = str.match(re3);
-
                     if (sortselect)
                     {
                         sortselect.set('value', found[1]);
                     }
                 }
-                if (QueryString.hasOwnProperty(x) && x !== "sort" && x !== "page" && x !== "rpp")
+                if (QueryString.hasOwnProperty(x) && x !== "scope" && x !== "sort" && x !== "page" && x !== "rpp")
                 {
                     var thisValueBox = Y.one('.group' + i + ' .q' + i);
                     if (thisValueBox)
                     {
-
                         str = QueryString[x];
-                        found = str.match(re1);
-                        Y.log("QueryString[x] " + str + "  found " + found);
-                        // if this has leading and ending asteriskss
-                        if (found)
-                        {
-                            // for clarity
-                            scopeIs = "contains";
-                            str = found[2];
-                        }
-                        else
-                        {
-                            found = str.match(re2);
-                            if (found)
-                            {
-                                // Y.log(found);
-                                scopeIs = "equals";
-                                str = found[2];
-                            }
-                        }
                         cleanstring = removeSOLRcharacters(str);
                         Y.one('.group' + i + ' .q' + i).set('value', cleanstring);
                     }
-
                     var selectField = Y.one('.group' + i + ' .field-select');
                     if (selectField)
                     {
                         selectField.set('value', x);
                     }
-                    var scopeField = Y.one('.group' + i + ' .scope-select');
-                    if (scopeField)
-                    {
-                        scopeField.set('value', scopeIs);
-                    }
-                    Y.log("Scope is " + scopeIs);
                     Y.log(i + " updateFormElements cleanstring " + x + " is  " + cleanstring);
                     i++;
                 }
@@ -706,22 +693,18 @@ YUI().use(
         function removeSOLRcharacters(str)
         {
             var outString = str.replace(/[*"]/gi, '');
-            Y.log(" removeSOLRcharacters returning " + outString);
+            // Y.log(" removeSOLRcharacters returning " + outString);
             return outString;
         }
 
         function onSuccess(response, args)
         {
             updateFormElements();
-            Y.log("onSuccess call. scopeIs " + scopeIs);
+            Y.log("onSuccess");
             try
             {
                 var node = args.container,
-                    // resultsnum = Y.one('.resultsnum'),
-                    // querytextNode = Y.one('.s-query'),
-                    // numfoundNode = resultsnum.one('.numfound'),
-                    //   startNode = resultsnum.one('.start'),
-                    // docslengthNode = resultsnum.one('.docslength'),
+                   
                     page = (args.page) ? args.page : 1,
                     numfound = parseInt(response.response.numFound, 10),
 
@@ -735,6 +718,7 @@ YUI().use(
                     aS = QueryString.author,
                     pubS = QueryString.publisher,
                     subS = QueryString.subject,
+                    scopeIs = QueryString.scope,
                     pubplaceS = QueryString.pubplace,
                     appRoot = Y.one('body').getAttribute('data-app'),
                     ADescribeSearch = [],
@@ -849,7 +833,7 @@ YUI().use(
                                     node.toggleClass('open');
                                 }
                             },
-                            duration: .5
+                            duration: 0.5
                         });
                         content.fx.set('reverse', !content.fx.get('reverse'));
                         content.fx.run();
@@ -897,11 +881,12 @@ YUI().use(
                 page = 0,
                 sortBy = options.sort,
                 rpp = options.rpp,
+                scopeIs = options.scopeIs,
                 data = options.container.getData(),
                 source = Y.one('.widget.items').getAttribute('data-source'),
                 qs = "",
                 fl = (data.fl) ? data.fl : '*',
-                scope = Y.one('.widget.items').getAttribute('data-scope'),
+               // scope = Y.one('.widget.items').getAttribute('data-scope'),
                 fq = [];
             Y.one('body').addClass('io-loading');
             /** find all data-fq and push the value into fq Array*/
@@ -921,51 +906,51 @@ YUI().use(
             //         Y.log("options[w]: " + w + "  " + options[w]);
             //     }
             // }
-
+            Y.log("&  initrequest scopeIs " + scopeIs);
             if (options.title)
             {
-               if(scopeIs=="equals")
-               {
-                fq.push('(ss_longlabel:' + options.title + ' OR ' + 'ss_ar_longlabel:' + options.title + ')');
-               }
-               else
-               {
-                fq.push('(tum_longlabel:' + options.title + ' OR ' + 'tum_ar_longlabel:' + options.title + ')');
-               }
+                if (scopeIs == "equals")
+                {
+                    fq.push('(ss_longlabel:' + options.title + ' OR ' + 'ss_ar_longlabel:' + options.title + ')');
+                }
+                else
+                {
+                    fq.push('(tum_longlabel:' + options.title + ' OR ' + 'tum_ar_longlabel:' + options.title + ')');
+                }
             }
             if (options.author)
             {
-               if(scopeIs=="equals")
-               {
-                fq.push('(sm_author:' + options.author + ' OR ' + 'sm_ar_author:' + options.author + ')');
-               }
-               else
-               {
-                fq.push('(tum_author:' + options.author + ' OR ' + 'tum_ar_author:' + options.author + ')');
-               }
+                if (scopeIs == "equals")
+                {
+                    fq.push('(sm_author:' + options.author + ' OR ' + 'sm_ar_author:' + options.author + ')');
+                }
+                else
+                {
+                    fq.push('(tum_author:' + options.author + ' OR ' + 'tum_ar_author:' + options.author + ')');
+                }
             }
 
             if (options.pubplace)
             {
-               if(scopeIs=="equals")
-               {
-                fq.push('(ss_spublocation:' + options.pubplace + ' OR ' + 'ss_ar_publication:' + options.pubplace + ')');
-               }
-               else
-               {
-                fq.push('(tus_spublocation:' + options.pubplace + ' OR ' + 'tus_ar_publication:' + options.pubplace + ')');
-               }
+                if (scopeIs === "equals")
+                {
+                    fq.push('(ss_spublocation:' + options.pubplace + ' OR ' + 'ss_ar_publication:' + options.pubplace + ')');
+                }
+                else
+                {
+                    fq.push('(tus_spublocation:' + options.pubplace + ' OR ' + 'tus_ar_publication:' + options.pubplace + ')');
+                }
             }
             if (options.publisher)
             {
-               if(scopeIs=="equals")
-               {
-                fq.push('(sm_publisher:' + options.publisher + ' OR ' + 'sm_ar_publiser:' + options.publisher + ')');
-               }
-               else
-               {
-                fq.push('(tum_publisher:' + options.publisher + ' OR ' + 'tum_ar_publisher:' + options.publisher + ')');
-               }
+                if (scopeIs === "equals")
+                {
+                    fq.push('(sm_publisher:' + options.publisher + ' OR ' + 'sm_ar_publiser:' + options.publisher + ')');
+                }
+                else
+                {
+                    fq.push('(tum_publisher:' + options.publisher + ' OR ' + 'tum_ar_publisher:' + options.publisher + ')');
+                }
             }
             if (options.provider)
             {
@@ -973,14 +958,14 @@ YUI().use(
             }
             if (options.subject)
             {
-               if(scopeIs=="equals")
-               {
-                fq.push('(sm_subject_label:' + options.subject + ')');
-               }
-               else
-               {
-                fq.push('(tum_subject_label:' + options.subject + ')');
-               }
+                if (scopeIs === "equals")
+                {
+                    fq.push('(sm_subject_label:' + options.subject + ')');
+                }
+                else
+                {
+                    fq.push('(tum_subject_label:' + options.subject + ')');
+                }
             }
 
             if (options.page)
@@ -1003,7 +988,7 @@ YUI().use(
             else
             {
                 qs = qs + '&q=*';
-            } 
+            }
 
             Y.log("**** Sending to Solr: " + qs);
             source = source + qs;
