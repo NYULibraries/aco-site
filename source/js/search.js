@@ -927,12 +927,12 @@ YUI().use(
                if(scopeIs=="equals")
                {
                 fq.push('(ss_longlabel:' + options.title + ' OR ' + 'ss_ar_longlabel:' + options.title + ')');
-            }
                }
                else
                {
                 fq.push('(tum_longlabel:' + options.title + ' OR ' + 'tum_ar_longlabel:' + options.title + ')');
                }
+            }
             if (options.author)
             {
                if(scopeIs=="equals")
@@ -950,11 +950,11 @@ YUI().use(
                if(scopeIs=="equals")
                {
                 fq.push('(ss_spublocation:' + options.pubplace + ' OR ' + 'ss_ar_publication:' + options.pubplace + ')');
-            }
                }
                else
                {
                 fq.push('(tus_spublocation:' + options.pubplace + ' OR ' + 'tus_ar_publication:' + options.pubplace + ')');
+               }
             }
             if (options.publisher)
             {

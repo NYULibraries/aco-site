@@ -16,12 +16,7 @@ YUI().use("node", 'anim', "event", function(Y) {
         value1 = value1.trim();
         Y.log("whichScope1 " + whichScope1);
         Y.log("value1 " + value1);
-        if (whichScope1 == "contains" && (whichField1 != 'q')) {
-            //value1 = value1.replace(/ /g, '"+"');
-        }
-        if (whichScope1 == "equals") {
             value1 = '"' + value1 + '"';
-        }
         var destinationString = whichField1 + "=" + value1;
 
         Y.log("Zounds! DestinationString is " + destinationString);
