@@ -343,7 +343,7 @@ YUI().use(
                 rpp = parseInt(options.rpp, 10);
             }
 
-            source = source + "?" + "wt=json" + "&json.wrf=callback={callback}" + "&fl=" + fl + "&fq=" + fq.join("&fq=") + "&rows=" + rpp + "&start=" + start + "&sort=" + sortBy;
+            source = source + "?" + "wt=json" + "&json.wrf=callback={callback}" + "&q=*"+"&fl=" + fl + "&fq=" + fq.join("&fq=") + "&rows=" + rpp + "&start=" + start + "&sort=" + sortBy;
 
             options.container.empty();
 

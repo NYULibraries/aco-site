@@ -463,7 +463,7 @@ YUI().use(
 
             function removeCombinedDiacritics(str)
             {
-                return str.replace(/\u02BB/g, '').replace(/[\u0300-\u036f]/g, '').replace(/[\,\.\[\]\{\}|]/g, '');
+                return str.replace(/\u02BB/g, '').replace(/[\u0300-\u036f]/g, '').replace(/[\,\[\]\{\}|]/g, '');
             }
 
             function removeDiacritics(str)
@@ -901,6 +901,7 @@ YUI().use(
                 source = Y.one('.widget.items').getAttribute('data-source'),
                 qs = "",
                 fl = (data.fl) ? data.fl : '*',
+                scope = Y.one('.widget.items').getAttribute('data-scope'),
                 fq = [];
             Y.one('body').addClass('io-loading');
             /** find all data-fq and push the value into fq Array*/
@@ -923,19 +924,48 @@ YUI().use(
 
             if (options.title)
             {
-                fq.push('(iass_longlabel:' + options.title + ' OR ' + 'iass_ar_longlabel:' + options.title + ')');
+               if(scopeIs=="equals")
+               {
+                fq.push('(ss_longlabel:' + options.title + ' OR ' + 'ss_ar_longlabel:' + options.title + ')');
             }
+               }
+               else
+               {
+                fq.push('(tum_longlabel:' + options.title + ' OR ' + 'tum_ar_longlabel:' + options.title + ')');
+               }
             if (options.author)
             {
-                fq.push('(sm_sauthor:' + options.author + ' OR ' + 'sm_ar_sauthor:' + options.author + ')');
+               if(scopeIs=="equals")
+               {
+                fq.push('(sm_author:' + options.author + ' OR ' + 'sm_ar_author:' + options.author + ')');
+               }
+               else
+               {
+                fq.push('(tum_author:' + options.author + ' OR ' + 'tum_ar_author:' + options.author + ')');
+               }
             }
+
             if (options.pubplace)
             {
-                fq.push('(ss_spublocation:' + options.pubplace + ' OR ' + 'ss_ar_publication_location:' + options.pubplace + ')');
+               if(scopeIs=="equals")
+               {
+                fq.push('(ss_spublocation:' + options.pubplace + ' OR ' + 'ss_ar_publication:' + options.pubplace + ')');
+            }
+               }
+               else
+               {
+                fq.push('(tus_spublocation:' + options.pubplace + ' OR ' + 'tus_ar_publication:' + options.pubplace + ')');
             }
             if (options.publisher)
             {
-                fq.push('(sm_spublisher:' + options.publisher + ' OR ' + 'sm_ar_publisher:' + options.publisher + ')');
+               if(scopeIs=="equals")
+               {
+                fq.push('(sm_publisher:' + options.publisher + ' OR ' + 'sm_ar_publiser:' + options.publisher + ')');
+               }
+               else
+               {
+                fq.push('(tum_publisher:' + options.publisher + ' OR ' + 'tum_ar_publisher:' + options.publisher + ')');
+               }
             }
             if (options.provider)
             {
@@ -943,7 +973,14 @@ YUI().use(
             }
             if (options.subject)
             {
-                fq.push('(sm_ssubject:' + options.subject + ')');
+               if(scopeIs=="equals")
+               {
+                fq.push('(sm_subject_label:' + options.subject + ')');
+               }
+               else
+               {
+                fq.push('(tum_subject_label:' + options.subject + ')');
+               }
             }
 
             if (options.page)
@@ -963,6 +1000,10 @@ YUI().use(
             {
                 qs = qs + '&q=' + options.q;
             }
+            else
+            {
+                qs = qs + '&q=*';
+            } 
 
             Y.log("**** Sending to Solr: " + qs);
             source = source + qs;

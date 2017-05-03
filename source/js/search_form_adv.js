@@ -13,11 +13,11 @@ YUI().use("node", 'anim', "event", function(Y) {
             whichScope1 = currentTarget.one('.group1 .scope-select').get("value"),
             input1 = currentTarget.one('.group1 [type="text"]'),
             value1 = input1.get("value");
-        value1 = value1.trim().replace(/\s/g, '+');
+        value1 = value1.trim();
         Y.log("whichScope1 " + whichScope1);
         Y.log("value1 " + value1);
         if (whichScope1 == "contains" && (whichField1 != 'q')) {
-            value1 = "*" + value1 + "*";
+            //value1 = value1.replace(/ /g, '"+"');
         }
         if (whichScope1 == "equals") {
             value1 = '"' + value1 + '"';
