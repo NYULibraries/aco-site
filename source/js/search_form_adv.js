@@ -20,7 +20,7 @@ YUI().use("node", 'anim', "event", function(Y)
         Y.log("value1 " + value1);
         if (value1 !== "")
         {
-            destinationString = whichField1 + "=" + value1 + "&scope=" + whichScope1;
+            destinationString = whichField1 + '=' + value1 + '&scope=' + whichScope1;
             Y.log("Zounds! DestinationString is " + destinationString);
             location.href = currentTarget.get("action") + "?" + destinationString;
         }

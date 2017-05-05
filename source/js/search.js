@@ -520,7 +520,7 @@ YUI().use(
 
             function removeCombinedDiacritics(str)
             {
-                return str.replace(/\u02BB/g, '').replace(/[\u0300-\u036f]/g, '').replace(/[\,\[\]\{\}|]/g, '');
+                return str.replace(/\u02BB/g, '').replace(/[\u0300-\u036f]/g, '').replace(/[\,\.\[\]\{\}|]/g, '');
             }
 
             function removeDiacritics(str)
@@ -911,22 +911,45 @@ YUI().use(
             {
                 if (scopeIs == "equals")
                 {
-                    fq.push('(ss_longlabel:' + options.title + ' OR ' + 'ss_ar_longlabel:' + options.title + ')');
+                    fq.push('(ss_stitle_long:"' + options.title + '" OR ' + 'ss_ar_stitle_long:"' + options.title + '")');
                 }
                 else
                 {
-                    fq.push('(tum_longlabel:' + options.title + ' OR ' + 'tum_ar_longlabel:' + options.title + ')');
+                    var title_words=options.title.split(" "); 
+                    var index;
+                    var query_str='(';
+                    for (index = 0; index < title_words.length; ++index) { 
+                      query_str=query_str+'tus_stitle_long:"' + title_words[index] + '" OR ' + 'tus_ar_stitle_long:"' + title_words[index]+'"';
+                      if(index<(title_words.length-1))
+                      {
+                           query_str=query_str+' OR ';
+                      } 
+                    }
+                    query_str=query_str+')';
+                    fq.push(query_str);
                 }
             }
             if (options.author)
             {
                 if (scopeIs == "equals")
                 {
-                    fq.push('(sm_author:' + options.author + ' OR ' + 'sm_ar_author:' + options.author + ')');
+                    fq.push('(sm_sauthor:"' + options.author + '" OR ' + 'sm_ar_sauthor:"' + options.author + '")');
                 }
                 else
                 {
-                    fq.push('(tum_author:' + options.author + ' OR ' + 'tum_ar_author:' + options.author + ')');
+                    var author_words=options.author.split(" "); 
+                    var index;
+                    var query_str='(';
+                    for (index = 0; index < author_words.length; ++index) { 
+                      query_str=query_str+'tum_author:' + '"'+author_words[index]+'"' + ' OR ' + 'tum_ar_author:"' + author_words[index]+'"';
+                      if(index<(author_words.length-1))
+                      {
+                           query_str=query_str+' OR ';
+
+                      } 
+                    }
+                    query_str=query_str+')';
+                    fq.push(query_str);
                 }
             }
 
@@ -934,40 +957,90 @@ YUI().use(
             {
                 if (scopeIs === "equals")
                 {
-                    fq.push('(ss_spublocation:' + options.pubplace + ' OR ' + 'ss_ar_publication:' + options.pubplace + ')');
+                    fq.push('(ss_spublocation:"' + options.pubplace + '" OR ' + 'ss_ar_spublocation:"' + options.pubplace + '")');
                 }
                 else
                 {
-                    fq.push('(tus_spublocation:' + options.pubplace + ' OR ' + 'tus_ar_publication:' + options.pubplace + ')');
+                    var pubplace_words=options.pubplace.split(" "); 
+                    var index;
+                    var query_str='(';
+                    for (index = 0; index < pubplace_words.length; ++index) { 
+                      query_str=query_str+'tus_spublocation:' + '"'+pubplace_words[index]+'"' + ' OR ' + 'tus_ar_publocation:"' + pubplace_words[index]+'"';
+                      if(index<(pubplace_words.length-1))
+                      {
+                           query_str=query_str+' OR ';
+                      } 
+                    }
+                    query_str=query_str+')';
+                    fq.push(query_str);
                 }
             }
             if (options.publisher)
             {
                 if (scopeIs === "equals")
                 {
-                    fq.push('(sm_publisher:' + options.publisher + ' OR ' + 'sm_ar_publiser:' + options.publisher + ')');
+                    fq.push('(sm_spublisher:"' + options.publisher + '" OR ' + 'sm_ar_spublisher:"' + options.publisher + '")');
                 }
                 else
                 {
-                    fq.push('(tum_publisher:' + options.publisher + ' OR ' + 'tum_ar_publisher:' + options.publisher + ')');
+                    var publisher_words=options.publisher.split(" "); 
+                    var index;
+                    var query_str='(';
+                    for (index = 0; index < publisher_words.length; ++index) { 
+                      query_str=query_str+'tum_publisher:"'+publisher_words[index]+'"' + ' OR ' + 'tum_ar_publisher:"' + publisher_words[index]+'"';
+                      if(index<(publisher_words.length-1))
+                      {
+                           query_str=query_str+' OR ';
+                      } 
+                    }
+                    query_str=query_str+')';
+                    fq.push(query_str);
                 }
             }
             if (options.provider)
             {
-                fq.push('(sm_sprovider_label:' + options.provider + ' OR ' + 'sm_ar_provider_label:' + options.provider + ')');
+                if (scopeIs === "equals")
+                {
+                    fq.push('(sm_sprovider_label:"' + options.provider + '")' );
+                }
+                else
+                {
+                    var provider_words=options.provider.split(" "); 
+                    var index;
+                    var query_str='(';
+                    for (index = 0; index < provider_words.length; ++index) { 
+                      query_str=query_str+'tum_provider_label:"'+provider_words[index]+'"';
+                      if(index<(provider_words.length-1))
+                      {
+                           query_str=query_str+' AND ';
+                      } 
+                    }
+                    query_str=query_str+')';
+                    fq.push(query_str);
+                }
             }
             if (options.subject)
             {
                 if (scopeIs === "equals")
                 {
-                    fq.push('(sm_subject_label:' + options.subject + ')');
+                    fq.push('(sm_ssubject_label:"' + options.subject + '")');
                 }
                 else
                 {
-                    fq.push('(tum_subject_label:' + options.subject + ')');
+                    var subject_words=options.subject.split(" "); 
+                    var index;
+                    var query_str='(';
+                    for (index = 0; index < subject_words.length; ++index) { 
+                      query_str=query_str+'tum_ssubject_label:' + '"'+subject_words[index]+'"';
+                      if(index<(subject_words.length-1))
+                      {
+                           query_str=query_str+' AND ';
+                      } 
+                    }
+                    query_str=query_str+')';
+                    fq.push(query_str);
                 }
             }
-
             if (options.page)
             {
                 page = parseInt(options.page, 10);
