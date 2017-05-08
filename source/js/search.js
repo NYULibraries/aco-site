@@ -520,7 +520,7 @@ YUI().use(
 
             function removeCombinedDiacritics(str)
             {
-                return str.replace(/\u02BB/g, '').replace(/[\u0300-\u036f]/g, '').replace(/[\,\.\[\]\{\}|]/g, '');
+                return str.replace(/[\u02BB-\u02BC]/g, '').replace(/[\u0300-\u036f]/g, '').replace(/[\,\.\[\]\{\}|]/g, '');
             }
 
             function removeDiacritics(str)
@@ -919,10 +919,10 @@ YUI().use(
                     var index;
                     var query_str='(';
                     for (index = 0; index < title_words.length; ++index) { 
-                      query_str=query_str+'tus_stitle_long:"' + title_words[index] + '" OR ' + 'tus_ar_stitle_long:"' + title_words[index]+'"';
+                      query_str=query_str+'(tus_stitle_long:"' + title_words[index] + '" OR ' + 'tus_ar_stitle_long:"' + title_words[index]+'")';
                       if(index<(title_words.length-1))
                       {
-                           query_str=query_str+' OR ';
+                           query_str=query_str+' AND ';
                       } 
                     }
                     query_str=query_str+')';
@@ -941,10 +941,10 @@ YUI().use(
                     var index;
                     var query_str='(';
                     for (index = 0; index < author_words.length; ++index) { 
-                      query_str=query_str+'tum_author:' + '"'+author_words[index]+'"' + ' OR ' + 'tum_ar_author:"' + author_words[index]+'"';
+                      query_str=query_str+'(tum_author:' + '"'+author_words[index]+'"' + ' OR ' + 'tum_ar_author:"' + author_words[index]+'")';
                       if(index<(author_words.length-1))
                       {
-                           query_str=query_str+' OR ';
+                           query_str=query_str+' AND ';
 
                       } 
                     }
@@ -965,10 +965,10 @@ YUI().use(
                     var index;
                     var query_str='(';
                     for (index = 0; index < pubplace_words.length; ++index) { 
-                      query_str=query_str+'tus_spublocation:' + '"'+pubplace_words[index]+'"' + ' OR ' + 'tus_ar_publocation:"' + pubplace_words[index]+'"';
+                      query_str=query_str+'(tus_spublocation:' + '"'+pubplace_words[index]+'"' + ' OR ' + 'tus_ar_publocation:"' + pubplace_words[index]+'")';
                       if(index<(pubplace_words.length-1))
                       {
-                           query_str=query_str+' OR ';
+                           query_str=query_str+' AND ';
                       } 
                     }
                     query_str=query_str+')';
@@ -987,10 +987,10 @@ YUI().use(
                     var index;
                     var query_str='(';
                     for (index = 0; index < publisher_words.length; ++index) { 
-                      query_str=query_str+'tum_publisher:"'+publisher_words[index]+'"' + ' OR ' + 'tum_ar_publisher:"' + publisher_words[index]+'"';
+                      query_str=query_str+'(tum_publisher:"'+publisher_words[index]+'"' + ' OR ' + 'tum_ar_publisher:"' + publisher_words[index]+'")';
                       if(index<(publisher_words.length-1))
                       {
-                           query_str=query_str+' OR ';
+                           query_str=query_str+' AND ';
                       } 
                     }
                     query_str=query_str+')';
