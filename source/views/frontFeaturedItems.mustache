@@ -41,12 +41,12 @@
                 <span><a href="/aco/book/{{ss_book_identifier}}/1?lang=ar">{{ss_ar_title_long}}</a></span>
             </div>
             <div class="md_authors">
-                <span class="md_label">الكاتب:</span> {{ifempty sm_ar_author "n.a."}} {{#each sm_ar_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author="{{this}}"'>{{this}}</a></span>{{/each}}
+                <span class="md_label">الكاتب:</span> {{ifempty sm_ar_author "n.a."}} {{#each sm_ar_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author={{this}}'>{{this}}</a></span>{{/each}}
             </div>
-            <div class="md_publisher"><span class="md_label">الناشر:</span> {{ifempty sm_ar_publisher "n.p."}} {{#each sm_ar_publisher}}<a class="md_publisher" href='/aco/search/?publisher="{{this}}"'><span>{{this}}</span></a>{{/each}}</div>
+            <div class="md_publisher"><span class="md_label">الناشر:</span> {{ifempty sm_ar_publisher "n.p."}} {{#each sm_ar_publisher}}<a class="md_publisher" href='/aco/search/?publisher={{this}}'><span>{{this}}</span></a>{{/each}}</div>
             <div class="md_publocation">
                 <span class="md_label">مكان النشر:</span> {{ifempty ss_ar_publication_location "n.p."}}
-                <a class="md_pubplace" href='/aco/search/?pubplace="{{ss_ar_publication_location}}"'><span>{{ss_ar_publication_location}}</span></a>
+                <a class="md_pubplace" href='/aco/search/?pubplace={{ss_ar_publication_location}}'><span>{{ss_ar_publication_location}}</span></a>
             </div>
             <div class="md_pubdate"><span class="md_label">تاريخ النشر:</span> {{ifempty ss_pubdate "n.d."}}
                 <span dir="ltr" lang="en">{{ss_pubdate}}</span></div>
