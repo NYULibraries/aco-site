@@ -700,7 +700,7 @@ YUI().use(
         function onSuccess(response, args)
         {
             updateFormElements();
-            Y.log("onSuccess");
+          
             try
             {
                 var node = args.container,
@@ -718,7 +718,7 @@ YUI().use(
                     aS = QueryString.author,
                     pubS = QueryString.publisher,
                     subS = QueryString.subject,
-                    scopeIs = QueryString.scope,
+                    scopeIs = args.scopeIs,
                     pubplaceS = QueryString.pubplace,
                     appRoot = Y.one('body').getAttribute('data-app'),
                     ADescribeSearch = [],
