@@ -85,8 +85,8 @@
       </div>
       <div class="md_authors">
         <span class="md_label">الكاتب:</span> 
-         {{ifempty sm_ar_author "n.a."}}
-        {{#each sm_ar_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author={{this}}'>{{this}}</a></span>{{/each}}
+         {{ifempty sm_ar_sauthor "n.a."}}
+        {{#each sm_ar_sauthor}}<span class="one_author"><a class="md_author" href='/aco/search/?author={{this}}'>{{this}}</a></span>{{/each}}
       </div>
       <div class="md_publisher"><span class="md_label">الناشر:</span>  
         {{ifempty sm_ar_publisher "n.p."}}
