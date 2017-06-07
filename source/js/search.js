@@ -550,12 +550,16 @@ YUI().use(
 
         function onSelectChangeRpp()
         {
-            Y.log(" onSelectChangeRpp ");
-            var rppData = Y.one('#rpp-select-el :checked'),
-                rppNum = rppData.get('value');
             QueryString = Y.QueryString.parse(window.location.search.substring(1));
-            QueryString.rpp = rppNum;
-            Y.log(" QueryString.rpp " + QueryString.rpp);
+            var rppData = Y.one('#rpp-select-el :checked'),
+                rowsPerPage = rppData.get('value'),
+                numfound = Y.one('.numfound').get('innerHTML'),
+                page = 1;
+            
+            QueryString.page = page;
+            QueryString.rpp = rowsPerPage;
+            Y.log("onSelectChangeRpp:  QueryString.rowsPerPage " + QueryString.rpp);
+            initPaginator(page, numfound, rowsPerPage)
             router.replace(getRoute());
         }
 
@@ -596,12 +600,8 @@ YUI().use(
             var i = 1,
                 cleanstring,
                 str,
-                // leading and ending asterisks
-                // re1 = /(^[*])(.*)([*]$)/i,
-                // leading and ending quotes
-                //re2 = /(^["])(.*)(["]$)/i,
                 // spaces
-                re3 = /(.*)\%20(.*)/i,
+                regex = /(.*)\%20(.*)/i,
                 found;
 
 
@@ -631,7 +631,7 @@ YUI().use(
                     Y.log("QueryString[x] sort " + QueryString[x]);
                     var sortselect = Y.one('#sort-select-el');
                     str = QueryString[x];
-                    found = str.match(re3);
+                    found = str.match(regex);
                     if (sortselect)
                     {
                         sortselect.set('value', found[1]);
