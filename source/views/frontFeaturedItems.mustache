@@ -12,7 +12,7 @@
                 <span class="md_label">Publisher:</span> {{#each sm_publisher}}{{ifempty this "n.p."}}<span><a  class="md_publisher" href='/aco/search/?publisher={{this}}'>{{this}}</a></span>{{/each}}</div> {{/if}} {{#if ss_publocation}}
             <div class="md_pubplace">
                 <span class="md_label">Place of Publication:</span>
-                <span class="publoc"><a  class="md_pubplace" href='/aco/search/?pubplace="{{ss_publocation}}"'>{{ss_publocation}}</a></span></div>
+                <span class="publoc"><a  class="md_pubplace" href='/aco/search/?pubplace={{ss_publocation}}'>{{ss_publocation}}</a></span></div>
             {{/if}} {{#if ss_pubdate}}
             <div class="md_pubdate"><span class="md_label">Date of Publication:</span> <span class="pubdate">{{ss_pubdate}}</span></div>
             {{/if}} {{#if zm_subject}}
