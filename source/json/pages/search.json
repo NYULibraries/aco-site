@@ -14,7 +14,7 @@
     "bodyClass": "search io-loading",
     "content": {
       "items": {
-        "source": "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/stage/select",
+        "source": "http://discovery.dlib.nyu.edu:8080/solr3_discovery/viewer/select",
         "rows": 10,
         "fl": [
           "ss_representative_image", 
