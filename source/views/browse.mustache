@@ -1,46 +1,24 @@
 <!doctype html>
 <html>
+
 <head>{{> head }}</head>
+
 <body data-app="{{appUrl}}" data-appRoot="{{appRoot}}" class="{{bodyClass}}">
-  {{> header }}
-  <main class="main container-fluid" role="main">
-    <header>
-      {{#title}}
-        <h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}"><span>{{{html}}}</span></h2>
-      {{/title}}
-      <select id="browse-select">
-        <option data-sort-dir="desc" value="ds_created" selected>Recently added  </option>
-        <option data-sort-dir="asc" value="ss_longlabel" >Title in English / العنوان بالانجليزية</option>
-        <option data-sort-dir="asc" value="ss_ar_title">Title in Arabic / العنوان بالعربية</option>
-        <option data-sort-dir="asc" value="ss_sauthor">Author in English / الكاتب بالانجليزية</option>
-        <option data-sort-dir="asc" value="ss_ar_sauthor">Author in Arabic / الكاتب بالعربية</option>
-        <option data-sort-dir="asc" value="ss_ssubject">Subject in English / الموضوع بالانجليزية</option>
-    
-        <option data-sort-dir="asc" value="ss_publocation">Place in English / بلد النشر بالانجليزية</option>
-        <option data-sort-dir="asc" value="ss_ar_publocation">Place in Arabic / بلد النشر بالعربية</option>
-      </select>
-      <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
-    </header>
-    {{#content}}
-      {{#items}}
-        <div 
-          class="widget items" 
-          data-name="items" 
-          data-rows="{{rows}}"
-          data-source="{{source}}"
-          data-fl="{{fl}}"
-          {{#fq}}
-          data-fq-{{ filter }}="{{ value }}"
-          {{/fq}}
-          data-script='{ "js" : [ "browse.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" } ] }'
-        ></div>
+    {{> header }}
+    <main class="main container-fluid" role="main">
+        <header class="results-header">
+            {{#title}}
+            <h2 class="page-title" lang="{{language_code}}" dir="{{language_dir}}"><span>{{{html}}}</span></h2> {{/title}}
+          
+        </header>
+        {{#content}} {{#items}}
+        <div class="widget items" data-name="items" data-rows="{{rows}}" data-source="{{source}}" data-fl="{{fl}}" {{#fq}} data-fq-{{ filter }}="{{ value }}" {{/fq}} data-script='{ "js" : [ "browse.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" } ] }'></div>
         <div class="text-center">
-          <div id="paginator" class="pagination"></div>
-        </div>        
-      {{/items}}
-    {{/content}}
-  </main>
-  {{> footer }}
-  {{{ closure }}}
+            <div id="paginator" class="pagination"></div>
+        </div>
+        {{/items}} {{/content}}
+    </main>
+    {{> footer }} {{{ closure }}}
 </body>
+
 </html>
