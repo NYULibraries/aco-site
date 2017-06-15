@@ -57,6 +57,10 @@ source/json/htmlminify.json
 source/json/js.json
 source/json/compass.json
 # till we have config directory
+source/json/pages/book.json
+source/json/pages/search.json
+source/json/pages/browse.json
+source/json/curl.json
 
 source/yuiTabTest.html
 source/json/datasources/*
