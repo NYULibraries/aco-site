@@ -19,7 +19,7 @@ YUI().use(
             transactions = [],
             defaultRpp = "10",
             defaultSort = "score",
-            defaultScope = "containsAny",
+            defaultScope = "matches",
             initialQs = window.location.search.substring(1),
             QueryString = Y.QueryString.parse(initialQs);
 
