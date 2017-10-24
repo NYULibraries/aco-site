@@ -520,7 +520,7 @@ YUI().use(
 
             function removeCombinedDiacritics(str)
             {
-                return str.replace(/[\u02BB-\u02BC]/g, '').replace(/[\u0300-\u036f]/g, '').replace(/[\,\.\[\]\{\}|]/g, '');
+                return str.replace(/[\u02BB-\u02BC]/g, '').replace(/[\u0300-\u036f]/g, '').replace(/[\,\.\[\]\{\}|"]/g, '');
             }
 
             function removeDiacritics(str)
@@ -1102,9 +1102,10 @@ YUI().use(
             qs = "?" + "wt=json" + "&json.wrf=callback={callback}" + "&fl=*" + "&fq=" + fq.join("&fq=") + "&rows=" + rpp + "&start=" + start + "&sort=" + sortBy;
             if (options.q)
             {
+                var query_str='';
                 if (scopeIs == "matches")
                 {
-                    fq.push('(content_und:"' + options.q + '" OR ' + 'content_und_ws:"' + options.q + '" OR ' + 'content_en:"' + options.q + '" OR ' + 'content:"' + +options.q+'")');
+                    query_str = '(content_und:"' + options.q + '" OR ' + 'content_und_ws:"' + options.q + '" OR ' + 'content_en:"' + options.q + '" OR ' + 'content:"' + +options.q+'")';
                 }
                 else
                 {
@@ -1126,8 +1127,8 @@ YUI().use(
                       } 
                     }
                     query_str=query_str+')';
-                    qs = qs + '&q=' + query_str;
                }
+                    qs = qs + '&q=' + query_str;
             }
             else
             {
