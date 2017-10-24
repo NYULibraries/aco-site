@@ -30,7 +30,7 @@ YUI().use(
                 var node = Y.one('[data-name="items"]'),
                     data = node.getData(),
                     rpp = (req.query.rpp) ? req.query.rpp : ((data.rpp) ? data.rpp : defaultRpp),
-                    sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : "ds_created asc"),
+                    sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : "score desc"),
                     page = (req.query.page) ? parseInt(req.query.page, 10) : 0,
                     query = (req.query.q) ? req.query.q : '',
                     scopeIs = (req.query.scope) ? req.query.scope : defaultScope,
