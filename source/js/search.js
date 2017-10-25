@@ -676,17 +676,22 @@ YUI().use(
         function initPaginator(page, totalRecords, rowsPerPage)
         {
             Y.one('#paginator').empty();
+            page = parseInt(page);
+            totalRecords = parseInt(totalRecords);
+            rowsPerPage = parseInt(rowsPerPage);
             var paginatorConfiguration = {
                     totalRecords: totalRecords,
                     rowsPerPage: rowsPerPage,
                     initialPage: page,
                     template: '{FirstPageLink} {PageLinks} {NextPageLink}'
                 },
-                paginator = new Y.Paginator(paginatorConfiguration);
+            paginator = new Y.Paginator(paginatorConfiguration);
             paginator.on('changeRequest', update);
             if (totalRecords > rowsPerPage)
             {
                 paginator.render('#paginator');
+            } else {
+                Y.log("\n Paginator hidden -- not needed ");
             }
         }
 
