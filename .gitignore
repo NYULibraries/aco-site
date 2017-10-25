@@ -60,7 +60,7 @@ source/json/pages/book.json
 source/json/pages/browse.json
 source/json/pages/search.json
 source/json/curl.json
-#source/json/conf.json
+source/json/conf.json
 
 source/yuiTabTest.html
 source/json/datasources/*
