@@ -51,15 +51,10 @@ build/*
 node_modules/*
 backups/*
 
-source/json/conf.json
 source/json/sass.json
 source/json/htmlminify.json
 source/json/js.json
 source/json/compass.json
-#till we figure out better way to deal with configs
-source/json/book.json
-source/json/search.json
-source/json/browse.json
 
 source/yuiTabTest.html
 source/json/datasources/*
