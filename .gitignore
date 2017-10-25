@@ -51,12 +51,12 @@ build/*
 node_modules/*
 backups/*
 
-source/json/conf.json
 source/json/sass.json
 source/json/htmlminify.json
 source/json/js.json
 source/json/compass.json
 # till we have config directory
+source/json/conf.json
 source/json/pages/book.json
 source/json/pages/search.json
 source/json/pages/browse.json
