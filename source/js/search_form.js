@@ -1,7 +1,7 @@
 YUI().use("node", "event", function(Y) {
 
     "use strict";
-
+    console.log("*** Search for simple! I believe this file is no longer used in ACO 2017-06-07 LMH ***************");
     var body = Y.one("body");
     
     function onSubmit(event) {
@@ -19,6 +19,6 @@ YUI().use("node", "event", function(Y) {
 
     }
     
-    body.delegate("submit", onSubmit, "form");
+    body.delegate("submit", onSubmit, "form.simple");
  
 });

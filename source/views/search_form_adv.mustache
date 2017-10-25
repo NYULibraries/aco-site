@@ -1,0 +1,34 @@
+<div class="search_holder_advanced widget" data-name="search_form" data-script='{ "js" : [ "search_form_adv.min.js" ] }'>
+    <form class="advanced" method="get" action="{{ appUrl }}/search" role="search">
+        <div class="fieldset group1">
+            <div class="select-hold">
+                <div class="select-style">
+                    <select class="field-select">
+                        <option value="q">Any Field / أي مُصطلح</option>
+                        <option value="title">Title / العنوان</option>
+                        <option value="author">Author / الكاتب</option>
+                        <option value="publisher">Publisher / الناشر</option>
+                        <option value="pubplace">Place of Publication / مكان النشر</option>
+                        <option value="provider">Provider / الشريك</option>
+                        <option value="subject">Subject / الموضوع</option>
+                    </select>
+                </div>
+            </div>
+            <div class="select-hold">
+                <div class="select-style">
+                    <select class="scope-select">
+                        <option value="containsAny" selected="selected">Contains Any / يحتوي على اي</option>
+                        <option value="containsAll">Contains All / يحتوي على كل</option>
+                        <option value="matches">Matches / يساوي</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-hold">
+                <input class="q1" name="q1" type="text" placeholder="search  /  ابحث" title="Enter the terms you wish to search for.">
+            </div>
+            <div class="submit-hold">
+                <input type="submit" class="submit-search">
+            </div>
+        </div>
+    </form>
+</div>

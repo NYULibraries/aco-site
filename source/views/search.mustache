@@ -1,56 +1,25 @@
 <!doctype html>
 <html>
+
 <head>{{> head }}</head>
+
 <body data-app="{{ appUrl }}" data-appRoot="{{ appRoot }}" class="{{ bodyClass }}">
-  {{> header }}
-  <main class="main container-fluid" role="main">
-    <header>
-      {{#title}}
-        <h2  class="page-title" lang="{{language_code}}" dir="{{language_dir}}"><span>{{{html}}}<span></h2>
-      {{/title}}
-      <div class = "aboutinfo">
-        <div class = "aboutinfo-links">
-          <a href="#" dir = "ltr" lang="en" class="aboutinfo-link aboutinfo-link-available"><span></span>About this search</a>
-         <a href="#" dir = "rtl" lang="ar" class="aboutinfo-link aboutinfo-link-available">بخصوص هذا البحث<span class="arrow-left"></a>
-        </div>
-        <div class="about-info-content" style="height:0; overflow:hidden">
-          <p dir = "ltr" lang="en">Searches you perform on this site will query only the descriptive information about each book, both in English and Arabic, but not the full texts of the books.  As searching technologies for Arabic develop, we intend to introduce full-text searching.</p>
-          <p  dir = "rtl" lang="ar">إن عملية البحث التي تجريها في هذا الموقع تعطي وصف ببليوغرافي عن الكتاب المسترجع باللغتين العربية والانجليزية ولكنها لا تقدّم إمكانية البحث بالنص الكامل. سنقوم بتوفير هذا البحث عندما تتطوّر إمكانية استخدام تقنية التعرّف الضوئي على المحارف باللغة العربية في  النصوص المرقمنة للكتب العربية</p>
-        </div> 
-      </div>
-      <select id="browse-select">
-        <option data-sort-dir="asc" value="ss_longlabel">Title in English / العنوان بالانجليزية</option>
-        <option data-sort-dir="asc" value="ss_ar_title">Title in Arabic / العنوان بالعربية</option>
-        <option data-sort-dir="asc" value="ss_sauthor">Author in English / االمؤلف بالانجليزية</option>
-        <option data-sort-dir="asc" value="ss_ar_sauthor">Author in Arabic / المؤلف بالعربية</option>
-        <option data-sort-dir="asc" value="ss_ssubject">Subject in English / الموضوع بالانجليزية</option>
-        <option data-sort-dir="asc" value="ss_publocation">Place in English / بلد النشر بالانجليزية</option>
-        <option data-sort-dir="asc" value="ss_ar_publocation">Place in Arabic / بلد النشر بالعربية</option>
-         <option data-sort-dir="desc" value="ds_created">Recently added  </option>
-        <option data-sort-dir="desc" value="score" selected>Relevance/ فرز حسب</option>
-      </select>
-      <div class="resultsnum">Showing  <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span> results for <span class="s-query"></span></div>
-    </header>
-    {{#content}}
-      {{#items}}
-        <div 
-          class="widget items" 
-          data-name="items" 
-          data-rows="{{rows}}"
-          data-source="{{source}}"
-          data-fl="{{fl}}"
-          {{#fq}}
-          data-fq-{{filter}}="{{value}}"
-          {{/fq}}
-          data-script='{ "js" : [ "search.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" }, { "template" : "noresults.hbs", "id" : "noresults" } ] }'
-        ></div>
+    {{> header }}
+    <main class="main container-fluid" role="main">
+        {{> search_form_adv }}
+        <header class="results-header">
+            {{#title}}
+            <h2 class="page-title" lang="{{language_code}}" dir="{{language_dir}}"><span>{{{html}}}<span></h2> {{/title}}
+          
+        </header>
+        {{#content}} {{#items}}
+        <div class="widget items" data-name="items" data-rows="{{rows}}" data-source="{{source}}" data-fl="{{fl}}" {{#fq}} data-fq-{{filter}}="{{value}}" {{/fq}} data-script='{ "js" : [ "search.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" }, { "template" : "noresults.hbs", "id" : "noresults" } , { "template" : "searchtips.mustache", "id" : "searchtips" }] }'></div>
         <div class="text-center">
-          <div id="paginator" class="pagination"></div>
-        </div>        
-      {{/items}}
-    {{/content}}    
-  </main>
-  {{> footer }}
-  {{{ closure }}}
+            <div id="paginator" class="pagination"></div>
+        </div>
+        {{/items}} {{/content}}
+    </main>
+    {{> footer }} {{{ closure }}}
 </body>
+
 </html>

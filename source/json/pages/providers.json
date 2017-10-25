@@ -1,6 +1,0 @@
-{
-  "providers": {
-    "callback" : "providers",
-    "route": "/providers/index.html"
-  }
-}

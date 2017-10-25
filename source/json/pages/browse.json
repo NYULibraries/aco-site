@@ -19,7 +19,7 @@
     "bodyClass": "browse",
     "content": {
       "items": {
-        "source": "http://discovery.dlib.nyu.edu:8080/solr3_discovery/viewer/select",
+        "source": "http://stagediscovery.dlib.nyu.edu:8983/solr/viewer/select",
         "rows": 10,
         "fl": [
           "ss_representative_image", 
@@ -30,6 +30,7 @@
           "ss_uri", 
           "sm_publisher", 
           "ss_pubdate", 
+          "iass_pubyear", 
           "sm_collection_partner_label",          
           "zm_subject", 
           "zm_partner",
@@ -40,9 +41,10 @@
           "sm_ar_publication_date", 
           "sm_ar_partner", 
           "sm_ar_subject",
+          "ss_ar_sauthor", 
           "ss_longlabel", 
           "ss_sauthor", 
-          "ss_ar_sauthor", 
+          "sm_ar_sauthor", 
           "ss_ar_publocation", 
           "ss_ar_publication_location",
           "ds_created",
