@@ -57,8 +57,8 @@ source/json/js.json
 source/json/compass.json
 #till we find a better way 
 source/json/pages/book.json
-source/json/pages/search.json
 source/json/pages/browse.json
+source/json/pages/search.json
 source/json/curl.json
 source/json/conf.json
 
