@@ -7,5 +7,5 @@
   "appUrl": "http://devweb1.dlib.nyu.edu/aco",
   "appUrlx": "http://localhost/aco",
   "appRoot": "/aco",
-  "discovery": "http://devdiscovery.dlib.nyu.edu:8983/solr/viewer/select/"
+  "discovery": "http://dev-discovery.dlib.nyu.edu:8983/solr/viewer/select/"
 }
