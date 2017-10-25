@@ -19,7 +19,7 @@ YUI().use(
             transactions = [],
             defaultRpp = "10",
             defaultSort = "score",
-            defaultScope = "contains",
+            defaultScope = "matches",
             initialQs = window.location.search.substring(1),
             QueryString = Y.QueryString.parse(initialQs);
 
@@ -30,7 +30,7 @@ YUI().use(
                 var node = Y.one('[data-name="items"]'),
                     data = node.getData(),
                     rpp = (req.query.rpp) ? req.query.rpp : ((data.rpp) ? data.rpp : defaultRpp),
-                    sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : "ds_created asc"),
+                    sort = (req.query.sort) ? req.query.sort : ((data.sort) ? data.sort : "score desc"),
                     page = (req.query.page) ? parseInt(req.query.page, 10) : 0,
                     query = (req.query.q) ? req.query.q : '',
                     scopeIs = (req.query.scope) ? req.query.scope : defaultScope,
@@ -520,7 +520,7 @@ YUI().use(
 
             function removeCombinedDiacritics(str)
             {
-                return str.replace(/[\u02BB-\u02BC]/g, '').replace(/[\u0300-\u036f]/g, '').replace(/[\,\.\[\]\{\}|]/g, '');
+                return str.replace(/[\u02BB-\u02BC]/g, '').replace(/[\u0300-\u036f]/g, '').replace(/[\,\.\[\]\{\}|"]/g, '');
             }
 
             function removeDiacritics(str)
@@ -676,17 +676,22 @@ YUI().use(
         function initPaginator(page, totalRecords, rowsPerPage)
         {
             Y.one('#paginator').empty();
+            page = parseInt(page);
+            totalRecords = parseInt(totalRecords);
+            rowsPerPage = parseInt(rowsPerPage);
             var paginatorConfiguration = {
                     totalRecords: totalRecords,
                     rowsPerPage: rowsPerPage,
                     initialPage: page,
                     template: '{FirstPageLink} {PageLinks} {NextPageLink}'
                 },
-                paginator = new Y.Paginator(paginatorConfiguration);
+            paginator = new Y.Paginator(paginatorConfiguration);
             paginator.on('changeRequest', update);
             if (totalRecords > rowsPerPage)
             {
                 paginator.render('#paginator');
+            } else {
+                Y.log("\n Paginator hidden -- not needed ");
             }
         }
 
@@ -909,7 +914,7 @@ YUI().use(
             Y.log("&  initrequest scopeIs " + scopeIs);
             if (options.title)
             {
-                if (scopeIs == "equals")
+                if (scopeIs == "matches")
                 {
                     fq.push('(tks_title_long:"' + options.title + '" OR ' + 'tks_ar_title_long:"' + options.title + '")');
                 }
@@ -922,7 +927,14 @@ YUI().use(
                       query_str=query_str+'(tus_title_long:"' + title_words[index] +'" OR ' + 'ts_title_long:"' + title_words[index]+ '" OR ' + 'tusar_title_long:"' + title_words[index]+'")';
                       if(index<(title_words.length-1))
                       {
-                           query_str=query_str+' AND ';
+                          if (scopeIs === "containsAny")
+                          {
+                             query_str=query_str+ ' OR ';
+                          } 
+                          else 
+                          {
+                             query_str=query_str+' AND ';
+                          }
                       } 
                     }
                     query_str=query_str+')';
@@ -931,7 +943,7 @@ YUI().use(
             }
             if (options.author)
             {
-                if (scopeIs == "equals")
+                if (scopeIs == "matches")
                 {
                     fq.push('(tkm_author:"' + options.author + '" OR ' + 'tkm_ar_author:"' + options.author + '")');
                 }
@@ -944,8 +956,14 @@ YUI().use(
                       query_str=query_str+'(tum_author:' + '"'+author_words[index]+'"' + ' OR ' + 'tm_author:"' + author_words[index] +'" OR ' + 'tumar_author:"' + author_words[index]+'")';
                       if(index<(author_words.length-1))
                       {
+                          if (scopeIs === "containsAny")
+                          {
+                             query_str=query_str+ ' OR ';
+                          } 
+                          else 
+                          {
                            query_str=query_str+' AND ';
-
+                          }
                       } 
                     }
                     query_str=query_str+')';
@@ -955,7 +973,7 @@ YUI().use(
 
             if (options.pubplace)
             {
-                if (scopeIs === "equals")
+                if (scopeIs === "matches")
                 {
                     fq.push('(tks_publocation:"' + options.pubplace + '" OR ' + 'tks_ar_publocation:"' + options.pubplace + '")');
                 }
@@ -968,7 +986,14 @@ YUI().use(
                       query_str=query_str+'(tus_publocation:' + '"'+pubplace_words[index]+ '" OR ' + 'ts_publocation:"' + pubplace_words[index]+  '" OR ' + 'tusar_publocation:"' + pubplace_words[index]+'")';
                       if(index<(pubplace_words.length-1))
                       {
+                          if (scopeIs === "containsAny")
+                          {
+                             query_str=query_str+ ' OR ';
+                          } 
+                          else 
+                          {
                            query_str=query_str+' AND ';
+                          }
                       } 
                     }
                     query_str=query_str+')';
@@ -977,7 +1002,7 @@ YUI().use(
             }
             if (options.publisher)
             {
-                if (scopeIs === "equals")
+                if (scopeIs === "matches")
                 {
                     fq.push('(tkm_publisher:"' + options.publisher + '" OR ' + 'tkm_ar_publisher:"' + options.publisher + '")');
                 }
@@ -990,7 +1015,14 @@ YUI().use(
                       query_str=query_str+'(tum_publisher:"'+publisher_words[index]+'" OR ' + 'tm_publisher:"' + publisher_words[index]+'" OR ' + 'tumar_publisher:"' + publisher_words[index]+'")';
                       if(index<(publisher_words.length-1))
                       {
+                          if (scopeIs === "containsAny")
+                          {
+                             query_str=query_str+ ' OR ';
+                          } 
+                          else 
+                          {
                            query_str=query_str+' AND ';
+                          }
                       } 
                     }
                     query_str=query_str+')';
@@ -999,7 +1031,7 @@ YUI().use(
             }
             if (options.provider)
             {
-                if (scopeIs === "equals")
+                if (scopeIs === "matches")
                 {
                     fq.push('(tkm_provider_label:"' + options.provider + '")' );
                 }
@@ -1012,7 +1044,14 @@ YUI().use(
                       query_str=query_str+'(tum_provider_label:"'+provider_words[index]+'" OR '+'tm_provider_label:"'+provider_words[index]+'")';
                       if(index<(provider_words.length-1))
                       {
+                          if (scopeIs === "containsAny")
+                          {
+                             query_str=query_str+ ' OR ';
+                          } 
+                          else 
+                          {
                            query_str=query_str+' AND ';
+                          }
                       } 
                     }
                     query_str=query_str+')';
@@ -1021,7 +1060,7 @@ YUI().use(
             }
             if (options.subject)
             {
-                if (scopeIs === "equals")
+                if (scopeIs === "matches")
                 {
                     fq.push('(tkm_subject_label:"' + options.subject + '")');
                 }
@@ -1034,7 +1073,14 @@ YUI().use(
                       query_str=query_str+'(tum_subject_label:' + '"'+subject_words[index]+'" OR '+ 'tm_subject_label:"'+subject_words[index]+'")';
                       if(index<(subject_words.length-1))
                       {
-                           query_str=query_str+' AND ';
+                          if (scopeIs === "containsAny")
+                          {
+                             query_str=query_str+ ' OR ';
+                          } 
+                          else 
+                          {
+                             query_str=query_str+ ' AND ';
+                          }
                       } 
                     }
                     query_str=query_str+')';
@@ -1056,6 +1102,13 @@ YUI().use(
             qs = "?" + "wt=json" + "&json.wrf=callback={callback}" + "&fl=*" + "&fq=" + fq.join("&fq=") + "&rows=" + rpp + "&start=" + start + "&sort=" + sortBy;
             if (options.q)
             {
+                var query_str='';
+                if (scopeIs == "matches")
+                {
+                    query_str = '(content_und:"' + options.q + '" OR ' + 'content_und_ws:"' + options.q + '" OR ' + 'content_en:"' + options.q + '" OR ' + 'content:"' + +options.q+'")';
+                }
+                else
+                {
                     var query_words=options.q.split(" "); 
                     var index;
                     var query_str='(';
@@ -1063,11 +1116,19 @@ YUI().use(
                       query_str=query_str+'(content_und:' +query_words[index]+' OR '+ 'content_und_ws:'+query_words[index]+' OR ' + 'content_en:' + query_words[index] + ' OR ' + 'content:' + query_words[index]+')';
                       if(index<(query_words.length-1))
                       {
-                           query_str=query_str+' AND ';
+                          if (scopeIs === "containsAny")
+                          {
+                             query_str=query_str+ ' OR ';
+                          } 
+                          else 
+                          {
+                             query_str=query_str+ ' AND ';
+                          }
                       } 
                     }
                     query_str=query_str+')';
-                qs = qs + '&q=' + query_str;
+               }
+                    qs = qs + '&q=' + query_str;
             }
             else
             {
