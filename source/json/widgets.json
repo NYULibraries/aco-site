@@ -44,6 +44,12 @@
         "name": "The American University in Cairo",
         "logo": "images/logos/auc.png",
         "url": "http://www.aucegypt.edu/"
+      }, 
+      {
+        "id": "uae",
+        "name": "United Arab Emirates National Archives",
+        "logo": "images/logos/uae.png",
+        "url": "http://www.na.ae/"
       }
     ]
   },
