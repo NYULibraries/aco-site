@@ -14,7 +14,7 @@
     "bodyClass": "search io-loading",
     "content": {
       "items": {
-        "source": "http://stagediscovery.dlib.nyu.edu:8983/solr/viewer/select",
+        "source": "http://discovery1.dlib.nyu.edu:8983/solr/viewer/select",
         "rows": 10,
         "fl": [
           "ss_representative_image", 

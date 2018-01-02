@@ -2,10 +2,10 @@
   "appName": "Arabic Collections Online",
   "appOGDescription": "Arabic Collections Online is a publicly available digital library of public domain Arabic language content. Funded by New York University Abu Dhabi, this project aims to expose 23,000 volumes from NYU and partner institutions over a period of five years.",
   "appOGImage": [{"path":"images/booklarge.png"}],
-  "appOGUrl": "http://stageweb1.dlib.nyu.edu/aco",
+  "appOGUrl": "http://dlib.nyu.edu/aco",
   "collectionCode": "aco",
-  "appUrl": "http://stageweb1.dlib.nyu.edu/aco",
+  "appUrl": "http://dlib.nyu.edu/aco",
   "appUrlx": "http://localhost/aco",
   "appRoot": "/aco",
-  "discovery": "http://stagediscovery.dlib.nyu.edu:8983/solr/viewer/select/"
+  "discovery": "http://discovery1.dlib.nyu.edu:8983/solr/viewer/select/"
 }
