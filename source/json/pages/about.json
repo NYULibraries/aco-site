@@ -93,7 +93,20 @@
                 "class": "col-l",
                 "language_dir": "ltr",
                 "sequence": "8",
-                "html": "<h3>Have more questions? </h3><p>For more information, please contact us at: <a class=\"email-link\" href=\"mailto:ACO-contact-group@nyu.edu\">ACO-contact-group@nyu.edu</a></p>"
+                "html": "<h3>Is ACO metadata available?</h3><p>MARC metadata records for all ACO content are available to the public at:<br> <a target=\"_blank\" class=\"ext\" href= \"https://github.com/NYULibraries/aco-karms\">https://github.com/NYULibraries/aco-karms</a>.</p>"
+            }, {
+                "language_code": "ar",
+                "class": "col-r",
+                "language_dir": "rtl",
+                "sequence": "8",
+                "html": "<h3>هل البيانات الوصفية متاحة ؟</h3><p>تتوفر سجلات البيانات الوصفية لجميع محتويات المجموعات العربية على الانترنت للجمهور على العنوان التالي: <br><a target=\"_blank\" class=\"ext\" href= \"https://github.com/NYULibraries/aco-karms\">https://github.com/NYULibraries/aco-karms</a></p>"
+            }
+            , {
+                "language_code": "en",
+                "class": "col-l",
+                "language_dir": "ltr",
+                "sequence": "8",
+                "html": "<h3>Have more questions?</h3><p>For more information, please contact us at: <a class=\"email-link\" href=\"mailto:ACO-contact-group@nyu.edu\">ACO-contact-group@nyu.edu</a></p>"
             }, {
                 "language_code": "ar",
                 "class": "col-r",
