@@ -10,7 +10,7 @@
 
  <div class="md_publisher"><span class="md_label">Publisher:</span>
     {{#if sm_publisher}}
-           {{#each sm_publisher}} <span><a  class="md_publisher" href='/aco/search/?publisher={{this}}'>{{this}}</a></span>{{/each}}{{else}}n.p.{{/if}} </div> 
+           {{#each sm_publisher}} {{#if this}}<span><a  class="md_publisher" href='/aco/search/?publisher={{this}}'>{{this}}</a></span>{{else}}n.p.{{/if}}{{/each}}{{/if}} </div> 
 
     {{#if ss_publocation}}
             <div class="md_pubplace">
