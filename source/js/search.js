@@ -73,10 +73,10 @@ YUI().use(
         }
         else
         {
-            Y.log("No initial query: Search Landing page");
+            //Y.log("No initial query: Search Landing page");
             var node = Y.one('[data-name="items"]');
             node.append(searchlandingTemplate());
-            Y.one('body').removeClass('io-loading');
+            //Y.one('body').removeClass('io-loading');
         }
 
         function getRoute()
@@ -84,7 +84,7 @@ YUI().use(
             var route = router.getPath() + '?';
             var newString = Y.QueryString.stringify(QueryString);
             route += newString;
-            Y.log("getRoute: route  " + route);
+            //Y.log("getRoute: route  " + route);
             return route;
         }
 
@@ -558,7 +558,7 @@ YUI().use(
             
             QueryString.page = page;
             QueryString.rpp = rowsPerPage;
-            Y.log("onSelectChangeRpp:  QueryString.rowsPerPage " + QueryString.rpp);
+            //Y.log("onSelectChangeRpp:  QueryString.rowsPerPage " + QueryString.rpp);
             initPaginator(page, numfound, rowsPerPage)
             router.replace(getRoute());
         }
@@ -585,7 +585,7 @@ YUI().use(
             }
             else
             {
-                Y.log('onFailure: there was a problem with this request');
+                //Y.log('onFailure: there was a problem with this request');
             }
         }
 
@@ -596,7 +596,6 @@ YUI().use(
 
         function updateFormElements()
         {
-            Y.log("lmh updateFormElements()");
             var i = 1,
                 cleanstring,
                 str,
@@ -610,7 +609,7 @@ YUI().use(
 
                 if (QueryString.hasOwnProperty(x) && x == "rpp")
                 {
-                    Y.log("QueryString[x] RPP " + QueryString[x]);
+                    //Y.log("QueryString[x] RPP " + QueryString[x]);
                     var rppselect = Y.one('#rpp-select-el');
                     if (rppselect)
                     {
@@ -619,7 +618,7 @@ YUI().use(
                 }
                 else if (QueryString.hasOwnProperty(x) && x === "scope")
                 {
-                    Y.log("QueryString[x] scope " + QueryString[x]);
+                   // Y.log("QueryString[x] scope " + QueryString[x]);
                     var scopeselect = Y.one('.scope-select');
                     if (scopeselect)
                     {
@@ -628,7 +627,7 @@ YUI().use(
                 }
                 else if (QueryString.hasOwnProperty(x) && x == "sort")
                 {
-                    Y.log("QueryString[x] sort " + QueryString[x]);
+                    //Y.log("QueryString[x] sort " + QueryString[x]);
                     var sortselect = Y.one('#sort-select-el');
                     str = QueryString[x];
                     found = str.match(regex);
@@ -651,7 +650,7 @@ YUI().use(
                     {
                         selectField.set('value', x);
                     }
-                    Y.log(i + " updateFormElements cleanstring " + x + " is  " + cleanstring);
+                    //Y.log(i + " updateFormElements cleanstring " + x + " is  " + cleanstring);
                     i++;
                 }
             }
@@ -663,7 +662,7 @@ YUI().use(
         {
             this.setPage(state.page, true);
             this.setRowsPerPage(state.rowsPerPage, true);
-            Y.log("Function update page " + state.page + " rowsPerPage " + state.rowsPerPage);
+           // Y.log("Function update page " + state.page + " rowsPerPage " + state.rowsPerPage);
             QueryString = Y.QueryString.parse(window.location.search.substring(1));
             QueryString.page = state.page ? state.page : 1;
             var newPath = router.getPath() + '?';
@@ -690,9 +689,7 @@ YUI().use(
             if (totalRecords > rowsPerPage)
             {
                 paginator.render('#paginator');
-            } else {
-                Y.log("\n Paginator hidden -- not needed ");
-            }
+            } 
         }
 
         function removeSOLRcharacters(str)
@@ -766,7 +763,7 @@ YUI().use(
                 }
                 stringToDescribeSearch = ADescribeSearch.join((" and "));
 
-                Y.log("The number of results found: numfound " + numfound);
+                //Y.log("The number of results found: numfound " + numfound);
                 if (numfound > 0)
                 {
 
@@ -802,7 +799,7 @@ YUI().use(
                     numfoundNode.set('innerHTML', numfound);
                     var aboutInfoBox = function onAboutSearchClick(event)
                     {
-                        Y.log("clicked about link");
+                        
                         event.preventDefault();
                         /* add the mustache content into the dropdown */
                         var node = Y.one('.about-info-content');
@@ -867,7 +864,7 @@ YUI().use(
                 // no results
                 else
                 {
-                    Y.log("nothing found ");
+                   // Y.log("nothing found ");
                     Y.one('body').addClass('items-no-results');
                     updateFormElements();
                     node.append(noresultsTemplate());
@@ -911,7 +908,7 @@ YUI().use(
             //         Y.log("options[w]: " + w + "  " + options[w]);
             //     }
             // }
-            Y.log("&  initrequest scopeIs " + scopeIs);
+            //Y.log("&  initrequest scopeIs " + scopeIs);
             if (options.title)
             {
                 if (scopeIs == "matches")
@@ -1135,7 +1132,7 @@ YUI().use(
                 qs = qs + '&q=*';
             }
 
-            Y.log("**** Sending to Solr: " + qs);
+            //Y.log("**** Sending to Solr: " + qs);
             source = source + qs;
 
 
