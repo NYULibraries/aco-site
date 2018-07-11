@@ -80,12 +80,19 @@ YUI().use(
 	}
   });
 
+  // DLTS Viewer fires a crossframe:message when the
+  // metadata pane in the book page is updated. We 
+  // listen for this event and use it to update 
+  // <title> [HTML element] with the title of the book.
+  // [WCAG2.0AA compliance](https://www.w3.org/WAI/WCAG21/Understanding/page-titled.html)
+  Y.on('display:load', function(data) {
+    document.title = data.title
+  });  
+
   Y.Global.on("crossframe:message", function(o, data) {
     var message = JSON.parse(data.message);
     Y.fire(message.fire, message.data);
   });
-
-  Y.log(router.getPath());
 
   widget.on('load', function() {
       var anim = new Y.Anim({
