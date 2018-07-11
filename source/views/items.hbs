@@ -9,7 +9,7 @@
                 </div>
           </div>
         <div class="select-style sort-select">
-                <select id="sort-select-el">
+                <select id="sort-select-el" aria-label="Sorting Criteria">
                     <option data-sort-dir="desc" value="score">Relevance / فرز حسب</option>
                     <option data-sort-dir="asc" value="tks_title_long">Title in English / العنوان بالانجليزية</option>
                     <option data-sort-dir="asc" value="tks_ar_title_long">Title in Arabic / العنوان بالعربية</option>
@@ -20,7 +20,7 @@
                 </select>
             </div>
             <div class="select-style rpp-select">
-                <select id="rpp-select-el">
+                <select id="rpp-select-el" aria-label="Number of Results Per Page">
                     <option value="10" selected>10 per page</option>
                     <option value="20">20 per page</option>
                     <option value="40">40 per page</option>
@@ -44,9 +44,9 @@
         {{ifempty sm_author "n.a."}}
         {{#each sm_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author={{this}}'>{{this}}</a></span>{{/each}}
         </div>                        
-        <div class="md_publisher"><span class="md_label">Publisher:</span>  
-        {{ifempty sm_publisher "n.p."}}
-        {{#each sm_publisher}}<a  class="md_publisher" href='/aco/search/?publisher={{this}}'><span>{{this}}</span></a>{{/each}}</div>
+        <div class="md_publisher"><span class="md_label">Publisher:</span>
+    {{#if sm_publisher}}
+           {{#each sm_publisher}} {{#if this}}<span><a  class="md_publisher" href='/aco/search/?publisher={{this}}'>{{this}}</a></span>{{else}}n.p.{{/if}}{{/each}}{{/if}} </div> 
         <div class="md_pubplace"><span class="md_label">Place of Publication:</span> 
          {{ifempty ss_publocation "n.p."}}
          <a  class="md_pubplace" href='/aco/search/?pubplace={{ss_publocation}}'>{{ss_publocation}}</a></div>                        

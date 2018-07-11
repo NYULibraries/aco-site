@@ -7,9 +7,12 @@
             <div class="md_author">
                 <span class="md_label">Author:</span> {{ifempty sm_author "n.a."}}{{#each sm_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author={{this}}'>{{this}}</a></span>{{/each}}
             </div>
-            {{#if sm_publisher}}
-            <div class="md_publisher">
-                <span class="md_label">Publisher:</span> {{#each sm_publisher}}{{ifempty this "n.p."}}<span><a  class="md_publisher" href='/aco/search/?publisher={{this}}'>{{this}}</a></span>{{/each}}</div> {{/if}} {{#if ss_publocation}}
+
+ <div class="md_publisher"><span class="md_label">Publisher:</span>
+    {{#if sm_publisher}}
+           {{#each sm_publisher}} {{#if this}}<span><a  class="md_publisher" href='/aco/search/?publisher={{this}}'>{{this}}</a></span>{{else}}n.p.{{/if}}{{/each}}{{/if}} </div> 
+
+    {{#if ss_publocation}}
             <div class="md_pubplace">
                 <span class="md_label">Place of Publication:</span>
                 <span class="publoc"><a  class="md_pubplace" href='/aco/search/?pubplace={{ss_publocation}}'>{{ss_publocation}}</a></span></div>
