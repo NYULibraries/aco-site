@@ -86,8 +86,8 @@ YUI().use(
   // <title> [HTML element] with the title of the book.
   // [WCAG2.0AA compliance](https://www.w3.org/WAI/WCAG21/Understanding/page-titled.html)
   Y.on('display:load', function(data) {
-    document.title = data.title
-  });  
+    document.title = data.title + ': ' + Y.one('meta[property="og:site_name"]').get('content');
+  });
 
   Y.Global.on("crossframe:message", function(o, data) {
     var message = JSON.parse(data.message);
