@@ -78,3 +78,11 @@ source/json/datasources/*
 !node_modules/subjects_pages
 
 source_old/*
+
+npm-debug.log
+nohup.out
+selenium-debug.log
+
+reports
+screenshots
+.env

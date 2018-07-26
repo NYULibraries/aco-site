@@ -72,3 +72,41 @@ $ grunt
 ```bash
 $ grunt watch
 ```
+
+## Test
+
+We are introducing [Nightwatch.js](http://nightwatchjs.org/) as this project test suite.
+
+[Nightwatch.js](http://nightwatchjs.org/) is an easy to use Node.js based End-to-End (E2E) testing solution for browser based apps and websites. It uses the powerful W3C WebDriver API to perform commands and assertions on DOM elements.
+
+A good introduction to learn [Nightwatch.js](http://nightwatchjs.org/) can be found at [Learn how to use Nightwatch.js](https://github.com/dwyl/learn-nightwatch)
+
+### Quick start with Nightwatch.js
+
+1) Install [Nightwatch.js](http://nightwatchjs.org/) globally in your machine.
+
+```
+npm install nightwatch -g
+```
+
+2) Add enviorment information file
+
+```
+cp sample.env .env 
+```
+
+3) Add your enviorment information. E.g.,
+
+```
+export APP_URL=http://localhost/aco
+```
+
+NOTE: *At the moment we only have an enviormental variable for the site URL that we want to test*
+
+4) Inside the same folder that has the nightwatch.conf.js type:
+
+```
+npm test
+```
+
+NOTE: *You need to run `npm install` if you happend to have this repository around and willl resume work on this project.
