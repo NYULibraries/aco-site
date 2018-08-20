@@ -78,3 +78,5 @@ source/json/datasources/*
 !node_modules/subjects_pages
 
 source_old/*
+
+package-lock.json
