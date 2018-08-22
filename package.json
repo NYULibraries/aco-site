@@ -21,8 +21,7 @@
     "request": "^2.45.0",
     "speakingurl": "^1.1.1",
     "underscore": "^1.7.0",
-    "xml2js": "^0.4.6",
-    "grunt-contrib-writeHTML": "file:local_modules/grunt-contrib-writeHTML"
+    "xml2js": "^0.4.6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
