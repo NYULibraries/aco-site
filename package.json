@@ -1,8 +1,11 @@
 {
   "name": "aco-site",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Arabic Collections Online",
   "main": "Gruntfile.js",
+  "engines": {
+    "node": ">=4.4.6"
+  },
   "devDependencies": {
     "dateformat": "^1.0.11",
     "diacritics": "^1.2.1",
@@ -18,19 +21,27 @@
     "grunt-curl": "^2.0.3",
     "handlebars": "^4.0.1",
     "hogan": "^1.0.2",
-    "request": "^2.45.0",
+    "request": "^2.87.0",
     "speakingurl": "^1.1.1",
     "underscore": "^1.7.0",
-    "xml2js": "^0.4.6"
+    "xml2js": "^0.4.6",
+    "aws-sdk": "^2.7.13",
+    "chromedriver": "^2.33.2",
+    "env2": "^2.1.1",
+    "mime-types": "^2.1.13",
+    "nodemon": "^1.11.0",
+    "selenium-server": "^3.8.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nightwatch --env default"
   },
   "author": "NYU Digital Library Technology Services",
   "license": "ISC",
   "homepage": "https://github.com/NYULibraries/aco-site",
   "dependencies": {
     "html-entities": "^1.1.2",
-    "html-minifier": "^0.7.2"
+    "html-minifier": "^0.7.2",
+    "nightwatch": "^1.0.6",
+    "selenium-download": "^2.0.7"
   }
 }
