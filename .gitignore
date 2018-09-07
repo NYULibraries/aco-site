@@ -79,6 +79,8 @@ source/json/datasources/*
 
 source_old/*
 
+package-lock.json
+
 npm-debug.log
 nohup.out
 selenium-debug.log
