@@ -72,10 +72,17 @@ source/json/datasources/*
 
 # project sub modules
 !node_modules/grunt-contrib-writeHTML
+!node_modules/grunt-contrib-writeHTML/package.json
 !node_modules/series
+!node_modules/series/package.json
 !node_modules/series_pages
+!node_modules/series_pages/package.json
 !node_modules/subjects
+!node_modules/subjects/package.json
 !node_modules/subjects_pages
+!node_modules/subjects_pages/package.json
+!node_modules/providers/package.json
+!node_modules/providers_pages/package.json
 
 source_old/*
 
