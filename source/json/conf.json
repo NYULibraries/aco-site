@@ -4,8 +4,8 @@
   "appOGImage": [{"path":"images/booklarge.png"}],
   "appOGUrl": "http://devweb1.dlib.nyu.edu/aco",
   "collectionCode": "aco",
-  "appUrl": "http://devweb1.dlib.nyu.edu/aco",
-  "appUrlx": "http://localhost/aco",
+  "appUrlx": "http://devweb1.dlib.nyu.edu/aco",
+  "appUrl": "http://localhost/aco",
   "appRoot": "/aco",
-  "discovery": "http://dev-discovery.dlib.nyu.edu:8983/solr/viewer/select/"
+  "discovery": "http://discovery.dlib.nyu.edu:8983/solr/viewer/select/"
 }
