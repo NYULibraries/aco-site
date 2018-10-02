@@ -1,15 +1,15 @@
 {
   "curl" : {
     "featuredTitlesAll" : {
-      "src" : "http://dev-discovery.dlib.nyu.edu:8983/solr/viewer/select?wt=json&fq=sm_collection_code:aco&fq=ss_language:en&fq=(ss_book_identifier:aub_aco000078+OR+ss_book_identifier:aub_aco000141+OR+ss_book_identifier:aub_aco000157+OR+ss_book_identifier:aub_aco000045+OR+ss_book_identifier:aub_aco000083+OR+ss_book_identifier:princeton_aco000380+OR+ss_book_identifier:princeton_aco000328+OR+ss_book_identifier:princeton_aco000319+OR+ss_book_identifier:princeton_aco000060+OR+ss_book_identifier:princeton_aco000062+OR+ss_book_identifier:columbia_aco000059+OR+ss_book_identifier:columbia_aco000247+OR+ss_book_identifier:columbia_aco000103+OR+ss_book_identifier:columbia_aco000078+OR+ss_book_identifier:cornell_aco000139+OR+ss_book_identifier:cornell_aco000327+OR+ss_book_identifier:cornell_aco000041+OR+ss_book_identifier:cornell_aco000042+OR+ss_book_identifier:cornell_aco000043+OR+ss_book_identifier:nyu_aco001050+OR+ss_book_identifier:nyu_aco001718+OR+ss_book_identifier:nyu_aco001719+OR+ss_book_identifier:nyu_aco001720)&sort=ss_book_identifier%20desc&rows=30&fl=*&hl=falsei&q=*",
+      "src" : "http://discovery1.dlib.nyu.edu:8983/solr/viewer/select?wt=json&fq=sm_collection_code:aco&fq=ss_language:en&fq=(ss_book_identifier:aub_aco000078+OR+ss_book_identifier:aub_aco000141+OR+ss_book_identifier:aub_aco000157+OR+ss_book_identifier:aub_aco000045+OR+ss_book_identifier:aub_aco000083+OR+ss_book_identifier:princeton_aco000380+OR+ss_book_identifier:princeton_aco000328+OR+ss_book_identifier:princeton_aco000319+OR+ss_book_identifier:princeton_aco000060+OR+ss_book_identifier:princeton_aco000062+OR+ss_book_identifier:columbia_aco000059+OR+ss_book_identifier:columbia_aco000247+OR+ss_book_identifier:columbia_aco000103+OR+ss_book_identifier:columbia_aco000078+OR+ss_book_identifier:cornell_aco000139+OR+ss_book_identifier:cornell_aco000327+OR+ss_book_identifier:cornell_aco000041+OR+ss_book_identifier:cornell_aco000042+OR+ss_book_identifier:cornell_aco000043+OR+ss_book_identifier:nyu_aco001050+OR+ss_book_identifier:nyu_aco001718+OR+ss_book_identifier:nyu_aco001719+OR+ss_book_identifier:nyu_aco001720)&sort=ss_book_identifier%20desc&rows=30&fl=*&hl=falsei&q=*",
       "dest" : "source/json/datasources/featuredTitlesAll.json"      
     },
     "frontCount" : {
-      "src" : "http://dev-discovery.dlib.nyu.edu:8983/solr/viewer/select?wt=json&fq=sm_collection_code:aco&fq=ss_language:en&fl=id&hl=false&q=*",
+      "src" : "http://discovery1.dlib.nyu.edu:8983/solr/viewer/select?wt=json&fq=sm_collection_code:aco&fq=ss_language:en&fl=id&hl=false&q=*",
       "dest" : "source/json/datasources/frontCountId.json"      
     },
     "subjectCount" : {
-      "src" : "http://dev-discovery.dlib.nyu.edu:8983/solr/viewer/select?wt=json&json.nl=arrmap&fq=sm_collection_code:aco&rows=0&facet=true&facet.limit=-1&facet.mincount=1&facet.field=im_field_subject&hl=falsei&q=*",
+      "src" : "http://discovery1.dlib.nyu.edu:8983/solr/viewer/select?wt=json&json.nl=arrmap&fq=sm_collection_code:aco&rows=0&facet=true&facet.limit=-1&facet.mincount=1&facet.field=im_field_subject&hl=falsei&q=*",
       "dest" : "source/json/datasources/subjectCount.json"      
     }
   }
