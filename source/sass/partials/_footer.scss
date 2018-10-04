@@ -1,45 +1,71 @@
+.external {
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-size: 1em;
+  padding-right: 1.2em;
+  display: inline;
+  background-image: url(/aco/images/External.svg);
+
+  // inline-image is a compass helper http://compass-style.org/reference/compass/helpers/inline-data/ 
+  //background: inline-image("External.svg");
+}
+
 .footer-main.container-fluid {
   margin: 90px auto 40px;
   box-shadow: 0px -1px 0px 0px #DECCBF;
   border-top: 1px solid #FFFFFF;
   text-align: center;
-  padding: 40px 0;
+  padding: 40px 20px;
+
+  .creditshold {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    > * {
+      padding-bottom: 2rem;
+    }
+  }
+
   .credits {
-    float: none;
-    clear: both;
     text-transform: uppercase;
-    // screen smart book
     font-family: "Times New Roman", serif;
     font-weight: 400;
     font-style: normal;
     font-size: .9em;
     font-size: .9rem;
-    line-height: 1.5;
+    line-height: 1;
     padding-top: 35px;
     letter-spacing: 1px;
     text-align: center;
     box-shadow: 0px -1px 0px 0px #DECCBF;
     border-top: 1px solid #FFFFFF;
-    //background-color: fuchsia;
   }
+
   .logo-hold {
     margin: 0 auto;
   }
+
   .logo {
     display: inline-block;
     margin: 0 30px 30px;
     line-height: 1;
     width: auto;
     height: 40px;
+
     a {
       display: block;
       width: auto;
       height: 100%;
     }
+
     img {
       width: auto;
       height: 100%;
     }
+
     @media (max-width: 400px) {
       margin: 0 0px 30px;
       width: 100%;
