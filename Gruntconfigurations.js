@@ -118,10 +118,10 @@ function compass () {
 function copy () {
   return {
     main: {
-      expand: true,
-      cwd: 'source/images',
-      src: '**/*',
-      dest: 'build/images',
+      files: [
+       { expand: true, cwd: 'source/images', src: '**/*', dest: 'build/images'},
+       { expand: true, cwd: 'source', src: 'robots.txt', dest: 'build'},
+       ]
     }
   };
 }
