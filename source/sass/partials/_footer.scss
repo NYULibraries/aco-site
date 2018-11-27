@@ -1,13 +1,20 @@
 .external {
+  padding-right: 1.2em;
+  display: inline;
+  background: url(/aco/images/External.svg);
   background-position: right center;
   background-repeat: no-repeat;
   background-size: 1em;
-  padding-right: 1.2em;
-  display: inline;
-  background-image: url(/aco/images/External.svg);
+  padding-bottom: 1px;
+}
 
-  // inline-image is a compass helper http://compass-style.org/reference/compass/helpers/inline-data/ 
-  //background: inline-image("External.svg");
+[dir="rtl"] .external {
+  padding-right: 0;
+  padding-left: 1.3em;
+  background: url(/aco/images/External_rtl.svg);
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 1em;
 }
 
 .footer-main.container-fluid {
@@ -36,12 +43,43 @@
     font-style: normal;
     font-size: .9em;
     font-size: .9rem;
-    line-height: 1;
+    line-height: 1.5;
     padding-top: 35px;
     letter-spacing: 1px;
     text-align: center;
     box-shadow: 0px -1px 0px 0px #DECCBF;
     border-top: 1px solid #FFFFFF;
+  }
+
+  .feedback {
+    font-weight: 400;
+    font-style: normal;
+    font-size: .9em;
+    font-size: .9rem;
+    line-height: 1.5;
+    padding: 35px 0;
+    box-shadow: 0px 1px 0px 0px #DECCBF;
+    border-bottom: 1px solid #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+    margin-bottom: 35px;
+
+    > div {
+      flex: 1 1 auto;
+      margin-bottom: .5rem;
+    }
+
+    > [dir="rtl"] {
+      text-align: right;
+      padding-left: 20px;
+    }
+
+    > [dir="ltr"] {
+      text-align: left;
+      padding-right: 20px;
+    }
   }
 
   .logo-hold {
