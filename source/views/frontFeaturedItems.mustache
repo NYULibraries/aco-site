@@ -8,9 +8,20 @@
                 <span class="md_label">Author:</span> {{ifempty sm_author "n.a."}}{{#each sm_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author={{this}}'>{{this}}</a></span>{{/each}}
             </div>
 
+            <div class="md_category">
+              <span class="md_label">Category:</span>
+              {{ifempty sm_field_topic "n.a."}}
+              {{#each sm_field_topic}}<span class="one_category"><a class="md_category" href='{{../appRoot}}/search?category={{this}}&scope=matches'>{{this}}</a></span>{{/each}}
+            </div>
+            <div class="md_call_number">
+              <span class="md_label">Call number:</span>
+              {{ifempty ss_call_number "n.a."}}
+              {{ss_call_number}}
+            </div>
+
  <div class="md_publisher"><span class="md_label">Publisher:</span>
     {{#if sm_publisher}}
-           {{#each sm_publisher}} {{#if this}}<span><a  class="md_publisher" href='/aco/search/?publisher={{this}}'>{{this}}</a></span>{{else}}n.p.{{/if}}{{/each}}{{/if}} </div> 
+           {{#each sm_publisher}} {{#if this}}<span><a  class="md_publisher" href='/aco/search/?publisher={{this}}'>{{this}}</a></span>{{else}}n.p.{{/if}}{{/each}}{{/if}} </div>
 
     {{#if ss_publocation}}
             <div class="md_pubplace">
@@ -46,6 +57,18 @@
             <div class="md_authors">
                 <span class="md_label">الكاتب:</span> {{ifempty sm_ar_author "n.a."}} {{#each sm_ar_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author={{this}}'>{{this}}</a></span>{{/each}}
             </div>
+
+            <div class="md_category">
+              <span class="md_label">Bresaola:</span>
+              {{ifempty sm_ar_field_topic "n.a."}}
+              {{#each sm_ar_field_topic}}<span class="one_category"><a class="md_category" href='{{../appRoot}}/search?category={{this}}&scope=matches'>{{this}}</a></span>{{/each}}
+            </div>
+            <div class="md_call_number">
+              <span class="md_label">Alcatra:</span>
+              {{ifempty ss_ar_call_number "n.a."}}
+              {{ss_call_number}}
+            </div>
+
             <div class="md_publisher"><span class="md_label">الناشر:</span> {{ifempty sm_ar_publisher "n.p."}} {{#each sm_ar_publisher}}<a class="md_publisher" href='/aco/search/?publisher={{this}}'><span>{{this}}</span></a>{{/each}}</div>
             <div class="md_publocation">
                 <span class="md_label">مكان النشر:</span> {{ifempty ss_ar_publication_location "n.p."}}
