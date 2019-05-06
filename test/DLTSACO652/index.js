@@ -26,7 +26,7 @@ module.exports = {
 
   'Seach page items include "Category" as part of their metadata' : function (browser) {
     browser.url(`${process.env.APP_URL}/search/?category=General%20Works&scope=matches`).waitForElementVisible('body', 1000)
-    browser.expect.element('.md_call_number').to.be.present;
+    browser.expect.element('.md_category').to.be.present;
     browser.end();
   },
 
@@ -43,7 +43,5 @@ module.exports = {
     browser.expect.element('.field-select').to.have.value.that.equals('category');
     browser.end();
   }
-
-
 
 };
