@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>{{>head}}</head>
+<body data-app="{{appUrl}}" data-appRoot="{{appRoot}}" class="{{bodyClass}}">
+  {{>header}}
+  <main class="main container-fluid" role="main">
+    <header class="results-header">
+      {{#title}}
+        <h2 class="page-title" lang="{{language_code}}" dir="{{language_dir}}"><span>{{{html}}}</span></h2>
+      {{/title}}
+    </header>
+    <div class="inner">
+      {{#content}}
+        {{#categoryEn}}
+          <div class="col-l" dir="{{dir}}" lang="{{language}}">
+            <p>{{text}}<p>
+            <ul>
+              <li><a href="{{../../appUrl}}/browse">All ({{#../frontCount}}{{#frontCountId}}{{#data}}{{#response}}{{addcommas numFound}}{{/response}}{{/data}}{{/frontCountId}}{{/../frontCount}} books)</li>
+              {{#categoryQueryEn}}
+                {{#data}}
+                  {{#facet_counts}}
+                    {{#each facet_queries}}
+                      <li><a href="{{../../appUrl}}/search?category={{@key}}&scope=matches">{{@key}}</a> ({{this}} books)</li>
+                    {{/each}}
+                  {{/facet_counts}}
+                {{/data}}
+              {{/categoryQueryEn}}
+            </ul>
+          </div>
+        {{/categoryEn}}
+        {{#categoryAr}}
+          <div class="col-r" dir="{{dir}}" lang="{{language}}">
+            <p>{{text}}<p>
+            <ul>
+              <li><a href="{{../../appUrl}}/browse">Hamburger ({{#../frontCount}}{{#frontCountId}}{{#data}}{{#response}}{{addcommas numFound}}{{/response}}{{/data}}{{/frontCountId}}{{/../frontCount}} frankfurter)</li>
+              {{#categoryQueryAr}}
+                {{#data}}
+                  {{#facet_counts}}
+                    {{#each facet_queries}}
+                      <li><a href="{{../../appUrl}}/search?category={{@key}}&scope=matches">{{@key}}</a> ({{this}} frankfurter)</li>
+                    {{/each}}
+                  {{/facet_counts}}
+                {{/data}}
+              {{/categoryQueryAr}}
+            </ul>
+          </div>
+        {{/categoryAr}}
+      </div>
+    {{/content}}
+  </main>
+  {{>footer}}
+  {{{closure}}}
+</body>
+</html>
