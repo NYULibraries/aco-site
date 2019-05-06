@@ -39,30 +39,42 @@
         </a>
       </div>
       <div lang="en">
-        <div class="md_title"><a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">{{ss_title_long}}</a></div>                
-        <div class="md_authors"><span class="md_label">Author:</span> 
+        <div class="md_title"><a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">{{ss_title_long}}</a></div>
+        <div class="md_authors"><span class="md_label">Author:</span>
         {{ifempty sm_author "n.a."}}
         {{#each sm_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author={{this}}'>{{this}}</a></span>{{/each}}
-        </div>                        
+        </div>
+
+        <div class="md_category">
+          <span class="md_label">Category:</span>
+          {{ifempty sm_field_topic "n.a."}}
+          {{#each sm_field_topic}}<span class="one_category"><a class="md_category" href='{{../app.appRoot}}/search?category={{this}}&scope=matches'>{{this}}</a></span>{{/each}}
+        </div>
+        <div class="md_call_number">
+          <span class="md_label">Call number:</span>
+          {{ifempty ss_call_number "n.a."}}
+          {{ss_call_number}}
+        </div>
+
         <div class="md_publisher"><span class="md_label">Publisher:</span>
     {{#if sm_publisher}}
-           {{#each sm_publisher}} {{#if this}}<span><a  class="md_publisher" href='/aco/search/?publisher={{this}}'>{{this}}</a></span>{{else}}n.p.{{/if}}{{/each}}{{/if}} </div> 
-        <div class="md_pubplace"><span class="md_label">Place of Publication:</span> 
+           {{#each sm_publisher}} {{#if this}}<span><a  class="md_publisher" href='/aco/search/?publisher={{this}}'>{{this}}</a></span>{{else}}n.p.{{/if}}{{/each}}{{/if}} </div>
+        <div class="md_pubplace"><span class="md_label">Place of Publication:</span>
          {{ifempty ss_publocation "n.p."}}
-         <a  class="md_pubplace" href='/aco/search/?pubplace={{ss_publocation}}'>{{ss_publocation}}</a></div>                        
+         <a  class="md_pubplace" href='/aco/search/?pubplace={{ss_publocation}}'>{{ss_publocation}}</a></div>
         <div class="md_pubdate"><span class="md_label">Date of Publication:</span>
          {{ifempty ss_pubdate "n.d."}}
-         {{ss_pubdate}}</div>  
-        <div class="md_pubdate_sort"><span class="md_label">Date of Publication, sortable:</span> {{iass_pubyear}}</div>  
-       
-        {{#if zm_subject}}                           
+         {{ss_pubdate}}</div>
+        <div class="md_pubdate_sort"><span class="md_label">Date of Publication, sortable:</span> {{iass_pubyear}}</div>
+
+        {{#if zm_subject}}
         <div class="md_subjects">
           <span class="md_label">Subject:</span>
           {{#each zm_subject}}
             {{#json this}}<span class="one_subject">
               <a class="md_subject" href='/aco/search/?subject={{name}}'>{{name}}</a></span>
             {{/json}}
-          {{/each}}        
+          {{/each}}
         </div>
          {{/if}}
 
@@ -73,33 +85,45 @@
               <a class="md_provider" data-code="{{code}}" data-id="{{nid}}" href='{{../../../app.appRoot}}/search/?provider={{name}}'>{{name}}</a>
             {{/json}}
           {{/each}}
-        </div>        
+        </div>
       </div>
     </div>
     <div dir="rtl" lang="ar">
-      <div class="md_title" dir="rtl" lang="ar"> 
+      <div class="md_title" dir="rtl" lang="ar">
         <span><a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1?lang=ar">{{ss_ar_title_long}}</a></span>
       </div>
       <div class="md_authors">
-        <span class="md_label">الكاتب:</span> 
+        <span class="md_label">الكاتب:</span>
          {{ifempty sm_ar_author "n.a."}}
         {{#each sm_ar_author}}<span class="one_author"><a class="md_author" href='/aco/search/?author={{this}}'>{{this}}</a></span>{{/each}}
       </div>
-      <div class="md_publisher"><span class="md_label">الناشر:</span>  
+
+      <div class="md_category">
+        <span class="md_label">Bresaola:</span>
+        {{ifempty sm_ar_field_topic "n.a."}}
+        {{#each sm_ar_field_topic}}<span class="one_category"><a class="md_category" href='{{../app.appRoot}}/search?category={{this}}&scope=matches'>{{this}}</a></span>{{/each}}
+      </div>
+      <div class="md_call_number">
+        <span class="md_label">Alcatra:</span>
+        {{ifempty ss_ar_call_number "n.a."}}
+        {{ss_call_number}}
+      </div>
+
+      <div class="md_publisher"><span class="md_label">الناشر:</span>
         {{ifempty sm_ar_publisher "n.p."}}
         {{#each sm_ar_publisher}}<a  class="md_publisher" href='/aco/search/?publisher={{this}}'><span>{{this}}</span></a>{{/each}}</div>
 
       <div class="md_publocation">
-        <span class="md_label">مكان النشر:</span> 
+        <span class="md_label">مكان النشر:</span>
          {{ifempty ss_ar_publication_location "n.p."}}
          <a  class="md_pubplace" href='/aco/search/?pubplace={{ss_ar_publication_location}}'><span>{{ss_ar_publication_location}}</span></a>
-      </div>  
-      <div class="md_pubdate"><span class="md_label">تاريخ النشر:</span> 
+      </div>
+      <div class="md_pubdate"><span class="md_label">تاريخ النشر:</span>
       {{ifempty ss_pubdate "n.d."}}
-      <span dir="ltr" lang="en" >{{ss_pubdate}}</span></div>                        
-    
-  
-    </div>                      
+      <span dir="ltr" lang="en" >{{ss_pubdate}}</span></div>
+
+
+    </div>
   </div>
   {{/items}}
 </div>
