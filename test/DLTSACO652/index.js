@@ -1,14 +1,10 @@
-const conf = require('../../nightwatch.conf.js');
-const path = require('path');
-
 module.exports = {
 
   'Browse by Category exists' : function (browser) {
     browser
-      .url(path.join(process.env.APP_URL, 'browse-by-category'))
+      .url(`${process.env.APP_URL}/browse-by-category`)
       .waitForElementVisible('body', 1000)
       .assert.title('Arabic Collections Online: Browse by Category')
-      .saveScreenshot(conf.imgpath(browser) + 'DLTSACO652-01.png')
       .end();
   },
 
