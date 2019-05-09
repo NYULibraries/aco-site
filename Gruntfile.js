@@ -14,7 +14,7 @@ module.exports = function (grunt) {
 	  compass : configuration.compass()
   };
 
-  if (grunt.file.isFile(__dirname + '/source/json/curl.json')) {
+  if (grunt.file.isFile(`${__dirname}/source/json/curl.js`)) {
 	  taskConfiguration.curl = configuration.curl();
   }
 

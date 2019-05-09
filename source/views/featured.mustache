@@ -1,16 +1,23 @@
-{{#content}} {{#featured}}
-<div class="featured">
-    {{#featuredTitlesAll}} {{#widget}}
-    <div class="flexrow header">
-        <h2 dir="ltr" lang="en" class="itemhomeCol flexcol">{{titleEn}}</h2>
-        <h2 dir="rtl" lang="ar" class="itemhomeCol flexcol"> {{titleAr}}</h2>
-    </div>
-    {{/widget}} {{#data}} {{#response}} {{#docs}} {{> frontFeaturedItems }} {{/docs}} {{/response}} {{/data}} {{/featuredTitlesAll}}
-    <div class="flexrow itemhome viewmore">
-        <div class="itemhomeCol flexcol" lang="en" dir="ltr"><a href="{{../../appUrl}}/browse">View More</a>
+{{#content}}
+  {{#featured}}
+    <div class="featured">
+      {{#featuredTitlesAll}}
+        {{#widget}}
+          <div class="flexrow header">
+            <h2 dir="ltr" lang="en" class="itemhomeCol flexcol">{{titleEn}}</h2>
+            <h2 dir="rtl" lang="ar" class="itemhomeCol flexcol"> {{titleAr}}</h2>
+          </div>
+        {{/widget}}
+      {{/featuredTitlesAll}}
+      {{> frontFeaturedItems ../..}}
+      <div class="flexrow itemhome viewmore">
+        <div class="itemhomeCol flexcol" lang="en" dir="ltr">
+          <a href="{{../../appUrl}}/browse">View More</a>
         </div>
-       <div class="itemhomeCol flexcol" lang="ar" dir="rtl"><a href="{{../../appUrl}}/browse">المزيد</a>
+        <div class="itemhomeCol flexcol" lang="ar" dir="rtl">
+          <a href="{{../../appUrl}}/browse">المزيد</a>
         </div>
+      </div>
     </div>
-</div>
-{{/featured}} {{/content}}
+  {{/featured}}
+ {{/content}}

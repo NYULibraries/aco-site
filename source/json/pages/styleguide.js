@@ -1,4 +1,4 @@
-{
+module.exports = exports = {
   "styleguide": {
     "htmltitle": "styleguide",
     "title": "styleguide",
@@ -6,4 +6,4 @@
     "bodyClass": "styleguide",
     "content": {}
   }
-}
+};

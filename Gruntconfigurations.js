@@ -1,13 +1,10 @@
-
-var grunt = require('grunt') ;
+var grunt = require('grunt');
 
 function project () {
-  var projectConfiguration ;
-  var projectConfigurationFile = __dirname + '/source/json/conf.json' ;
-  if ( grunt.file.isFile ( projectConfigurationFile ) ) {
-    projectConfiguration = grunt.file.readJSON ( projectConfigurationFile ) ;
+  const projectConfigurationFile = `${__dirname}/source/json/conf.js`;
+  if (grunt.file.isFile(projectConfigurationFile)) {
+    return require(projectConfigurationFile);
   }
-  return projectConfiguration ;
 }
 
 function htmlminify () {
@@ -21,9 +18,9 @@ function htmlminify () {
 }
 
 function curl () {
-  if ( grunt.file.isFile( __dirname + '/source/json/curl.json' ) ) {
-	var curlConfiguration = grunt.file.readJSON( __dirname + '/source/json/curl.json' ) ;
-	return curlConfiguration.curl ;
+  const curlConfigurationPath = `${__dirname}/source/json/curl.js`;
+  if (grunt.file.isFile(curlConfigurationPath)) {
+	  return require(curlConfigurationPath).curl;
   }
 }
 
@@ -34,7 +31,7 @@ function js () {
   if ( grunt.file.isFile( __dirname + '/source/json/js.json' ) ) {
 	js_conf = grunt.file.readJSON( __dirname + '/source/json/js.json' ) ;
   }
-	  
+
   else {
     // default JS configuration
     js_conf = {
@@ -42,43 +39,44 @@ function js () {
         build : "external", // options: inline,  external
         style : "expanded" // options: compressed, expanded
 	  }
-    };  
+    };
   }
-  
+
   return js_conf ;
 
 }
 
 /** merge with compass */
 function sass () {
-  
+
   var sass_conf;
-  
+
   if ( grunt.file.isFile( __dirname + '/source/json/sass.json' ) ) {
-    sass_conf = grunt.file.readJSON( __dirname + '/source/json/sass.json' ) ;  
+    sass_conf = grunt.file.readJSON( __dirname + '/source/json/sass.json' ) ;
   }
-  
+
   else {
 	// default SASS configuration
     sass_conf = {
-      sass : {
-        build : "external", // options: inline,  external
-	    // build : "external", // options: inline,  external
+      sass: {
+        build: 'external', // options: inline,  external
 	    // for options; see: https://github.com/gruntjs/grunt-contrib-sass
-	    options : {
-          style : "expanded", // options: nested, compact, compressed, expanded
-          debugInfo : false,
-          lineNumbers : true,
+	    options: {
+          style: 'expanded', // options: nested, compact, compressed, expanded
+          debugInfo: false,
+          lineNumbers: true,
           trace: false
         }
       }
-    };  
+    };
   }
-  
+
   return {
     dist: {
       options: sass_conf.sass.options,
-      files: { 'build/css/style.css': __dirname + '/source/sass/style.scss' },
+      files: {
+        'build/css/style.css': __dirname + '/source/sass/style.scss'
+      },
       build : sass_conf.sass.build
     }
   } ;
@@ -86,19 +84,19 @@ function sass () {
 }
 
 function compass () {
-	
+
   var projectConfiguration = project () ;
-  
+
   // outputStyle: nested, expanded, compact, compressed
   // noLineComments: true, false
   // httpPath: String , default to "/"
 
   var compass_conf;
-	  
+
   if ( grunt.file.isFile ( __dirname + '/source/json/compass.json' ) ) {
-    compass_conf = grunt.file.readJSON ( __dirname + '/source/json/compass.json' ) ;  
+    compass_conf = grunt.file.readJSON ( __dirname + '/source/json/compass.json' ) ;
   }
-	
+
   return {
 	dist: {
 	  options: {
@@ -115,21 +113,31 @@ function compass () {
 
 }
 
-function copy () {
+function copy() {
   return {
     main: {
       files: [
-       { expand: true, cwd: 'source/images', src: '**/*', dest: 'build/images'},
-       { expand: true, cwd: 'source', src: 'robots.txt', dest: 'build'},
-       ]
+        {
+          expand: true,
+          cwd: 'source/images',
+          src: '**/*',
+          dest: 'build/images'
+        },
+        {
+          expand: true,
+          cwd: 'source',
+          src: 'robots.txt',
+          dest: 'build'
+        },
+      ]
     }
   };
 }
 
 function clean () {
-  return [ 
+  return [
     __dirname + '/build/*',
-    __dirname + '/source/json/datasources/*.json' 
+    __dirname + '/source/json/datasources/*.json'
   ];
 }
 

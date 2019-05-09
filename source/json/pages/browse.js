@@ -1,4 +1,6 @@
-{
+const discoveryCore = process.env.DISCOVERY_CORE;
+
+module.exports = exports = {
   "browse": {
     "htmltitle": "Browse",
     "title": [{
@@ -19,36 +21,36 @@
     "bodyClass": "browse",
     "content": {
       "items": {
-        "source": "http://discovery1.dlib.nyu.edu:8983/solr/viewer/select",
+        "source": `${discoveryCore}/select`,
         "rows": 10,
         "fl": [
-          "ss_representative_image", 
-          "ss_title_long",      
-          "ss_ar_title_long",    
+          "ss_representative_image",
+          "ss_title_long",
+          "ss_ar_title_long",
           "ss_book_identifier",
           "sm_author",
-          "ss_uri", 
-          "sm_publisher", 
-          "ss_pubdate", 
-          "iass_pubyear", 
-          "sm_collection_partner_label",          
-          "zm_subject", 
+          "ss_uri",
+          "sm_publisher",
+          "ss_pubdate",
+          "iass_pubyear",
+          "sm_collection_partner_label",
+          "zm_subject",
           "zm_partner",
-          "ss_publocation", 
-          "ss_ar_title", 
-          "sm_ar_author", 
-          "sm_ar_publisher", 
-          "sm_ar_publication_date", 
-          "sm_ar_partner", 
+          "ss_publocation",
+          "ss_ar_title",
+          "sm_ar_author",
+          "sm_ar_publisher",
+          "sm_ar_publication_date",
+          "sm_ar_partner",
           "sm_ar_subject",
-          "ss_ar_sauthor", 
-          "ss_longlabel", 
-          "ss_sauthor", 
-          "sm_ar_sauthor", 
-          "ss_ar_publocation", 
+          "ss_ar_sauthor",
+          "ss_longlabel",
+          "ss_sauthor",
+          "sm_ar_sauthor",
+          "ss_ar_publocation",
           "ss_ar_publication_location",
           "ds_created",
-          "score"          
+          "score"
         ],
         "fq": [
           {
@@ -67,4 +69,4 @@
       }
     }
   }
-}
+};

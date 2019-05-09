@@ -1,4 +1,4 @@
-{
+module.exports = exports = {
     "about": {
         "htmltitle": "About",
         "title": [{
@@ -161,4 +161,4 @@
             }]
         }
     }
-}
+};

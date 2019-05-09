@@ -1,4 +1,4 @@
-{  
+module.exports = exports = {
   "book": {
     "htmltitle": "Book",
     "title": "Book",
@@ -7,4 +7,4 @@
     "sourceUrl": "http://sites.dlib.nyu.edu/viewer",
     "route": "/book/index.html"
   }
-}
+};

@@ -1,4 +1,4 @@
-{
+module.exports = exports = {
     "team": {
         "htmltitle": "About the project team",
         "title": [{
@@ -58,4 +58,4 @@
             }]
         }
     }
-}
+};

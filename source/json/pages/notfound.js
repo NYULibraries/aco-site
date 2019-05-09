@@ -1,4 +1,4 @@
-{
+module.exports = exports = {
   "notfound": {
     "htmltitle": "Page Not Found",
     "title": [{
@@ -26,4 +26,4 @@
       }]
     }
   }
-}
+};

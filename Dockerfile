@@ -16,9 +16,8 @@ WORKDIR /usr/src/app
 COPY . .
 
 RUN npm install -g grunt-cli \
-  && npm install http-server -g \
   && npm install \
-  && grunt
+  && npm run-script build-docker
 
 # Stage 2
 FROM httpd:2.4-alpine

@@ -1,4 +1,4 @@
-{
+module.exports = exports = {
   "resources": {
     "htmltitle": "Other Resources",
     "title": [{
@@ -31,4 +31,4 @@
       }]
     }
   }
-}
+};

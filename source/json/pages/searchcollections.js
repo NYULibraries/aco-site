@@ -1,4 +1,4 @@
-{
+module.exports = exports = {
   "searchcollections": {
     "htmltitle": "Search Collections",
     "title": [{
@@ -18,4 +18,4 @@
     "route": "/searchcollections/index.html",
     "bodyClass": "search"
   }
-}
+};

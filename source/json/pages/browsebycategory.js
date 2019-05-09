@@ -1,4 +1,4 @@
-{
+module.exports = exports = {
   "browsebycategory": {
     "htmltitle": "Browse by Category",
     "title": [{
@@ -40,4 +40,4 @@
       ]
     }
   }
-}
+};

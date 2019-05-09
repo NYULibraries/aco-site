@@ -1,4 +1,4 @@
-{
+module.exports = exports = {
   "front": {
     "title": [ { "html": "Browse Home" } ],
     "menu": [{
@@ -29,4 +29,4 @@
       ]
     }
   }
-}
+};
