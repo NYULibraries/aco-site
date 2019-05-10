@@ -62,7 +62,8 @@ YUI().use(
                     scopeIs: scopeIs,
                     q: removeQueryDiacritics(query),
                     provider: removeQueryDiacritics(provider).toLowerCase(),
-                    category: removeQueryDiacritics(category).toLowerCase(),
+                    //category: removeQueryDiacritics(category).toLowerCase(),
+                    category: removeQueryDiacritics(category),
                     author: removeQueryDiacritics(author).toLowerCase(),
                     title: removeQueryDiacritics(title).toLowerCase(),
                     publisher: removeQueryDiacritics(publisher).toLowerCase(),
@@ -536,8 +537,6 @@ YUI().use(
             return removeCombinedDiacritics(removeDiacritics(str));
         }
 
-
-
         function onSelectChangeSort()
         {
 
@@ -896,7 +895,7 @@ YUI().use(
                 scopeIs = options.scopeIs,
                 data = options.container.getData(),
                 source = Y.one('.widget.items').getAttribute('data-source'),
-                qs = "",
+                qs = '',
                 fl = (data.fl) ? data.fl : '*',
                // scope = Y.one('.widget.items').getAttribute('data-scope'),
                 fq = [];
@@ -913,12 +912,7 @@ YUI().use(
                     }
                 }
             }
-            // for (var w in options) {
-            //     if (options.hasOwnProperty(w)) {
-            //         Y.log("options[w]: " + w + "  " + options[w]);
-            //     }
-            // }
-            //Y.log("&  initrequest scopeIs " + scopeIs);
+
             if (options.title)
             {
                 if (scopeIs == "matches")
@@ -977,7 +971,6 @@ YUI().use(
                     fq.push(query_str);
                 }
             }
-
             if (options.pubplace)
             {
                 if (scopeIs === "matches")
@@ -1007,6 +1000,7 @@ YUI().use(
                     fq.push(query_str);
                 }
             }
+
             if (options.publisher)
             {
                 if (scopeIs === "matches")
@@ -1036,6 +1030,12 @@ YUI().use(
                     fq.push(query_str);
                 }
             }
+
+            if (options.category)
+            {
+                fq.push('(sm_topic:"' + options.category + '" OR ' + 'sm_ar_topic:"' + options.category + '")');
+            }
+
             if (options.provider)
             {
                 if (scopeIs === "matches")

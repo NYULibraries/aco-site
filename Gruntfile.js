@@ -1,17 +1,17 @@
 module.exports = function (grunt) {
 
   /** task to run */
-  var tasks = ['clean', 'copy', 'uglify', 'compass', 'curl', 'writeHTML'];
+  const tasks = ['clean', 'copy', 'uglify', 'compass', 'curl', 'writeHTML'];
 
-  var configuration = require('./Gruntconfigurations');
+  const configuration = require('./Gruntconfigurations');
 
-  var taskConfiguration = {
+  let taskConfiguration = {
     pkg: grunt.file.readJSON('package.json'),
 	  clean: configuration.clean(),
 	  copy: configuration.copy(),
 	  uglify: configuration.uglify(),
 	  watch: configuration.watch(),
-	  compass : configuration.compass()
+	  compass: configuration.compass()
   };
 
   if (grunt.file.isFile(`${__dirname}/source/json/curl.js`)) {

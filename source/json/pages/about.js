@@ -1,13 +1,76 @@
-module.exports = exports = {
-    "about": {
+async function about () {
+  const grunt = require('grunt');
+  const { resolve } = require('path');
+  // frontCount
+  // This information is cache and save as {ROOT}/json/source/datasources/frontCountId.json
+  // on build using grunt-curl.
+  async function frontCountFromCache() {
+    // Data and cache directory {ROOT}/json/source/datasources/*.json
+    const datasourcesFilepath = resolve(__dirname, '../datasources/frontCountId.json');
+    if (grunt.file.isFile(datasourcesFilepath)) {
+      const frontCountData = await grunt.file.readJSON(datasourcesFilepath);
+      return frontCountData.response.numFound;
+    }
+  }
+  // subjectCount
+  // This information is cache and save as {ROOT}/json/source/datasources/subjectCount.json
+  // on build using grunt-curl.
+  async function subjectCountFromCache() {
+    // Data and cache directory {ROOT}/json/source/datasources/*.json
+    const datasourcesFilepath = resolve(__dirname, '../datasources/subjectCount.json');
+    if (grunt.file.isFile(datasourcesFilepath)) {
+      const subjectCountData = await grunt.file.readJSON(datasourcesFilepath);
+      return subjectCountData.facet_counts.facet_fields.im_field_subject.length + 1;
+    }
+  }
+
+  let frontCount = await frontCountFromCache();
+  let subjectCount = await subjectCountFromCache();
+
+  const content = {
+          about: [
+            {
+              languageClass: 'col-l',
+              languageDir: 'ltr',
+              languageCode: 'en',
+              label: 'What is Arabic Collections Online?',
+              body: `<b>Arabic Collections Online </b> (ACO) is a publicly available digital
+                     library of public domain Arabic language content. ACO currently provides
+                     digital access to <b>${frontCount}</b> volumes across <b>${subjectCount}</b>
+                     subjects drawn from rich Arabic collections of distinguished research libraries.
+                     Established with support from NYU Abu Dhabi, and currently supported by major
+                     grants from Arcadia, a charitable fund of Lisbet Rausing and Peter Baldwin,
+                     and Carnegie Corporation of New York, this mass digitization project aims to
+                     feature up to 23,000 volumes from the library collections of NYU and partner
+                     institutions. These institutions are contributing published books in all
+                     fields—literature, business, science, and more—from their Arabic
+                     language collections.`
+            },
+            {
+              languageClass: 'col-r',
+              languageDir: 'rtl',
+              languageCode: 'ar',
+              label: 'ما هي المجموعات العربية على الانترنت؟',
+              body: `<b>المجموعات العربية على الانترنِت</b> هي عبارة عن مكتبة عامة رقميَّة للكتب المؤلَّفة باللغة العربية
+              والتي أصبحت في المجال العام. حالياً، هذا المشروع يوفّر إمكانيّة الولوج الإلكتروني إلى
+              <b>${frontCount}</b> كتاباً في اكثر من <b>${subjectCount}</b> موضوعاً مُستَمداً من مجموعات
+              قيّمة في مكتبات مميَّزة. تأسست بدعم من جامعة نيويورك أبوظبي وتدعمها حاليًا المنح الكبرى من أركاديا ، وهي
+              صندوق خيري لشركة ليسبت راوزينج وبيتر بالدوين ، وشركة كارنيجي في نيويورك. يهدف مشروع الرقمنة هذا إلى عرض
+              ما يصل إلى 23,000 مجلد من مجموعات مكتبة جامعة نيويورك والمؤسسات الشريكة. إن هذه المؤسسات تساهم في تقديم
+              كتب منشورة في مختلف مجالات الأدب، والأعمال، والعلوم، وغيرها من مقتنياتها من المجموعات العربية.`
+            },
+          ]
+    };
+
+    return {
         "htmltitle": "About",
         "title": [{
-            "language_code": "en",
-            "language_dir": "ltr",
+            "languageCode": "en",
+            "languageDir": "ltr",
             "html": "About"
         }, {
-            "language_code": "ar",
-            "language_dir": "rtl",
+            "languageCode": "ar",
+            "languageDir": "rtl",
             "html": "عن هذا المشروع"
         }],
         "menu": [{
@@ -18,7 +81,9 @@ module.exports = exports = {
         "route": "/about/index.html",
         "bodyClass": "page about",
         "content": {
-            "main": [{
+            about: content.about,
+            "main": [
+            {
                 "language_code": "en",
                 "class": "col-l",
                 "language_dir": "ltr",
@@ -150,15 +215,10 @@ module.exports = exports = {
                 "language_dir": "rtl",
                 "sequence": "10",
                 "html": "<p>يستخدم هذا الموقع الخط <a href=\"http://www.amirifont.org/\">العربي</a> الأميري الذي صممه الدكتور خالد حسني. يوزع الخط الأميري تحت <a href=\"http://scripts.sil.org/OFL\">رخصة الخطوط المفتوحة</a>.</p>"
-            }],
-            "frontCount": [{
-                "id": "frontCountId",
-                "widgets": ["frontCountId"]
-            }],
-            "subjectCount": [{
-                "id": "subjectCount",
-                "widgets": ["subjectCount"]
-            }]
+            }
+          ]
         }
     }
 };
+
+module.exports = about;

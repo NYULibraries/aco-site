@@ -1,7 +1,6 @@
-const discoveryCore = process.env.DISCOVERY_CORE;
-
-module.exports = exports = {
-  "search": {
+async function search () {
+  const discoveryCore = process.env.DISCOVERY_CORE;
+  return {
     "htmltitle": "Search",
     "title": [{
       "language_code": "en",
@@ -65,3 +64,5 @@ module.exports = exports = {
     }
   }
 };
+
+module.exports = search;

@@ -1,5 +1,5 @@
-module.exports = exports = {
-  "styleguide": {
+async function styleguide () {
+  return {
     "htmltitle": "styleguide",
     "title": "styleguide",
     "route": "/styleguide/index.html",
@@ -7,3 +7,5 @@ module.exports = exports = {
     "content": {}
   }
 };
+
+module.exports = styleguide;

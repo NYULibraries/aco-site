@@ -1,4 +1,4 @@
-var grunt = require('grunt');
+const grunt = require('grunt');
 
 function project () {
   const projectConfigurationFile = `${__dirname}/source/json/conf.js`;
@@ -8,11 +8,11 @@ function project () {
 }
 
 function htmlminify () {
-  var htmlminifyConfiguration = {} ;
-  var htmlminifyConfigurationFile = __dirname + '/source/json/htmlminify.json' ;
-  if ( grunt.file.isFile ( htmlminifyConfigurationFile ) ) {
-    htmlminifyConfiguration = grunt.file.readJSON ( htmlminifyConfigurationFile ) ;
-    htmlminifyConfiguration = htmlminifyConfiguration.htmlminify
+  let htmlminifyConfiguration = {};
+  let htmlminifyConfigurationFile = `${__dirname}/source/json/htmlminify.json`;
+  if ( grunt.file.isFile(htmlminifyConfigurationFile)) {
+    htmlminifyConfiguration = grunt.file.readJSON(htmlminifyConfigurationFile);
+    htmlminifyConfiguration = htmlminifyConfiguration.htmlminify;
   }
   return htmlminifyConfiguration ;
 }
@@ -25,36 +25,28 @@ function curl () {
 }
 
 function js () {
-
-  var js_conf;
-
-  if ( grunt.file.isFile( __dirname + '/source/json/js.json' ) ) {
-	js_conf = grunt.file.readJSON( __dirname + '/source/json/js.json' ) ;
+  let js_conf;
+  if (grunt.file.isFile(`${__dirname}/source/json/js.json`)) {
+    js_conf = grunt.file.readJSON(`${__dirname}/source/json/js.json`);
   }
-
   else {
     // default JS configuration
     js_conf = {
-      js : {
-        build : "external", // options: inline,  external
-        style : "expanded" // options: compressed, expanded
-	  }
+      js: {
+        build: 'external', // options: inline,  external
+        style: 'expanded' // options: compressed, expanded
+	    }
     };
   }
-
-  return js_conf ;
-
+  return js_conf;
 }
 
 /** merge with compass */
 function sass () {
-
-  var sass_conf;
-
-  if ( grunt.file.isFile( __dirname + '/source/json/sass.json' ) ) {
-    sass_conf = grunt.file.readJSON( __dirname + '/source/json/sass.json' ) ;
+  let sass_conf;
+  if (grunt.file.isFile(`${__dirname}/source/json/sass.json`)) {
+    sass_conf = grunt.file.readJSON(`${__dirname}/source/json/sass.json`);
   }
-
   else {
 	// default SASS configuration
     sass_conf = {
@@ -70,38 +62,31 @@ function sass () {
       }
     };
   }
-
   return {
     dist: {
       options: sass_conf.sass.options,
       files: {
-        'build/css/style.css': __dirname + '/source/sass/style.scss'
+        'build/css/style.css': `${__dirname}/source/sass/style.scss`
       },
-      build : sass_conf.sass.build
+      build: sass_conf.sass.build
     }
-  } ;
-
+  };
 }
 
 function compass () {
-
-  var projectConfiguration = project () ;
-
+  var projectConfiguration = project();
   // outputStyle: nested, expanded, compact, compressed
   // noLineComments: true, false
   // httpPath: String , default to "/"
-
   var compass_conf;
-
-  if ( grunt.file.isFile ( __dirname + '/source/json/compass.json' ) ) {
-    compass_conf = grunt.file.readJSON ( __dirname + '/source/json/compass.json' ) ;
+  if (grunt.file.isFile(`${__dirname}/source/json/compass.json`)) {
+    compass_conf = grunt.file.readJSON(`${__dirname}/source/json/compass.json`);
   }
-
   return {
-	dist: {
-	  options: {
+	  dist: {
+	    options: {
         basePath: __dirname,
-        sassDir: __dirname + '/source/sass',
+        sassDir:`${__dirname}/source/sass`,
         outputStyle: 'expanded',
         imagesDir: 'images',
         javascriptsDir: 'js',
@@ -110,7 +95,6 @@ function compass () {
       }
     }
   }
-
 }
 
 function copy() {
@@ -136,19 +120,19 @@ function copy() {
 
 function clean () {
   return [
-    __dirname + '/build/*',
-    __dirname + '/source/json/datasources/*.json'
+    `${__dirname}/build/*`,
+    `${__dirname}/source/json/datasources/*.json`
   ];
 }
 
 function watch () {
   return {
     files: [
-      __dirname + '/source/js/*.js',
-      __dirname + '/source/json/*.json',
-      __dirname + '/source/sass/*.scss',
-      __dirname + '/source/views/*.mustache',
-      __dirname + '/source/views/*.hbs'
+      `${__dirname}/source/js/*.js`,
+      `${__dirname}/source/json/*.json`,
+      `${__dirname}/source/sass/*.scss`,
+      `${__dirname}/source/views/*.mustache`,
+      `${__dirname}/source/views/*.hbs`
     ],
     tasks: [
       'clean',
@@ -161,12 +145,11 @@ function watch () {
 }
 
 function uglify () {
-  function targetsCallback() {
-    var targets = {};
-    grunt.file.recurse(__dirname + '/source/js/', function callback (abspath, rootdir, subdir, filename) {
-      if ( filename.match('.js') ) {
-        var name = filename.replace('.js', '');
-        targets['build/js/' + name + '.min.js'] = abspath;
+  function targetsCallback () {
+    let targets = {};
+    grunt.file.recurse(`${__dirname}/source/js/`, (abspath, rootdir, subdir, filename) => {
+      if (filename.match('.js')) {
+        targets[`build/js/${filename.replace('.js', '')}.min.js`] = abspath;
       }
     });
     return targets;

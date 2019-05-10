@@ -1,5 +1,5 @@
-module.exports = exports = {
-  "takedown": {
+async function takedown () {
+  return {
     "htmltitle": "Takedown Policy",
     "title": "Takedown Policy",
     "route": "/takedownpolicy/index.html",
@@ -11,3 +11,5 @@ module.exports = exports = {
     }
   }
 };
+
+module.exports = takedown;

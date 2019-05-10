@@ -1,5 +1,5 @@
-module.exports = exports = {
-  "searchcollections": {
+async function searchcollections () {
+  return {
     "htmltitle": "Search Collections",
     "title": [{
       "language_code": "en",
@@ -19,3 +19,5 @@ module.exports = exports = {
     "bodyClass": "search"
   }
 };
+
+module.exports = searchcollections;

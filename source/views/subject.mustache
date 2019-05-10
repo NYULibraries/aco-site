@@ -9,23 +9,22 @@
         <nav class="navbar subcat-nav" role="navigation">
           <ul class="nav navbar-nav">
             <li><h3>Subcategories:</h3></li>
-            <li ><a href="{{ appUrl }}/subject/hadith">All</a></li>
-            <li><a href="{{ appUrl }}/subject/hadith/dictionaries">Dictionaries</a></li>
-            <li><a href="{{ appUrl }}/subject/hadith/bukhari">Bukhari</a></li>
+            <li ><a href="{{appUrl}}/subject/hadith">All</a></li>
+            <li><a href="{{appUrl}}/subject/hadith/dictionaries">Dictionaries</a></li>
+            <li><a href="{{appUrl}}/subject/hadith/bukhari">Bukhari</a></li>
           </ul>
         </nav>
         <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
-     
       </header>
-      <div 
-        class="widget" 
-        data-name="subjects" 
-        data-rows="10" 
+      <div
+        class="widget"
+        data-name="subjects"
+        data-rows="10"
         data-script='{ "js" : [ "subject.min.js" ,  "browse.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" } ] }'
       ></div>
       <div class="text-center">
         <div id="paginator" class="pagination"></div>
-      </div>      
+      </div>
     </main>
     {{> footer }}
     {{> subjectsList }}

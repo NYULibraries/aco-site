@@ -1,5 +1,5 @@
-module.exports = exports = {
-    "team": {
+async function team () {
+  return {
         "htmltitle": "About the project team",
         "title": [{
             "language_code": "en",
@@ -59,3 +59,5 @@ module.exports = exports = {
         }
     }
 };
+
+module.exports = team;
