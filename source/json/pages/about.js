@@ -1,6 +1,17 @@
 async function about () {
   const grunt = require('grunt');
   const { resolve } = require('path');
+
+  // number with commas. e.g., 1000 will become 1,000
+  function toNumberWithCommas (numberWithoutCommas) {
+    try {
+      return numberWithoutCommas.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+    catch (error) {
+      grunt.fail.warn(error);
+    }
+  }
+
   // frontCount
   // This information is cache and save as {ROOT}/json/source/datasources/frontCountId.json
   // on build using grunt-curl.
@@ -9,7 +20,8 @@ async function about () {
     const datasourcesFilepath = resolve(__dirname, '../datasources/frontCountId.json');
     if (grunt.file.isFile(datasourcesFilepath)) {
       const frontCountData = await grunt.file.readJSON(datasourcesFilepath);
-      return frontCountData.response.numFound;
+      return toNumberWithCommas(frontCountData.response.numFound);
+
     }
   }
   // subjectCount
@@ -20,7 +32,7 @@ async function about () {
     const datasourcesFilepath = resolve(__dirname, '../datasources/subjectCount.json');
     if (grunt.file.isFile(datasourcesFilepath)) {
       const subjectCountData = await grunt.file.readJSON(datasourcesFilepath);
-      return subjectCountData.facet_counts.facet_fields.im_field_subject.length + 1;
+      return toNumberWithCommas(subjectCountData.facet_counts.facet_fields.im_field_subject.length + 1);
     }
   }
 
