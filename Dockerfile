@@ -5,7 +5,7 @@
 # $ docker run -d --name=aco -p 8000:80 nyudlts/aco:latest
 
 # Stage 1
-FROM node:8 as node
+FROM node:10.15.1 as node
 
 RUN apt-get update -qq \
   && apt-get install -y build-essential ruby-full \
