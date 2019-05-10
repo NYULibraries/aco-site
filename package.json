@@ -7,44 +7,47 @@
     "node": ">=4.4.6"
   },
   "devDependencies": {
+    "aws-sdk": "^2.7.13",
+    "chromedriver": "^2.33.2",
     "dateformat": "^1.0.11",
     "diacritics": "^1.2.1",
-    "grunt": "^0.4.5",
+    "env2": "^2.1.1",
+    "grunt": "^1.0.4",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-compass": "^1.0.3",
     "grunt-contrib-copy": "^0.5.0",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-nodeunit": "^0.4.1",
+    "grunt-contrib-jshint": "^2.1.0",
+    "grunt-contrib-nodeunit": "^2.0.0",
     "grunt-contrib-sass": "^0.8.1",
-    "grunt-contrib-uglify": "^0.5.1",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-curl": "^2.0.3",
-    "handlebars": "^4.0.1",
+    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-curl": "^2.5.1",
+    "handlebars": "^4.1.2",
     "hogan": "^1.0.2",
+    "html-entities": "^1.1.2",
+    "html-minifier": "^4.0.0",
+    "mime-types": "^2.1.13",
+    "nightwatch": "^1.0.6",
+    "nodemon": "^1.11.0",
     "request": "^2.87.0",
+    "selenium-download": "^2.0.14",
+    "selenium-server": "^3.8.1",
     "speakingurl": "^1.1.1",
     "underscore": "^1.7.0",
-    "xml2js": "^0.4.6",
-    "aws-sdk": "^2.7.13",
-    "chromedriver": "^2.33.2",
-    "env2": "^2.1.1",
-    "mime-types": "^2.1.13",
-    "nodemon": "^1.11.0",
-    "selenium-server": "^3.8.1",
-    "html-entities": "^1.1.2",
-    "html-minifier": "^0.7.2",
-    "nightwatch": "^1.0.6",
-    "selenium-download": "^2.0.7"
+    "xml2js": "^0.4.6"
   },
   "scripts": {
-    "test": "./nightwatch/node_modules/nightwatch/bin/nightwatch --env default"
+    "test": "VIEWER_SOURCE_URL=http://sites.dlib.nyu.edu/viewer APP_URL=http://127.0.0.1:8080/aco APP_ROOT=/ DISCOVERY_CORE=http://stagediscovery.dlib.nyu.edu:8983/solr/viewer ./node_modules/nightwatch/bin/nightwatch --env default",
+    "build-local": "AG=0 VIEWER_SOURCE_URL=http://sites.dlib.nyu.edu/viewer APP_URL=http://127.0.0.1:8080 APP_ROOT=/ DISCOVERY_CORE=http://devdiscovery.dlib.nyu.edu/solr/viewer grunt",
+    "build-docker": "AG=0 VIEWER_SOURCE_URL=http://sites.dlib.nyu.edu/viewer APP_URL=http://127.0.0.1:8000/aco APP_ROOT=/aco DISCOVERY_CORE=http://stagediscovery.dlib.nyu.edu:8983/solr/viewer grunt",
+    "build-dev": "AG=1 VIEWER_SOURCE_URL=http://dev-sites.dlib.nyu.edu/viewer APP_URL=http://devweb1.dlib.nyu.edu/aco APP_ROOT=/aco DISCOVERY_CORE=http://devdiscovery.dlib.nyu.edu/solr/viewer grunt"
   },
   "author": "NYU Digital Library Technology Services",
   "license": "ISC",
   "homepage": "https://github.com/NYULibraries/aco-site",
   "dependencies": {},
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/NYULibraries/aco-site.git"
+    "type": "git",
+    "url": "https://github.com/NYULibraries/aco-site.git"
   }
 }
