@@ -62,9 +62,9 @@ async function browsebycategory () {
   try {
     const frontCount = await frontCountFromCache();
     let categoriesEn = await categoriesFromCache('En');
-        categoriesEn.unshift({ category: 'All', count: frontCount })
+        categoriesEn.unshift({ category: 'All', count: frontCount, uri: `${appUrl}/browse`})
     let categoriesAr = await categoriesFromCache('Ar');
-        categoriesAr.unshift({ category: 'Frankfurter', count: frontCount });
+        categoriesAr.unshift({ category: 'Frankfurter', count: frontCount, uri: `${appUrl}/browse`});
     return {
       htmltitle: 'Browse by Category',
       title: [
