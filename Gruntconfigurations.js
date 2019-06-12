@@ -112,7 +112,7 @@ function copy() {
           cwd: 'source',
           src: 'robots.txt',
           dest: 'build'
-        },
+        }
       ]
     }
   };

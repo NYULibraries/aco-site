@@ -1,4 +1,5 @@
-async function browsebycategory () {
+'use strict';
+module.exports = async function browsebycategory () {
 
   const appUrl = process.env.APP_URL;
   const grunt = require('grunt');
@@ -50,7 +51,7 @@ async function browsebycategory () {
             uri: encodeURI(`${appUrl}/search?category=${category}&scope=matches`),
             // format count number e.g., 1,000 instead of 1000.
             count: toNumberWithCommas(data.facet_counts.facet_queries[category])
-          }
+          };
         });
       }
     }
@@ -62,9 +63,10 @@ async function browsebycategory () {
   try {
     const frontCount = await frontCountFromCache();
     let categoriesEn = await categoriesFromCache('En');
-        categoriesEn.unshift({ category: 'All', count: frontCount, uri: `${appUrl}/browse`})
+    categoriesEn.unshift({ category: 'All', count: frontCount, uri: `${appUrl}/browse`});
     let categoriesAr = await categoriesFromCache('Ar');
-        categoriesAr.unshift({ category: 'Frankfurter', count: frontCount, uri: `${appUrl}/browse`});
+    categoriesAr.unshift({ category: 'الجميع', count: frontCount, uri: `${appUrl}/browse`});
+
     return {
       htmltitle: 'Browse by Category',
       title: [
@@ -76,7 +78,7 @@ async function browsebycategory () {
         {
           languageCode: 'ar',
           languageDir: 'rtl',
-          html: 'Capicola burgdoggen'
+          html: 'تصفح حسب فئة الموضوع'
         }
       ],
       menu: [
@@ -91,14 +93,14 @@ async function browsebycategory () {
       content: {
         categories: [
           {
-            text: 'Pancetta pork chop hamburger short loin ribeye meatloaf picanha.',
+            text: 'ACO categories follow the  Library of Congress Classification system',
             languageCode: 'en',
             languageDir: 'ltr',
             cssClass: 'col-l',
             data: categoriesEn
           },
           {
-            text: 'Venison bacon meatloaf ribeye, alcatra jowl turkey salami pastrami.',
+            text: 'المجموعات العربية على الانترت تتبع نظام تصنيف مكتبة الكونغرس',
             languageCode: 'ar',
             languageDir: 'rtl',
             data: categoriesAr
@@ -110,6 +112,4 @@ async function browsebycategory () {
   catch (error) {
     grunt.fail.warn(error);
   }
-}
-
-module.exports = browsebycategory;
+};

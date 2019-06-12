@@ -29,7 +29,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  require('./lib/grunt-contrib-writeHTML/tasks/writeHTML.js')(grunt);
+  require('./lib/task')(grunt);
 
   /** register the task */
   grunt.registerTask('default', tasks);
