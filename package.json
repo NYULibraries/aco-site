@@ -38,7 +38,7 @@
   },
   "scripts": {
     "test": "VIEWER_SOURCE_URL=http://sites.dlib.nyu.edu/viewer APP_URL=http://127.0.0.1:8080/aco APP_ROOT=/ DISCOVERY_CORE=http://stagediscovery.dlib.nyu.edu:8983/solr/viewer ./node_modules/nightwatch/bin/nightwatch --env default",
-    "build-local": "AG=0 VIEWER_SOURCE_URL=http://sites.dlib.nyu.edu/viewer APP_URL=http://127.0.0.1:8080 APP_ROOT=/ DISCOVERY_CORE=http://devdiscovery.dlib.nyu.edu/solr/viewer grunt",
+    "build-local": "AG=0 VIEWER_SOURCE_URL=http://sites.dlib.nyu.edu/viewer APP_URL=http://127.0.0.1:8080 APP_ROOT=/ DISCOVERY_CORE=http://stagediscovery.dlib.nyu.edu:8983/solr/viewer grunt",
     "build-docker": "AG=0 VIEWER_SOURCE_URL=http://sites.dlib.nyu.edu/viewer APP_URL=http://127.0.0.1:8000/aco APP_ROOT=/aco DISCOVERY_CORE=http://stagediscovery.dlib.nyu.edu:8983/solr/viewer grunt",
     "build-dev": "AG=1 VIEWER_SOURCE_URL=http://dev-sites.dlib.nyu.edu/viewer APP_URL=http://devweb1.dlib.nyu.edu/aco APP_ROOT=/aco DISCOVERY_CORE=http://devdiscovery.dlib.nyu.edu/solr/viewer grunt"
   },
