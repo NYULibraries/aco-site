@@ -37,6 +37,10 @@ module.exports = async function browsebycategory () {
   // This information is cached as `{ROOT}/json/source/datasources/categoryQuery${language}.json`
   // on build using grunt-curl.
   async function categoriesFromCache(language) {
+    const prefixLabel = {
+      En: 'books',
+      Ar: 'كتب'
+    };
     try {
       // Data and cache directory {ROOT}/json/source/datasources/*.json
       const datasourcesFilepath = resolve(__dirname, `../datasources/categoryQuery${language}.json`);
@@ -50,7 +54,9 @@ module.exports = async function browsebycategory () {
             // build link
             uri: encodeURI(`${appUrl}/search?category=${category}&scope=matches`),
             // format count number e.g., 1,000 instead of 1000.
-            count: toNumberWithCommas(data.facet_counts.facet_queries[category])
+            count: toNumberWithCommas(data.facet_counts.facet_queries[category]),
+            // label (en/ar) used to prefix the books count
+            prefixLabel: prefixLabel[language],
           };
         });
       }
