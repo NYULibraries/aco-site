@@ -62,8 +62,7 @@ YUI().use(
                     scopeIs: scopeIs,
                     q: removeQueryDiacritics(query),
                     provider: removeQueryDiacritics(provider).toLowerCase(),
-                    //category: removeQueryDiacritics(category).toLowerCase(),
-                    category: removeQueryDiacritics(category),
+                    category: removeQueryDiacritics(category).toLowerCase(),
                     author: removeQueryDiacritics(author).toLowerCase(),
                     title: removeQueryDiacritics(title).toLowerCase(),
                     publisher: removeQueryDiacritics(publisher).toLowerCase(),
@@ -717,8 +716,7 @@ YUI().use(
                     docslength = parseInt(response.response.docs.length, 10),
                     q = QueryString.q,
                     pS = QueryString.provider,
-                    // aof1: What does pS means (any meaning behind the selection of this variable name?) ... I'm just doing copy/paste in hopes this will work
-                    pCategory = QueryString.category,
+                    cS = QueryString.category,
                     tS = QueryString.title,
                     aS = QueryString.author,
                     pubS = QueryString.publisher,
@@ -744,10 +742,10 @@ YUI().use(
                     pS = removeSOLRcharacters(pS);
                     ADescribeSearch.push(" Provider " + scopeIs + " " + pS);
                 }
-                if (pCategory)
+                if (cS)
                 {
-                    pCategory = removeSOLRcharacters(pCategory);
-                    ADescribeSearch.push(" Category " + scopeIs + " " + pCategory);
+                    cS = removeSOLRcharacters(cS);
+                    ADescribeSearch.push(" Category " + scopeIs + " " + cS);
                 }
 
                 if (aS)
@@ -1032,10 +1030,35 @@ YUI().use(
             }
 
             if (options.category)
-            {
-                fq.push('(sm_topic:"' + options.category + '" OR ' + 'sm_ar_topic:"' + options.category + '")');
-            }
+{
+                if (scopeIs === "matches")
+                {
+                    fq.push('(tkm_topic:"' + options.category + '" OR ' + 'tkm_ar_topic:"' + options.category + '")');
+                }
+                else
+                {
+                    var category_words=options.category.split(" ");
+                    var index;
+                    var query_str='(';
+                    for (index = 0; index < category_words.length; ++index) {
+                      query_str=query_str+'(tum_topic:"'+category_words[index]+'" OR '+'tm_topic:"'+category_words[index]+'" OR ' + 'tumar_topic:"' + category_words[index]+'")';
 
+                      if(index<(category_words.length-1))
+                      {
+                          if (scopeIs === "containsAny")
+                          {
+                             query_str=query_str+ ' OR ';
+                          }
+                          else
+                          {
+                           query_str=query_str+' AND ';
+                          }
+                      }
+                    }
+                    query_str=query_str+')';
+                    fq.push(query_str);
+                }
+            }
             if (options.provider)
             {
                 if (scopeIs === "matches")
