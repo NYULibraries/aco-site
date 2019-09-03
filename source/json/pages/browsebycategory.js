@@ -109,6 +109,7 @@ module.exports = async function browsebycategory () {
             text: 'المجموعات العربية على الانترت تتبع نظام تصنيف مكتبة الكونغرس',
             languageCode: 'ar',
             languageDir: 'rtl',
+            cssClass: 'col-r',
             data: categoriesAr
           }
         ]
