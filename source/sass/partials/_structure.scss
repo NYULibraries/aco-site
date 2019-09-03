@@ -137,6 +137,7 @@ main {
   }
   .col-l {
     clear: both;
+    margin-bottom: 4rem;
     @media (min-width: $grid-float-breakpoint) {
       width: 46%;
       &[lang="en"] {
