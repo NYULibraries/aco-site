@@ -333,7 +333,7 @@ nav.navbar.navbar-default {
             text-align: right;
             border-bottom: 1px solid darken($navbar-default-link-hover-bg, 12%);
           }
-          a.about {
+          a.about\.js {
             box-shadow: none;
           }
         }
@@ -346,13 +346,12 @@ nav.navbar.navbar-default {
 /* active links */
 
 @media (min-width: $grid-float-breakpoint) {
-  body.search a.searchcollections,
-  body.browse a.browse,
-  body.resources a.resources,
-  body.about a.about {
-    // color: $input-border-focus;
+  body.search a.searchcollections\.js,
+  body.browse a.browse\.js,
+  body.resources a.resources\.js,
+  body.about a.about\.js, 
+  body.browse-by-category a.browsebycategory\.js {
     &:link {
-      // color: #acabb1;
       background-color: darken($brand-primary, 5%);
       box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.7);
     }
