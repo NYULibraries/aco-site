@@ -1,4 +1,4 @@
-{  
+{
   "partners": {
     "title": "Partners",
     "sourceType": "local",
@@ -14,7 +14,7 @@
         "name": "New York University Abu Dhabi",
         "logo": "images/logos/nyuad.png",
         "url": "http://www.nyu.edu/"
-      }, 
+      },
       {
         "id": "columbia",
         "name": "Columbia University in the City of New York",
@@ -26,25 +26,25 @@
         "name": "Cornell University",
         "logo": "images/logos/cornell.png",
         "url": "http://www.cornell.edu/"
-      }, 
+      },
       {
         "id": "princeton",
         "name": "Princeton University",
         "logo": "images/logos/princeton.png",
         "url": "https://www.princeton.edu/"
-      }, 
+      },
       {
         "id": "aub",
         "name": "American University of Beirut",
         "logo": "images/logos/aub.png",
         "url": "http://www.aub.edu.lb/"
-      }, 
+      },
       {
         "id": "auc",
         "name": "The American University in Cairo",
         "logo": "images/logos/auc.png",
         "url": "http://www.aucegypt.edu/"
-      }, 
+      },
       {
         "id": "uae",
         "name": "United Arab Emirates National Archives",
@@ -53,7 +53,7 @@
       }
     ]
   },
-  "featuredTitlesAll": {  
+  "featuredTitlesAll": {
     "titleEn": "Featured Titles",
     "titleAr": "من العناوين المعروضة",
     "language_code" : "en",
@@ -61,12 +61,20 @@
     "sourceType": "json",
     "source": "source/json/datasources/featuredTitlesAll.json"
   },
-  "frontCountId": {  
+  "frontCountId": {
     "sourceType": "json",
     "source": "source/json/datasources/frontCountId.json"
   },
-   "subjectCount": {  
+   "subjectCount": {
     "sourceType": "json",
     "source": "source/json/datasources/subjectCount.json"
+  },
+  "categoryQueryEn": {
+    "sourceType": "json",
+    "source": "source/json/datasources/categoryQueryEn.json"
+  },
+  "categoryQueryAr": {
+    "sourceType": "json",
+    "source": "source/json/datasources/categoryQueryAr.json"
   }
 }

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>{{>head}}</head>
+<body data-app="{{appUrl}}" data-appRoot="{{appRoot}}" class="{{bodyClass}}">
+  {{>header}}
+  <main class="main container-fluid" role="main">
+    <header class="results-header">
+      {{#title}}
+        <h2 class="page-title" lang="{{languageCode}}" dir="{{languageDir}}"><span>{{{html}}}</span></h2>
+      {{/title}}
+    </header>
+    <div class="inner">
+      {{#content}}
+        {{#categories}}
+          <div class="col {{cssClass}}" dir="{{languageDir}}" lang="{{languageCode}}">
+            <p>{{text}}<p>
+            <ul>
+              {{#data}}
+                <li><a href="{{uri}}">{{category}}</a> ({{count}} {{prefixLabel}})</li>
+              {{/data}}
+            </ul>
+          </div>
+        {{/categories}}
+      </div>
+    {{/content}}
+  </main>
+  {{>footer}}
+  {{{closure}}}
+</body>
+</html>

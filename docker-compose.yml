@@ -1,0 +1,9 @@
+version: '2.3'
+
+services:
+  aco:
+    hostname: localhost
+    container_name: aco-container
+    build: .
+    ports:
+      - 8000:80
