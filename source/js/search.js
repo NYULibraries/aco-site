@@ -35,6 +35,7 @@ YUI().use(
                     query = (req.query.q) ? req.query.q : '',
                     scopeIs = (req.query.scope) ? req.query.scope : defaultScope,
                     provider = (req.query.provider) ? req.query.provider : '',
+                    category = (req.query.category) ? req.query.category : '',
                     author = (req.query.author) ? req.query.author : '',
                     title = (req.query.title) ? req.query.title : '',
                     publisher = (req.query.publisher) ? req.query.publisher : '',
@@ -61,6 +62,7 @@ YUI().use(
                     scopeIs: scopeIs,
                     q: removeQueryDiacritics(query),
                     provider: removeQueryDiacritics(provider).toLowerCase(),
+                    category: removeQueryDiacritics(category).toLowerCase(),
                     author: removeQueryDiacritics(author).toLowerCase(),
                     title: removeQueryDiacritics(title).toLowerCase(),
                     publisher: removeQueryDiacritics(publisher).toLowerCase(),
@@ -534,8 +536,6 @@ YUI().use(
             return removeCombinedDiacritics(removeDiacritics(str));
         }
 
-
-
         function onSelectChangeSort()
         {
 
@@ -555,7 +555,7 @@ YUI().use(
                 rowsPerPage = rppData.get('value'),
                 numfound = Y.one('.numfound').get('innerHTML'),
                 page = 1;
-            
+
             QueryString.page = page;
             QueryString.rpp = rowsPerPage;
             //Y.log("onSelectChangeRpp:  QueryString.rowsPerPage " + QueryString.rpp);
@@ -689,7 +689,7 @@ YUI().use(
             if (totalRecords > rowsPerPage)
             {
                 paginator.render('#paginator');
-            } 
+            }
         }
 
         function removeSOLRcharacters(str)
@@ -702,11 +702,11 @@ YUI().use(
         function onSuccess(response, args)
         {
             updateFormElements();
-          
+
             try
             {
                 var node = args.container,
-                   
+
                     page = (args.page) ? args.page : 1,
                     numfound = parseInt(response.response.numFound, 10),
 
@@ -716,6 +716,7 @@ YUI().use(
                     docslength = parseInt(response.response.docs.length, 10),
                     q = QueryString.q,
                     pS = QueryString.provider,
+                    cS = QueryString.category,
                     tS = QueryString.title,
                     aS = QueryString.author,
                     pubS = QueryString.publisher,
@@ -741,6 +742,12 @@ YUI().use(
                     pS = removeSOLRcharacters(pS);
                     ADescribeSearch.push(" Provider " + scopeIs + " " + pS);
                 }
+                if (cS)
+                {
+                    cS = removeSOLRcharacters(cS);
+                    ADescribeSearch.push(" Category " + scopeIs + " " + cS);
+                }
+
                 if (aS)
                 {
                     aS = removeSOLRcharacters(aS);
@@ -799,7 +806,7 @@ YUI().use(
                     numfoundNode.set('innerHTML', numfound);
                     var aboutInfoBox = function onAboutSearchClick(event)
                     {
-                        
+
                         event.preventDefault();
                         /* add the mustache content into the dropdown */
                         var node = Y.one('.about-info-content');
@@ -886,7 +893,7 @@ YUI().use(
                 scopeIs = options.scopeIs,
                 data = options.container.getData(),
                 source = Y.one('.widget.items').getAttribute('data-source'),
-                qs = "",
+                qs = '',
                 fl = (data.fl) ? data.fl : '*',
                // scope = Y.one('.widget.items').getAttribute('data-scope'),
                 fq = [];
@@ -903,12 +910,7 @@ YUI().use(
                     }
                 }
             }
-            // for (var w in options) {
-            //     if (options.hasOwnProperty(w)) {
-            //         Y.log("options[w]: " + w + "  " + options[w]);
-            //     }
-            // }
-            //Y.log("&  initrequest scopeIs " + scopeIs);
+
             if (options.title)
             {
                 if (scopeIs == "matches")
@@ -917,22 +919,22 @@ YUI().use(
                 }
                 else
                 {
-                    var title_words=options.title.split(" "); 
+                    var title_words=options.title.split(" ");
                     var index;
                     var query_str='(';
-                    for (index = 0; index < title_words.length; ++index) { 
+                    for (index = 0; index < title_words.length; ++index) {
                       query_str=query_str+'(tus_title_long:"' + title_words[index] +'" OR ' + 'ts_title_long:"' + title_words[index]+ '" OR ' + 'tusar_title_long:"' + title_words[index]+'")';
                       if(index<(title_words.length-1))
                       {
                           if (scopeIs === "containsAny")
                           {
                              query_str=query_str+ ' OR ';
-                          } 
-                          else 
+                          }
+                          else
                           {
                              query_str=query_str+' AND ';
                           }
-                      } 
+                      }
                     }
                     query_str=query_str+')';
                     fq.push(query_str);
@@ -946,28 +948,27 @@ YUI().use(
                 }
                 else
                 {
-                    var author_words=options.author.split(" "); 
+                    var author_words=options.author.split(" ");
                     var index;
                     var query_str='(';
-                    for (index = 0; index < author_words.length; ++index) { 
+                    for (index = 0; index < author_words.length; ++index) {
                       query_str=query_str+'(tum_author:' + '"'+author_words[index]+'"' + ' OR ' + 'tm_author:"' + author_words[index] +'" OR ' + 'tumar_author:"' + author_words[index]+'")';
                       if(index<(author_words.length-1))
                       {
                           if (scopeIs === "containsAny")
                           {
                              query_str=query_str+ ' OR ';
-                          } 
-                          else 
+                          }
+                          else
                           {
                            query_str=query_str+' AND ';
                           }
-                      } 
+                      }
                     }
                     query_str=query_str+')';
                     fq.push(query_str);
                 }
             }
-
             if (options.pubplace)
             {
                 if (scopeIs === "matches")
@@ -976,27 +977,28 @@ YUI().use(
                 }
                 else
                 {
-                    var pubplace_words=options.pubplace.split(" "); 
+                    var pubplace_words=options.pubplace.split(" ");
                     var index;
                     var query_str='(';
-                    for (index = 0; index < pubplace_words.length; ++index) { 
+                    for (index = 0; index < pubplace_words.length; ++index) {
                       query_str=query_str+'(tus_publocation:' + '"'+pubplace_words[index]+ '" OR ' + 'ts_publocation:"' + pubplace_words[index]+  '" OR ' + 'tusar_publocation:"' + pubplace_words[index]+'")';
                       if(index<(pubplace_words.length-1))
                       {
                           if (scopeIs === "containsAny")
                           {
                              query_str=query_str+ ' OR ';
-                          } 
-                          else 
+                          }
+                          else
                           {
                            query_str=query_str+' AND ';
                           }
-                      } 
+                      }
                     }
                     query_str=query_str+')';
                     fq.push(query_str);
                 }
             }
+
             if (options.publisher)
             {
                 if (scopeIs === "matches")
@@ -1005,22 +1007,53 @@ YUI().use(
                 }
                 else
                 {
-                    var publisher_words=options.publisher.split(" "); 
+                    var publisher_words=options.publisher.split(" ");
                     var index;
                     var query_str='(';
-                    for (index = 0; index < publisher_words.length; ++index) { 
+                    for (index = 0; index < publisher_words.length; ++index) {
                       query_str=query_str+'(tum_publisher:"'+publisher_words[index]+'" OR ' + 'tm_publisher:"' + publisher_words[index]+'" OR ' + 'tumar_publisher:"' + publisher_words[index]+'")';
                       if(index<(publisher_words.length-1))
                       {
                           if (scopeIs === "containsAny")
                           {
                              query_str=query_str+ ' OR ';
-                          } 
-                          else 
+                          }
+                          else
                           {
                            query_str=query_str+' AND ';
                           }
-                      } 
+                      }
+                    }
+                    query_str=query_str+')';
+                    fq.push(query_str);
+                }
+            }
+
+            if (options.category)
+{
+                if (scopeIs === "matches")
+                {
+                    fq.push('(tkm_topic:"' + options.category + '" OR ' + 'tkm_ar_topic:"' + options.category + '")');
+                }
+                else
+                {
+                    var category_words=options.category.split(" ");
+                    var index;
+                    var query_str='(';
+                    for (index = 0; index < category_words.length; ++index) {
+                      query_str=query_str+'(tum_topic:"'+category_words[index]+'" OR '+'tm_topic:"'+category_words[index]+'" OR ' + 'tumar_topic:"' + category_words[index]+'")';
+
+                      if(index<(category_words.length-1))
+                      {
+                          if (scopeIs === "containsAny")
+                          {
+                             query_str=query_str+ ' OR ';
+                          }
+                          else
+                          {
+                           query_str=query_str+' AND ';
+                          }
+                      }
                     }
                     query_str=query_str+')';
                     fq.push(query_str);
@@ -1034,22 +1067,22 @@ YUI().use(
                 }
                 else
                 {
-                    var provider_words=options.provider.split(" "); 
+                    var provider_words=options.provider.split(" ");
                     var index;
                     var query_str='(';
-                    for (index = 0; index < provider_words.length; ++index) { 
+                    for (index = 0; index < provider_words.length; ++index) {
                       query_str=query_str+'(tum_provider_label:"'+provider_words[index]+'" OR '+'tm_provider_label:"'+provider_words[index]+'")';
                       if(index<(provider_words.length-1))
                       {
                           if (scopeIs === "containsAny")
                           {
                              query_str=query_str+ ' OR ';
-                          } 
-                          else 
+                          }
+                          else
                           {
                            query_str=query_str+' AND ';
                           }
-                      } 
+                      }
                     }
                     query_str=query_str+')';
                     fq.push(query_str);
@@ -1063,22 +1096,22 @@ YUI().use(
                 }
                 else
                 {
-                    var subject_words=options.subject.split(" "); 
+                    var subject_words=options.subject.split(" ");
                     var index;
                     var query_str='(';
-                    for (index = 0; index < subject_words.length; ++index) { 
+                    for (index = 0; index < subject_words.length; ++index) {
                       query_str=query_str+'(tum_subject_label:' + '"'+subject_words[index]+'" OR '+ 'tm_subject_label:"'+subject_words[index]+'")';
                       if(index<(subject_words.length-1))
                       {
                           if (scopeIs === "containsAny")
                           {
                              query_str=query_str+ ' OR ';
-                          } 
-                          else 
+                          }
+                          else
                           {
                              query_str=query_str+ ' AND ';
                           }
-                      } 
+                      }
                     }
                     query_str=query_str+')';
                     fq.push(query_str);
@@ -1106,22 +1139,22 @@ YUI().use(
                 }
                 else
                 {
-                    var query_words=options.q.split(" "); 
+                    var query_words=options.q.split(" ");
                     var index;
                     var query_str='(';
-                    for (index = 0; index < query_words.length; ++index) { 
+                    for (index = 0; index < query_words.length; ++index) {
                       query_str=query_str+'(content_und:' +query_words[index]+' OR '+ 'content_und_ws:'+query_words[index]+' OR ' + 'content_en:' + query_words[index] + ' OR ' + 'content:' + query_words[index]+')';
                       if(index<(query_words.length-1))
                       {
                           if (scopeIs === "containsAny")
                           {
                              query_str=query_str+ ' OR ';
-                          } 
-                          else 
+                          }
+                          else
                           {
                              query_str=query_str+ ' AND ';
                           }
-                      } 
+                      }
                     }
                     query_str=query_str+')';
                }
