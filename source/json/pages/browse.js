@@ -33,6 +33,8 @@ async function browse () {
             "ss_pubdate",
             "iass_pubyear",
             "sm_collection_partner_label",
+            "sm_field_topic",
+            "ss_call_number",
             "zm_subject",
             "zm_partner",
             "ss_publocation",
@@ -48,6 +50,7 @@ async function browse () {
             "sm_ar_sauthor",
             "ss_ar_publocation",
             "ss_ar_publication_location",
+            "sm_ar_topic",
             "ds_created",
             "score"
           ],
