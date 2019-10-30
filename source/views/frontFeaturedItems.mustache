@@ -99,9 +99,9 @@
                     {{/each}}
                   </div>
                   <div class="md_category">
-                    <span class="md_label">Bresaola:</span>
-                    {{ifempty sm_ar_field_topic "n.a."}}
-                    {{#each sm_ar_field_topic}}
+                    <span class="md_label">فئة الموضوع:</span>
+                    {{ifempty sm_ar_topic "n.a."}}
+                    {{#each sm_ar_topic}}
                       <span class="one_category"><a class="md_category" href="{{../../../../../../../appUrl}}/search?category={{this}}&scope=matches">{{this}}</a></span>
                     {{/each}}
                   </div>
