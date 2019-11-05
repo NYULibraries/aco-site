@@ -1,4 +1,6 @@
 module.exports = function (grunt) {
+  
+  require('dotenv').config();
 
   /** task to run */
   const tasks = ['clean', 'copy', 'uglify', 'compass', 'curl', 'writeHTML'];
