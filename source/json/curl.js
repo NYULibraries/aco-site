@@ -4,16 +4,7 @@ module.exports = exports = {
   "curl" : {
     "featuredTitlesAll" : {
       "src" : `${discoveryCore}/select?wt=json&fq=sm_collection_code:aco&fq=ss_language:en&fq=
-      (ss_book_identifier:columbia_aco003391
-        +OR+ss_book_identifier:nyu_aco000348
-        +OR+ss_book_identifier:princeton_aco000320
-        +OR+ss_book_identifier:aub_aco001663
-        +OR+ss_book_identifier:nyu_aco000227
-        +OR+ss_book_identifier:auc_aco000056
-        +OR+ss_book_identifier:aub_aco001474
-        +OR+ss_book_identifier:cornell_aco000223
-        +OR+ss_book_identifier:aub_aco000056
-        +OR+ss_book_identifier:cornell_aco000032)&sort=ss_book_identifier%20desc&rows=30&fl=*&hl=falsei&q=*`,
+      (ss_book_identifier:columbia_aco003391+OR+ss_book_identifier:nyu_aco000348+OR+ss_book_identifier:princeton_aco000320+OR+ss_book_identifier:aub_aco001663+OR+ss_book_identifier:nyu_aco000227+OR+ss_book_identifier:aub_aco001474+OR+ss_book_identifier:cornell_aco000223+OR+ss_book_identifier:aub_aco000056+OR+ss_book_identifier:cornell_aco000032)&sort=ss_book_identifier%20desc&rows=30&fl=*&hl=falsei&q=*`,
       "dest" : "source/json/datasources/featuredTitlesAll.json"
     },
     "frontCount" : {
