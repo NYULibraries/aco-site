@@ -50,6 +50,12 @@
         "name": "United Arab Emirates National Archives",
         "logo": "images/logos/uae.png",
         "url": "http://www.na.ae/"
+      },
+      {
+        "id": "qnl",
+        "name": "Qatar National Library",
+        "logo": "images/logos/qnl.png",
+        "url": "https://www.qnl.qa/"
       }
     ]
   },
