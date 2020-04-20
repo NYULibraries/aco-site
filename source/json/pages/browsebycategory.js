@@ -48,13 +48,16 @@ module.exports = async function browsebycategory () {
       if (grunt.file.isFile(datasourcesFilepath)) {
         const data = await grunt.file.readJSON(datasourcesFilepath);
         // Get Object keys and organize the data in a more meaningful way
-        return Object.keys(data.facet_counts.facet_queries).map(category => {
+        var fd = ( language === 'En') ? Object.values(data.facet_counts.facet_fields.sm_topic) : Object.values(data.facet_counts.facet_fields.sm_ar_topic);
+        console.log(fd);
+
+        return fd.map(category => {
           return {
-            category: category,
+            category: Object.keys(category),
             // build link
-            uri: encodeURI(`${appUrl}/search?category=${category}&scope=matches`),
+            uri: encodeURI(`${appUrl}/search?category=${Object.keys(category)}&scope=matches`),
             // format count number e.g., 1,000 instead of 1000.
-            count: toNumberWithCommas(data.facet_counts.facet_queries[category]),
+            count: toNumberWithCommas(Object.values(category)),
             // label (en/ar) used to prefix the books count
             prefixLabel: prefixLabel[language],
           };
@@ -62,6 +65,7 @@ module.exports = async function browsebycategory () {
       }
     }
     catch (error) {
+      console.log("here 1");
       grunt.fail.warn(error);
     }
   }
@@ -69,8 +73,10 @@ module.exports = async function browsebycategory () {
   try {
     const frontCount = await frontCountFromCache();
     let categoriesEn = await categoriesFromCache('En');
+    //console.log(categoriesEn);
     categoriesEn.unshift({ category: 'All', count: frontCount, uri: `${appUrl}/browse`});
     let categoriesAr = await categoriesFromCache('Ar');
+    console.log(categoriesAr);
     categoriesAr.unshift({ category: 'الجميع', count: frontCount, uri: `${appUrl}/browse`});
 
     return {
