@@ -32,78 +32,8 @@
 </header>
 <div class="item-list">
   {{#items}}
-  <div class="item flexrow">
-
-    <div class="flexcol" lang="en">
-      <div class="md_title">
-        <a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">{{ss_title_long}}</a>
-      </div>
-      <div class="md_authors">
-        <span class="md_label">Author:</span>
-        {{ifempty sm_author "n.a."}}
-        {{#each sm_author}}
-        <span class="one_author"><a class="md_author"
-            href="{{../../app.appRoot}}/search/?author={{this}}">{{this}}</a></span>
-        {{/each}}
-      </div>
-      <div class="md_category">
-        <span class="md_label">Category:</span>
-        {{ifempty sm_field_topic "n.a."}}
-        {{#each sm_field_topic}}
-        <span class="one_category">
-          <a class="md_category" href="{{../../app.appRoot}}/search?category={{this}}&scope=matches">{{this}}</a>
-        </span>
-        {{/each}}
-      </div>
-      <div class="md_publisher">
-        <span class="md_label">Publisher:</span>
-        {{#if sm_publisher}}
-        {{#each sm_publisher}}
-        {{#if this}}
-        <span><a class="md_publisher" href="{{../../../../app.appRoot}}/search/?publisher={{this}}">{{this}}</a></span>
-        {{else}}
-        n.p.
-        {{/if}}
-        {{/each}}
-        {{/if}}
-      </div>
-      <div class="md_pubplace">
-        <span class="md_label">Place of Publication:</span>
-        {{ifempty ss_publocation "n.p."}}
-        <a class="md_pubplace" href="{{../app.appRoot}}/search/?pubplace={{ss_publocation}}">{{ss_publocation}}</a>
-      </div>
-      <div class="md_pubdate">
-        <span class="md_label">Date of Publication:</span>
-        {{ifempty ss_pubdate "n.d."}}
-        {{ss_pubdate}}
-      </div>
-      <div class="md_pubdate_sort">
-        <span class="md_label">Date of Publication, sortable:</span> {{iass_pubyear}}
-      </div>
-      {{#if zm_subject}}
-      <div class="md_subjects">
-        <span class="md_label">Subject:</span>
-        {{#each zm_subject}}
-        {{#json this}}
-        <span class="one_subject">
-          <a class="md_subject" href="{{../../../../app.appRoot}}/search/?subject={{name}}">{{name}}</a>
-        </span>
-        {{/json}}
-        {{/each}}
-      </div>
-      {{/if}}
-      <div class="md_partner">
-        <span class="md_label">Provider:</span>
-        {{#each zm_partner}}
-        {{#json this}}
-        <a class="md_provider" data-code="{{code}}" data-id="{{nid}}"
-          href="{{../../../app.appRoot}}/search/?provider={{name}}">{{name}}</a>
-        {{/json}}
-        {{/each}}
-      </div>
-    </div>
-
-    <div class="thumbholder  flexcol">
+  <div class="item">
+    <div class="l-hold">
       <div class="thumbs">
         <a class="read-online" href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">
           <div lang="ar" class="ar_callout" dir="rtl">شاهِد فوراً</div>
@@ -126,9 +56,78 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="flexcol" dir="rtl" lang="ar">
+      <div lang="en">
+        <div class="md_title">
+          <a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">{{ss_title_long}}</a>
+        </div>
+        <div class="md_authors">
+          <span class="md_label">Author:</span>
+          {{ifempty sm_author "n.a."}}
+          {{#each sm_author}}
+          <span class="one_author"><a class="md_author"
+              href="{{../../app.appRoot}}/search/?author={{this}}">{{this}}</a></span>
+          {{/each}}
+        </div>
+        <div class="md_category">
+          <span class="md_label">Category:</span>
+          {{ifempty sm_field_topic "n.a."}}
+          {{#each sm_field_topic}}
+          <span class="one_category">
+            <a class="md_category" href="{{../../app.appRoot}}/search?category={{this}}&scope=matches">{{this}}</a>
+          </span>
+          {{/each}}
+        </div>
+        <div class="md_publisher">
+          <span class="md_label">Publisher:</span>
+          {{#if sm_publisher}}
+          {{#each sm_publisher}}
+          {{#if this}}
+          <span><a class="md_publisher"
+              href="{{../../../../app.appRoot}}/search/?publisher={{this}}">{{this}}</a></span>
+          {{else}}
+          n.p.
+          {{/if}}
+          {{/each}}
+          {{/if}}
+        </div>
+        <div class="md_pubplace">
+          <span class="md_label">Place of Publication:</span>
+          {{ifempty ss_publocation "n.p."}}
+          <a class="md_pubplace" href="{{../app.appRoot}}/search/?pubplace={{ss_publocation}}">{{ss_publocation}}</a>
+        </div>
+        <div class="md_pubdate">
+          <span class="md_label">Date of Publication:</span>
+          {{ifempty ss_pubdate "n.d."}}
+          {{ss_pubdate}}
+        </div>
+        <div class="md_pubdate_sort">
+          <span class="md_label">Date of Publication, sortable:</span> {{iass_pubyear}}
+        </div>
+        {{#if zm_subject}}
+        <div class="md_subjects">
+          <span class="md_label">Subject:</span>
+          {{#each zm_subject}}
+          {{#json this}}
+          <span class="one_subject">
+            <a class="md_subject" href="{{../../../../app.appRoot}}/search/?subject={{name}}">{{name}}</a>
+          </span>
+          {{/json}}
+          {{/each}}
+        </div>
+        {{/if}}
+        <div class="md_partner">
+          <span class="md_label">Provider:</span>
+          {{#each zm_partner}}
+          {{#json this}}
+          <a class="md_provider" data-code="{{code}}" data-id="{{nid}}"
+            href="{{../../../app.appRoot}}/search/?provider={{name}}">{{name}}</a>
+          {{/json}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <div dir="rtl" lang="ar">
       <div class="md_title" dir="rtl" lang="ar">
         <span><a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1?lang=ar">{{ss_ar_title_long}}</a></span>
       </div>
@@ -170,7 +169,7 @@
         <span class="md_label">تحميل الكتاب (پي دي اف):</span>
         <a class="md_download-pdfs-link" href="{{../app.appRoot}}"><span>دِقّة عالية</span> <span>(350 MB)</span></a>
       </div>
-      <div class="md_download-pdfs  dl-low-res" dir="rtl" lang="ar">
+         <div class="md_download-pdfs  dl-low-res" dir="rtl" lang="ar">
         <span class="md_label">تحميل الكتاب (پي دي اف):</span>
         <a class="md_download-pdfs-link" href="{{../app.appRoot}}"><span>دِقّة منخفضة</span> <span>(23 MB)</span></a>
       </div>

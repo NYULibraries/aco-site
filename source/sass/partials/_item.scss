@@ -21,67 +21,14 @@
   }
 
   >div {
-    &.l-hold {
-      float: left;
-      padding-top: 20px;
-      width: 100%;
-
-      >[lang="en"] {
-        margin-left: 19%;
-        border-bottom: 1px solid #DECCBF;
-        padding-bottom: 20px;
-      }
-
-      .thumbs {
-        padding: 0;
-        width: 15%;
-        float: left;
-
-        img {
-          width: 100%;
-          height: auto;
-        }
-      }
-    }
 
     &[lang="ar"] {
       border-top: 1px solid #FCF7F0;
-      margin-left: 19%;
-      padding: 20px 0;
-      clear: left;
       text-align: right;
+      line-height: 1.7;
 
       span {
         word-wrap: break-word;
-      }
-    }
-
-    @media (min-width: $grid-float-breakpoint) {
-      &.l-hold {
-        width: 60%;
-
-        >[lang="en"] {
-          margin-left: 0;
-          width: 70%;
-          border-bottom: none;
-        }
-
-        .thumbs {
-          float: right;
-          width: 23%;
-          text-align: right;
-          margin-bottom: 15px;
-        }
-      }
-
-      &[lang="ar"] {
-        clear: none;
-        margin-left: 0;
-        padding: 20px 0px 20px 0;
-        float: right;
-        width: 37%;
-        border-top: none;
-        line-height: 1.9;
       }
     }
   }
@@ -105,15 +52,14 @@
   }
 
   .md_title {
-    // font-size: 1.15rem;
+    font-size: 1.3rem;
     line-height: 1.25;
     margin-bottom: 5px;
 
     a:link,
     a:visited {
-      font-weight: normal;
+      font-weight: bold;
       font-size: 1.3rem;
-      color: black;
     }
   }
 
@@ -153,7 +99,6 @@ span.one_author {
   font-family: Helvetica, sans-serif;
 
   [lang="en"] {
-
     font-size: .7rem;
     text-transform: uppercase;
     font-weight: bold;
@@ -235,5 +180,27 @@ span.one_author {
         white-space: nowrap;
       }
     }
+  }
+}
+
+.download-pdfs {
+  display: none;
+}
+
+.md_download-pdfs-link {
+  background-image: url(/aco/images/pdf.svg);
+  background-position: left 5px;
+  background-repeat: no-repeat;
+  padding-left: 17px;
+  white-space: nowrap;
+}
+
+@media (min-width: $grid-float-breakpoint) {
+  .download-pdfs {
+    display: block;
+  }
+
+  .md_download-pdfs {
+    display: none;
   }
 }
