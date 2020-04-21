@@ -4,7 +4,7 @@
   font-family: $font-family-serif;
   width: 100%;
   border-collapse: separate;
-  border-top: 1px solid #DECCBF;
+  border-top: 2px solid #DECCBF;
   border-bottom: 1px solid #ffffff;
 }
 
@@ -151,12 +151,14 @@ span.one_author {
   text-align: center;
   margin-top: 20px;
   font-family: Helvetica, sans-serif;
+
   [lang="en"] {
 
     font-size: .7rem;
     text-transform: uppercase;
     font-weight: bold;
   }
+
   [lang="ar"] {
 
     font-size: 1.2rem;
@@ -176,7 +178,7 @@ span.one_author {
       box-shadow: 2px 2px 1px rgba(10, 10, 10, .4);
       margin-right: 2px;
       font-family: Helvetica, sans-serif;
-  
+
       font-size: .7rem;
       text-align: center;
       font-weight: normal;
@@ -200,6 +202,7 @@ span.one_author {
         padding-top: 4px;
         text-transform: uppercase;
       }
+
       [lang="ar"] {
         font-size: 1.1rem;
         padding-top: 4px;
@@ -209,6 +212,8 @@ span.one_author {
       &:visited {
         color: #ffffff;
         background-color: $brand-primary;
+        background-image: url(/aco/images/bg_pattern.svg);
+        background-size: 22px;
       }
     }
 
@@ -216,6 +221,7 @@ span.one_author {
       margin: 10px 0;
       color: #222222;
       background-color: #ffffff;
+
       [lang="ar"] {
         font-size: 1.3rem;
         background-image: url("/aco/images/pdf.svg");
@@ -224,11 +230,10 @@ span.one_author {
         display: inline-block;
         padding-right: 22px;
       }
+
       .fs {
         white-space: nowrap;
       }
     }
   }
-
-
 }
