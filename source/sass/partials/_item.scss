@@ -4,27 +4,27 @@
   font-family: $font-family-serif;
   width: 100%;
   border-collapse: separate;
-  border-top: 2px solid #DECCBF;
+  border-top: 2px solid $item-border-color;
   border-bottom: 1px solid #ffffff;
 }
 
 .item {
-  clear: both;
   width: 100%;
-  overflow: hidden;
-  border-bottom: 2px solid #DECCBF;
+  // overflow: hidden;
+  box-shadow: inset 0 1px white;
+  border-top: 1px solid $item-border-color;
+  border-bottom: 2px solid $item-border-color;
   border-top: 1px solid #FFFFFF;
   font-size: 1rem;
+  padding: 20px 0;
 
   @media (min-width: $grid-float-breakpoint) {
-    border-bottom: 1px solid #DECCBF;
+    border-bottom: 1px solid $item-border-color;
   }
 
   >div {
 
     &[lang="ar"] {
-      border-top: 1px solid #FCF7F0;
-      text-align: right;
       line-height: 1.7;
 
       span {
