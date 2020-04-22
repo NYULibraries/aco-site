@@ -29,7 +29,7 @@
   margin-bottom: 50px;
   margin-top: 30px;
   padding: 0;
-  background-color: #FCF7F0;
+  background-color: $feature-background-color;
   border-radius: 2% 2% 0% 0% / 2% 2% 0 0;
   //border-radius: 5% 5% 0% 0%/100% 100% 0% 0%;
   -webkit-background-clip: padding-box;
@@ -53,6 +53,8 @@
     font-weight: normal;
     text-transform: uppercase;
     font-size: .9rem;
+    padding: 15px 30px 10px;
+    display: block;
   }
 }
 
@@ -74,9 +76,7 @@
 
   .flexcol {
 
-    // all
-    // padding-bottom: 10px;
-    // padding-top: 10px;
+
     &.thumbholder {
       -ms-flex: 1 1 120px;
       -webkit-flex: 1 1 120px;
@@ -90,11 +90,6 @@
       margin: 0 auto;
       // padding-left: 30px;
       padding-bottom: 10px;
-
-      img {
-        width: 100%;
-        display: block;
-      }
     }
   }
 
@@ -182,7 +177,6 @@
     -webkit-justify-content: space-between;
     justify-content: space-between;
     -ms-flex-pack: justify;
-    border-bottom: 1px solid #ECDCC8;
 
     .flexcol {
       
