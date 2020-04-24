@@ -6,43 +6,59 @@
   width: 100%;
   overflow: auto;
   background-image: url(/aco/images/bg_pattern.svg);
-  background-repeat:repeat;
-  background-size: 75px;
+  background-repeat: repeat;
+  background-size: 80px;
 }
 
 .header-main {
   // Masthead
   padding-top: 13px;
   padding-bottom: 13px;
+  padding-left: 90px;
   display: table !important;
   width: 100%;
+  background-image: url(/aco/images/acoflower.svg);
+  background-repeat: no-repeat;
+  background-position: 4% bottom;
+  background-size: 41px;
 
   // for mobile, they are stacked
-  > div {
+  >div {
     &[lang="en"] {
       display: table-header-group;
     }
+
     &[lang="ar"] {
       display: table-footer-group;
     }
   }
-  @media (min-width: $grid-float-breakpoint) {
+
+
+  @media (min-width: $grid-float-breakpoint-max) {
     // full width, horizontally arranged
-    padding-top: 30px;
-    padding-bottom: 30px;
-    background-image: url(/aco/images/flower.svg);
-    background-repeat: no-repeat;
-    background-position: right center;
-    background-size: 77px;
-    > div[lang="en"],
-    > div[lang="ar"] {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    // ACO flower icon
+    background-position: center bottom;
+
+    >div[lang="en"],
+    >div[lang="ar"] {
       display: table-cell;
       vertical-align: bottom;
+      vertical-align: baseline;
     }
   }
+
+  @media (min-width: 869px) {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
   .sitename {
     margin: 0;
     line-height: 1;
+
     a {
       color: #fff;
       line-height: 1.5;
@@ -50,6 +66,7 @@
       display: block;
       font-style: normal;
     }
+
     &[lang="en"] a {
       letter-spacing: normal;
       font-size: 20px;
@@ -60,42 +77,56 @@
       letter-spacing: .5px;
       font-weight: 300;
       text-transform: uppercase;
+
       @media (max-width: $screen-xs) {
         font-size: 1.3rem;
       }
+
       @media (min-width: $grid-float-breakpoint) {
         font-size: 1.5rem;
         line-height: 1;
+        // allow centered flower
+        padding-right: 40px;
       }
+
       @media (max-width: 400px) {
         font-size: 1rem;
         padding-bottom: 5px;
       }
     }
+
     &[lang="ar"] {
+
       /* tweaking the baseline */
       @media (min-width: $grid-float-breakpoint) {
         margin-bottom: -3px;
       }
+
       a {
         letter-spacing: normal;
         font-style: normal;
         font-weight: normal;
         font-size: 1.4rem;
+
         @media (max-width: $screen-xs) {
           font-size: 1.3rem;
         }
+
         @media (min-width: $grid-float-breakpoint) {
           // full size
+          // allow centered flower
+          padding-left: 40px;
           font-size: 2.3rem;
           line-height: 1;
           text-align: right;
         }
+
         @media (max-width: 400px) {
           font-size: 1.2rem;
         }
       }
     }
+
     a:hover {
       text-decoration: none;
       text-shadow: 1px 0px 0px #FF9C00, -1px 0px 0px #FF9C00, 0px 1px 0px #FF9C00, 0px -1px 0px #FF9C00;
