@@ -16,10 +16,7 @@
   padding-bottom: 13px;
   display: table !important;
   width: 100%;
-  //background-image: url(/aco/images/flower.svg);
-  //background-repeat: no-repeat;
-  //background-position: right bottom;
-  //background-size: 77px;
+
   // for mobile, they are stacked
   > div {
     &[lang="en"] {
@@ -33,6 +30,10 @@
     // full width, horizontally arranged
     padding-top: 30px;
     padding-bottom: 30px;
+    background-image: url(/aco/images/flower.svg);
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 77px;
     > div[lang="en"],
     > div[lang="ar"] {
       display: table-cell;
