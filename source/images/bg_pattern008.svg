@@ -2,16 +2,12 @@
 <svg version="1.1" 
   xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" width="100%" height="52">
   <style type="text/css">
-	.st0{fill:#000066;}
 	.st1{fill:#362697;}
 	.st2{fill:#201B85;}
 	.st3{fill:#30247D;}
   </style>
   <defs>
     <pattern id="bg" patternUnits="userSpaceOnUse" width="71.5" height="52">
-      <g>
-        <rect class="st0" width="71.5" height="52"/>
-      </g>
       <g>
         <g>
           <polygon class="st1" points="67.6,31.4 68.5,33.9 62.8,38 65,31.4 			"/>
