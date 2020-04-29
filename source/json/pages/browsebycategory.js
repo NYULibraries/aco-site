@@ -47,7 +47,7 @@ module.exports = async function browsebycategory () {
       // check if datasource file exists
       if (grunt.file.isFile(datasourcesFilepath)) {
         const data = await grunt.file.readJSON(datasourcesFilepath);
-        // Get Object keys and organize the data in a more meaningful way
+        // Get Object keys and organize the data in a more meaningful way. TODO: add checks for malformed response
         var fd = ( language === 'En') ? Object.values(data.facet_counts.facet_fields.sm_topic) : Object.values(data.facet_counts.facet_fields.sm_ar_topic);
         console.log(fd);
 
