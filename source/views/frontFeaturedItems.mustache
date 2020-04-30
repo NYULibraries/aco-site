@@ -59,9 +59,7 @@
         <span class="md_label">Subjects:</span>
         {{#each zm_subject}}
         {{#json this}}
-        <span class="one_subject">
-          <a class="md_subject" href="{{../../../../../../../../appUrl}}/search/?subject={{name}}">{{name}}</a>
-        </span>
+        <span class="one_subject"><a class="md_subject" href="{{../../../../../../../../appUrl}}/search/?subject={{name}}">{{name}}</a></span>
         {{/json}}
         {{/each}}
       </div>
