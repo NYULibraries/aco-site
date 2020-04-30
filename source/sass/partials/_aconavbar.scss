@@ -259,7 +259,7 @@ nav.navbar.navbar-default {
   // overridding bootstrap
   //   border-bottom: 1px solid $brand-primary;
   // border-bottom: 1px solid #DECCBF;
-  border-top: 1px solid darken($brand-primary, 15%);
+  
   box-shadow: 0px 2px 3px rgba(10, 10, 10, .3);
   li > a {
     font-size: 1rem;
@@ -277,6 +277,7 @@ nav.navbar.navbar-default {
   }
   @media (min-width: $grid-float-breakpoint) {
     // full size
+    border-top: 1px solid darken($brand-primary, 15%);
     margin-top: 0;
     //@include box-shadow(0px 0px 16px 0px rgba(110, 102, 93, 0.3));
     .nav > li:first-child > a {
