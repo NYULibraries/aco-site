@@ -87,11 +87,23 @@
         <div class="download-pdf-button">
           <a class="pdf-button" href="#">
             <div dir="rtl" lang="ar">تحميل دِقّة منخفضة</div>
-            <div dir="ltr" lang="en">Low-resolution PDF <span class="fs">(31 MB)</span></div>
+            <div dir="ltr" lang="en">Low-resolution PDF 
+            {{#each zm_pdf_lo}}
+              {{#json this}}
+                <span class="fs">({{humanFileSize filesize}})</span>
+              {{/json}}
+            {{/each}}
+            </div>
           </a>
           <a class="pdf-button" href="#">
             <div dir="rtl" lang="ar">تحميل دِقّة عالية</div>
-            <div dir="ltr" lang="en">High-resolution PDF <span class="fs">(497 MB)</span></div>
+            <div dir="ltr" lang="en">High-resolution PDF 
+            {{#each zm_pdf_hi}}
+              {{#json this}}
+                <span class="fs">({{humanFileSize filesize}})</span>
+              {{/json}}
+            {{/each}}
+            </div>
           </a>
         </div>
       </div>
