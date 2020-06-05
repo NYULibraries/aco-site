@@ -100,15 +100,15 @@ a:focus {
 }
 
 [role="search"].advanced {
-  border: 1px solid #DECCBF;
-  background-color: #efe5d9;
+  border: 1px solid $item-border-color;
+  background-color: $searchbox-background-color;
   padding: 20px;
   margin: 0 0 15px 0;
   @media (max-width: 500px) {
     background-color: transparent;
     padding: 0 0 20px 0;
     border: none;
-    box-shadow: inset 0px -1px 0px #DECCBF;
+    box-shadow: inset 0px -1px 0px $item-border-color;
     border-bottom: 1px solid white;
     margin: 15px 0 40px;
   }

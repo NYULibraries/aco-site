@@ -13,11 +13,13 @@
     data-sourceUrl="{{sourceUrl}}"
     data-script='{ "js" : [ "crossframe.min.js", "book.min.js" ] }'
     allowfullscreen mozallowfullscreen webkitallowfullscreen>
+    {{#if ga}}
     <!-- Google Tag Manager (noscript) -->
     <noscript>
       <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TRVMLPF" height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
     <!-- End Google Tag Manager (noscript) -->
+    {{/if}}
   </iframe>
   {{> loading }}
   {{{closure}}}

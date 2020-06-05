@@ -52,6 +52,8 @@ async function browse () {
             "ss_ar_publication_location",
             "sm_ar_topic",
             "ds_created",
+            "zm_pdf_lo",
+            "zm_pdf_hi",
             "score"
           ],
           "fq": [
