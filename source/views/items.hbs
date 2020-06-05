@@ -33,7 +33,6 @@
 <div class="item-list">
   {{#items}}
   <div class="item flexrow">
-
     <div class="flexcol" lang="en">
       <div class="md_title">
         <a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">{{ss_title_long}}</a>
@@ -42,8 +41,8 @@
         <span class="md_label">Author:</span>
         {{ifempty sm_author "n.a."}}
         {{#each sm_author}}
-        <span class="one_author"><a class="md_author"
-            href="{{../../app.appRoot}}/search/?author={{this}}">{{this}}</a></span>
+        <span class="one_author">
+          <a class="md_author" href="{{../../app.appRoot}}/search/?author={{this}}">{{this}}</a></span>
         {{/each}}
       </div>
       <div class="md_category">
@@ -94,15 +93,18 @@
       <div class="md_partner">
         <span class="md_label">Provider:</span>
         {{#each zm_partner}}
-        {{#json this}}
-        <a class="md_provider" data-code="{{code}}" data-id="{{nid}}"
-          href="{{../../../app.appRoot}}/search/?provider={{name}}">{{name}}</a>
-        {{/json}}
+          {{#json this}}
+            <a 
+              class="md_provider" 
+              data-code="{{code}}" 
+              data-id="{{nid}}"
+              href="{{../../../app.appRoot}}/search/?provider={{name}}">{{name}}</a>
+          {{/json}}
         {{/each}}
       </div>
     </div>
 
-    <div class="thumbholder  flexcol">
+    <div class="thumbholder flexcol">
       <div class="thumbs">
         <div class="read-online">
           <a class="read-online" href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">
@@ -116,7 +118,10 @@
               {{#json this}}
               <a class="pdf-button" href="{{ uri }}">
                 <div dir="rtl" lang="ar">تحميل دِقّة منخفضة</div>
-                <div dir="ltr" lang="en">Low-resolution PDF <span class="fs">({{humanFileSize filesize}})</span>
+                <div dir="ltr" lang="en">Low-resolution PDF
+                  {{#if (hasFileSize filesize)}}
+                    <span class="fs">({{humanFileSize filesize}})</span>
+                  {{/if}}
                 </div>
               </a>
               {{/json}}
@@ -126,7 +131,9 @@
               <a class="pdf-button" href="{{ uri }}">
                 <div dir="rtl" lang="ar">تحميل دِقّة عالية</div>
                 <div dir="ltr" lang="en">High-resolution PDF   
-                  <span class="fs">({{humanFileSize filesize}})</span>
+                  {{#if (hasFileSize filesize)}}
+                    <span class="fs">({{humanFileSize filesize}})</span>
+                  {{/if}}
                 </div>
               </a>
               {{/json}}
@@ -175,24 +182,29 @@
         <span dir="ltr" lang="en">{{ss_pubdate}}</span>
       </div>
       {{#each zm_pdf_hi}}
-      {{#json this}}
-      <div class="md_download-pdfs dl-hi-res" dir="rtl" lang="ar">
-        <span class="md_label">تحميل الكتاب (پي دي اف):</span>
-        <a class="md_download-pdfs-link" href="{{ uri }}"><span>دِقّة عالية</span> <span>({{humanFileSize filesize}})</span></a>
-      </div>
-      {{/json}}
+        {{#json this}}
+          <div class="md_download-pdfs dl-hi-res" dir="rtl" lang="ar">
+            <span class="md_label">تحميل الكتاب (پي دي اف):</span>
+            <a class="md_download-pdfs-link" href="{{ uri }}"><span>دِقّة عالية</span> 
+              {{#if (hasFileSize filesize)}}
+                <span>({{humanFileSize filesize}})</span>
+              {{/if}}
+            </a>
+        </div>
+        {{/json}}
       {{/each}}
-      
       {{#each zm_pdf_lo}}
-      {{#json this}}
-      <div class="md_download-pdfs  dl-low-res" dir="rtl" lang="ar">
-        <span class="md_label">تحميل الكتاب (پي دي اف):</span>
-        <a class="md_download-pdfs-link" href="{{ uri }}"><span>دِقّة منخفضة</span> 
-            <span>({{humanFileSize filesize}})</span>
-        </a>
-      </div>
-      {{/json}}
-      {{/each}} 
+        {{#json this}}
+          <div class="md_download-pdfs  dl-low-res" dir="rtl" lang="ar">
+            <span class="md_label">تحميل الكتاب (پي دي اف):</span>
+            <a class="md_download-pdfs-link" href="{{ uri }}"><span>دِقّة منخفضة</span> 
+              {{#if (hasFileSize filesize)}}
+                <span>({{humanFileSize filesize}})</span>
+              {{/if}}          
+            </a>
+          </div>
+        {{/json}}
+      {{/each}}
     </div>
   </div>
   {{/items}}

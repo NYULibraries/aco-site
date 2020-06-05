@@ -126,10 +126,15 @@ YUI().use(
               return bytes.toFixed(1) + ' ' + units[u];
             }
 
+            function hasFileSize(bytes) {
+                return parseInt(bytes, 10) > 0 ? true : false;
+            }        
+
             return {
                 ifempty: ifempty,
                 json: json,
-                humanFileSize: humanFileSize
+                humanFileSize: humanFileSize,
+                hasFileSize: hasFileSize
             };
         }
 

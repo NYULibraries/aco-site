@@ -14,16 +14,14 @@
         <span class="md_label">Author:</span>
         {{ifempty sm_author "n.a."}}
         {{#each sm_author}}
-        <span class="one_author"><a class="md_author"
-            href="{{../../../../../../../appUrl}}/search/?author={{this}}">{{this}}</a></span>
+          <span class="one_author"><a class="md_author" href="{{../../../../../../../appUrl}}/search/?author={{this}}">{{this}}</a></span>
         {{/each}}
       </div>
       <div class="md_category">
         <span class="md_label">Category:</span>
         {{ifempty sm_field_topic "n.a."}}
         {{#each sm_field_topic}}
-        <span class="one_category"><a class="md_category"
-            href="{{../../../../../../../appUrl}}/search?category={{this}}&scope=matches">{{this}}</a></span>
+          <span class="one_category"><a class="md_category" href="{{../../../../../../../appUrl}}/search?category={{this}}&scope=matches">{{this}}</a></span>
         {{/each}}
       </div>
       <div class="md_publisher">
@@ -31,8 +29,7 @@
         {{#if sm_publisher}}
         {{#each sm_publisher}}
         {{#if this}}
-        <span><a class="md_publisher"
-            href="{{../../../../../../../appUrl}}/search/?publisher={{this}}">{{this}}</a></span>
+        <span><a class="md_publisher" href="{{../../../../../../../appUrl}}/search/?publisher={{this}}">{{this}}</a></span>
         {{else}}
         n.p.
         {{/if}}
@@ -43,8 +40,7 @@
       <div class="md_pubplace">
         <span class="md_label">Place of Publication:</span>
         <span class="publoc">
-          <a class="md_pubplace"
-            href="{{../../../../../../appUrl}}/search/?pubplace={{ss_publocation}}">{{ss_publocation}}</a>
+          <a class="md_pubplace" href="{{../../../../../../appUrl}}/search/?pubplace={{ss_publocation}}">{{ss_publocation}}</a>
         </span>
       </div>
       {{/if}}
@@ -58,19 +54,18 @@
       <div class="md_subjects">
         <span class="md_label">Subjects:</span>
         {{#each zm_subject}}
-        {{#json this}}
-        <span class="one_subject"><a class="md_subject" href="{{../../../../../../../../appUrl}}/search/?subject={{name}}">{{name}}</a></span>
-        {{/json}}
+          {{#json this}}
+            <span class="one_subject"><a class="md_subject" href="{{../../../../../../../../appUrl}}/search/?subject={{name}}">{{name}}</a></span>
+          {{/json}}
         {{/each}}
       </div>
       {{/if}}
       <div class="md_partner">
         <span class="md_label">Provider:</span>
         {{#each zm_partner}}
-        {{#json this}}
-        <a class="md_provider" data-code="{{code}}" data-id="{{nid}}"
-          href="{{../../../../../../../../appUrl}}/search/?provider={{name}}">{{name}}</a>
-        {{/json}}
+          {{#json this}}
+            <a class="md_provider" data-code="{{code}}" data-id="{{nid}}" href="{{../../../../../../../../appUrl}}/search/?provider={{name}}">{{name}}</a>
+          {{/json}}
         {{/each}}
       </div>
     </div>
@@ -89,8 +84,10 @@
           {{#json this}}
           <a class="pdf-button" href="{{ uri }}">
             <div dir="rtl" lang="ar">تحميل دِقّة منخفضة</div>
-            <div dir="ltr" lang="en">Low-resolution PDF   
+            <div dir="ltr" lang="en">Low-resolution PDF 
+              {{#if (hasFileSize filesize)}}
                 <span class="fs">({{humanFileSize filesize}})</span>
+              {{/if}}
             </div>
           </a>
           {{/json}}
@@ -99,8 +96,10 @@
           {{#json this}}
           <a class="pdf-button" href="{{ uri }}">
             <div dir="rtl" lang="ar">تحميل دِقّة عالية</div>
-            <div dir="ltr" lang="en">High-resolution PDF   
-              <span class="fs">({{humanFileSize filesize}})</span>
+            <div dir="ltr" lang="en">High-resolution PDF 
+              {{#if (hasFileSize filesize)}}
+                <span class="fs">({{humanFileSize filesize}})</span>
+              {{/if}}
             </div>
           </a>
           {{/json}}
@@ -142,8 +141,7 @@
       <div class="md_publocation">
         <span class="md_label">مكان النشر:</span>
         {{ifempty ss_ar_publication_location "n.p."}}
-        <a class="md_pubplace"
-          href="{{../../../../../../appUrl}}/search/?pubplace={{ss_ar_publication_location}}"><span>{{ss_ar_publication_location}}</span></a>
+        <a class="md_pubplace" href="{{../../../../../../appUrl}}/search/?pubplace={{ss_ar_publication_location}}"><span>{{ss_ar_publication_location}}</span></a>
       </div>
       <div class="md_pubdate">
         <span class="md_label">تاريخ النشر:</span>
@@ -154,7 +152,11 @@
       {{#json this}}
       <div class="md_download-pdfs dl-hi-res" dir="rtl" lang="ar">
         <span class="md_label">تحميل الكتاب (پي دي اف):</span>
-        <a class="md_download-pdfs-link" href="{{ uri }}"><span>دِقّة عالية</span> <span>({{humanFileSize filesize}})</span></a>
+        <a class="md_download-pdfs-link" href="{{ uri }}"><span>دِقّة عالية</span> 
+        {{#if (hasFileSize filesize)}}
+          <span>({{humanFileSize filesize}})</span>
+        {{/if}}           
+        </a>
       </div>
       {{/json}}
       {{/each}}
@@ -162,7 +164,11 @@
       {{#json this}}
       <div class="md_download-pdfs  dl-low-res" dir="rtl" lang="ar">
         <span class="md_label">تحميل الكتاب (پي دي اف):</span>
-        <a class="md_download-pdfs-link" href="{{ uri }}"><span>دِقّة منخفضة</span> <span>({{humanFileSize filesize}})</span></a>
+        <a class="md_download-pdfs-link" href="{{ uri }}"><span>دِقّة منخفضة</span> 
+              {{#if (hasFileSize filesize)}}
+                <span>({{humanFileSize filesize}})</span>
+              {{/if}}   
+        </a>
       </div>
        {{/json}}
       {{/each}}

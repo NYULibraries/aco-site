@@ -27,6 +27,10 @@ YUI().use(
       	    return window.getSlug ( this.label ) ;
         }
 
+        function hasFileSize(bytes) {
+          return parseInt(bytes, 10) > 0 ? true : false;
+        }        
+
         // Taken from https://stackoverflow.com/questions/10420352/converting-file-size-in-bytes-to-human-readable-string#14919494
         function humanFileSize(bytes, si) {
           var thresh = si ? 1000 : 1024;
@@ -47,7 +51,8 @@ YUI().use(
        return { 
            json : json ,
            speakingurl : speakingurl,
-           humanFileSize: humanFileSize
+           humanFileSize: humanFileSize,
+           hasFileSize: hasFileSize
        } ;
 
     }
