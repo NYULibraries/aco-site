@@ -1,4 +1,5 @@
 <title>{{appName}}{{#if htmltitle}}: {{htmltitle}}{{/if}}</title>
+{{#if ga}}
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -6,6 +7,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-TRVMLPF');</script>
 <!-- End Google Tag Manager -->
+{{/if}}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--[if lte IE 9]>
@@ -24,10 +26,11 @@ WebFont.load({
     timeout: 6000
 });
 </script>
-<link rel="apple-touch-icon"  href="{{appUrl}}/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="{{appUrl}}/images/apple-touch-icon.png">
 <link rel="shortcut icon" href="{{appUrl}}/images/favicon.ico" />
 {{{css}}}
-<script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
+<script src="https://yui-s.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
+{{#if ga}}
 <script>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function()
 { (i[r].q=i[r].q||[]).push(arguments)}
@@ -38,3 +41,4 @@ ga('create', 'UA-55585548-1', 'auto');
 ga("set", "anonymizeIp", true);
 ga('send', 'pageview');
 </script>
+{{/if}}
