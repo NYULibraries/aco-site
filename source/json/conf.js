@@ -1,7 +1,7 @@
 const appUrl = process.env.APP_URL;
 const appRoot = process.env.APP_ROOT;
 const discoveryCore = process.env.DISCOVERY_CORE;
-const ga = process.env.GA ? true : false;
+const ga = (process.env.GA && (process.env.GA * 1) === 1) ? true : false;
 
 module.exports = exports = {
   appName: 'Arabic Collections Online',
