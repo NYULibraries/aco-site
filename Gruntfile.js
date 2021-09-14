@@ -23,12 +23,10 @@ module.exports = function (grunt) {
 
   /** load modules and tasks */
   grunt.loadNpmTasks('grunt-curl');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-compass');
-  grunt.loadNpmTasks('grunt-contrib-watch');
   require('./lib/task')(grunt);
 
   /** register the task */
