@@ -183,13 +183,13 @@ async function about () {
                 "class": "col-l",
                 "language_dir": "ltr",
                 "sequence": "8",
-                "html": "<h3>Have more questions?</h3><p>For more information, please contact us at: <a class=\"email-link\" href=\"mailto:ACO-contact-group@nyu.edu\">ACO-contact-group@nyu.edu</a></p>"
+                "html": "<h3>Have more questions?</h3><p>For more information, please contact us at: <a class=\"email-link\" href=\"mailto:aco-support@nyu.edu\">aco-support@nyu.edu</a></p>"
             }, {
                 "language_code": "ar",
                 "class": "col-r",
                 "language_dir": "rtl",
                 "sequence": "8",
-                "html": "<h3>هل لديك المزيد من الأسئلة؟</h3><p>لمزيد من المعلومات، يرجى الاتصال بنا على العنوان التالي: <a class=\"email-link\" href=\"mailto:ACO-contact-group@nyu.edu\">ACO-contact-group@nyu.edu</a></p>"
+                "html": "<h3>هل لديك المزيد من الأسئلة؟</h3><p>لمزيد من المعلومات، يرجى الاتصال بنا على العنوان التالي: <a class=\"email-link\" href=\"mailto:aco-support@nyu.edu\">aco-support@nyu.edu</a></p>"
             }, {
                 "language_code": "en",
                 "class": "col-l",
