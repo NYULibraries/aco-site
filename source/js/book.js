@@ -126,19 +126,11 @@ YUI().use(
     document.title = data.title + ': ' + Y.one('meta[property="og:site_name"]').get('content');
   });
 
-  // Y.Global.on('crossframe:message', function(_o, data) {
-  //   var message = data);
-  //   // Y.fire(message.fire, message.data);
-  //   console.log(message)
-  // });
-
-  window.addEventListener('message', (event) => {
+  window.addEventListener('message', function (event) {
     // event.origin
-    if (1 === 1) {
-      var data = JSON.parse(event.data)
-      if (data.fire) {
-        Y.fire(data.fire, data.message)
-      }
+    var data = JSON.parse(event.data)
+    if (data.fire) {
+      Y.fire(data.fire, data.message)
     }
   }, false)
 
