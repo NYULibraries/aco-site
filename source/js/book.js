@@ -1,21 +1,21 @@
 YUI().use(
-  'node', 
-  'anim', 
-  'crossframe', 
-  'router', 
-  'event-resize', 
+  'node',
+  'anim',
+  'crossframe',
+  'router',
+  'event-resize',
   'querystring-parse',
   function (Y) {
     'use strict';
 
     var body = Y.one('body');
-    
+
     var widget = Y.one('.widget.book');
-    
+
     var appRoot = body.getAttribute('data-appRoot');
-    
-    var params = { 
-      'lang' : 'en' 
+
+    var params = {
+      'lang' : 'en'
     };
 
     if (window.location.search.length) {
@@ -30,7 +30,7 @@ YUI().use(
       var siblings = widget.siblings();
       var viewport = Y.DOM.viewportRegion();
       var availableHeight = viewport.height;
-      
+
       // Push the iframe down 5px to make up for the 5 pixels
       // space created by the curved corners of the browser?
       // Not elegant but to consider.
@@ -46,7 +46,7 @@ YUI().use(
 
       return availableHeight + loaderHeight;
     }
-    
+
     function resizeBookView() {
       widget.setStyles({
         height: calculateAvailableHeight()
@@ -78,16 +78,16 @@ YUI().use(
       }
     }
 
-    var router = new Y.Router({ 
-      root: appRoot, 
+    var router = new Y.Router({
+      root: appRoot,
       routes: [
-        { 
-          path: '/book/:identifier/:page', 
-          callbacks: requestReplaceLoadBook 
-        }, 
-        { 
-          path: '/book/:identifier', 
-          callbacks: requestReplaceLoadBook 
+        {
+          path: '/book/:identifier/:page',
+          callbacks: requestReplaceLoadBook
+        },
+        {
+          path: '/book/:identifier',
+          callbacks: requestReplaceLoadBook
         }
       ]
     });
@@ -98,7 +98,15 @@ YUI().use(
 
     Y.on('button:button-fullscreen:off', showSiblings);
 
-    Y.on('openlayers:change', function(data) {
+    Y.on('viewer:sequence:change', function(data) {
+      router.save('/book/' + widget.getAttribute('data-identifier') + '/' + data.sequence);
+    });
+
+    Y.on('viewer:sequence:increase', function(data) {
+      router.save('/book/' + widget.getAttribute('data-identifier') + '/' + data.sequence);
+    });
+
+    Y.on('viewer:sequence:decrease', function(data) {
       router.save('/book/' + widget.getAttribute('data-identifier') + '/' + data.sequence);
     });
 
@@ -110,18 +118,29 @@ YUI().use(
   });
 
   // DLTS Viewer fires a crossframe:message when the
-  // metadata pane in the book page is updated. We 
-  // listen for this event and use it to update 
+  // metadata pane in the book page is updated. We
+  // listen for this event and use it to update
   // <title> [HTML element] with the title of the book.
   // [WCAG2.0AA compliance](https://www.w3.org/WAI/WCAG21/Understanding/page-titled.html)
   Y.on('display:load', function(data) {
     document.title = data.title + ': ' + Y.one('meta[property="og:site_name"]').get('content');
   });
 
-  Y.Global.on('crossframe:message', function(_o, data) {
-    var message = JSON.parse(data.message);
-    Y.fire(message.fire, message.data);
-  });
+  // Y.Global.on('crossframe:message', function(_o, data) {
+  //   var message = data);
+  //   // Y.fire(message.fire, message.data);
+  //   console.log(message)
+  // });
+
+  window.addEventListener('message', (event) => {
+    // event.origin
+    if (1 === 1) {
+      var data = JSON.parse(event.data)
+      if (data.fire) {
+        Y.fire(data.fire, data.message)
+      }
+    }
+  }, false)
 
   widget.on('load', function() {
       var anim = new Y.Anim({
@@ -137,7 +156,7 @@ YUI().use(
   });
 
   resizeBookView();
-  
+
   // initial request
   router.replace(router.getPath());
 
