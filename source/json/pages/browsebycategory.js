@@ -49,8 +49,6 @@ module.exports = async function browsebycategory () {
         const data = await grunt.file.readJSON(datasourcesFilepath);
         // Get Object keys and organize the data in a more meaningful way. TODO: add checks for malformed response
         var fd = ( language === 'En') ? Object.values(data.facet_counts.facet_fields.sm_topic) : Object.values(data.facet_counts.facet_fields.sm_ar_topic);
-        console.log(fd);
-
         return fd.map(category => {
           return {
             category: Object.keys(category),
@@ -65,7 +63,6 @@ module.exports = async function browsebycategory () {
       }
     }
     catch (error) {
-      console.log("here 1");
       grunt.fail.warn(error);
     }
   }
@@ -73,10 +70,10 @@ module.exports = async function browsebycategory () {
   try {
     const frontCount = await frontCountFromCache();
     let categoriesEn = await categoriesFromCache('En');
-    //console.log(categoriesEn);
+    // console.log(categoriesEn);
     categoriesEn.unshift({ category: 'All', count: frontCount, uri: `${appUrl}/browse`});
     let categoriesAr = await categoriesFromCache('Ar');
-    console.log(categoriesAr);
+    // console.log(categoriesAr);
     categoriesAr.unshift({ category: 'الجميع', count: frontCount, uri: `${appUrl}/browse`});
 
     return {

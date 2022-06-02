@@ -17,7 +17,7 @@ async function notfound () {
       "language_code": "en",
       "class": "col-l",
       "language_dir": "ltr",
-      "html": "<p>Sorry, you have requested a page or file that does not exist or has moved.</p><ul><li>Start from the beginning; <a href=\"/aco/\">visit the homepage</a></li><li>Utilize the search tool</li><li>Contact us at <a href=\"mailto:ACO-contact-group@nyu.edu\">ACO-contact-group@nyu.edu</a></li><ul></p>"
+      "html": "<p>Sorry, you have requested a page or file that does not exist or has moved.</p><ul><li>Start from the beginning; <a href=\"/aco/\">visit the homepage</a></li><li>Utilize the search tool</li><li>Contact us at <a href=\"mailto:aco-support@nyu.edu\">aco-support@nyu.edu</a></li><ul></p>"
     }, {
       "language_code": "ar",
       "class": "col-r",

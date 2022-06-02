@@ -17,7 +17,7 @@ COPY . .
 
 RUN npm install -g grunt-cli \
   && npm install \
-  && npm run-script build-docker
+  && npm run-script build-docker-source-production
 
 # Stage 2
 FROM httpd:2.4-alpine
