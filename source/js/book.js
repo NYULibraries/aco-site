@@ -116,10 +116,8 @@ YUI().use(
     Y.on('change:option:multivolume', data => {
       const args = data.split('/');
       if ((typeof args[2] !=='undefined') && (typeof args[3] !=='undefined')) {
-        const type = args[2];
         const identifier = args[3];
-        console.log(args[0])
-        // window.location = `${appRoot}/book/${identifier}/1`;
+        window.location = `${appRoot}/book/${identifier}/1`;
       }
     });
 
