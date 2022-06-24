@@ -1,36 +1,25 @@
 # Usage example
-# 1) Build container image
-# $ docker build -t nyudlts/aco:latest .
-# 2) Run container
-# $ docker run -d --name=aco -p 8000:80 nyudlts/aco:latest
+# 1) Build: $ docker build -o build .
 
-# Stage 1
-FROM node:10.15.1 as node
-
-RUN apt-get update -qq \
-  && apt-get install -y build-essential ruby-full \
-  && gem install compass
+FROM node:10.15.1 as build
 
 WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm install -g grunt-cli \
+ARG GA='1'
+ARG VIEWER_SOURCE_URL='https://sites.dlib.nyu.edu/viewer'
+ARG APP_URL='https://dlib.nyu.edu/aco'
+ARG APP_ROOT='/aco'
+ARG DISCOVERY_CORE='https://discovery1.dlib.nyu.edu/solr/viewer'
+
+RUN apt-get update -qq \
+  && apt-get install -y build-essential ruby-full \
+  && gem install compass \
+  && npm install -g grunt-cli \
   && npm install \
-  && npm run-script build-docker-source-production
+  && GA=${GA} VIEWER_SOURCE_URL=${VIEWER_SOURCE_URL} APP_URL=${APP_URL} APP_ROOT=${APP_ROOT} DISCOVERY_CORE=${DISCOVERY_CORE} grunt
 
-# Stage 2
-FROM httpd:2.4-alpine
+FROM scratch AS export-stage
 
-RUN sed -i '/LoadModule rewrite_module/s/^#//g' /usr/local/apache2/conf/httpd.conf
-
-RUN { \
-  echo 'IncludeOptional conf.d/*.conf'; \
-} >> /usr/local/apache2/conf/httpd.conf \
-  && mkdir /usr/local/apache2/conf.d
-
-COPY --from=node /usr/src/app/build /usr/local/apache2/htdocs/aco
-
-COPY --from=node /usr/src/app/source/robots.txt /usr/local/apache2/htdocs/robots.txt
-
-COPY ./httpd.conf /usr/local/apache2/conf.d/aco.conf
+COPY --from=build /usr/src/app/build /

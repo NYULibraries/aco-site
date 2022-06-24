@@ -41,8 +41,6 @@ source/json/datasources/*.json
 
 design/*
 
-ALBERTO 
-
 .out
 .DS_Store
 

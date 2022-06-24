@@ -1,9 +1,9 @@
-version: '2.3'
-
+version: "3.2"
 services:
-  aco:
-    hostname: localhost
-    container_name: aco-container
-    build: .
+  apache:
+    build: "apache"
     ports:
-      - 8000:80
+      - "80:80"
+    volumes:
+      - ./apache/site.conf:/usr/local/apache2/conf.d/site.conf
+      - ./build/:/usr/local/apache2/htdocs/aco

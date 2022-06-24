@@ -98,37 +98,44 @@ YUI().use(
 
     Y.on('button:button-fullscreen:off', showSiblings);
 
-    Y.on('viewer:sequence:change', function(data) {
-      router.save('/book/' + widget.getAttribute('data-identifier') + '/' + data.sequence);
+    Y.on('viewer:sequence:change', data => {
+      const identifier = widget.getAttribute('data-identifier');
+      router.save(`/book/${identifier}/${data.sequence}`);
     });
 
-    Y.on('viewer:sequence:increase', function(data) {
-      router.save('/book/' + widget.getAttribute('data-identifier') + '/' + data.sequence);
+    Y.on('viewer:sequence:increase', data => {
+      const identifier = widget.getAttribute('data-identifier');
+      router.save(`/book/${identifier}/${data.sequence}`);
     });
 
-    Y.on('viewer:sequence:decrease', function(data) {
-      router.save('/book/' + widget.getAttribute('data-identifier') + '/' + data.sequence);
+    Y.on('viewer:sequence:decrease', data => {
+      const identifier = widget.getAttribute('data-identifier');
+      router.save(`/book/${identifier}/${data.sequence}`);
     });
 
-  Y.on('change:option:multivolume', function(data) {
-	  var parts = data.url.split('/');
-	  if (parts[3]) {
-	    router.replace('/book/' + parts[3] + '/1');
-	  }
-  });
+    Y.on('change:option:multivolume', data => {
+      const args = data.split('/');
+      if ((typeof args[2] !=='undefined') && (typeof args[3] !=='undefined')) {
+        const type = args[2];
+        const identifier = args[3];
+        console.log(args[0])
+        // window.location = `${appRoot}/book/${identifier}/1`;
+      }
+    });
 
   // DLTS Viewer fires a crossframe:message when the
   // metadata pane in the book page is updated. We
   // listen for this event and use it to update
   // <title> [HTML element] with the title of the book.
   // [WCAG2.0AA compliance](https://www.w3.org/WAI/WCAG21/Understanding/page-titled.html)
-  Y.on('display:load', function(data) {
+  Y.on('display:load', data => {
     document.title = data.title + ': ' + Y.one('meta[property="og:site_name"]').get('content');
   });
 
   window.addEventListener('message', function (event) {
-    // event.origin
+    console.log('message')
     var data = JSON.parse(event.data)
+    console.log(data.fire)
     if (data.fire) {
       Y.fire(data.fire, data.message)
     }
