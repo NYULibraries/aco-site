@@ -7,15 +7,15 @@ module.exports = function (grunt) {
 
   let taskConfiguration = {
     pkg: grunt.file.readJSON('package.json'),
-	  clean: configuration.clean(),
-	  copy: configuration.copy(),
-	  uglify: configuration.uglify(),
-	  watch: configuration.watch(),
-	  compass: configuration.compass()
+    clean: configuration.clean(),
+    copy: configuration.copy(),
+    uglify: configuration.uglify(),
+    watch: configuration.watch(),
+    compass: configuration.compass()
   };
 
   if (grunt.file.isFile(`${__dirname}/source/json/curl.js`)) {
-	  taskConfiguration.curl = configuration.curl();
+    taskConfiguration.curl = configuration.curl();
   }
 
   /** project configuration */

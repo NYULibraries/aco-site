@@ -20,7 +20,7 @@ function htmlminify () {
 function curl () {
   const curlConfigurationPath = `${__dirname}/source/json/curl.js`;
   if (grunt.file.isFile(curlConfigurationPath)) {
-	  return require(curlConfigurationPath).curl;
+    return require(curlConfigurationPath).curl;
   }
 }
 
@@ -35,7 +35,7 @@ function js () {
       js: {
         build: 'external', // options: inline,  external
         style: 'expanded' // options: compressed, expanded
-	    }
+      }
     };
   }
   return js_conf;
@@ -48,12 +48,10 @@ function sass () {
     sass_conf = grunt.file.readJSON(`${__dirname}/source/json/sass.json`);
   }
   else {
-	// default SASS configuration
-    sass_conf = {
+    sass_conf = { // default SASS configuration
       sass: {
         build: 'external', // options: inline,  external
-	    // for options; see: https://github.com/gruntjs/grunt-contrib-sass
-	    options: {
+        options: { // for options; see: https://github.com/gruntjs/grunt-contrib-sass
           style: 'expanded', // options: nested, compact, compressed, expanded
           debugInfo: false,
           lineNumbers: true,
@@ -75,16 +73,9 @@ function sass () {
 
 function compass () {
   var projectConfiguration = project();
-  // outputStyle: nested, expanded, compact, compressed
-  // noLineComments: true, false
-  // httpPath: String , default to "/"
-  var compass_conf;
-  if (grunt.file.isFile(`${__dirname}/source/json/compass.json`)) {
-    compass_conf = grunt.file.readJSON(`${__dirname}/source/json/compass.json`);
-  }
   return {
-	  dist: {
-	    options: {
+    dist: {
+      options: {
         basePath: __dirname,
         sassDir:`${__dirname}/source/sass`,
         outputStyle: 'expanded',
@@ -94,7 +85,7 @@ function compass () {
         httpPath: projectConfiguration.appRoot
       }
     }
-  }
+  };
 }
 
 function copy() {
