@@ -110,13 +110,13 @@ async function about () {
                 "class": "col-l",
                 "language_dir": "ltr",
                 "sequence": "3",
-                "html": "<h3>Which institutions are involved in the project?</h3><p>ACO contributing partners are <a href=\"http://www.nyu.edu/\">New York University</a>, <a href=\"https://www.princeton.edu/main/\">Princeton</a>, <a href=\"https://www.cornell.edu/\">Cornell</a>, <a href=\"http://www.columbia.edu/\">Columbia</a>, <a href=\"http://www.aucegypt.edu/\">American University in Cairo</a>, <a href=\"http://www.aub.edu.lb/main/Pages/index.aspx\">American University of Beirut</a>, <a href=\"http://www.na.ae/en/\">United Arab Emirates National Archives</a> and <a href=\"https://www.qnl.qa/en\">Qatar National Library</a>.</p>"
+                "html": "<h3>Which institutions are involved in the project?</h3><p>ACO contributing partners are <a href=\"http://www.nyu.edu/\">New York University</a>, <a href=\"https://www.princeton.edu/main/\">Princeton</a>, <a href=\"https://www.cornell.edu/\">Cornell</a>, <a href=\"http://www.columbia.edu/\">Columbia</a>, <a href=\"http://www.aucegypt.edu/\">American University in Cairo</a>, <a href=\"http://www.aub.edu.lb/main/Pages/index.aspx\">American University of Beirut</a>, <a href=\"http://www.na.ae/en/\">United Arab Emirates National Library and Archives</a> and <a href=\"https://www.qnl.qa/en\">Qatar National Library</a>.</p>"
             }, {
                 "language_code": "ar",
                 "class": "col-r",
                 "language_dir": "rtl",
                 "sequence": "3",
-                "html": "<h3>ما هي المؤسسات المشاركة في المشروع؟</h3><p> المساهمون المشاركون في المشروع: <a href=\"http://www.nyu.edu/\">جامعة نيويورك</a>، <a href=\"https://www.princeton.edu/main/\">جامعة پرنستون</a>، <a href=\"https://www.cornell.edu/\">جامعة كورنيل</a>،<a href=\"http://www.columbia.edu/\"> جامعة كولومبيا</a>، <a href=\"http://www.aucegypt.edu/\">الجامعة الأمريكية بالقاهرة</a>، <a href=\"http://www.aub.edu.lb/main/Pages/index.aspx\">الجامعة الأمريكية في بيروت</a>، <a href=\"http://www.na.ae/ar/default.aspx\">الامارات العربية المتحدة - الارشيف الوطني</a> و <a href=\"https://www.qnl.qa/ar\"> مكتبة قطر الوطنية</a>.</p>"
+                "html": "<h3>ما هي المؤسسات المشاركة في المشروع؟</h3><p> المساهمون المشاركون في المشروع: <a href=\"http://www.nyu.edu/\">جامعة نيويورك</a>، <a href=\"https://www.princeton.edu/main/\">جامعة پرنستون</a>، <a href=\"https://www.cornell.edu/\">جامعة كورنيل</a>،<a href=\"http://www.columbia.edu/\"> جامعة كولومبيا</a>، <a href=\"http://www.aucegypt.edu/\">الجامعة الأمريكية بالقاهرة</a>، <a href=\"http://www.aub.edu.lb/main/Pages/index.aspx\">الجامعة الأمريكية في بيروت</a>، <a href=\"http://www.na.ae/ar/default.aspx\">الأرشيف والمكتبة الوطنية بدولة الإمارات العربية المتحدة</a> و <a href=\"https://www.qnl.qa/ar\"> مكتبة قطر الوطنية</a>.</p>"
             }, {
                 "language_code": "en",
                 "class": "col-l",
