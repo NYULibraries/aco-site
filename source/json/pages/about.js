@@ -50,12 +50,11 @@ async function about () {
                      library of public domain Arabic language content. ACO currently provides
                      digital access to <b>${frontCount}</b> volumes across <b>${subjectCount}</b>
                      subjects drawn from rich Arabic collections of distinguished research libraries.
-                     Established with support from NYU Abu Dhabi, and currently supported by major
-                     grants from Arcadia, a charitable fund of Lisbet Rausing and Peter Baldwin,
-                     and Carnegie Corporation of New York, this mass digitization project aims to
-                     feature up to 23,000 volumes from the library collections of NYU and partner
-                     institutions. These institutions are contributing published books in all
-                     fields—literature, business, science, and more—from their Arabic
+                     Established with support from NYU Abu Dhabi, and supported by major grants from 
+                     Arcadia, a charitable fund of Lisbet Rausing and Peter Baldwin, and Carnegie 
+                     Corporation of New York, this mass digitization project features volumes from the 
+                     library collections of NYU and partner institutions. These institutions contributed 
+                     published books in all fields—literature, business, science, and more—from their Arabic 
                      language collections.`
             },
             {
@@ -63,13 +62,7 @@ async function about () {
               languageDir: 'rtl',
               languageCode: 'ar',
               label: 'ما هي المجموعات العربية على الانترنت؟',
-              body: `<b>المجموعات العربية على الانترنِت</b> هي عبارة عن مكتبة عامة رقميَّة للكتب المؤلَّفة باللغة العربية
-              والتي أصبحت في المجال العام. حالياً، هذا المشروع يوفّر إمكانيّة الولوج الإلكتروني إلى
-              <b>${frontCount}</b> كتاباً في اكثر من <b>${subjectCount}</b> موضوعاً مُستَمداً من مجموعات
-              قيّمة في مكتبات مميَّزة. تأسست بدعم من جامعة نيويورك أبوظبي وتدعمها حاليًا المنح الكبرى من أركاديا ، وهي
-              صندوق خيري لشركة ليسبت راوزينج وبيتر بالدوين ، وشركة كارنيجي في نيويورك. يهدف مشروع الرقمنة هذا إلى عرض
-              ما يصل إلى 23,000 مجلد من مجموعات مكتبة جامعة نيويورك والمؤسسات الشريكة. إن هذه المؤسسات تساهم في تقديم
-              كتب منشورة في مختلف مجالات الأدب، والأعمال، والعلوم، وغيرها من مقتنياتها من المجموعات العربية.`
+              body: `<b>المجموعات العربية على الانترنِت</b> هي عبارة عن مكتبة عامة رقميَّة للكتب المؤلَّفة باللغة العربية والتي أصبحت في المجال العام. حالياً، هذا المشروع يوفّر إمكانيّة الولوج الإلكتروني إلى <b>${frontCount}</b> كتاباً في اكثر من <b>${subjectCount}</b> موضوعاً مُستَمداً من مجموعات قيّمة في مكتبات مميَّزة. تأسست بدعم من جامعة نيويورك أبوظبي. و يساهمُ في دعمها مادياً بعديد المنح الهامة من "أركاديا"، وهو صندوق خيري ينتمي لشركة "ليسبت راوزينج وبيتر بالدوين" ، و كذلك شركة "كارنيجي" في نيويورك. و يشمُلُ هذا مشروع الخاص بالرقمنة المكثفة لِمجلدات من مجموعات تابعة لمكتبات جامعة نيويورك وعدد من المؤسسات الشريكة لها. كما ساهمت هذه المؤسسات في تقديم عدد من الكتب في مختلف المجالات: الأدب، والأعمال، والعلوم، و اهم مقتنياتها من المجموعات باللغة العربية.`
             },
           ]
     };

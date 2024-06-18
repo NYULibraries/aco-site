@@ -29,13 +29,13 @@
   },
   "scripts": {
     "test": "GA=0 VIEWER_SOURCE_URL=http://sites.dlib.nyu.edu/viewer APP_URL=http://127.0.0.1:8080/aco APP_ROOT=/ DISCOVERY_CORE=http://stagediscovery.dlib.nyu.edu/solr/viewer ./node_modules/nightwatch/bin/nightwatch --env default",    
-    "build-local": "rm -rf ./build && docker build -o build . --build-arg GA=0 --build-arg VIEWER_SOURCE_URL=https://stage-sites.dlib.nyu.edu/viewer --build-arg APP_URL=http://localhost:8085/aco --build-arg APP_ROOT=/aco --build-arg DISCOVERY_CORE=https://stagediscovery.dlib.nyu.edu/solr/viewer",
-    "build-stage": "rm -rf ./build && docker build -o build . --build-arg GA=1 --build-arg VIEWER_SOURCE_URL=https://stage-sites.dlib.nyu.edu/viewer --build-arg APP_URL=https://stageweb1.dlib.nyu.edu/aco --build-arg APP_ROOT=/aco --build-arg DISCOVERY_CORE=https://stagediscovery.dlib.nyu.edu/solr/viewer",
-    "build-prod": "rm -rf ./build && docker build -o build . --build-arg GA=1 --build-arg VIEWER_SOURCE_URL=https://sites.dlib.nyu.edu/viewer --build-arg APP_URL=/aco --build-arg APP_ROOT=/aco --build-arg DISCOVERY_CORE=https://discovery1.dlib.nyu.edu/solr/viewer",
-    "build-dev": "rm -rf ./build && docker build -o build . --build-arg GA=0 VIEWER_SOURCE_URL=https://dev-sites.dlib.nyu.edu/viewer APP_URL=https://devweb1.dlib.nyu.edu/aco APP_ROOT=/aco DISCOVERY_CORE=http://devdiscovery.dlib.nyu.edu/solr/viewer",    
+    "build-local": "rm -rf ./build && docker build -o build . --build-arg GA=0 --build-arg VIEWER_SOURCE_URL=https://sites.dlib.nyu.edu/viewer --build-arg APP_URL=http://localhost:8085/aco --build-arg APP_ROOT=/aco --build-arg DISCOVERY_CORE=http://discovery1.dlib.nyu.edu:8983/solr/viewer",
+    "build-stage": "rm -rf ./build && docker build -o build . --build-arg GA=1 --build-arg VIEWER_SOURCE_URL=https://stage-sites.dlib.nyu.edu/viewer --build-arg APP_URL=https://stageweb1.dlib.nyu.edu/aco --build-arg APP_ROOT=/aco --build-arg DISCOVERY_CORE=http://discovery1.dlib.nyu.edu:8983/solr/viewer",
+    "build-prod": "rm -rf ./build && docker build -o build . --build-arg GA=1 --build-arg VIEWER_SOURCE_URL=https://sites.dlib.nyu.edu/viewer --build-arg APP_URL=/aco --build-arg APP_ROOT=/aco --build-arg DISCOVERY_CORE=http://discovery1.dlib.nyu.edu:8983/solr/viewer",
+    "build-dev": "rm -rf ./build && docker build -o build . --build-arg GA=0 VIEWER_SOURCE_URL=https://dev-sites.dlib.nyu.edu/viewer APP_URL=https://devweb1.dlib.nyu.edu/aco APP_ROOT=/aco DISCOVERY_CORE=http://discovery1.dlib.nyu.edu:8983/solr/viewer",    
     "dev-deploy": "rsync -avzhe ssh ./build/ devweb1:/home/ortiz/aco/",
     "deploy-stage": "rsync -avzhe ssh ./build/ stageweb1:/home/ortiz/aco/",
-    "deploy-prod": "rsync -avzhe ssh ./build/ ortiz@web1.dlib.nyu.edu:/home/ortiz/aco/"
+    "deploy-prod": "rsync -avzhe ssh ./build/ web1:/home/ortiz/aco/"
   },
   "author": "NYU Digital Library Technology Services",
   "license": "ISC",
