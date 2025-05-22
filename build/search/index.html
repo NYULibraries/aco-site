@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head><title>Arabic Collections Online: Search</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VBYLT4NB1C"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VBYLT4NB1C');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!--[if lte IE 9]>
+	<script>
+		window.location.replace("https://stageweb1.dlib.nyu.edu/aco/upgrade.html");
+	</script>
+<![endif]-->
+<meta property="og:site_name" content="Arabic Collections Online">
+<meta property="og:title" content="Search">
+<meta property="og:description" content="Arabic Collections Online is a publicly available digital library of public domain Arabic language content. Funded by New York University Abu Dhabi, this project aims to expose 23,000 volumes from NYU and partner institutions over a period of five years.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dlib.nyu.edu/aco/">
+<meta property="og:image:secure_url" content="https://dlib.nyu.edu/aco/images/ACO_opengraph_thumb1200.jpg">
+<meta property="og:image" content="https://dlib.nyu.edu/aco/images/ACO_opengraph_thumb1200.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<style>
+    @font-face {
+        font-family: 'NYUPerstare';
+        src: url('https://webstatic.nyu.edu/fonts/NYUPerstare-VF.woff2') format('woff2');
+        font-style: normal;
+        font-synthesis: none;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.10/webfont.js"></script>
+<script>
+WebFont.load({
+  google: {
+    families: ['Amiri:400,700','Open Sans:400,300,700']
+  },
+  timeout: 6000
+});
+</script>
+<link rel="apple-touch-icon" href="https://stageweb1.dlib.nyu.edu/aco/images/apple-touch-icon.png">
+<link rel="shortcut icon" href="https://stageweb1.dlib.nyu.edu/aco/images/favicon.ico">
+<link href="https://stageweb1.dlib.nyu.edu/aco/css/style.css?1747934700065" rel="stylesheet" type="text/css">
+<script src="https://yui-s.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
+<script src="https://yui-s.yahooapis.com/combo?gallery-2014.07.31-18-26/build/gallery-paginator/gallery-paginator-min.js"></script>
+</head>
+<body data-app="https://stageweb1.dlib.nyu.edu/aco" data-approot="/aco" class="search io-loading">
+  <div class="header-wrapper">
+    <header class="header-main container-fluid" role="banner">
+      <div lang="en"><h1 class="sitename" lang="en"><a href="https://stageweb1.dlib.nyu.edu/aco/">Arabic Collections Online</a></h1></div>
+      <div lang="ar"><h1 class="sitename" lang="ar"><a href="https://stageweb1.dlib.nyu.edu/aco/">المجموعات العربية على الانترنت</a></h1></div>
+    </header>
+  </div>
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed widget" data-toggle="collapse" aria-label="Toggle Navigation" data-name="navButton" data-script='{ "js" : [ "navButton.min.js" ] }'>
+         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="18" height="18" viewBox="0 0 18 18">
+           <rect y="3" fill="#FFFFFF" width="18" height="3"></rect>
+           <rect y="8" fill="#FFFFFF" width="18" height="3"></rect>
+           <rect y="13" fill="#FFFFFF" width="18" height="3"></rect>
+         </svg>
+       </button><script src="https://stageweb1.dlib.nyu.edu/aco/js/navButton.min.js"></script>    </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="https://stageweb1.dlib.nyu.edu/aco" class="front.js">Home</a></li>
+          <li><a href="https://stageweb1.dlib.nyu.edu/aco/about" class="about.js">About</a></li>
+          <li><a href="https://stageweb1.dlib.nyu.edu/aco/resources" class="resources.js">Other Resources</a></li>
+          <li><a href="https://stageweb1.dlib.nyu.edu/aco/browse" class="browse.js">Browse</a></li>
+          <li><a href="https://stageweb1.dlib.nyu.edu/aco/browse-by-category" class="browsebycategory.js">Browse by Category</a></li>
+          <li><a href="https://stageweb1.dlib.nyu.edu/aco/searchcollections" class="searchcollections.js">Search</a></li>
+        </ul>
+    </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav><noscript>
+    <div class="warning container-fluid main">
+      <h2 class="page-title">Please enable JavaScript</h2>
+      <p>It appears that your browser has JavaScript disabled.<br>
+         This website relies on JavaScript-based technologies and services.<br>
+         Please enable JavaScript and then reload the page.</p>
+    </div>
+  </noscript>  <main class="main container-fluid" role="main">
+    <div class="search_holder_advanced widget" data-name="search_form" data-script='{ "js" : [ "search_form_adv.min.js" ] }'>
+      <form class="advanced" method="get" action="https://stageweb1.dlib.nyu.edu/aco/search" role="search">
+        <div class="fieldset group1">
+                <div class="select-hold">
+                    <div class="select-style">
+                        <select class="field-select" aria-label="Attribute">
+                            <option value="q">Any Field / أي مُصطلح</option>
+                            <option value="title">Title / العنوان</option>
+                            <option value="author">Author / الكاتب</option>
+                            <option value="category">Category / فئة الموضوع</option>
+                            <option value="publisher">Publisher / الناشر</option>
+                            <option value="pubplace">Place of Publication / مكان النشر</option>
+                            <option value="provider">Provider / الشريك</option>
+                            <option value="subject">Subject / الموضوع</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="select-hold">
+                    <div class="select-style">
+                        <select class="scope-select" aria-label="Boolean Operator">
+                            <option value="containsAny" selected="selected">Contains Any / يحتوي على اي</option>
+                            <option value="containsAll">Contains All / يحتوي على كل</option>
+                            <option value="matches">Matches / يساوي</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-hold">
+                    <input class="q1" aria-label="Search" name="q1" type="text" placeholder="search  /  ابحث" title="Enter the terms you wish to search for.">
+                </div>
+                <div class="submit-hold">
+                    <input type="submit" class="submit-search">
+                </div>
+            </div>
+        </form>
+    </div><script src="https://stageweb1.dlib.nyu.edu/aco/js/search_form_adv.min.js"></script>    <header class="results-header">
+        <h2 class="page-title" lang="en" dir="ltr"><span>Search Results</span></h2>
+        <h2 class="page-title" lang="ar" dir="rtl"><span>نتائج البحث</span></h2>
+    </header>
+        <div class="widget items" data-name="items" data-rows="10" data-source="http://discovery1.dlib.nyu.edu:8983/solr/viewer/select" data-fl="ss_representative_image,ss_title_long,ss_ar_title_long,ss_book_identifier,sm_author,ss_uri,sm_publisher,ss_pubdate,iass_pubyear,sm_collection_partner_label,sm_field_topic,ss_call_number,zm_subject,zm_partner,ss_publocation,ss_ar_title,sm_ar_author,sm_ar_publisher,sm_ar_publication_date,sm_ar_partner,sm_ar_subject,sm_ar_sauthor,ss_longlabel,ss_sauthor,ss_ar_sauthor,ss_ar_publocation,ss_ar_publication_location,ss_ar_topic,ds_created,score" data-fq-bundle="dlts_book" data-fq-sm_collection_code="aco" data-fq-ss_language="en" data-script='{ "js" : [ "removeQueryDiacritics.min.js", "handlebarsHelpers.min.js", "search.min.js" ], "hbs" : [ { "template" : "items.hbs", "id" : "items" }, { "template" : "noresults.hbs", "id" : "noresults" } , { "template" : "searchtips.mustache", "id" : "searchtips" }] }'></div>
+        <div class="text-center">
+          <div id="paginator" class="pagination"></div>
+        </div>
+  </main>
+  <footer class="footer-main container-fluid" role="contentinfo">
+    <div class="feedback">
+      <div dir="rtl"><a href="https://nyu.qualtrics.com/jfe/form/SV_7X5LdFZDVpnj88J?Q_Language=AR" class="external" target="_blank">أسئلة؟ طلبات؟ الرجاء اعلامنا</a></div>
+      <div dir="ltr"><a href="https://nyu.qualtrics.com/jfe/form/SV_7X5LdFZDVpnj88J?Q_Language=EN" class="external" target="_blank">Questions? Requests? Please let us know.</a></div>
+    </div>  <div class="logo-hold">
+            <div class="logo nyu">
+              <a href="http://www.nyu.edu/"><img src="https://stageweb1.dlib.nyu.edu/aco/images/logos/nyu_short_color.png" title="New York University" alt="New York University"></a>
+            </div>
+            <div class="logo nyuad">
+              <a href="http://www.nyu.edu/"><img src="https://stageweb1.dlib.nyu.edu/aco/images/logos/nyuad.png" title="New York University Abu Dhabi" alt="New York University Abu Dhabi"></a>
+            </div>
+            <div class="logo columbia">
+              <a href="http://www.columbia.edu/"><img src="https://stageweb1.dlib.nyu.edu/aco/images/logos/columbia.png" title="Columbia University in the City of New York" alt="Columbia University in the City of New York"></a>
+            </div>
+            <div class="logo cornell">
+              <a href="http://www.cornell.edu/"><img src="https://stageweb1.dlib.nyu.edu/aco/images/logos/cornell.png" title="Cornell University" alt="Cornell University"></a>
+            </div>
+            <div class="logo princeton">
+              <a href="https://www.princeton.edu/"><img src="https://stageweb1.dlib.nyu.edu/aco/images/logos/princeton.png" title="Princeton University" alt="Princeton University"></a>
+            </div>
+            <div class="logo aub">
+              <a href="http://www.aub.edu.lb/"><img src="https://stageweb1.dlib.nyu.edu/aco/images/logos/aub.png" title="American University of Beirut" alt="American University of Beirut"></a>
+            </div>
+            <div class="logo auc">
+              <a href="http://www.aucegypt.edu/"><img src="https://stageweb1.dlib.nyu.edu/aco/images/logos/auc.png" title="The American University in Cairo" alt="The American University in Cairo"></a>
+            </div>
+            <div class="logo uae">
+              <a href="https://www.nla.ae/"><img src="https://stageweb1.dlib.nyu.edu/aco/images/logos/uae2.png" title="United Arab Emirates National Library and Archives" alt="United Arab Emirates National Library and Archives"></a>
+            </div>
+            <div class="logo qnl">
+              <a href="https://www.qnl.qa/"><img src="https://stageweb1.dlib.nyu.edu/aco/images/logos/qnl.png" title="Qatar National Library" alt="Qatar National Library"></a>
+            </div>
+    </div>
+    <div class="credits">
+      <div class="creditshold">
+       <div><a class="external" href="https://www.nyu.edu/footer/accessibility.html" target="_blank">Accessibility</a></div><div>Powered by: <a href="http://dlib.nyu.edu/dlts/" class="external" target="_blank">Digital Library Technology Services, NYU Libraries</a></div>
+     </div>
+    </div></footer>  <script id="items" type="text/x-handlebars-template"><header class="results-header">
+  <div class="aboutinfo">
+    <div class="aboutinfo-links">
+      <a href="#" dir="ltr" lang="en" class="aboutinfo-link aboutinfo-link-available"><span></span>About this search</a>
+      <a href="#" dir="rtl" lang="ar" class="aboutinfo-link aboutinfo-link-available">بخصوص هذا البحث<span class="arrow-left"></a>
+    </div>
+    <div class="about-info-content" style="height:0; overflow:hidden">
+      &nbsp;
+    </div>
+  </div>
+  <div class="select-style sort-select">
+    <select id="sort-select-el" aria-label="Sorting Criteria">
+      <option data-sort-dir="desc" value="score">Relevance / فرز حسب</option>
+      <option data-sort-dir="asc" value="tks_title_long">Title in English / العنوان بالانجليزية</option>
+      <option data-sort-dir="asc" value="tks_ar_title_long">Title in Arabic / العنوان بالعربية</option>
+      <option data-sort-dir="asc" value="iass_pubyear">Date of Publication / تاريخ النشر</option>
+      <option data-sort-dir="asc" value="tks_publocation">Place in English / بلد النشر بالانجليزية</option>
+      <option data-sort-dir="asc" value="tks_ar_publocation">Place in Arabic / بلد النشر بالعربية</option>
+      <option data-sort-dir="desc" value="ds_created">Recently added / وضِعت مؤخراً</option>
+    </select>
+  </div>
+  <div class="select-style rpp-select">
+    <select id="rpp-select-el" aria-label="Number of Results Per Page">
+      <option value="10" selected>10 per page</option>
+      <option value="20">20 per page</option>
+      <option value="40">40 per page</option>
+    </select>
+  </div>
+  <div class="resultsnum">Showing <span class="start">1</span> - <span class="docslength">10</span> of <span
+      class="numfound"></span> <span class="resultsfor">results for</span> <span class="s-query"></span></div>
+</header>
+<div class="item-list">
+  {{#items}}
+  <div class="item flexrow">
+    <div class="flexcol" lang="en">
+      <div class="md_title">
+        <a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">{{ss_title_long}}</a>
+      </div>
+      <div class="md_authors">
+        <span class="md_label">Author:</span>
+        {{ifempty sm_author "n.a."}}
+        {{#each sm_author}}
+        <span class="one_author">
+          <a class="md_author" href="{{../../app.appRoot}}/search/?author={{this}}">{{this}}</a></span>
+        {{/each}}
+      </div>
+      <div class="md_category">
+        <span class="md_label">Category:</span>
+        {{ifempty sm_field_topic "n.a."}}
+        {{#each sm_field_topic}}
+        <span class="one_category">
+          <a class="md_category" href="{{../../app.appRoot}}/search?category={{this}}&scope=matches">{{this}}</a>
+        </span>
+        {{/each}}
+      </div>
+      <div class="md_publisher">
+        <span class="md_label">Publisher:</span>
+        {{#if sm_publisher}}
+        {{#each sm_publisher}}
+        {{#if this}}
+        <span><a class="md_publisher" href="{{../../../../app.appRoot}}/search/?publisher={{this}}">{{this}}</a></span>
+        {{else}}
+        n.p.
+        {{/if}}
+        {{/each}}
+        {{/if}}
+      </div>
+      <div class="md_pubplace">
+        <span class="md_label">Place of Publication:</span>
+        {{ifempty ss_publocation "n.p."}}
+        <a class="md_pubplace" href="{{../app.appRoot}}/search/?pubplace={{ss_publocation}}">{{ss_publocation}}</a>
+      </div>
+      <div class="md_pubdate">
+        <span class="md_label">Date of Publication:</span>
+        {{ifempty ss_pubdate "n.d."}}
+        {{ss_pubdate}}
+      </div>
+      <div class="md_pubdate_sort">
+        <span class="md_label">Date of Publication, sortable:</span> {{iass_pubyear}}
+      </div>
+      {{#if zm_subject}}
+      <div class="md_subjects">
+        <span class="md_label">Subject:</span>
+        {{#each zm_subject}}
+        {{#json this}}
+        <span class="one_subject">
+          <a class="md_subject" href="{{../../../../app.appRoot}}/search/?subject={{name}}">{{name}}</a></span>
+        {{/json}}
+        {{/each}}
+      </div>
+      {{/if}}
+      <div class="md_partner">
+        <span class="md_label">Provider:</span>
+        {{#each zm_partner}}
+          {{#json this}}
+            <a 
+              class="md_provider" 
+              data-code="{{code}}" 
+              data-id="{{nid}}"
+              href="{{../../../app.appRoot}}/search/?provider={{name}}">{{name}}</a>
+          {{/json}}
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="thumbholder flexcol">
+      <div class="thumbs">
+        <div class="read-online">
+          <a class="read-online" href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1">
+            <div lang="ar" class="ar_callout" dir="rtl">شاهِد فوراً</div>
+            <div dir="ltr" lang="en">Read Online</div>
+          </a>
+        </div>
+        <div class="download-pdfs">
+          <div class="download-pdf-button">
+            {{#each zm_pdf_lo}}
+              {{#json this}}
+              <a class="pdf-button" href="{{ uri }}">
+                <div dir="rtl" lang="ar">تحميل دِقّة منخفضة</div>
+                <div dir="ltr" lang="en">Low-resolution PDF
+                  {{#if (hasFileSize filesize)}}
+                    <span class="fs">({{humanFileSize filesize}})</span>
+                  {{/if}}
+                </div>
+              </a>
+              {{/json}}
+            {{/each}}
+            {{#each zm_pdf_hi}}
+              {{#json this}}
+              <a class="pdf-button" href="{{ uri }}">
+                <div dir="rtl" lang="ar">تحميل دِقّة عالية</div>
+                <div dir="ltr" lang="en">High-resolution PDF   
+                  {{#if (hasFileSize filesize)}}
+                    <span class="fs">({{humanFileSize filesize}})</span>
+                  {{/if}}
+                </div>
+              </a>
+              {{/json}}
+            {{/each}}         
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flexcol" dir="rtl" lang="ar">
+      <div class="md_title" dir="rtl" lang="ar">
+        <span><a href="{{../app.appRoot}}/book/{{ss_book_identifier}}/1?lang=ar">{{ss_ar_title_long}}</a></span>
+      </div>
+      <div class="md_authors">
+        <span class="md_label">الكاتب:</span>
+        {{ifempty sm_ar_author "n.a."}}
+        {{#each sm_ar_author}}
+        <span class="one_author"><a class="md_author"
+            href="{{../../app.appRoot}}/search/?author={{this}}">{{this}}</a></span>
+        {{/each}}
+      </div>
+      <div class="md_category">
+        <span class="md_label">فئة الموضوع:</span>
+        {{ifempty sm_ar_topic "n.a."}}
+        {{#each sm_ar_topic}}
+        <span class="one_category"><a class="md_category"
+            href="{{../../app.appRoot}}/search?category={{this}}&scope=matches">{{this}}</a></span>
+        {{/each}}
+      </div>
+      <div class="md_publisher">
+        <span class="md_label">الناشر:</span>
+        {{ifempty sm_ar_publisher "n.p."}}
+        {{#each sm_ar_publisher}}
+        <a class="md_publisher" href="{{../../app.appRoot}}/search/?publisher={{this}}"><span>{{this}}</span></a>
+        {{/each}}
+      </div>
+      <div class="md_publocation">
+        <span class="md_label">مكان النشر:</span>
+        {{ifempty ss_ar_publication_location "n.p."}}
+        <a class="md_pubplace"
+          href="{{../app.appRoot}}/search/?pubplace={{ss_ar_publication_location}}"><span>{{ss_ar_publication_location}}</span></a>
+      </div>
+      <div class="md_pubdate">
+        <span class="md_label">تاريخ النشر:</span>
+        {{ifempty ss_pubdate "n.d."}}
+        <span dir="ltr" lang="en">{{ss_pubdate}}</span>
+      </div>
+      {{#each zm_pdf_hi}}
+        {{#json this}}
+          <div class="md_download-pdfs dl-hi-res" dir="rtl" lang="ar">
+            <span class="md_label">تحميل الكتاب (پي دي اف):</span>
+            <a class="md_download-pdfs-link" href="{{ uri }}"><span>دِقّة عالية</span> 
+              {{#if (hasFileSize filesize)}}
+                <span>({{humanFileSize filesize}})</span>
+              {{/if}}
+            </a>
+        </div>
+        {{/json}}
+      {{/each}}
+      {{#each zm_pdf_lo}}
+        {{#json this}}
+          <div class="md_download-pdfs  dl-low-res" dir="rtl" lang="ar">
+            <span class="md_label">تحميل الكتاب (پي دي اف):</span>
+            <a class="md_download-pdfs-link" href="{{ uri }}"><span>دِقّة منخفضة</span> 
+              {{#if (hasFileSize filesize)}}
+                <span>({{humanFileSize filesize}})</span>
+              {{/if}}          
+            </a>
+          </div>
+        {{/json}}
+      {{/each}}
+    </div>
+  </div>
+  {{/items}}
+</div>
+</script><script id="noresults" type="text/x-handlebars-template"><div class="col-l" lang="en" dir="ltr">
+  <p>Sorry, no results found.</p>
+  <p>Try a different term.</p>
+</div>
+<div class="col-r" lang="ar" dir="rtl">
+  <p>عذراً، لا توجد نتائج.</p>
+  <p>إبحث عن مصطلح آخر.</p>
+</div></script><script id="searchtips" type="text/x-handlebars-template"><div class="inner">
+  <div class="col-l" lang="en" dir="ltr">
+    <h3>Search tips in Arabic transliteration</h3>
+    <ul>
+      <li>Searches you perform on this site will query only the descriptive information about each book, both in English and Arabic, but not the full texts of the books. As searching technologies for Arabic OCR develop, we intend to introduce full-text searching.</li>
+      <li>Books in multi-volume works appear as separate search results. In the book viewer, click on “view related titles” to read the other volumes.</li>
+      <li>Click on hyper-linked metadata to find other books in the same category.</li>
+      <li>Transliteration (for consonants) usually follows the <a href="https://www.loc.gov/catdir/cpso/romanization/arabic.pdf">LOC transliteration system</a>.</li>
+      <li>Pronunciation follows Modern Standard Arabic (fuṣḥá).</li>
+      <li>Diacritical vowels are equivalent to normal characters, i.e. Ḥajjāj = Hajjaj.</li>
+      <li>Try searching places by different transliterations, i.e. Cairo, Qahira, Qahirah, Tehran, Tihran.</li>
+      <li>Try searching places in English, French, or transliteration, i.e. Egypt, Egypte, Misr.</li>
+      <li>Try searching subject terms in English, French, or transliteration, i.e. philosophy, philosophie, falsafah.</li>
+      <li>Try searching names with or without the definite article “Al-“.</li>
+      <li>Diacritics on the last letter of a word are not included, i.e. search for al-Kabir not al-Kabiru.</li>
+      <li>Feminine possessive suffix appears as -iyah and not as -iyyah, i.e. search for Hanafiyah.</li>
+      <li>Tanwīn al-Fatḥ is written in transliteration as -an, i.e. search for khassatan.</li>
+      <li>Tāʼ Marbūṭah is written as -h for single nouns and -t in cases of al-Iḍāfah (compound nouns).
+    </ul>
+  </div>
+  <div class="col-r" lang="ar" dir="rtl">
+    <h3>إرشادات للبحث لدى استخدام الترجمة الصوتية بالحروف اللاتينية</h3>
+    <p>إن عملية البحث التي تجريها في هذا الموقع تعطي وصف ببليوغرافي عن الكتاب المسترجع باللغتين العربية والانجليزية
+      ولكنها لا تقدّم إمكانية البحث بالنص الكامل. سنقوم بتوفير هذا البحث عندما تتطوّر إمكانية استخدام تقنيّة التعرّف
+      الضوئي على المحارف باللغة العربية في النصوص المرقمنة للكتب العربية</p>
+    <p>العنا وين المتعددة الأجزاء تظهر في نتائج البحث منفصلة</p>
+    <p>اضغط على “شاهد العناوين المتعلقة” لتقرأ بقية الأجزاء</p>
+    <p>اضغط على الروابط لمزيد من الكتب في نفس الفئة</p>
+    <p> الترجمة الصوتية بالحروف اللاتينية تتبع <a href="https://www.loc.gov/catdir/cpso/romanization/arabic.pdf">نظام
+        مكتبة الكونجر</a>س</p>
+    <p>النطق يتبع العربية الفصحى لدى الترجمة الصوتية</p>
+    <p>لدى الترجمة الصوتية تتساوى حروف العلّة بتشكيل وبدونه</p>
+    <p>حاول البحث عن مكان النشر باستخدام طرق مختلفة من
+      الترجمة الصوتية.</p>
+    <p>حاول البحث عن مكان النشر باللغة الفرنسية أو باللغة الإنجليزية.</p>
+    <p>حاول البحث عن الموضوع باستخدام طرق مختلفة من
+      الترجمة الصوتية أو باللغة الفرنسية أو باللغة الإنجليزية</p>
+    <p>حاول البحث باستخدام ال- التعريف أو بدونها</p>
+    <p>لا تستعمل الحركة على الحرف الأخير من الكلمة في الترجمة الصوتية باستثناء حالة التنوين بالفتحتين
+    </p>
+  </div>
+</div></script><script src="https://stageweb1.dlib.nyu.edu/aco/js/removeQueryDiacritics.min.js" defer="defer"></script><script src="https://stageweb1.dlib.nyu.edu/aco/js/handlebarsHelpers.min.js" defer="defer"></script><script src="https://stageweb1.dlib.nyu.edu/aco/js/search.min.js" defer="defer"></script>
+</body>
+</html>
