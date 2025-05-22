@@ -1,7 +1,7 @@
 # Usage example
 # 1) Build: $ docker build -o build .
 
-FROM node:20.2.0 as build
+FROM node:20.2.0 AS build
 
 WORKDIR /usr/src/app
 
