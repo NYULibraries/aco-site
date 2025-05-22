@@ -7,7 +7,7 @@ pids
 *.pid
 *.seed
 
-index.html
+#index.html
 
 *.min.js
 *.css
@@ -25,7 +25,6 @@ coverage
 lib/.sass-cache
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
-build/
 build/Release
 
 .buildpath
@@ -44,8 +43,6 @@ design/*
 .out
 .DS_Store
 
-build
-build/*
 node_modules/*
 backups/*
 
