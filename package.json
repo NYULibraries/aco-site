@@ -1,49 +1,24 @@
 {
-  "name": "aco-site",
-  "version": "1.0.1",
-  "description": "Arabic Collections Online",
-  "main": "Gruntfile.js",
-  "engines": {
-    "node": ">=4.4.6"
-  },
-  "devDependencies": {
-    "dateformat": "^1.0.11",
-    "diacritics": "^1.2.1",
-    "env2": "^2.1.1",
-    "grunt": "^1.1.0",
-    "grunt-contrib-clean": "2.0.1",
-    "grunt-contrib-compass": "1.1.1",
-    "grunt-contrib-copy": "1.0.0",
-    "grunt-contrib-sass": "2.0.0",
-    "grunt-contrib-uglify": "5.2.2",
-    "grunt-curl": "2.5.1",
-    "handlebars": "4.7.7",
-    "hogan": "^1.0.2",
-    "html-entities": "^1.1.2",
-    "html-minifier": "^4.0.0",
-    "mime-types": "^2.1.13",
-    "request": "^2.87.0",
-    "speakingurl": "^1.1.1",
-    "underscore": "^1.7.0",
-    "xml2js": "^0.4.6"
-  },
-  "scripts": {
-    "test": "GA=0 VIEWER_SOURCE_URL=http://sites.dlib.nyu.edu/viewer APP_URL=http://127.0.0.1:8080/aco APP_ROOT=/ DISCOVERY_CORE=http://stagediscovery.dlib.nyu.edu/solr/viewer ./node_modules/nightwatch/bin/nightwatch --env default",    
-    "build-local": "rm -rf ./build && docker build -o build . --build-arg GA=0 --build-arg VIEWER_SOURCE_URL=https://sites.dlib.nyu.edu/viewer --build-arg APP_URL=http://localhost:8085/aco --build-arg APP_ROOT=/aco --build-arg DISCOVERY_CORE=http://discovery1.dlib.nyu.edu:8983/solr/viewer",
-    "build-stage": "rm -rf ./build && docker build -o build . --build-arg GA=1 --build-arg VIEWER_SOURCE_URL=https://stage-sites.dlib.nyu.edu/viewer --build-arg APP_URL=https://stageweb1.dlib.nyu.edu/aco --build-arg APP_ROOT=/aco --build-arg DISCOVERY_CORE=http://discovery1.dlib.nyu.edu:8983/solr/viewer",
-    "build-prod": "rm -rf ./build && docker build -o build . --build-arg GA=1 --build-arg VIEWER_SOURCE_URL=https://sites.dlib.nyu.edu/viewer --build-arg APP_URL=/aco --build-arg APP_ROOT=/aco --build-arg DISCOVERY_CORE=http://discovery1.dlib.nyu.edu:8983/solr/viewer",
-    "build-dev": "rm -rf ./build && docker build -o build . --build-arg GA=0 VIEWER_SOURCE_URL=https://dev-sites.dlib.nyu.edu/viewer APP_URL=https://devweb1.dlib.nyu.edu/aco APP_ROOT=/aco DISCOVERY_CORE=http://discovery1.dlib.nyu.edu:8983/solr/viewer",    
-    "dev-deploy": "rsync -avzhe ssh ./build/ devweb1:/home/ortiz/aco/",
-    "deploy-stage": "rsync -avzhe ssh ./build/ stageweb1:/home/ortiz/aco/",
-    "deploy-prod": "rsync -avzhe ssh ./build/ web1:/home/ortiz/aco/"
-  },
-  "author": "NYU Digital Library Technology Services",
-  "license": "ISC",
-  "homepage": "https://github.com/NYULibraries/aco-site",
-  "dependencies": {
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/NYULibraries/aco-site.git"
-  }
+    "$schema": "https://json.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite"
+    },
+    "dependencies": {
+        "@tailwindcss/vite": "^4.1.11",
+        "autoprefixer": "^10.4.20",
+        "axios": "^1.7.4",
+        "concurrently": "^9.0.1",
+        "laravel-vite-plugin": "^2.0",
+        "sass-embedded": "^1.93.2",
+        "tailwindcss": "^4.0.7",
+        "vite": "^7.0.4"
+    },
+    "optionalDependencies": {
+        "@rollup/rollup-linux-x64-gnu": "4.9.5",
+        "@tailwindcss/oxide-linux-x64-gnu": "^4.0.1",
+        "lightningcss-linux-x64-gnu": "^1.29.1"
+    }
 }

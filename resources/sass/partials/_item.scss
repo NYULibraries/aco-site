@@ -1,0 +1,205 @@
+.item-list {
+  //clear: both;
+  margin-top: .5em;
+  //font-family: $font-family-serif;
+  //width: 100%;
+  //border-collapse: separate;
+  border-top: 1px solid $item-border-color;
+  border-bottom: 1px solid $border-highlight-color;
+}
+
+.item {
+  width: 100%;
+  // overflow: hidden;
+  box-shadow: inset 0 1px $border-highlight-color;
+  //border-top: 1px solid $item-border-color;
+  border-bottom: 1px solid $item-border-color;
+ // border-top: 1px solid $border-highlight-color;
+  font-size: 1rem;
+  padding: 20px 0;
+
+ // @media (min-width: $grid-float-breakpoint) {
+  //  border-bottom: 1px solid $item-border-color;
+ // }
+
+  >div {
+
+    &[lang="ar"] {
+      line-height: 1.7;
+      padding-bottom: 20px;
+      span {
+        word-wrap: break-word;
+      }
+    }
+  }
+
+  [lang="ar"] .md_subjects {
+    font-family: $font-family-serif !important;
+    line-height: 1.25;
+    margin: .65rem 0;
+  }
+
+  [lang="en"] .md_subjects,
+  [lang="en"] .md_authors {
+    line-height: 1.25;
+    margin: .15rem 0;
+  }
+
+  .md_partner {
+    display: inline-block;
+    font-family: $font-family-serif !important;
+    white-space: nowrap;
+  }
+
+  .md_title {
+    font-size: 1.2rem;
+    line-height: 1.25;
+    margin-bottom: 5px;
+    &[lang="ar"] {
+      font-size: 1.3rem;
+    }
+  }
+
+  .md_label {
+    font-weight: bold !important;
+  }
+}
+
+span.one_subject {
+  &::after {
+    content: ", ";
+    margin-right: .2em;
+  }
+
+  &:last-child::after {
+    content: "";
+    margin-right: 0em;
+  }
+}
+
+// for multiple authors
+span.one_author {
+  &::after {
+    content: ", ";
+    margin-right: .2em;
+  }
+
+  &:last-child::after {
+    content: "";
+    margin-right: 0em;
+  }
+}
+
+.download-pdfs-header {
+  text-align: center;
+  margin-top: 20px;
+  font-family: Helvetica, sans-serif;
+
+  [lang="en"] {
+    font-size: .7rem;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  [lang="ar"] {
+
+    font-size: 1.2rem;
+  }
+}
+
+.thumbs {
+  // font-weight: bold;
+
+  a {
+    display: block;
+    padding: 5px;
+
+    &:link,
+    &:visited {
+
+      box-shadow: 2px 2px 1px rgba(10, 10, 10, .4);
+      margin-right: 2px;
+      font-family: Helvetica, sans-serif;
+
+      font-size: .7rem;
+      text-align: center;
+      font-weight: normal;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+      box-shadow: 0px 0px 1px 3px $input-border-focus;
+      text-decoration: none;
+    }
+
+    &:active {
+      box-shadow: 0px 0px 0px 4px $input-border-focus;
+    }
+
+    &.read-online {
+
+      [lang="en"] {
+        font-size: .8rem;
+        padding-top: 4px;
+        text-transform: uppercase;
+      }
+
+      [lang="ar"] {
+        font-size: 1.1rem;
+        padding-top: 4px;
+      }
+
+      &:link,
+      &:visited {
+        color: #ffffff;
+        background-color: #000066;
+        background-image: url('@assets/bg_pattern_tiny.svg');
+      }
+      &:hover {
+        background-color: #5e5ec8;
+      }
+    }
+
+    &.pdf-button {
+      margin: 10px 2px 10px 0;
+      color: #222222;
+      background-color: $border-highlight-color;
+
+      [lang="ar"] {
+        font-size: 1.3rem;
+        background-image: url('@assets/pdf.svg');
+        background-position: right 5px;
+        background-repeat: no-repeat;
+        display: inline-block;
+        padding-right: 22px;
+      }
+
+      .fs {
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+.download-pdfs {
+  display: none;
+}
+
+.md_download-pdfs-link {
+  background-image: url('@assets/pdf.svg');
+  background-position: left 5px;
+  background-repeat: no-repeat;
+  padding-left: 17px;
+  white-space: nowrap;
+}
+
+@media (min-width: $grid-float-breakpoint) {
+  .download-pdfs {
+    display: block;
+  }
+
+  .md_download-pdfs {
+    display: none;
+  }
+}
