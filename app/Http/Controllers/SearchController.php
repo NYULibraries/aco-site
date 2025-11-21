@@ -63,6 +63,7 @@ class SearchController extends Controller
 
   public function search(Request $request, SolrService $solrService): View
   {
+
     $scope = $request->query('scope', 'containsAny');
 
     $results = $solrService->search($request, $scope);

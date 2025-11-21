@@ -24,7 +24,6 @@ class SolrService
       // fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en
       // &fq=((tus_title_long:%22jibran%22%20OR%20ts_title_long:%22jibran%22%20OR%20tusar_title_long:%22jibran%22))&rows=10&start=0&sort=score%20desc&q=*
 
-
       // select?
       // wt=json
       // fl=*
@@ -149,8 +148,6 @@ class SolrService
 
       }
 
-
-
       $query = $this->solrClient->createSelect();
 
       $query->setQuery('*:*');
@@ -160,170 +157,171 @@ class SolrService
       }
 
       if (!empty($options['q'])) {
-            $q = trim($options['q']);
-            if ($scopeIs === 'matches') {
-                $query->setQuery("(content_und:\"$q\" OR content_und_ws:\"$q\" OR content_en:\"$q\" OR content:\"$q\")");
-            } else {
-                $words = preg_split('/\s+/', $q);
-                $parts = [];
-                foreach ($words as $w) {
-                    $parts[] = "(content_und:$w OR content_und_ws:$w OR content_en:$w OR content:$w)";
-                }
-                $query->setQuery('(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $parts) . ')');
-            }
+
+        $q = trim($options['q']);
+
+        if ($scopeIs === 'matches') {
+          $query->setQuery("(content_und:\"$q\" OR content_und_ws:\"$q\" OR content_en:\"$q\" OR content:\"$q\")");
+        } else {
+          $words = preg_split('/\s+/', $q);
+          $parts = [];
+          foreach ($words as $w) {
+            $parts[] = "(content_und:$w OR content_und_ws:$w OR content_en:$w OR content:$w)";
+          }
+          $query->setQuery('(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $parts) . ')');
         }
 
-        $start = $options['start'] ?? 0;
-
-        $rows  = $options['rpp'] ?? 10;
-
-        $query->setStart($start);
-
-        $query->setRows($rows);
-
-       $request = $this->solrClient->createRequest($query);
-
-       $uri = $request->getUri();
-
-        echo $uri;
-
-        die();
-
-        $resultset = $this->solrClient->select($query);
-
-        $total = $resultset->getNumFound();
-
-        $docs = iterator_to_array($resultset);
-
-        $documents = [];
-
-    foreach ($docs as $doc) {
-
-      $publocation = [];
-
-      if (isset($doc->ss_publocation)) {
-        $publocation[] = [
-          'label' => $doc->ss_publocation,
-          'path' => "search/?provider={$doc->ss_publocation}",
-        ];
       }
 
-      $ar_publocation = [];
-      if (isset($doc->ss_ar_publocation)) {
-        $ar_publocation[] = [
-          'label' => $doc->ss_ar_publocation,
-          'path' => "search/?provider={$doc->ss_ar_publocation}",
-        ];
-      }
+      $start = $options['start'] ?? 0;
 
-      $providers = [];
+      $rows  = $options['rpp'] ?? 10;
 
-      if (isset($doc->sm_provider_label)) {
-        foreach ($doc->sm_provider_label as $provider) {
-          $providers[] = [
-            'label' => $provider,
-            'path' => "search/?provider={$provider}",
+      $query->setStart($start);
+
+      $query->setRows($rows);
+
+      $request = $this->solrClient->createRequest($query);
+
+      $uri = $request->getUri();
+
+      $resultset = $this->solrClient->select($query);
+
+      $total = $resultset->getNumFound();
+
+      $docs = iterator_to_array($resultset);
+
+      $documents = [];
+
+      foreach ($docs as $doc) {
+
+        $publocation = [];
+
+        if (isset($doc->ss_publocation)) {
+          $publocation[] = [
+            'label' => $doc->ss_publocation,
+            'path' => "search/?provider={$doc->ss_publocation}",
           ];
         }
-      }
 
-      $publishers = [];
+        $ar_publocation = [];
 
-      if (isset($doc->sm_publisher)) {
-        foreach ($doc->sm_publisher as $publisher) {
-          $publishers[] = [
-            'label' => $publisher,
-            'path' => "search/?publisher={$publisher}",
+        if (isset($doc->ss_ar_publocation)) {
+          $ar_publocation[] = [
+            'label' => $doc->ss_ar_publocation,
+            'path' => "search/?provider={$doc->ss_ar_publocation}",
           ];
         }
-      }
 
-      $topics = [];
+        $providers = [];
 
-      if (isset($doc->sm_field_topic)) {
-        foreach ($doc->sm_field_topic as $topic) {
-          $topics[] = [
-            'label' => $topic,
-            'path' => "search?category={$topic}&scope=matches",
-          ];
-        }
-      }
-
-      $subjects = [];
-
-      if (isset($doc->zm_subject)) {
-        foreach ($doc->zm_subject as $subject) {
-          $subject = json_decode($subject);
-          $subject->path = "search?subject={$subject->name}";
-          $subjects[] = $subject;
-        }
-      }
-
-      $partners_map = [
-        'Arabic collections online' => 'المجموعات العربية على الانترنت',
-        'New York University Libraries' => 'مكتبات جامعة نيويورك',
-        'Princeton University Libraries' => 'مكتبات جامعة برينستون',
-        'Cornell University Libraries' => 'مكتبات جامعة كورنيل',
-        'Columbia University Libraries' => 'مكتبات جامعة كولومبيا',
-        'American University of Beirut' => 'الجامعة الاميركية في بيروت',
-        'American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
-        'The American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
-        'United Arab Emirates National Archives' => 'الامارات العربية المتحدة - الارشيف الوطني',
-      ];
-
-      $partners = [];
-
-      $partners_ar = [];
-
-      if (isset($doc->zm_partner)) {
-        foreach ($doc->zm_partner as $partner) {
-          $partner = json_decode($partner);
-          $partner->path = "search?partner={$partner->name}";
-          $partners[] = $partner;
-          if (isset($partners_map[$partner->name])) {
-            $partners_ar[] = [
-              'label' => $partners_map[$partner->name],
-              'path' => "search?partner={$partner->name}",
+        if (isset($doc->sm_provider_label)) {
+          foreach ($doc->sm_provider_label as $provider) {
+            $providers[] = [
+              'label' => $provider,
+              'path' => "search/?provider={$provider}",
             ];
           }
         }
-      }
 
-      $authors = [];
+        $publishers = [];
 
-      if (isset($doc->sm_author)) {
-        foreach ($doc->sm_author as $author) {
-          $authors[] = [
-            'label' => $author,
-            'path' => "search?subject={$author}",
-          ];
+        if (isset($doc->sm_publisher)) {
+          foreach ($doc->sm_publisher as $publisher) {
+            $publishers[] = [
+              'label' => $publisher,
+              'path' => "search/?publisher={$publisher}",
+            ];
+          }
         }
-      }
 
-      $authors_ar = [];
+        $topics = [];
 
-      if (isset($doc->sm_ar_author)) {
-        foreach ($doc->sm_ar_author as $author) {
-          $authors_ar[] = [
-            'label' => $author,
-            'path' => "search?subject={$author}",
-          ];
+        if (isset($doc->sm_field_topic)) {
+          foreach ($doc->sm_field_topic as $topic) {
+            $topics[] = [
+              'label' => $topic,
+              'path' => "search?category={$topic}&scope=matches",
+            ];
+          }
         }
-      }
 
-      $pdf_hi = [];
+        $subjects = [];
 
-      if (isset($doc->zm_pdf_hi) && isset($doc->zm_pdf_hi[0])) {
-        $pdf_hi = json_decode($doc->zm_pdf_hi[0]);
-      }
+        if (isset($doc->zm_subject)) {
+          foreach ($doc->zm_subject as $subject) {
+            $subject = json_decode($subject);
+            $subject->path = "search?subject={$subject->name}";
+            $subjects[] = $subject;
+          }
+        }
 
-      $pdf_lo = [];
+        $partners_map = [
+          'Arabic collections online' => 'المجموعات العربية على الانترنت',
+          'New York University Libraries' => 'مكتبات جامعة نيويورك',
+          'Princeton University Libraries' => 'مكتبات جامعة برينستون',
+          'Cornell University Libraries' => 'مكتبات جامعة كورنيل',
+          'Columbia University Libraries' => 'مكتبات جامعة كولومبيا',
+          'American University of Beirut' => 'الجامعة الاميركية في بيروت',
+          'American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
+          'The American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
+          'United Arab Emirates National Archives' => 'الامارات العربية المتحدة - الارشيف الوطني',
+        ];
 
-      if (isset($doc->zm_pdf_lo) && isset($doc->zm_pdf_lo[0])) {
-        $pdf_lo = json_decode($doc->zm_pdf_lo[0]);
-      }
+        $partners = [];
+
+        $partners_ar = [];
+
+        if (isset($doc->zm_partner)) {
+          foreach ($doc->zm_partner as $partner) {
+            $partner = json_decode($partner);
+            $partner->path = "search?partner={$partner->name}";
+            $partners[] = $partner;
+            if (isset($partners_map[$partner->name])) {
+              $partners_ar[] = [
+                'label' => $partners_map[$partner->name],
+                'path' => "search?partner={$partner->name}",
+              ];
+            }
+          }
+        }
+
+        $authors = [];
+
+        if (isset($doc->sm_author)) {
+          foreach ($doc->sm_author as $author) {
+            $authors[] = [
+              'label' => $author,
+              'path' => "search?subject={$author}",
+            ];
+          }
+        }
+
+        $authors_ar = [];
+
+        if (isset($doc->sm_ar_author)) {
+          foreach ($doc->sm_ar_author as $author) {
+            $authors_ar[] = [
+              'label' => $author,
+              'path' => "search?subject={$author}",
+            ];
+          }
+        }
+
+        $pdf_hi = [];
+
+        if (isset($doc->zm_pdf_hi) && isset($doc->zm_pdf_hi[0])) {
+          $pdf_hi = json_decode($doc->zm_pdf_hi[0]);
+        }
+
+        $pdf_lo = [];
+
+        if (isset($doc->zm_pdf_lo) && isset($doc->zm_pdf_lo[0])) {
+          $pdf_lo = json_decode($doc->zm_pdf_lo[0]);
+        }
 
       $pubdate = 'n.d.';
+
       if (isset($doc->ss_pubdate) && isset($doc->ss_pubdate)) {
         $pubdate = $doc->ss_pubdate;
       }
@@ -373,11 +371,13 @@ class SolrService
 
     }
 
-        return [
-            'documents' => $documents,
-            'total' => $total,
-            'rows' => $rows,
-            'page' => ($start / $rows) + 1,
-        ];
-    }
+    return [
+      'documents' => $documents,
+      'total' => $total,
+      'rows' => $rows,
+      'page' => ($start / $rows) + 1,
+    ];
+
+  }
+
 }
