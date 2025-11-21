@@ -2,12 +2,12 @@
     <header class="header-main container-fluid" role="banner">
       <div lang="en">
         <h1 class="sitename" lang="en">
-          <a href="{{ url('app.url') }}">{{ env('APP_NAME_EN') }}</a>
+          <a href="{{ config('app.url') }}">{{ env('APP_NAME_EN') }}</a>
         </h1>
       </div>
       <div lang="ar">
         <h1 class="sitename" lang="ar">
-          <a href="{{ url('app.url') }}">{{ env('APP_NAME_AR') }}</a>
+          <a href="{{ config('app.url') }}">{{ env('APP_NAME_AR') }}</a>
         </h1>
       </div>
     </header>
