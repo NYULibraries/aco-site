@@ -79,7 +79,7 @@ Start the environment:
 ##### Setup & Discovery
 
 - Write set-up basic documentation (README.md)
-- Sett-up Laravel Sail
+- Set up Laravel Sail
 
 ##### Technical Debt & Risks
 
@@ -90,16 +90,16 @@ Start the environment:
 ##### Migrate routes
 
 - Home (https://dlib.nyu.edu/aco/ | http://3.219.126.115/aco/)
-  -- Total count of volumes across (needs dynamic counts or cache with cron job.) | Damon
-  -- Subjects count (needs dynamic counts or cache with cron job.) | Damon
-  -- Style shift | Damon
-  -- Featured Titles | Taka
+  - Total count of volumes across (needs dynamic counts or cache with cron job.) | Damon  
+  - Subjects count (needs dynamic counts or cache with cron job.) | Damon  
+  - Style shift | Damon  
+  - Featured Titles | Taka
 
 - About (https://dlib.nyu.edu/aco/about/ | http://3.219.126.115/aco/about/)
   - Done
 
 - Other Resources (https://dlib.nyu.edu/aco/resources/ | http://3.219.126.115/aco/resources/ )
-  - Trailing slash on the arabic Url | Damon
+  - Trailing slash on the Arabic URL | Damon
 
 - Browse titles (https://dlib.nyu.edu/aco/browse/ | http://3.219.126.115/aco/browse/)
   - Page title | Damon
@@ -107,7 +107,7 @@ Start the environment:
 
 - Browse by Category (https://dlib.nyu.edu/aco/browse-by-category/ | http://3.219.126.115/aco/browse-by-category/)
   - Style shift  | Damon
-  - "All" link is missing from the english and arabic section  | Damon
+  - "All" link is missing from the English and Arabic section  | Damon
   - Arabic section: The tags count is missing "books" | Damon
 
 - Search Collections (https://dlib.nyu.edu/aco/searchcollections/ | http://3.219.126.115/aco/searchcollections/)
@@ -116,7 +116,7 @@ Start the environment:
 - Search Results (https://dlib.nyu.edu/aco/search/ | http://3.219.126.115/aco/search/)
   - Search widget | Taka
   - "About this search" dropdown not working | Damon
-  - Paggination style | Damon
+  - Pagination style | Damon
 
 Others:
 
