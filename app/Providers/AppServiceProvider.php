@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Http\Request;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,29 +36,29 @@ class AppServiceProvider extends ServiceProvider
         $scope = $request->query('scope', 'containsAny');
 
         $conf = [
-          'q' => $q,
-          'scope' => $scope,
-          'scopes' => [
-            [
-              'label' => 'Contains Any / يحتوي على اي',
-              'value' => 'containsAny',
-              'selected' => ($scope === 'containsAny' ? true : false),
+            'q' => $q,
+            'scope' => $scope,
+            'scopes' => [
+                [
+                    'label' => 'Contains Any / يحتوي على اي',
+                    'value' => 'containsAny',
+                    'selected' => ($scope === 'containsAny' ? true : false),
+                ],
+                [
+                    'label' => 'Contains All / يحتوي على كل',
+                    'value' => 'containsAll',
+                    'selected' => ($scope === 'containsAll' ? true : false),
+                ],
+                [
+                    'label' => 'Matches / يساوي',
+                    'value' => 'matches',
+                    'selected' => ($scope === 'matches' ? true : false),
+                ],
             ],
-            [
-              'label' => 'Contains All / يحتوي على كل',
-              'value' => 'containsAll',
-              'selected' => ($scope === 'containsAll' ? true : false),
-            ],
-            [
-              'label' => 'Matches / يساوي',
-              'value' => 'matches',
-              'selected' => ($scope === 'matches' ? true : false),
-            ],
-          ]
         ];
 
         View::composer('partials.search_form_adv', function ($view) use ($conf) {
-          $view->with('form', $conf);
+            $view->with('form', $conf);
         });
 
     }

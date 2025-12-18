@@ -1,154 +1,151 @@
 <?php
 
 namespace App\Http\Controllers;
-use Solarium\Client;
-use Illuminate\View\View;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Request;
-use App\Providers\SolrServiceProvider;
+
 use App\Services\SolrService;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\View\View;
+use Solarium\Client;
 
 class SearchController extends Controller
 {
-
-  public function searchcollection(Request $request, Client $solrClient): View
-  {
+    public function searchcollection(Request $request, Client $solrClient): View
+    {
 
         $data = [
-          'pagetitle' => 'Search Collections',
-          'body_class' => 'search',
-          'title' => [
-            'en' => [
-              'label' => 'Search Collections',
-              'language' => [
-                'code' => 'en',
-                'dir' => 'ltr',
+            'pagetitle' => 'Search Collections',
+            'body_class' => 'search',
+            'title' => [
+                'en' => [
+                    'label' => 'Search Collections',
+                    'language' => [
+                        'code' => 'en',
+                        'dir' => 'ltr',
+                    ],
                 ],
-              ],
-            'ar' => [
-              'label' => 'إبحث في المجموعات',
-              'language' => [
-                'code' => 'ar',
-                'dir' => 'rtl',
+                'ar' => [
+                    'label' => 'إبحث في المجموعات',
+                    'language' => [
+                        'code' => 'ar',
+                        'dir' => 'rtl',
+                    ],
                 ],
-              ],
             ],
             'content' => [
-              'body' => [
-                'en' => [
-                  'language' => [
-                  'class' => 'col col-l',
-                  'lang' => 'en',
-                  'dir' => 'ltr',
+                'body' => [
+                    'en' => [
+                        'language' => [
+                            'class' => 'col col-l',
+                            'lang' => 'en',
+                            'dir' => 'ltr',
+                        ],
+                        'label' => 'Search tips in Arabic transliteration',
+                        'content' => '',
+                    ],
+                    'ar' => [
+                        'language' => [
+                            'class' => 'col col-r',
+                            'lang' => 'ar',
+                            'dir' => 'rtl',
+                        ],
+                        'label' => 'إرشادات للبحث لدى استخدام الترجمة الصوتية بالحروف اللاتينية',
+                        'content' => '',
+                    ],
                 ],
-                'label' => 'Search tips in Arabic transliteration',
-                'content' => '',
-          ],
-          'ar' => [
-            'language' => [
-              'class' => 'col col-r',
-              'lang' => 'ar',
-              'dir' => 'rtl',
             ],
-            'label' => 'إرشادات للبحث لدى استخدام الترجمة الصوتية بالحروف اللاتينية',
-            'content' => '',
-          ]
-        ],
-      ],
-    ];
+        ];
 
-    return view('pages.searchcollections', $data);
+        return view('pages.searchcollections', $data);
 
-  }
+    }
 
-  public function search(Request $request, SolrService $solrService): View
-  {
+    public function search(Request $request, SolrService $solrService): View
+    {
 
-    $scope = $request->query('scope', 'containsAny');
+        $scope = $request->query('scope', 'containsAny');
 
-    $results = $solrService->search($request, $scope);
+        $results = $solrService->search($request, $scope);
 
-    $documents = $results['documents'];
+        $documents = $results['documents'];
 
-    $total = $results['total'];
+        $total = $results['total'];
 
-    $rows = $results['rows'];
+        $rows = $results['rows'];
 
-    $page = $results['page'];
+        $page = $results['page'];
 
-    // Calculate Solr start offset
-    $start = ($page - 1) * $rows;
+        // Calculate Solr start offset
+        $start = ($page - 1) * $rows;
 
-    $q = $request->query('q', '');
+        $q = $request->query('q', '');
 
-    $paginator = new LengthAwarePaginator(
-        $documents,
-        $total,
-        $rows,
-        $page,
-        [
-            'path' => $request->url(),
-            'query' => $request->query(),
-        ]
-    );
+        $paginator = new LengthAwarePaginator(
+            $documents,
+            $total,
+            $rows,
+            $page,
+            [
+                'path' => $request->url(),
+                'query' => $request->query(),
+            ]
+        );
 
-    $data = [
-      'pagetitle' => 'Search Results',
-      'body_class' => 'search',
-      'title' => [
-        'en' => [
-          'label' => 'Search Results',
-          'language' => [
-            'code' => 'en',
-            'dir' => 'ltr'
-          ]
-        ],
-        'ar' => [
-          'label' => 'نتائج البحث',
-          'language' => [
-            'code' => 'ar',
-            'dir' => 'rtl'
-          ]
-        ],
-      ],
-      'content' => [
-        'body' => [
-          'en' => [
-            'language' => [
-              'class' => 'col col-l',
-              'lang' => 'en',
-              'dir' => 'ltr',
+        $data = [
+            'pagetitle' => 'Search Results',
+            'body_class' => 'search',
+            'title' => [
+                'en' => [
+                    'label' => 'Search Results',
+                    'language' => [
+                        'code' => 'en',
+                        'dir' => 'ltr',
+                    ],
+                ],
+                'ar' => [
+                    'label' => 'نتائج البحث',
+                    'language' => [
+                        'code' => 'ar',
+                        'dir' => 'rtl',
+                    ],
+                ],
             ],
-            'label' => 'Search tips in Arabic transliteration',
-            'content' => '',
-          ],
-          'ar' => [
-            'language' => [
-              'class' => 'col col-r',
-              'lang' => 'ar',
-              'dir' => 'rtl'
+            'content' => [
+                'body' => [
+                    'en' => [
+                        'language' => [
+                            'class' => 'col col-l',
+                            'lang' => 'en',
+                            'dir' => 'ltr',
+                        ],
+                        'label' => 'Search tips in Arabic transliteration',
+                        'content' => '',
+                    ],
+                    'ar' => [
+                        'language' => [
+                            'class' => 'col col-r',
+                            'lang' => 'ar',
+                            'dir' => 'rtl',
+                        ],
+                        'label' => 'إرشادات للبحث لدى استخدام الترجمة الصوتية بالحروف اللاتينية',
+                        'content' => '',
+                    ],
+                ],
             ],
-            'label' => 'إرشادات للبحث لدى استخدام الترجمة الصوتية بالحروف اللاتينية',
-            'content' => '',
-          ],
-        ],
-      ],
-      'limit' => $rows,
-      'docslength' => count($documents),
-      'numfound' => $total,
-      'total' => $total,
-      'query' => '',
-      'documents' => $documents,
-      'currentPage' => $page,
-      'totalPages' => ceil($total / $rows),
-      'paginator' => $paginator,
-      'startIndex' => $total > 0 ? $start + 1 : 0,
-      'endIndex' => min($start + count($documents), $total),
-    ];
+            'limit' => $rows,
+            'docslength' => count($documents),
+            'numfound' => $total,
+            'total' => $total,
+            'query' => '',
+            'documents' => $documents,
+            'currentPage' => $page,
+            'totalPages' => ceil($total / $rows),
+            'paginator' => $paginator,
+            'startIndex' => $total > 0 ? $start + 1 : 0,
+            'endIndex' => min($start + count($documents), $total),
+        ];
 
-    return view('pages.search', $data);
+        return view('pages.search', $data);
 
-  }
-
+    }
 }
-
