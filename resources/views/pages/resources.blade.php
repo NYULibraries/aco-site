@@ -18,7 +18,11 @@
                 <a href="{{ $item['href'] }}" target="_blank">{{ $item['label'] }}</a>
               </h3>
               <div class="link">
-                {{ $item['href'] }}
+                @if ($resources['language']['dir'] === 'rtl')
+                  {{ rtrim($item['href'], '/') }}
+                @else
+                  {{ $item['href'] }}
+                @endif
               </div>
             </li>
           @endforeach
