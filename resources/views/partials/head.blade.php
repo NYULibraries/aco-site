@@ -24,7 +24,7 @@
 <style>
   @font-face {
     font-family: 'NYUPerstare';
-    src: url('{{ config('app.url') }}/fonts/NYUPerstare-VF.woff2') format('woff2');
+    src: url('{{ asset('fonts/NYUPerstare-VF.woff2') }}') format('woff2');
     font-style: normal;
     font-synthesis: none;
     }
@@ -39,7 +39,7 @@
   });
 </script>
 
-<link rel="apple-touch-icon" href="{{ config('app.url') }}/images/apple-touch-icon.png">
-<link rel="shortcut icon" href="{{ config('app.url') }}/images/favicon.ico" />
+<link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
+<link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}" />
 
 @vite(['resources/sass/style.scss'])
