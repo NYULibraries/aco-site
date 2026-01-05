@@ -46,6 +46,11 @@ ul.resources {
     margin-bottom: .3rem;
     color: #555;
     font-size: .9rem;
+    .link-url {
+      direction: ltr;
+      unicode-bidi: embed;
+      display: inline-block;
+    }
   }
   .r-desc {
     line-height: 1.3;

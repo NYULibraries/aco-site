@@ -18,11 +18,8 @@
                 <a href="{{ $item['href'] }}" target="_blank">{{ $item['label'] }}</a>
               </h3>
               <div class="link">
-                @if ($resources['language']['dir'] === 'rtl')
-                  {{ rtrim($item['href'], '/') }}
-                @else
-                  {{ $item['href'] }}
-                @endif
+                {{-- Display the URL in LTR regardless of language --}}
+                <span class="link-url">{{ $item['href'] }}</span>
               </div>
             </li>
           @endforeach
