@@ -11,7 +11,7 @@ class BrowseController extends Controller
   public function index(Request $request): View
   {
 
-    $pagetitle = 'Browse';
+    $pagetitle = 'Browse titles';
 
     $body_class = 'browse';
 
