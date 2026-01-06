@@ -8,20 +8,21 @@
         "format:blade": "blade-formatter --write 'resources/**/*.blade.php'"
     },
     "dependencies": {
-        "@tailwindcss/vite": "^4.1.11",
-        "autoprefixer": "^10.4.20",
-        "axios": "^1.7.4",
-        "concurrently": "^9.0.1",
-        "laravel-vite-plugin": "^2.0",
-        "sass-embedded": "^1.93.2",
-        "tailwindcss": "^4.0.7",
-        "vite": "^7.0.4"
+        "@tailwindcss/vite": "4.1.11",
+        "autoprefixer": "10.4.20",
+        "axios": "1.7.4",
+        "concurrently": "9.0.1",
+        "laravel-vite-plugin": "2.0",
+        "sass-embedded": "1.93.2",
+        "tailwindcss": "4.0.7",
+        "vite": "7.0.4"
     },
     "optionalDependencies": {
         "@rollup/rollup-linux-x64-gnu": "4.9.5",
-        "@tailwindcss/oxide-linux-x64-gnu": "^4.0.1",
-        "lightningcss-linux-x64-gnu": "^1.29.1"
+        "@tailwindcss/oxide-linux-x64-gnu": "4.0.1",
+        "lightningcss-linux-x64-gnu": "1.29.1"
     },
+    "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39",
     "devDependencies": {
         "blade-formatter": "1.44.2"
     }

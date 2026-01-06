@@ -22,10 +22,12 @@ approach, but I am open to creating a single-page app with React or other altern
 Decision:
 
 - Apache
-- PHP 8.2.28
-- NodeJS v20.19.6
-- Laravel 12 (Blade)
-- pnpm
+- homebrew
+  - PHP 8.2.28
+  - Laravel 12 (Blade)
+- nvm
+  - NodeJS v20.19.6
+  - pnpm
 
 ##### Local development
 
