@@ -2,6 +2,8 @@
 
 @section('title', 'Home Page')
 
+@section('body_class', $body_class)
+
 @section('content')
   <main class="main container-fluid" role="main">
     @include('partials.search_form_adv')

@@ -247,7 +247,7 @@ class AboutController extends Controller
 
         $data = [
           'pagetitle' => 'About',
-          'body_class' => 'about',
+          'body_class' => 'page about',
           'title' => [
             'en' => [
               'label' => 'About',

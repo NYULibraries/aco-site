@@ -10,6 +10,7 @@ class HomeController extends Controller
     {
 
       $data = [
+        'body_class' => 'front',
         'appName' => 'Arabic Collections Online',
         'title' => 'Welcome to My Laravel Site',
         'message' => 'This text comes from the controller.',
