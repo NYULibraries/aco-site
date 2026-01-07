@@ -146,7 +146,7 @@ class ResourcesController extends Controller
 
       $data = [
           'pagetitle' => 'Other Resources',
-          'body_class' => 'resources',
+          'body_class' => 'page resources',
           'title' => [
             'en' => [
               'label' => 'Other Resources',

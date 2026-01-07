@@ -29,11 +29,11 @@
 @include('partials.openGraphMetaData')
 
 <style>
-    @font-face {
-        font-family: 'NYUPerstare';
-        src: url('{{ config('app.url') }}/fonts/NYUPerstare-VF.woff2') format('woff2');
-        font-style: normal;
-        font-synthesis: none;
+  @font-face {
+    font-family: 'NYUPerstare';
+    src: url('{{ asset('fonts/NYUPerstare-VF.woff2') }}') format('woff2');
+    font-style: normal;
+    font-synthesis: none;
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.10/webfont.js"></script>
@@ -46,7 +46,7 @@
     });
 </script>
 
-<link rel="apple-touch-icon" href="{{ config('app.url') }}/images/apple-touch-icon.png">
-<link rel="shortcut icon" href="{{ config('app.url') }}/images/favicon.ico" />
+<link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
+<link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}" />
 
 @vite(['resources/sass/style.scss'])
