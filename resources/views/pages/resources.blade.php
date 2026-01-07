@@ -5,9 +5,9 @@
 @section('body_class', $body_class)
 
 @section('content')
-  <main class="main container-fluid" role="main">
+    <main class="main container-fluid" role="main">
 
-    @include('partials.pagetitle')
+        @include('partials.pagetitle')
 
     @foreach ($content['resources'] as $resources)
       <div class="{{ $resources['language']['class'] }}" lang="{{ $resources['language']['lang'] }}" dir="{{ $resources['language']['dir'] }}">
@@ -18,7 +18,8 @@
                 <a href="{{ $item['href'] }}" target="_blank">{{ $item['label'] }}</a>
               </h3>
               <div class="link">
-                {{ $item['href'] }}
+                {{-- Display the URL in LTR regardless of language --}}
+                <span class="link-url">{{ $item['href'] }}</span>
               </div>
             </li>
           @endforeach
@@ -26,5 +27,5 @@
       </div>
     @endforeach
 
-  </main>
+    </main>
 @endsection

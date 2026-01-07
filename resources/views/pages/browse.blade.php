@@ -5,10 +5,10 @@
 @section('body_class', $body_class)
 
 @section('content')
-  <main class="main container-fluid" role="main">
+    <main class="main container-fluid" role="main">
 
-    @include('partials.pagetitle')
+        @include('partials.pagetitle')
 
 
-  </main>
+    </main>
 @endsection
