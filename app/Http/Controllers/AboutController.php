@@ -269,8 +269,6 @@ class AboutController extends Controller
           'content' => $content,
         ];
 
-        dd($data);
-
         return view('pages.about', $data);
     }
 }
