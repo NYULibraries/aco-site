@@ -29,11 +29,11 @@
 @include('partials.openGraphMetaData')
 
 <style>
-  @font-face {
-    font-family: 'NYUPerstare';
-    src: url('{{ asset('fonts/NYUPerstare-VF.woff2') }}') format('woff2');
-    font-style: normal;
-    font-synthesis: none;
+    @font-face {
+        font-family: 'NYUPerstare';
+        src: url('{{ asset('fonts/NYUPerstare-VF.woff2') }}') format('woff2');
+        font-style: normal;
+        font-synthesis: none;
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.10/webfont.js"></script>

@@ -4,12 +4,12 @@ window.addEventListener("DOMContentLoaded", () => {
   if (button && navbar) {
     button.addEventListener("click", (event) => {
       event.preventDefault();
-      const isCollapsed = navbar.dataset.collapsed === "collapse";
+      const isCollapsed = button.getAttribute("aria-expanded") === "false";
       if (isCollapsed) {
-        navbar.dataset.collapsed = "expand";
+        button.setAttribute("aria-expanded", "true");
         navbar.style.height = "283px";
       } else {
-        navbar.dataset.collapsed = "collapse";
+        button.setAttribute("aria-expanded", "false");
         navbar.style.height = "0px";
       }
     });
