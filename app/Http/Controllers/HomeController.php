@@ -16,8 +16,8 @@ class HomeController extends Controller
         'appName' => 'Arabic Collections Online',
         'title' => 'Welcome to My Laravel Site',
         'message' => 'This text comes from the controller.',
-        'frontCount' => number_format($itemCounts['volumes']),
-        'subjectCount' => number_format($itemCounts['subjects']),
+        'frontCount' => $itemCounts['volumes'],
+        'subjectCount' => $itemCounts['subjects'],
       ];
 
       return view('pages.home', $data);
