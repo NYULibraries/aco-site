@@ -8,18 +8,14 @@
     <main class="main container-fluid" role="main">
         @include('partials.search_form_adv')
         <div class="col col-l" lang="en" dir="ltr">
-            <p>
-                <b>Arabic Collections Online</b> (ACO) is a publicly available digital library of public domain Arabic
-                language
-                content. ACO currently provides digital access to <b>{{ $frontCount }}</b> volumes across
-                <b>{{ $subjectCount }}</b> subjects drawn from rich Arabic collections of distinguished research libraries.
-                Established with support from NYU Abu Dhabi, and currently supported by major grants from Arcadia, a
-                charitable
-                fund of Lisbet Rausing and Peter Baldwin, and Carnegie Corporation of New York, this mass digitization
-                project
-                aims to feature up to 23,000 volumes from the library collections of NYU and partner institutions.&nbsp;
-                <a href="/about/" aria-label="read more about Arabic Collections Online" class="readmore">READ&nbsp;MORE…</a>
-            </p>
+            <b>Arabic Collections Online</b> (ACO) is a publicly available digital library of public domain Arabic language
+            content. ACO currently provides digital access to <b>{{ $frontCount }}</b> volumes across
+            <b>{{ $subjectCount }}</b> subjects drawn from rich Arabic collections of distinguished research libraries.
+            Established with support from NYU Abu Dhabi, and currently supported by major grants from Arcadia, a charitable
+            fund of Lisbet Rausing and Peter Baldwin, and Carnegie Corporation of New York, this mass digitization project
+            aims to feature up to 23,000 volumes from the library collections of NYU and partner institutions.&nbsp;
+            <a href="{{ route('about.index') }}" aria-label="read more about Arabic Collections Online"
+                class="readmore">READ&nbsp;MORE…</a>
         </div>
         <div class="col col-r" lang="ar" dir="rtl">
             <p>
@@ -34,6 +30,8 @@
                 <a aria-label="read more about Arabic Collections Online" href="/about/" class="readmore">المزيد...</a>`
             </p>
         </div>
-        @include('partials.featured', ['data' => []])
+        @if (isset($documents))
+            @include('partials.featured', ['documents' => $documents])
+        @endif
     </main>
 @endsection
