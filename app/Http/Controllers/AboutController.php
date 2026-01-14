@@ -14,8 +14,8 @@ class AboutController extends Controller
         $itemCounts = ItemCountService::getItemCounts();
 
         $dynamicCounts = [
-          '[FRONT_COUNT]'   => $itemCounts['volumes'],
-          '[SUBJECT_COUNT]' => $itemCounts['subjects'],
+          '[FRONT_COUNT]'   => number_format($itemCounts['volumes']),
+          '[SUBJECT_COUNT]' => number_format($itemCounts['subjects']),
         ];
 
         $converter = new CommonMarkConverter([

@@ -11,7 +11,7 @@ use Throwable;
 class ItemCountService
 {
     // Default volume, subject counts
-    private const DEFAULT_COUNTS = ['volumes' => '0', 'subjects' => '0'];
+    private const DEFAULT_COUNTS = ['volumes' => 0, 'subjects' => 0];
 
     public static function getItemCounts(): array
     {
@@ -39,8 +39,8 @@ class ItemCountService
 
             // Validate the data using Validator
             $validator = Validator::make($data, [
-                'volumes' => 'required|string',
-                'subjects' => 'required|string',
+                'volumes' => 'required|integer',
+                'subjects' => 'required|integer',
             ]);
 
             if ($validator->fails()) {
