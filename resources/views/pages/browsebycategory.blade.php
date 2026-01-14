@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
+
 @section('pagetitle', $pagetitle)
 
 @section('body_class', $body_class)
 
 @section('content')
     <main class="main container-fluid" role="main">
-
+      <header class='results-header'>
         @include('partials.pagetitle')
+      </header>
         <div class="inner">
             @foreach ($content['resources'] as $resources)
                 <div class="{{ $resources['language']['class'] }}" lang="{{ $resources['language']['lang'] }}"
