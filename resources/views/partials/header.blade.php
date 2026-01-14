@@ -16,8 +16,8 @@
       <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed widget" data-toggle="collapse"
-                  aria-label="Toggle Navigation" data-name="navButton">
+              <button type="button" class="navbar-toggle collapsed widget" aria-label="Toggle Navigation"
+                  aria-expanded="false" data-name="navButton">
                   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="18" height="18"
                       viewBox="0 0 18 18">
                       <rect y="3" fill="#FFFFFF" width="18" height="3"></rect>
