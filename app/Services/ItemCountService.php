@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -10,55 +9,58 @@ use Throwable;
 
 class ItemCountService
 {
-    // Default volume, subject counts
     private const DEFAULT_COUNTS = ['volumes' => 0, 'subjects' => 0];
+
+    private static function getPath(): string
+    {
+        return base_path('database/data/itemcount.json');
+    }
 
     public static function getItemCounts(): array
     {
-        $path = base_path('database/data/itemcount.json');
+        $path = self::getPath();
 
-        // Check if file exists first
-        if (! File::exists($path)) {
-            Log::warning("Datasource file is missing: {$path}");
+        if (!File::exists($path)) {
             return self::DEFAULT_COUNTS;
         }
 
-        // Try to read the file
         try {
-            $content = File::get($path);
-            $data = json_decode($content, true);
+            $data = json_decode(File::get($path), true);
 
-            // Check if JSON is valid and an arr (json_decode should return arr)
-            if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
-                Log::error("Invalid JSON in item counts", [
-                    'path' => $path,
-                    'error' => json_last_error_msg(),
-                ]);
-                return self::DEFAULT_COUNTS;
-            }
-
-            // Validate the data using Validator
-            $validator = Validator::make($data, [
+            $validator = Validator::make($data ?? [], [
                 'volumes' => 'required|integer',
                 'subjects' => 'required|integer',
             ]);
 
             if ($validator->fails()) {
-                Log::error("Item count validation failed", [
-                    'path' => $path,
-                    'errors' => $validator->errors()->toArray(),
-                ]);
                 return self::DEFAULT_COUNTS;
             }
 
             return $data;
-
         } catch (Throwable $e) {
-            Log::error("Failed to read item counts", [
-                'path' => $path,
-                'error' => $e->getMessage(),
-            ]);
+            Log::error("Failed to read item counts: " . $e->getMessage());
             return self::DEFAULT_COUNTS;
+        }
+    }
+
+    public static function saveItemCounts(array $counts): bool
+    {
+        try {
+            $path = self::getPath();
+            $directory = dirname($path);
+
+            // Ensure directory exists
+            if (!File::isDirectory($directory)) {
+                File::makeDirectory($directory, 0755, true);
+            }
+
+            // Write prettified JSON for readability
+            File::put($path, json_encode($counts, JSON_PRETTY_PRINT));
+
+            return true;
+        } catch (Throwable $e) {
+            Log::error("Failed to save item counts: " . $e->getMessage());
+            return false;
         }
     }
 }
