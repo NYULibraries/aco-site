@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Request;
+use App\Services\DataMockupService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Bind the service and manually inject the database path
+        $this->app->bind(DataMockupService::class, function ($app) {
+            return new DataMockupService(database_path('data/DataMockupService.json'));
+        });
     }
 
     /**
