@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use League\CommonMark\CommonMarkConverter;
+use App\Services\ItemCountService;
 
 class AboutController extends Controller
 {
     public function index()
     {
+        $itemCounts = ItemCountService::getItemCounts();
 
         $dynamicCounts = [
-          '[FRONT_COUNT]'   => number_format(17699),
-          '[SUBJECT_COUNT]' => number_format(10473),
+          '[FRONT_COUNT]'   => number_format($itemCounts['volumes']),
+          '[SUBJECT_COUNT]' => number_format($itemCounts['subjects']),
         ];
 
         $converter = new CommonMarkConverter([
