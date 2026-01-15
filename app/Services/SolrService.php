@@ -20,7 +20,7 @@ class SolrService
    * Modifies the query object according to search params passed
    * use the previous YUI implementation for reference https://github.com/NYULibraries/aco-site/blob/main/source/js/search.js
    */
-  public function buildQuery(string $searchString, string $scopeIs = 'matches', string $sortBy = 'score desc'): Query
+  public function buildQuery(string $searchString, string $scopeIs = 'matches', string $sortDir = 'desc', string $sortField = 'score'): Query
   {
     /**
      * Possible combinations:
@@ -58,14 +58,10 @@ class SolrService
     // sort=score%20desc
     // q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))
 
-    // TAKANOTE: I don't believe we need the whole request object here... we might need some parts of it but not all
-    // putting the request in the arguments of this method makes unit testing it harder since it requires
-    // a Solarium call to the client
-    // TODO: investigate if we should be better separating the URL generator for the solr query
-
     // 2. extract the request details
     // $options = $request->all();
     $options = [];
+    // options only really have q => queryString
 
     /**
      * FIELD LIST - fl
@@ -189,6 +185,8 @@ class SolrService
 
     /**
      * QUERY q
+     * these only need to be when anyfield is selected in field select
+     * everything else is *
      */
     if (!empty($options['q'])) {
       $q = trim($options['q']);
@@ -206,11 +204,20 @@ class SolrService
 
     /**
      * PAGINATION
+     * TODO: consider method arguments to pass into pagination
      */
     $start = $options['start'] ?? 0;
     $rows  = $options['rpp'] ?? 10;
-    $query->setStart($start);
-    $query->setRows($rows);
+    $query->setStart($start); // what item to start from (page)
+    $query->setRows($rows);  // how many items to show (page size)
+
+    /**
+     * SORT
+     * field
+     * direction
+     */
+    $sortDirec = ($sortDir == 'desc') ? $query::SORT_DESC : $query::SORT_ASC;
+    $query->addSort($sortField, $sortDirec);
 
     // createRequest transforms the php queryObject into an actual HTTP request object (headers, URI, GET params)
     // used for debugging THIS IS WHERE WE CHECK THE URL
