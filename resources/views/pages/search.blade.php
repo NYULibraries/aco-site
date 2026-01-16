@@ -266,6 +266,10 @@
             @endforeach
         </div>
 
-        {{ $paginator->links() }}
+        <div class="text-center">
+            <div id="paginator" class="pagination">
+                {{ $paginator->links("vendor.pagination.default") }}
+            </div>
+        </div>
     </main>
 @endsection
