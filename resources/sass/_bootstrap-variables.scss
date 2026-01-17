@@ -9,6 +9,7 @@
 // NB: in Sass 3.3 there is a native function: function-exists(twbs-font-path)
 // $bootstrap-sass-asset-helper: (twbs-font-path("") != unquote('twbs-font-path("")'))
 
+// variables needed for overrides
 $brand-primary-value: #27205a;
 $body-bg-value: #f9f1e7;
 $gray-darker-value: color.adjust(black, $lightness: 13.5%, $space: hsl);
@@ -21,6 +22,7 @@ $font-size-h2-value: 1.5em;
 $nav-link-padding-value: 10px 25px;
 $pagination-bg-value: #FCF7F0;
 
+// override
 @use "bootstrap/variables" with (
   $gray-darker: $gray-darker-value,
   $brand-primary: $brand-primary-value,
@@ -49,6 +51,7 @@ $pagination-bg-value: #FCF7F0;
   $pagination-disabled-bg: $pagination-bg-value
 );
 
+// custom variables
 $brand-primary2: color.adjust(variables.$brand-primary, $lightness: -10%, $space: hsl);
 $brand-primary-l2: color.adjust(variables.$brand-primary, $lightness: 10%, $space: hsl);
 $brand-secondary: #f9f1e7;
