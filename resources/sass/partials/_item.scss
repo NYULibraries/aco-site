@@ -1,19 +1,21 @@
+@use "../bootstrap/variables";
+
 .item-list {
   //clear: both;
   margin-top: .5em;
   //font-family: $font-family-serif;
   //width: 100%;
   //border-collapse: separate;
-  border-top: 1px solid $item-border-color;
-  border-bottom: 1px solid $border-highlight-color;
+  border-top: 1px solid variables.$item-border-color;
+  border-bottom: 1px solid variables.$border-highlight-color;
 }
 
 .item {
   width: 100%;
   // overflow: hidden;
-  box-shadow: inset 0 1px $border-highlight-color;
+  box-shadow: inset 0 1px variables.$border-highlight-color;
   //border-top: 1px solid $item-border-color;
-  border-bottom: 1px solid $item-border-color;
+  border-bottom: 1px solid variables.$item-border-color;
  // border-top: 1px solid $border-highlight-color;
   font-size: 1rem;
   padding: 20px 0;
@@ -34,7 +36,7 @@
   }
 
   [lang="ar"] .md_subjects {
-    font-family: $font-family-serif !important;
+    font-family: variables.$font-family-serif !important;
     line-height: 1.25;
     margin: .65rem 0;
   }
@@ -47,7 +49,7 @@
 
   .md_partner {
     display: inline-block;
-    font-family: $font-family-serif !important;
+    font-family: variables.$font-family-serif !important;
     white-space: nowrap;
   }
 
@@ -129,12 +131,12 @@ span.one_author {
     &:hover,
     &:active,
     &:focus {
-      box-shadow: 0px 0px 1px 3px $input-border-focus;
+      box-shadow: 0px 0px 1px 3px variables.$input-border-focus;
       text-decoration: none;
     }
 
     &:active {
-      box-shadow: 0px 0px 0px 4px $input-border-focus;
+      box-shadow: 0px 0px 0px 4px variables.$input-border-focus;
     }
 
     &.read-online {
@@ -164,7 +166,7 @@ span.one_author {
     &.pdf-button {
       margin: 10px 2px 10px 0;
       color: #222222;
-      background-color: $border-highlight-color;
+      background-color: variables.$border-highlight-color;
 
       [lang="ar"] {
         font-size: 1.3rem;
@@ -194,7 +196,7 @@ span.one_author {
   white-space: nowrap;
 }
 
-@media (min-width: $grid-float-breakpoint) {
+@media (min-width: variables.$grid-float-breakpoint) {
   .download-pdfs {
     display: block;
   }

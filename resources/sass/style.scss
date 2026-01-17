@@ -1,28 +1,29 @@
 //Bootstrap
 // Core variables and mixins
-@import "bootstrap/variables";
-@import "bootstrap-variables";
-@import "bootstrap/mixins";
+@use "sass:meta";
+@use "bootstrap/variables";
+@use "bootstrap-variables";
+@use "bootstrap/mixins";
 // Reset and dependencies
-@import "bootstrap/normalize";
+@use "bootstrap/normalize";
 //@import "bootstrap/print";
 // Core CSS
-@import "partials/scaffolding";
+@use "partials/scaffolding";
 // Components
-@import "bootstrap/component-animations";
-@import "bootstrap/pagination";
+@use "bootstrap/component-animations";
+@use "bootstrap/pagination";
 
 /*  End Bootstrap */
 /*  Start ACO Styles */
 
-@import "partials/structure";
-@import "partials/homepage";
-@import "partials/footer";
-@import "partials/item";
-@import "partials/aconavbar";
-@import "partials/searchresultspage";
-@import "partials/search";
-@import "partials/masthead";
+@use "partials/structure";
+@use "partials/homepage";
+@use "partials/footer";
+@use "partials/item";
+@use "partials/aconavbar";
+@use "partials/searchresultspage";
+@use "partials/search";
+@use "partials/masthead";
 
 ul.resources {
   padding: 0px;
@@ -61,7 +62,7 @@ ul.resources {
       margin-bottom: .1rem;
     }
     .link {
-      font-family: $font-family-sans-serif;
+      font-family: variables.$font-family-sans-serif;
     }
   }
 }
@@ -150,10 +151,10 @@ body.book {
   }
 }
 
-@import "bubbling";
+@include meta.load-css("bubbling");
 .hiddenSiblings {
   display: none;
   visibility: hidden;
 }
 
-@import "partials/about";
+@include meta.load-css("partials/about");

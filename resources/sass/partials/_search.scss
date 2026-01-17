@@ -1,3 +1,9 @@
+@use "../bootstrap-variables";
+@use "../bootstrap/mixins/vendor-prefixes";
+@use "../bootstrap/variables";
+
+@use "sass:color";
+
 .browse {
   .aboutinfo {
     display: none;
@@ -16,7 +22,7 @@ input:focus {
     background: #ecdcc8 url('@assets/search-icon-2x.png') no-repeat center center;
     background-size: auto 80%;
     text-indent: -1000em;
-    border: 1px solid $brand-secondary3;
+    border: 1px solid bootstrap-variables.$brand-secondary3;
     -ms-flex: 1 0 50px;
     -webkit-flex: 0 1 50px;
     flex: 0 1 50px;
@@ -31,20 +37,20 @@ input:focus {
       z-index: 1000;
       outline-style: none;
       outline-width: 0px;
-      background-color: darken(#ecdcc8, 8%);
+      background-color: color.adjust(#ecdcc8, $lightness: -8%, $space: hsl);
     }
-    @media (min-width: $grid-float-breakpoint) {
+    @media (min-width: variables.$grid-float-breakpoint) {
       border-radius: 20px / 30px;
       border-top-left-radius: 0em;
       border-bottom-left-radius: 0px;
-      @include box-shadow(inset 0px 1px 0px rgba(0, 0, 0, 0.1));
+      @include vendor-prefixes.box-shadow(inset 0px 1px 0px rgba(0, 0, 0, 0.1));
     }
   }
   input[type="text"] {
     padding: 0 20px;
-    border: 1px solid $brand-secondary3;
+    border: 1px solid bootstrap-variables.$brand-secondary3;
     height: 30px;
-    @include box-shadow(inset 0px 1px 1px rgba(0, 0, 0, 0.2));
+    @include vendor-prefixes.box-shadow(inset 0px 1px 1px rgba(0, 0, 0, 0.2));
     -ms-flex: 1 1 auto;
     -webkit-flex: 1 1 auto;
     flex: 1 1 auto;
@@ -55,10 +61,10 @@ input:focus {
     &:focus {
       z-index: 1000;
     }
-    @media (min-width: $grid-float-breakpoint) {
-      border-top: 1px solid $brand-secondary2;
-      border-left: 1px solid $brand-secondary2;
-      border-bottom: 1px solid $brand-secondary2;
+    @media (min-width: variables.$grid-float-breakpoint) {
+      border-top: 1px solid bootstrap-variables.$brand-secondary2;
+      border-left: 1px solid bootstrap-variables.$brand-secondary2;
+      border-bottom: 1px solid bootstrap-variables.$brand-secondary2;
       border-right: none;
       -moz-border-radius: 10% / 100%;
       -webkit-border-radius: 10% / 100%;
@@ -81,7 +87,7 @@ input:focus {
   flex-flow: row nowrap;
   -ms-flex-wrap: nowrap;
   // width: 100%;
-  @media (min-width: $grid-float-breakpoint) {
+  @media (min-width: variables.$grid-float-breakpoint) {
     //max-width: 260px;
     margin: 0;
   }
@@ -100,15 +106,15 @@ a:focus {
 }
 
 [role="search"].advanced {
-  border: 1px solid $item-border-color;
-  background-color: $searchbox-background-color;
+  border: 1px solid variables.$item-border-color;
+  background-color: variables.$searchbox-background-color;
   padding: 20px;
   margin: 0 0 15px 0;
   @media (max-width: 500px) {
     background-color: transparent;
     padding: 0 0 20px 0;
     border: none;
-    box-shadow: inset 0px -1px 0px $item-border-color;
+    box-shadow: inset 0px -1px 0px variables.$item-border-color;
     border-bottom: 1px solid white;
     margin: 15px 0 40px;
   }
@@ -149,7 +155,7 @@ a:focus {
         flex: 0 0 auto;
         margin-top: 5px;
       }
-      @media (min-width: $grid-float-breakpoint) {
+      @media (min-width: variables.$grid-float-breakpoint) {
         // Desktop display
         -webkit-flex-flow: row nowrap;
         flex-flow: row nowrap;
@@ -198,8 +204,8 @@ a:focus {
     border: 1px solid #DECCBF;
   }
   .submit-search:hover {
-    border: 1px solid darken(#DECCBF, 6%);
-    box-shadow: inset 0px 0px 3px darken(#DECCBF, 6%);
+    border: 1px solid color.adjust(#DECCBF, $lightness: -6%, $space: hsl);
+    box-shadow: inset 0px 0px 3px color.adjust(#DECCBF, $lightness: -6%, $space: hsl);
   }
   .addafilter-link {
     max-height: 50px;
@@ -228,7 +234,7 @@ a:focus {
     float: right;
     select {
       font-size: .75em;
-      @media (min-width: $grid-float-breakpoint) {
+      @media (min-width: variables.$grid-float-breakpoint) {
         padding-bottom: 6px;
         margin: 0;
       }

@@ -1,3 +1,5 @@
+@use "../bootstrap/variables";
+
 .external {
   padding-right: 1.2em;
   display: inline;
@@ -56,8 +58,8 @@
     font-size: .9rem;
     line-height: 1.5;
     padding: 35px 0;
-    box-shadow: 0px 1px 0px 0px $border-highlight-color;
-    border-bottom: 1px solid  $item-border-color;
+    box-shadow: 0px 1px 0px 0px variables.$border-highlight-color;
+    border-bottom: 1px solid  variables.$item-border-color;
 
     display: flex;
     justify-content: space-between;

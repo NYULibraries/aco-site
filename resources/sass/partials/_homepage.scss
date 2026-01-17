@@ -1,3 +1,5 @@
+@use "../bootstrap/variables";
+
 .front {
   main {
     margin-top: 10px;
@@ -12,12 +14,12 @@
 
     font-size: .9rem;
 
-    @media (min-width: $grid-float-breakpoint) {
+    @media (min-width: variables.$grid-float-breakpoint) {
       font-size: 1rem;
       margin-top: 1rem;
     }
 
-    @media (max-width: $grid-float-breakpoint-max) {
+    @media (max-width: variables.$grid-float-breakpoint-max) {
       padding: 1.5rem 0 1px;
     }
   }
@@ -29,18 +31,18 @@
   margin-bottom: 50px;
   margin-top: 30px;
   padding: 0;
-  background-color: $feature-background-color;
+  background-color: variables.$feature-background-color;
   border-radius: 2% 2% 0% 0% / 2% 2% 0 0;
   //border-radius: 5% 5% 0% 0%/100% 100% 0% 0%;
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
   overflow: hidden;
-  border: 1px solid $feature-border-color;
+  border: 1px solid variables.$feature-border-color;
 
   .header {
-    background-color: $searchbox-background-color;
-    border-bottom: 1px solid $item-border-color;
+    background-color: variables.$searchbox-background-color;
+    border-bottom: 1px solid variables.$item-border-color;
   }
 
   .item {
@@ -49,7 +51,7 @@
   }
 
   .viewmore a {
-    font-family: $font-family-sans-serif;
+    font-family: variables.$font-family-sans-serif;
     font-weight: normal;
     text-transform: uppercase;
     font-size: .9rem;
@@ -61,7 +63,7 @@
 .flexrow {
   margin-top: 0;
   font-size: .9rem;
-  font-family: $font-family-serif;
+  font-family: variables.$font-family-serif;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
@@ -100,7 +102,7 @@
 
     &[lang="en"] {
       // screen smart book
-      font-family: $font-family-sans-serif;
+      font-family: variables.$font-family-sans-serif;
       font-weight: 400;
       font-style: normal;
       font-size: 1.1em;
@@ -112,7 +114,7 @@
     }
   }
 
-  @media (max-width: $grid-float-breakpoint-max) {
+  @media (max-width: variables.$grid-float-breakpoint-max) {
     // mobile only
 
     width: 100%;
@@ -166,7 +168,7 @@
     }
   }
 
-  @media (min-width: $grid-float-breakpoint) {
+  @media (min-width: variables.$grid-float-breakpoint) {
     // desktop
     display: -ms-flexbox;
     display: -webkit-flex;
