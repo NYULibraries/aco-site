@@ -20,7 +20,7 @@ class SolrService
    * Modifies the query object according to search params passed
    * use the previous YUI implementation for reference https://github.com/NYULibraries/aco-site/blob/main/source/js/search.js
    */
-  public function buildQuery(string $searchString, string $scopeIs = 'matches', string $sortDir = 'desc', string $sortField = 'score'): Query
+  public function buildQuery(string $searchString, string $scopeIs = 'matches', string $sortField = 'score', string $sortDir = 'desc', $rowStart, $rows): Query
   {
     /**
      * Possible combinations:
@@ -151,28 +151,39 @@ class SolrService
       ],
     ];
 
-    foreach ($fields as $key => $map) {
-      if (empty($options[$key])) continue;
-      $value = trim($options[$key]);
-      if ($scopeIs === 'matches') {
-        $parts = array_map(fn($f) => "$f:\"$value\"", $map['match']);
-        $fq[] = '(' . implode(' OR ', $parts) . ')';
-      } else {
-        $words = preg_split('/\s+/', $value);
-        $clauses = [];
-        foreach ($words as $w) {
-          $sub = array_map(fn($f) => "$f:\"$w\"", $map['contains']);
-          $clauses[] = '(' . implode(' OR ', $sub) . ')';
-        }
-        $fq[] = '(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $clauses) . ')';
-      }
+    // foreach ($fields as $key => $map) {
+    //   if (empty($options[$key])) continue;
+    //   $value = trim($options[$key]);
+    //   if ($scopeIs === 'matches') {
+    //     $parts = array_map(fn($f) => "$f:\"$value\"", $map['match']);
+    //     $fq[] = '(' . implode(' OR ', $parts) . ')';
+    //   } else {
+    //     $words = preg_split('/\s+/', $value);
+    //     $clauses = [];
+    //     foreach ($words as $w) {
+    //       $sub = array_map(fn($f) => "$f:\"$w\"", $map['contains']);
+    //       $clauses[] = '(' . implode(' OR ', $sub) . ')';
+    //     }
+    //     $fq[] = '(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $clauses) . ')';
+    //   }
+    // }
+
+    // any field
+    if ($sortField == 'q') {
+      // TODO: make q content_und+queryWords
+      // $finalQuery = "((content_und:$query OR content_und_ws: $query OR content_en:$query OR content:$query))";
+      // $query->setQuery($finalQuery);
+      echo "is this even happening";
+      // $fq[] = $finalQuery;
+      // TODO: make filterquery
+    } else {
+      // only adds the query into the fq otions and not the q options
     }
 
-    // 4. CONFIGURATION set the query
     /**
      * FILTER QUERY fq
      */
-    $query->setQuery('*:*');
+    // $query->setQuery('*:*');
     // these always have to happen as of 2026
     $query->createFilterQuery(md5('bundle:dlts_book'))->setQuery('bundle:dlts_book');
     $query->createFilterQuery(md5('sm_collection_code:aco'))->setQuery('sm_collection_code:aco');
@@ -187,20 +198,31 @@ class SolrService
      * QUERY q
      * these only need to be when anyfield is selected in field select
      * everything else is *
+     * q = query is the only thing coming from the Request Object
+     * TODO: sanitize query
+     * TODO:
      */
-    if (!empty($options['q'])) {
-      $q = trim($options['q']);
-      if ($scopeIs === 'matches') {
-        $query->setQuery("(content_und:\"$q\" OR content_und_ws:\"$q\" OR content_en:\"$q\" OR content:\"$q\")");
-      } else {
-        $words = preg_split('/\s+/', $q);
-        $parts = [];
-        foreach ($words as $w) {
-          $parts[] = "(content_und:$w OR content_und_ws:$w OR content_en:$w OR content:$w)";
-        }
-        $query->setQuery('(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $parts) . ')');
-      }
-    }
+    $helper = $query->getHelper();
+    $sanitizedSearchString = $helper->escapeTerm($searchString);
+    $finalQuery = "((content_und:$sanitizedSearchString OR content_und_ws:$sanitizedSearchString OR content_en:$sanitizedSearchString OR content:$sanitizedSearchString))";
+    echo "finalQuery before sanitizing:";
+    echo "$finalQuery \n";
+    // $sanitizedInput = $helper->escapeTerm($searchString);
+    // $sanitizedInput = $helper->escapeTerm($finalQuery);
+    $query->setQuery('text:' . $finalQuery);
+    // if (!empty($options['q'])) {
+    //   $q = trim($options['q']);
+    //   if ($scopeIs === 'matches') {
+    //     $query->setQuery("(content_und:\"$q\" OR content_und_ws:\"$q\" OR content_en:\"$q\" OR content:\"$q\")");
+    //   } else {
+    //     $words = preg_split('/\s+/', $q);
+    //     $parts = [];
+    //     foreach ($words as $w) {
+    //       $parts[] = "(content_und:$w OR content_und_ws:$w OR content_en:$w OR content:$w)";
+    //     }
+    //     $query->setQuery('(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $parts) . ')');
+    //   }
+    // }
 
     /**
      * PAGINATION
@@ -231,7 +253,7 @@ class SolrService
     echo "--------------------- \n";
     echo "example query: \n";
     echo "--------------------- \n";
-    echo "select?wt=json&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))";
+    echo "select?wt=json&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))" . PHP_EOL;
     echo "--------------------- \n";
     // 3. return single string for query execution
     return $query;
@@ -611,18 +633,24 @@ class SolrService
    * @param string $query
    * @param string $scope 'matches', 'contains all', 'contains any'
    * @param string $sortBy 'asc, 'desc'
-   * @param number $rowStart
-   * @param number $rows
+   * @param int $rowStart
+   * @param int $rows
    */
-  public function search2(string $query = '*', string $scopeIs = 'matches', string $sortBy = 'score desc'): array
+  public function search2(string $query = '*', string $scopeIs = 'matches', string $sortField, string $sortDir, $rowStart, $rows): array
   // public function search2($query): array
   {
     echo "running serach2 \n";
-    echo "args: \n";
-    echo "scopeIs: $scopeIs \n";
-    echo "sortBy: $sortBy \n";
+    echo "-----args-----\n";
     echo "query: $query \n";
-    $BuiltQuery = $this->buildQuery($query, $scopeIs, $sortBy);
+    echo "scopeIs: $scopeIs \n";
+    echo "sortField: $sortField \n";
+    echo "sortDir: $sortDir \n";
+    // echo "sortBy: $sortBy \n";
+    echo "rowStart: $rowStart \n";
+    echo "rows: $rows \n";
+    echo "-----args-----\n";
+
+    $BuiltQuery = $this->buildQuery($query, $scopeIs, $sortField, $sortDir, $rowStart, $rows);
     $compareQuery = "select?wt=json&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))";
     // $comparison = compareQueryToUrl($BuiltQuery, $query, $compareQuery)
     // // THIS IS WHERE THE QUERY IS EXECUTED
@@ -824,8 +852,8 @@ class SolrService
     return [
       'documents' => [],
       'total' => "??",
-      'rows' => "??",
-      'page' => "??",
+      'rows' => $rows,
+      'page' => ($rowStart / $rows) + 1,
     ];
 
     // return [
