@@ -11,8 +11,9 @@ Artisan::command('inspire', function () {
 /**
  * artisan command used to trigger the solr service without testing or calling the whole app
  */
-Artisan::command('solr:search {query="*:*"} {scopeIs="matches"} {sortBy="asc"}', function (SolrService $solrService, string $query, string $scopeIs, string $sortBy) {
-  $results = $solrService->search2($scopeIs, $sortBy, $query);
+// Artisan::command('solr:search {query="*:*"} {scopeIs="matches"} {sortBy="asc"} {rowStart} {rows}', function (SolrService $solrService, string $query, string $scopeIs, string $sortBy, int $rowStart, int $rows) {
+Artisan::command('solr:search {query="*:*"} {scopeIs="matches"} {sortField="score"} {sortDir="asc"} {rowStart=0} {rows=10}', function (string $query, string $scopeIs, string $sortField, string $sortDir, int $rowStart, int $rows, SolrService $solrService) {
+  $results = $solrService->search2($query, $scopeIs, $sortField, $sortDir, $rowStart, $rows);
 
   dump($results);
   // $this->table(['Results'], $results);
