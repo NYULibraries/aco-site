@@ -1,7 +1,6 @@
 //Bootstrap
 // Core variables and mixins
 @use "sass:meta";
-@use "bootstrap/variables";
 @use "bootstrap-variables";
 @use "bootstrap/mixins";
 // Reset and dependencies
@@ -62,7 +61,7 @@ ul.resources {
       margin-bottom: .1rem;
     }
     .link {
-      font-family: variables.$font-family-sans-serif;
+      font-family: bootstrap-variables.$font-family-sans-serif;
     }
   }
 }

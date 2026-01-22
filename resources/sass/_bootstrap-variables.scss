@@ -51,6 +51,8 @@ $pagination-bg-value: #FCF7F0;
   $pagination-disabled-bg: $pagination-bg-value
 );
 
+@forward "bootstrap/variables";
+
 // custom variables
 $brand-primary2: color.adjust(variables.$brand-primary, $lightness: -10%, $space: hsl);
 $brand-primary-l2: color.adjust(variables.$brand-primary, $lightness: 10%, $space: hsl);
