@@ -278,14 +278,12 @@ echo "finalQuery before sanitizing: \n";
     $request = $this->solrClient->createRequest($query);
     $uri = $request->getUri();
     echo "--------------------- \n";
-    echo "Created Solarium URL: \n";
-    echo "--------------------- \n";
-    echo $uri . PHP_EOL;
+    echo "urldecoded Created Solarium URL: \n";
+    echo urldecode($uri) . PHP_EOL;
     // dump($uri);
     echo "--------------------- \n";
-    echo "example query: \n";
-    echo "--------------------- \n";
-    echo "select?wt=json&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))" . PHP_EOL;
+    echo "urldecoded example query: \n";
+    echo urldecode("select?wt=json&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))") . PHP_EOL;
     echo "--------------------- \n";
     // 3. return single string for query execution
     return $query;
