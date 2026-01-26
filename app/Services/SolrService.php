@@ -20,8 +20,29 @@ class SolrService
    * Modifies the query object according to search params passed
    * use the previous YUI implementation for reference https://github.com/NYULibraries/aco-site/blob/main/source/js/search.js
    */
-  public function buildQuery(string $searchString, string $scopeIs = 'matches', string $sortField = 'score', string $sortDir = 'desc', $rowStart, $rows): Query
+  public function buildQuery(
+    string $fieldSelect = 'q', // what field to search on
+string $searchString,  // what query to use
+string $scopeIs = 'matches', // how to match results
+string $sortField = 'score', // how to order results
+string $sortDir = 'desc',
+$rowStart,
+$rows
+  ): Query
+  // public function buildQuery(string $searchString, array $options = []): Query
   {
+/**
+     * Defaults
+     */
+    // $defaults = [
+    //   'scopeIs' => 'matches',
+    //   'sortField' => 'score',
+    //   'sortDir' => 'desc',
+    //   'rowStart' => 10,
+    //   'rows' => 0,
+    // ];
+    // $params = array_merge($defaults, $options);
+
     /**
      * Possible combinations:
      * searchString - whatever sentence the user has
