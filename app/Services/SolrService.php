@@ -189,27 +189,40 @@ $rows
     //   }
     // }
 
-    // any field
-    if ($sortField == 'q') {
-      // TODO: make q content_und+queryWords
-      // $finalQuery = "((content_und:$query OR content_und_ws: $query OR content_en:$query OR content:$query))";
-      // $query->setQuery($finalQuery);
-      echo "is this even happening";
-      // $fq[] = $finalQuery;
-      // TODO: make filterquery
+    /**
+     * fieldSelect determines how the url is created and where the params are placed
+     * firldSelect q -> put the query in the q
+     * fieldSelect title, author, category, publisher, pubplace, provider, subject
+     * QUERY AND FILTERQUERY
+     */
+    // echo $fieldSelect;
+    // echo ">>>>>>>>>>> \n";
+    $helper = $query->getHelper();
+    $sanitizedSearchString = $helper->escapeTerm($searchString);
+    if ($fieldSelect == 'q') {
+      if ($scopeIs == 'matches') {
+$finalQuery = "((content_und:$sanitizedSearchString OR content_und_ws:$sanitizedSearchString OR content_en:$sanitizedSearchString OR content:$sanitizedSearchString))";
     } else {
+$finalQuery = "((content_und:$sanitizedSearchString OR content_und_ws:$sanitizedSearchString OR content_en:$sanitizedSearchString OR content:$sanitizedSearchString))";
+      }
+    } else {
+      echo "<<<< this is the else \n";
+      $finalQuery = '*';
       // only adds the query into the fq otions and not the q options
+
     }
+echo "finalQuery before sanitizing: \n";
+    echo "$finalQuery \n";
+    $query->setQuery($finalQuery);
 
     /**
      * FILTER QUERY fq
      */
-    // $query->setQuery('*:*');
-    // these always have to happen as of 2026
+        // these always have to happen as of 2026
     $query->createFilterQuery(md5('bundle:dlts_book'))->setQuery('bundle:dlts_book');
     $query->createFilterQuery(md5('sm_collection_code:aco'))->setQuery('sm_collection_code:aco');
     $query->createFilterQuery(md5('ss_language:en'))->setQuery('ss_language:en');
-    // 3.1 set the filter query
+    // 3.1 set additional filter query
     foreach ($fq as $filter) {
       $query->createFilterQuery(md5($filter))->setQuery($filter);
     }
@@ -223,14 +236,12 @@ $rows
      * TODO: sanitize query
      * TODO:
      */
-    $helper = $query->getHelper();
-    $sanitizedSearchString = $helper->escapeTerm($searchString);
-    $finalQuery = "((content_und:$sanitizedSearchString OR content_und_ws:$sanitizedSearchString OR content_en:$sanitizedSearchString OR content:$sanitizedSearchString))";
-    echo "finalQuery before sanitizing:";
-    echo "$finalQuery \n";
-    // $sanitizedInput = $helper->escapeTerm($searchString);
-    // $sanitizedInput = $helper->escapeTerm($finalQuery);
-    $query->setQuery('text:' . $finalQuery);
+//     $helper = $query->getHelper();
+//     $sanitizedSearchString = $helper->escapeTerm($searchString);
+//     $finalQuery = "((content_und:$sanitizedSearchString OR content_und_ws:$sanitizedSearchString OR content_en:$sanitizedSearchString OR content:$sanitizedSearchString))";
+//     echo "finalQuery before sanitizing: \n";
+//     echo "$finalQuery \n";
+    //     $query->setQuery($finalQuery);
     // if (!empty($options['q'])) {
     //   $q = trim($options['q']);
     //   if ($scopeIs === 'matches') {
