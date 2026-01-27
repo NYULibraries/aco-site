@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Solarium\Client;
 use Solarium\QueryType\Select\Query\Query;
+use Solarium\Core\Query\QueryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -28,33 +29,12 @@ class SolrService
     string $sortDir = 'desc',
     $rowStart,
     $rows
-  ): Query
-  // public function buildQuery(string $searchString, array $options = []): Query
-  {
-    /**
-     * Defaults
-     */
-    // $defaults = [
-    //   'scopeIs' => 'matches',
-    //   'sortField' => 'score',
-    //   'sortDir' => 'desc',
-    //   'rowStart' => 10,
-    //   'rows' => 0,
-    // ];
-    // $params = array_merge($defaults, $options);
-
+  ): Query {
     /**
      * Possible combinations:
      * searchString - whatever sentence the user has
      * scopeIs - matches, contains all, contains any
      * sortBy - asc, desc
-     */
-    echo "running buildQuery \n";
-    // 1. generate query object
-    $query = $this->solrClient->createSelect();
-
-    /**
-     * old examples for generated queries?
      */
     // title, matches, jibran
     // fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&
@@ -71,18 +51,16 @@ class SolrService
     // select?
     // wt=json
     // fl=*
-    // fq=bundle:dlts_book   << TAKA: this needs to be setup always
-    // fq=sm_collection_code:aco   << TAKA: this needs to be in the query always
-    // fq=ss_language:en     << TAKA: this needs to be in the query always
+    // fq=bundle:dlts_book
+    // fq=sm_collection_code:aco
+    // fq=ss_language:en
     // rows=10
     // start=0
     // sort=score%20desc
     // q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))
 
-    // 2. extract the request details
-    // $options = $request->all();
-    $options = [];
-    // options only really have q => queryString
+
+    $query = $this->solrClient->createSelect();
 
     /**
      * FIELD LIST - fl
@@ -92,7 +70,10 @@ class SolrService
     /**
      * FILTER QUERY - fq
      */
-    $fq = [];
+    // these filter queries always have to happen as of 2026
+    $query->createFilterQuery(md5('bundle:dlts_book'))->setQuery('bundle:dlts_book');
+    $query->createFilterQuery(md5('sm_collection_code:aco'))->setQuery('sm_collection_code:aco');
+    $query->createFilterQuery(md5('ss_language:en'))->setQuery('ss_language:en');
 
     // these are all the possible fields to add to the filter query
     // we will use the request options to trim these down to use on our query
@@ -172,93 +153,59 @@ class SolrService
       ],
     ];
 
-    // foreach ($fields as $key => $map) {
-    //   if (empty($options[$key])) continue;
-    //   $value = trim($options[$key]);
-    //   if ($scopeIs === 'matches') {
-    //     $parts = array_map(fn($f) => "$f:\"$value\"", $map['match']);
-    //     $fq[] = '(' . implode(' OR ', $parts) . ')';
-    //   } else {
-    //     $words = preg_split('/\s+/', $value);
-    //     $clauses = [];
-    //     foreach ($words as $w) {
-    //       $sub = array_map(fn($f) => "$f:\"$w\"", $map['contains']);
-    //       $clauses[] = '(' . implode(' OR ', $sub) . ')';
-    //     }
-    //     $fq[] = '(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $clauses) . ')';
-    //   }
-    // }
-
-    /**
-     * fieldSelect determines how the url is created and where the params are placed
-     * firldSelect q -> put the query in the q
-     * fieldSelect title, author, category, publisher, pubplace, provider, subject
-     * QUERY AND FILTERQUERY
-     */
-    // echo $fieldSelect;
-    // echo ">>>>>>>>>>> \n";
     $helper = $query->getHelper();
     $sanitizedSearchString = $helper->escapeTerm($searchString);
-    if ($fieldSelect == 'q') {
-      if ($scopeIs == 'matches') {
-        $finalQuery = "((content_und:$sanitizedSearchString OR content_und_ws:$sanitizedSearchString OR content_en:$sanitizedSearchString OR content:$sanitizedSearchString))";
+
+    $fq = [];
+    foreach ($fields as $key => $map) {
+      if ($fieldSelect !== $key) continue; // go to the next loop, skip the rest
+      $value = trim($fieldSelect);
+      if ($scopeIs === 'matches') {
+        $parts = array_map(fn($f) => "$f:\"$sanitizedSearchString\"", $map['match']);
+        $fq[] = '(' . implode(' OR ', $parts) . ')';
       } else {
-        $finalQuery = "((content_und:$sanitizedSearchString OR content_und_ws:$sanitizedSearchString OR content_en:$sanitizedSearchString OR content:$sanitizedSearchString))";
+        $words = preg_split('/\s+/', $sanitizedSearchString);
+        $clauses = [];
+        foreach ($words as $w) {
+          $sub = array_map(fn($f) => "$f:\"$w\"", $map['contains']);
+          $clauses[] = '(' . implode(' OR ', $sub) . ')';
+        }
+        $fq[] = '(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $clauses) . ')';
       }
-    } else {
-      echo "<<<< this is the else \n";
-      $finalQuery = '*';
-      // only adds the query into the fq otions and not the q options
-
     }
-    echo "finalQuery before sanitizing: \n";
-    echo "$finalQuery \n";
-    $query->setQuery($finalQuery);
 
-    /**
-     * FILTER QUERY fq
-     */
-    // these always have to happen as of 2026
-    $query->createFilterQuery(md5('bundle:dlts_book'))->setQuery('bundle:dlts_book');
-    $query->createFilterQuery(md5('sm_collection_code:aco'))->setQuery('sm_collection_code:aco');
-    $query->createFilterQuery(md5('ss_language:en'))->setQuery('ss_language:en');
-    // 3.1 set additional filter query
+    // set filter queries
     foreach ($fq as $filter) {
       $query->createFilterQuery(md5($filter))->setQuery($filter);
     }
 
-
     /**
      * QUERY q
      * these only need to be when anyfield is selected in field select
-     * everything else is *
      * q = query is the only thing coming from the Request Object
-     * TODO: sanitize query
-     * TODO:
      */
-    // $helper = $query->getHelper();
-    // $sanitizedSearchString = $helper->escapeTerm($searchString);
-    // $finalQuery = "((content_und:$sanitizedSearchString OR content_und_ws:$sanitizedSearchString OR content_en:$sanitizedSearchString OR content:$sanitizedSearchString))";
-    // echo "finalQuery before sanitizing: \n";
-    // echo "$finalQuery \n";
-    // $query->setQuery($finalQuery);
-    // if (!empty($options['q'])) {
-    //   $q = trim($options['q']);
-    //   if ($scopeIs === 'matches') {
-    //     $query->setQuery("(content_und:\"$q\" OR content_und_ws:\"$q\" OR content_en:\"$q\" OR content:\"$q\")");
-    //   } else {
-    //     $words = preg_split('/\s+/', $q);
-    //     $parts = [];
-    //     foreach ($words as $w) {
-    //       $parts[] = "(content_und:$w OR content_und_ws:$w OR content_en:$w OR content:$w)";
-    //     }
-    //     $query->setQuery('(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $parts) . ')');
-    //   }
-    // }
+
+    if ($fieldSelect == 'q') {
+      $helper = $query->getHelper();
+      $sanitizedSearchString = $helper->escapeTerm($searchString);
+      if ($scopeIs === 'matches') {
+        $finalQuery = "((content_und:$sanitizedSearchString OR content_und_ws:$sanitizedSearchString OR content_en:$sanitizedSearchString OR content:$sanitizedSearchString))";
+        $query->setQuery($finalQuery);
+      } else {
+        $words = preg_split('/\s+/', $sanitizedSearchString);
+        $parts = [];
+        foreach ($words as $w) {
+          $parts[] = "(content_und:$w OR content_und_ws:$w OR content_en:$w OR content:$w)";
+        }
+        $finalQuery = ('(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $parts) . ')');
+        $query->setQuery($finalQuery);
+      }
+    } else {
+      $query->setQuery("*");
+    }
 
     /**
      * PAGINATION
-     * TODO: consider method arguments to pass into pagination
      */
     $start = $options['start'] ?? 0;
     $rows  = $options['rpp'] ?? 10;
@@ -273,386 +220,9 @@ class SolrService
     $sortDirec = ($sortDir == 'desc') ? $query::SORT_DESC : $query::SORT_ASC;
     $query->addSort($sortField, $sortDirec);
 
-    // createRequest transforms the php queryObject into an actual HTTP request object (headers, URI, GET params)
-    // used for debugging THIS IS WHERE WE CHECK THE URL
     $request = $this->solrClient->createRequest($query);
     $uri = $request->getUri();
-    echo "--------------------- \n";
-    echo "urldecoded Created Solarium URL: \n";
-    echo urldecode($uri) . PHP_EOL;
-    // dump($uri);
-    echo "--------------------- \n";
-    echo "urldecoded example query: \n";
-    echo urldecode("select?wt=json&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))") . PHP_EOL;
-    echo "--------------------- \n";
-    // 3. return single string for query execution
     return $query;
-  }
-
-  public function search(Request $request, string $scopeIs = 'matches', string $sortBy = 'score desc'): array
-  {
-
-    // title, matches, jibran
-    // fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&
-    // fq=(tks_title_long:"jibran" OR tks_ar_title_long:"jibran")&rows=10&start=0&sort=score desc&q=*
-
-    // title, contains all, jibran
-    // fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en
-    // &fq=((tus_title_long:%22jibran%22%20OR%20ts_title_long:%22jibran%22%20OR%20tusar_title_long:%22jibran%22))&rows=10&start=0&sort=score%20desc&q=*
-
-    // title, contains aany, jibran
-    // fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en
-    // &fq=((tus_title_long:%22jibran%22%20OR%20ts_title_long:%22jibran%22%20OR%20tusar_title_long:%22jibran%22))&rows=10&start=0&sort=score%20desc&q=*
-
-    // select?
-    // wt=json
-    // fl=*
-    // fq=bundle:dlts_book
-    // fq=sm_collection_code:aco
-    // fq=ss_language:en
-    // rows=10
-    // start=0
-    // sort=score%20desc
-    // q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))
-
-    // TAKANOTE: I don't believe we need the whole request object here... we might need some parts of it but not all
-    // putting the request in the arguments of this method makes unit testing it harder since it requires
-    // a Solarium call to the client
-    // 1. extract the request details
-    $options = $request->all();   // the options object ONLY seems to contain the q parameter
-    echo "------------------ \n";
-    // dd dump and die
-    // dd($options);
-    // dump
-    dump($options);
-    Log::info('options variable coming from search service', $options);
-    echo "------------------ \n";
-
-    // 2. create the filterQuery array
-    $fq = [];
-
-    $fields = [
-      'title' => [
-        'match' => [
-          'tks_title_long',
-          'tks_ar_title_long',
-        ],
-        'contains' => [
-          'tus_title_long',
-          'ts_title_long',
-          'tusar_title_long',
-        ],
-      ],
-      'author' => [
-        'match' => [
-          'tkm_author',
-          'tkm_ar_author',
-        ],
-        'contains' => [
-          'tum_author',
-          'tm_author',
-          'tumar_author',
-        ]
-      ],
-      'pubplace'  => [
-        'match' => [
-          'tks_publocation',
-          'tks_ar_publocation',
-        ],
-        'contains' => [
-          'tus_publocation',
-          'ts_publocation',
-          'tusar_publocation',
-        ],
-      ],
-      'publisher' => [
-        'match' => [
-          'tkm_publisher',
-          'tkm_ar_publisher',
-        ],
-        'contains' => [
-          'tum_publisher',
-          'tm_publisher',
-          'tumar_publisher',
-        ],
-      ],
-      'category' => [
-        'match' => [
-          'tkm_topic',
-          'tkm_ar_topic',
-        ],
-        'contains' => [
-          'tum_topic',
-          'tm_topic',
-          'tumar_topic',
-        ],
-      ],
-      'provider' => [
-        'match' => [
-          'tkm_provider_label',
-        ],
-        'contains' => [
-          'tum_provider_label',
-          'tm_provider_label',
-        ],
-      ],
-      'subject' => [
-        'match' => [
-          'tkm_subject_label',
-        ],
-        'contains' => [
-          'tum_subject_label',
-          'tm_subject_label',
-        ],
-      ],
-    ];
-
-    // seems like there is only q => queryString in the options object
-    foreach ($fields as $key => $map) {
-      if (empty($options[$key])) continue;
-      $value = trim($options[$key]);
-      if ($scopeIs === 'matches') {
-        $parts = array_map(fn($f) => "$f:\"$value\"", $map['match']);
-        $fq[] = '(' . implode(' OR ', $parts) . ')';
-      } else {
-        $words = preg_split('/\s+/', $value);
-        $clauses = [];
-        foreach ($words as $w) {
-          $sub = array_map(fn($f) => "$f:\"$w\"", $map['contains']);
-          $clauses[] = '(' . implode(' OR ', $sub) . ')';
-        }
-        $fq[] = '(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $clauses) . ')';
-      }
-    }
-
-    $query = $this->solrClient->createSelect();
-
-    // 3. set the query
-    $query->setQuery('*:*');
-
-    // 4. set the filter query
-    foreach ($fq as $filter) {
-      $query->createFilterQuery(md5($filter))->setQuery($filter);
-    }
-
-    if (!empty($options['q'])) {
-      $q = trim($options['q']);
-      if ($scopeIs === 'matches') {
-        $query->setQuery("(content_und:\"$q\" OR content_und_ws:\"$q\" OR content_en:\"$q\" OR content:\"$q\")");
-      } else {
-        $words = preg_split('/\s+/', $q);
-        $parts = [];
-        foreach ($words as $w) {
-          $parts[] = "(content_und:$w OR content_und_ws:$w OR content_en:$w OR content:$w)";
-        }
-        $query->setQuery('(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $parts) . ')');
-      }
-    }
-
-    // 5. pagination for solr
-    $start = $options['start'] ?? 0;
-    $rows  = $options['rpp'] ?? 10;
-    $query->setStart($start);
-    $query->setRows($rows);
-
-    // 6. make the request
-    $request = $this->solrClient->createRequest($query);
-
-    // 7. extract returned data from request
-    $uri = $request->getUri();
-
-    // THIS IS WHERE THE QUERY IS EXECUTED
-    $resultset = $this->solrClient->select($query);
-    $total = $resultset->getNumFound();
-
-    $docs = iterator_to_array($resultset);
-
-    $documents = [];
-
-    // 8. data transformation
-    foreach ($docs as $doc) {
-
-      $publocation = [];
-
-      if (isset($doc->ss_publocation)) {
-        $publocation[] = [
-          'label' => $doc->ss_publocation,
-          'path' => "search/?provider={$doc->ss_publocation}",
-        ];
-      }
-
-      $ar_publocation = [];
-
-      if (isset($doc->ss_ar_publocation)) {
-        $ar_publocation[] = [
-          'label' => $doc->ss_ar_publocation,
-          'path' => "search/?provider={$doc->ss_ar_publocation}",
-        ];
-      }
-
-      $providers = [];
-
-      if (isset($doc->sm_provider_label)) {
-        foreach ($doc->sm_provider_label as $provider) {
-          $providers[] = [
-            'label' => $provider,
-            'path' => "search/?provider={$provider}",
-          ];
-        }
-      }
-
-      $publishers = [];
-
-      if (isset($doc->sm_publisher)) {
-        foreach ($doc->sm_publisher as $publisher) {
-          $publishers[] = [
-            'label' => $publisher,
-            'path' => "search/?publisher={$publisher}",
-          ];
-        }
-      }
-
-      $topics = [];
-
-      if (isset($doc->sm_field_topic)) {
-        foreach ($doc->sm_field_topic as $topic) {
-          $topics[] = [
-            'label' => $topic,
-            'path' => "search?category={$topic}&scope=matches",
-          ];
-        }
-      }
-
-      $subjects = [];
-
-      if (isset($doc->zm_subject)) {
-        foreach ($doc->zm_subject as $subject) {
-          $subject = json_decode($subject);
-          $subject->path = "search?subject={$subject->name}";
-          $subjects[] = $subject;
-        }
-      }
-
-      $partners_map = [
-        'Arabic collections online' => 'المجموعات العربية على الانترنت',
-        'New York University Libraries' => 'مكتبات جامعة نيويورك',
-        'Princeton University Libraries' => 'مكتبات جامعة برينستون',
-        'Cornell University Libraries' => 'مكتبات جامعة كورنيل',
-        'Columbia University Libraries' => 'مكتبات جامعة كولومبيا',
-        'American University of Beirut' => 'الجامعة الاميركية في بيروت',
-        'American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
-        'The American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
-        'United Arab Emirates National Archives' => 'الامارات العربية المتحدة - الارشيف الوطني',
-      ];
-
-      $partners = [];
-
-      $partners_ar = [];
-
-      if (isset($doc->zm_partner)) {
-        foreach ($doc->zm_partner as $partner) {
-          $partner = json_decode($partner);
-          $partner->path = "search?partner={$partner->name}";
-          $partners[] = $partner;
-          if (isset($partners_map[$partner->name])) {
-            $partners_ar[] = [
-              'label' => $partners_map[$partner->name],
-              'path' => "search?partner={$partner->name}",
-            ];
-          }
-        }
-      }
-
-      $authors = [];
-
-      if (isset($doc->sm_author)) {
-        foreach ($doc->sm_author as $author) {
-          $authors[] = [
-            'label' => $author,
-            'path' => "search?subject={$author}",
-          ];
-        }
-      }
-
-      $authors_ar = [];
-
-      if (isset($doc->sm_ar_author)) {
-        foreach ($doc->sm_ar_author as $author) {
-          $authors_ar[] = [
-            'label' => $author,
-            'path' => "search?subject={$author}",
-          ];
-        }
-      }
-
-      $pdf_hi = [];
-
-      if (isset($doc->zm_pdf_hi) && isset($doc->zm_pdf_hi[0])) {
-        $pdf_hi = json_decode($doc->zm_pdf_hi[0]);
-      }
-
-      $pdf_lo = [];
-
-      if (isset($doc->zm_pdf_lo) && isset($doc->zm_pdf_lo[0])) {
-        $pdf_lo = json_decode($doc->zm_pdf_lo[0]);
-      }
-
-      $pubdate = 'n.d.';
-
-      if (isset($doc->ss_pubdate) && isset($doc->ss_pubdate)) {
-        $pubdate = $doc->ss_pubdate;
-      }
-
-      $documents[] = [
-        'en' => [
-          'title' => $doc->ss_title_long,
-          'identifier' => $doc->ss_book_identifier,
-          'path' => "book/{$doc->ss_book_identifier}/1",
-          'noid' => $doc->ss_noid,
-          'handle' => $doc->ss_handle,
-          'manifest' => $doc->ss_manifest,
-          'subjects' => $subjects,
-          'pubdate' => $pubdate,
-          'pdf' => [
-            'hi' => $pdf_hi,
-            'lo' => $pdf_lo,
-          ],
-          'authors' => $authors,
-          'partners' => $partners,
-          'topics' => $topics,
-          'publishers' => $publishers,
-          'provider' => $providers,
-          'publocation' => $publocation,
-        ],
-        'ar' => [
-          'title' => $doc->ss_ar_title_long,  // ok
-          'identifier' => $doc->ss_book_identifier,  // ok
-          'path' => "book/{$doc->ss_book_identifier}/1?lang=ar",  // ok
-          'noid' => $doc->ss_noid,  // ok
-          'handle' => $doc->ss_handle,  // ok
-          'manifest' => $doc->ss_manifest,  // ok
-          'subjects' => [], // we do not display subjects in ar?
-          'pubdate' => $pubdate,  // ok
-          'pdf' => [
-            'hi' => $pdf_hi,
-            'lo' => $pdf_lo,
-          ],
-          'authors' => $authors_ar,  // ok
-          'partners' => $partners_ar,
-          'topics' => $topics,
-          'publishers' => $publishers,
-          'provider' => $providers,
-          'publocation' => $ar_publocation,
-        ],
-      ];
-    }
-
-    return [
-      'documents' => $documents,
-      'total' => $total,
-      'rows' => $rows,
-      'page' => ($start / $rows) + 1,
-    ];
   }
 
   /**
@@ -666,8 +236,7 @@ class SolrService
    * @param int $rowStart
    * @param int $rows
    */
-  public function search2(string $fieldSelect, string $query = '*', string $scopeIs = 'matches', string $sortField, string $sortDir, $rowStart, $rows): array
-  // public function search2($query): array
+  public function search(string $fieldSelect, string $query = '*', string $scopeIs = 'matches', string $sortField, string $sortDir, $rowStart, $rows): array
   {
     echo "running search2 \n";
     echo "-----args-----\n";
@@ -694,205 +263,261 @@ class SolrService
     // $comparison = compareQueryToUrl($BuiltQuery, $query, $compareQuery)
     // // THIS IS WHERE THE QUERY IS EXECUTED
     dump($BuiltQuery);
-    $resultset = $this->solrClient->select($BuiltQuery);
+    // $resultset = $this->solrClient->select($BuiltQuery);
     // dump($resultset);
 
     // // 7. extract more data form the request
     // // returns documents and facets
-    $total = $resultset->getNumFound();
+    // $total = $resultset->getNumFound();
 
     // result sets are already iterable, don't convert solarium call to iterator
     // $docs = iterator_to_array($resultset);
 
     // catcher
-    $documents = [];
+    // $documents = [];
 
-    // TODO: figure out if this should be it's own method
-    // // 8. data transformation
-    foreach ($resultset as $doc) {
+    // // TODO: figure out if this should be it's own method
+    // // // 8. data transformation
+    // foreach ($resultset as $doc) {
 
-      $publocation = [];
-      if (isset($doc->ss_publocation)) {
-        $publocation[] = [
-          'label' => $doc->ss_publocation,
-          'path' => "search/?provider={$doc->ss_publocation}",
-        ];
-      }
+    //   $publocation = [];
+    //   if (isset($doc->ss_publocation)) {
+    //     $publocation[] = [
+    //       'label' => $doc->ss_publocation,
+    //       'path' => "search/?provider={$doc->ss_publocation}",
+    //     ];
+    //   }
 
-      $ar_publocation = [];
+    //   $ar_publocation = [];
 
-      if (isset($doc->ss_ar_publocation)) {
-        $ar_publocation[] = [
-          'label' => $doc->ss_ar_publocation,
-          'path' => "search/?provider={$doc->ss_ar_publocation}",
-        ];
-      }
+    //   if (isset($doc->ss_ar_publocation)) {
+    //     $ar_publocation[] = [
+    //       'label' => $doc->ss_ar_publocation,
+    //       'path' => "search/?provider={$doc->ss_ar_publocation}",
+    //     ];
+    //   }
 
-      $providers = [];
+    //   $providers = [];
 
-      if (isset($doc->sm_provider_label)) {
-        foreach ($doc->sm_provider_label as $provider) {
-          $providers[] = [
-            'label' => $provider,
-            'path' => "search/?provider={$provider}",
-          ];
-        }
-      }
+    //   if (isset($doc->sm_provider_label)) {
+    //     foreach ($doc->sm_provider_label as $provider) {
+    //       $providers[] = [
+    //         'label' => $provider,
+    //         'path' => "search/?provider={$provider}",
+    //       ];
+    //     }
+    //   }
 
-      $publishers = [];
+    //   $publishers = [];
 
-      if (isset($doc->sm_publisher)) {
-        foreach ($doc->sm_publisher as $publisher) {
-          $publishers[] = [
-            'label' => $publisher,
-            'path' => "search/?publisher={$publisher}",
-          ];
-        }
-      }
+    //   if (isset($doc->sm_publisher)) {
+    //     foreach ($doc->sm_publisher as $publisher) {
+    //       $publishers[] = [
+    //         'label' => $publisher,
+    //         'path' => "search/?publisher={$publisher}",
+    //       ];
+    //     }
+    //   }
 
-      $topics = [];
+    //   $topics = [];
 
-      if (isset($doc->sm_field_topic)) {
-        foreach ($doc->sm_field_topic as $topic) {
-          $topics[] = [
-            'label' => $topic,
-            'path' => "search?category={$topic}&scope=matches",
-          ];
-        }
-      }
+    //   if (isset($doc->sm_field_topic)) {
+    //     foreach ($doc->sm_field_topic as $topic) {
+    //       $topics[] = [
+    //         'label' => $topic,
+    //         'path' => "search?category={$topic}&scope=matches",
+    //       ];
+    //     }
+    //   }
 
-      $subjects = [];
+    //   $subjects = [];
 
-      if (isset($doc->zm_subject)) {
-        foreach ($doc->zm_subject as $subject) {
-          $subject = json_decode($subject);
-          $subject->path = "search?subject={$subject->name}";
-          $subjects[] = $subject;
-        }
-      }
+    //   if (isset($doc->zm_subject)) {
+    //     foreach ($doc->zm_subject as $subject) {
+    //       $subject = json_decode($subject);
+    //       $subject->path = "search?subject={$subject->name}";
+    //       $subjects[] = $subject;
+    //     }
+    //   }
 
-      $partners_map = [
-        'Arabic collections online' => 'المجموعات العربية على الانترنت',
-        'New York University Libraries' => 'مكتبات جامعة نيويورك',
-        'Princeton University Libraries' => 'مكتبات جامعة برينستون',
-        'Cornell University Libraries' => 'مكتبات جامعة كورنيل',
-        'Columbia University Libraries' => 'مكتبات جامعة كولومبيا',
-        'American University of Beirut' => 'الجامعة الاميركية في بيروت',
-        'American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
-        'The American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
-        'United Arab Emirates National Archives' => 'الامارات العربية المتحدة - الارشيف الوطني',
-      ];
+    //   $partners_map = [
+    //     'Arabic collections online' => 'المجموعات العربية على الانترنت',
+    //     'New York University Libraries' => 'مكتبات جامعة نيويورك',
+    //     'Princeton University Libraries' => 'مكتبات جامعة برينستون',
+    //     'Cornell University Libraries' => 'مكتبات جامعة كورنيل',
+    //     'Columbia University Libraries' => 'مكتبات جامعة كولومبيا',
+    //     'American University of Beirut' => 'الجامعة الاميركية في بيروت',
+    //     'American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
+    //     'The American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
+    //     'United Arab Emirates National Archives' => 'الامارات العربية المتحدة - الارشيف الوطني',
+    //   ];
 
-      $partners = [];
+    //   $partners = [];
 
-      $partners_ar = [];
+    //   $partners_ar = [];
 
-      if (isset($doc->zm_partner)) {
-        foreach ($doc->zm_partner as $partner) {
-          $partner = json_decode($partner);
-          $partner->path = "search?partner={$partner->name}";
-          $partners[] = $partner;
-          if (isset($partners_map[$partner->name])) {
-            $partners_ar[] = [
-              'label' => $partners_map[$partner->name],
-              'path' => "search?partner={$partner->name}",
-            ];
-          }
-        }
-      }
+    //   if (isset($doc->zm_partner)) {
+    //     foreach ($doc->zm_partner as $partner) {
+    //       $partner = json_decode($partner);
+    //       $partner->path = "search?partner={$partner->name}";
+    //       $partners[] = $partner;
+    //       if (isset($partners_map[$partner->name])) {
+    //         $partners_ar[] = [
+    //           'label' => $partners_map[$partner->name],
+    //           'path' => "search?partner={$partner->name}",
+    //         ];
+    //       }
+    //     }
+    //   }
 
-      $authors = [];
+    //   $authors = [];
 
-      if (isset($doc->sm_author)) {
-        foreach ($doc->sm_author as $author) {
-          $authors[] = [
-            'label' => $author,
-            'path' => "search?subject={$author}",
-          ];
-        }
-      }
+    //   if (isset($doc->sm_author)) {
+    //     foreach ($doc->sm_author as $author) {
+    //       $authors[] = [
+    //         'label' => $author,
+    //         'path' => "search?subject={$author}",
+    //       ];
+    //     }
+    //   }
 
-      $authors_ar = [];
+    //   $authors_ar = [];
 
-      if (isset($doc->sm_ar_author)) {
-        foreach ($doc->sm_ar_author as $author) {
-          $authors_ar[] = [
-            'label' => $author,
-            'path' => "search?subject={$author}",
-          ];
-        }
-      }
+    //   if (isset($doc->sm_ar_author)) {
+    //     foreach ($doc->sm_ar_author as $author) {
+    //       $authors_ar[] = [
+    //         'label' => $author,
+    //         'path' => "search?subject={$author}",
+    //       ];
+    //     }
+    //   }
 
-      $pdf_hi = [];
+    //   $pdf_hi = [];
 
-      if (isset($doc->zm_pdf_hi) && isset($doc->zm_pdf_hi[0])) {
-        $pdf_hi = json_decode($doc->zm_pdf_hi[0]);
-      }
+    //   if (isset($doc->zm_pdf_hi) && isset($doc->zm_pdf_hi[0])) {
+    //     $pdf_hi = json_decode($doc->zm_pdf_hi[0]);
+    //   }
 
-      $pdf_lo = [];
+    //   $pdf_lo = [];
 
-      if (isset($doc->zm_pdf_lo) && isset($doc->zm_pdf_lo[0])) {
-        $pdf_lo = json_decode($doc->zm_pdf_lo[0]);
-      }
+    //   if (isset($doc->zm_pdf_lo) && isset($doc->zm_pdf_lo[0])) {
+    //     $pdf_lo = json_decode($doc->zm_pdf_lo[0]);
+    //   }
 
-      $pubdate = 'n.d.';
+    //   $pubdate = 'n.d.';
 
-      if (isset($doc->ss_pubdate) && isset($doc->ss_pubdate)) {
-        $pubdate = $doc->ss_pubdate;
-      }
+    //   if (isset($doc->ss_pubdate) && isset($doc->ss_pubdate)) {
+    //     $pubdate = $doc->ss_pubdate;
+    //   }
 
-      $documents[] = [
-        'en' => [
-          'title' => $doc->ss_title_long,
-          'identifier' => $doc->ss_book_identifier,
-          'path' => "book/{$doc->ss_book_identifier}/1",
-          'noid' => $doc->ss_noid,
-          'handle' => $doc->ss_handle,
-          'manifest' => $doc->ss_manifest,
-          'subjects' => $subjects,
-          'pubdate' => $pubdate,
-          'pdf' => [
-            'hi' => $pdf_hi,
-            'lo' => $pdf_lo,
-          ],
-          'authors' => $authors,
-          'partners' => $partners,
-          'topics' => $topics,
-          'publishers' => $publishers,
-          'provider' => $providers,
-          'publocation' => $publocation,
-        ],
-        'ar' => [
-          'title' => $doc->ss_ar_title_long,  // ok
-          'identifier' => $doc->ss_book_identifier,  // ok
-          'path' => "book/{$doc->ss_book_identifier}/1?lang=ar",  // ok
-          'noid' => $doc->ss_noid,  // ok
-          'handle' => $doc->ss_handle,  // ok
-          'manifest' => $doc->ss_manifest,  // ok
-          'subjects' => [], // we do not display subjects in ar?
-          'pubdate' => $pubdate,  // ok
-          'pdf' => [
-            'hi' => $pdf_hi,
-            'lo' => $pdf_lo,
-          ],
-          'authors' => $authors_ar,  // ok
-          'partners' => $partners_ar,
-          'topics' => $topics,
-          'publishers' => $publishers,
-          'provider' => $providers,
-          'publocation' => $ar_publocation,
-        ],
-      ];
+    //   $documents[] = [
+    //     'en' => [
+    //       'title' => $doc->ss_title_long,
+    //       'identifier' => $doc->ss_book_identifier,
+    //       'path' => "book/{$doc->ss_book_identifier}/1",
+    //       'noid' => $doc->ss_noid,
+    //       'handle' => $doc->ss_handle,
+    //       'manifest' => $doc->ss_manifest,
+    //       'subjects' => $subjects,
+    //       'pubdate' => $pubdate,
+    //       'pdf' => [
+    //         'hi' => $pdf_hi,
+    //         'lo' => $pdf_lo,
+    //       ],
+    //       'authors' => $authors,
+    //       'partners' => $partners,
+    //       'topics' => $topics,
+    //       'publishers' => $publishers,
+    //       'provider' => $providers,
+    //       'publocation' => $publocation,
+    //     ],
+    //     'ar' => [
+    //       'title' => $doc->ss_ar_title_long,  // ok
+    //       'identifier' => $doc->ss_book_identifier,  // ok
+    //       'path' => "book/{$doc->ss_book_identifier}/1?lang=ar",  // ok
+    //       'noid' => $doc->ss_noid,  // ok
+    //       'handle' => $doc->ss_handle,  // ok
+    //       'manifest' => $doc->ss_manifest,  // ok
+    //       'subjects' => [], // we do not display subjects in ar?
+    //       'pubdate' => $pubdate,  // ok
+    //       'pdf' => [
+    //         'hi' => $pdf_hi,
+    //         'lo' => $pdf_lo,
+    //       ],
+    //       'authors' => $authors_ar,  // ok
+    //       'partners' => $partners_ar,
+    //       'topics' => $topics,
+    //       'publishers' => $publishers,
+    //       'provider' => $providers,
+    //       'publocation' => $ar_publocation,
+    //     ],
+    //   ];
 
-      // stop iteration on first loop
-      break;
+    //   // stop iteration on first loop
+    //   break;
+    // }
+
+    // return [
+    //   'documents' => $documents,
+    //   'total' => $total,
+    //   'rows' => $rows,
+    //   'page' => ($rowStart / $rows) + 1,
+    // ];
+    return [];
+  }
+
+  public function parseSolrUrl(string $url): array
+  {
+    // 1. Parse the URL to get the query string (after the ?)
+    $queryString = parse_url($url, PHP_URL_QUERY);
+
+    if (!$queryString) {
+      return [];
     }
 
-    return [
-      'documents' => $documents,
-      'total' => $total,
-      'rows' => $rows,
-      'page' => ($rowStart / $rows) + 1,
-    ];
+    $result = [];
+
+    // 2. Explode by '&' to get raw key=value pairs
+    foreach (explode('&', $queryString) as $part) {
+      $parts = explode('=', $part, 2);
+
+      if (count($parts) === 2) {
+        $key = urldecode($parts[0]);
+        $value = urldecode($parts[1]);
+
+        // Handle duplicate keys (common for 'fq' in Solr)
+        if (isset($result[$key])) {
+          if (!is_array($result[$key])) {
+            $result[$key] = [$result[$key]];
+          }
+          $result[$key][] = $value;
+        } else {
+          $result[$key] = $value;
+        }
+      }
+    }
+
+    // Normalize single 'fq' to array for consistent comparison later
+    if (isset($result['fq']) && !is_array($result['fq'])) {
+      $result['fq'] = [$result['fq']];
+    }
+
+    return $result;
+  }
+
+  function getParamsFromSolarium(Client $client, QueryInterface $query): array
+  {
+    // Convert the Query object into a Request object
+    $request = $client->createRequest($query);
+
+    // Get the params (returns an array)
+    $params = $request->getParams();
+
+    // Normalize 'fq' to array for consistency
+    if (isset($params['fq']) && !is_array($params['fq'])) {
+      $params['fq'] = [$params['fq']];
+    }
+
+    return $params;
   }
 }
