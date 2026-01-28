@@ -84,19 +84,19 @@ describe('SolrService BuilQuery', function () {
         'rows' => 10,
       ]
     ],
-    // this one errors out for some reason with a NAN at the end of the original URL???
-    // [
-    //   "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1765998738928_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=(content_und:%22arabs%22%20OR%20content_und_ws:%22arabs%22%20OR%20content_en:%22arabs%22%20OR%20content:%22NaN%22)",
-    //   [
-    //     'fieldSelect' => 'q',
-    //     'scopeIs' => 'matches',
-    //     'query' => 'arabs',
-    //     'sortField' => 'score',
-    //     'sortDir' => 'desc',
-    //     'rowStart' => 0,
-    //     'rows' => 10,
-    //   ]
-    // ],
+    // there is a NAN in the original URL caused by coercing a string with ++, this URL is changed to accomodate for that
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1765998738928_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=(content_und:%22arabs%22%20OR%20content_und_ws:%22arabs%22%20OR%20content_en:%22arabs%22%20OR%20content:%22arabs%22)",
+      [
+        'fieldSelect' => 'q',
+        'scopeIs' => 'matches',
+        'query' => 'arabs',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'rowStart' => 0,
+        'rows' => 10,
+      ]
+    ],
     [
       "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1765998788005_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=((tus_title_long:%22arabs%22%20OR%20ts_title_long:%22arabs%22%20OR%20tusar_title_long:%22arabs%22))&rows=10&start=0&sort=score%20desc&q=*",
       [
