@@ -59,7 +59,6 @@ class SolrService
     // sort=score%20desc
     // q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))
 
-
     $query = $this->solrClient->createSelect();
 
     /**
@@ -189,7 +188,7 @@ class SolrService
       $helper = $query->getHelper();
       $sanitizedSearchString = $helper->escapeTerm($searchString);
       if ($scopeIs === 'matches') {
-        $finalQuery = "((content_und:$sanitizedSearchString OR content_und_ws:$sanitizedSearchString OR content_en:$sanitizedSearchString OR content:$sanitizedSearchString))";
+        $finalQuery = "(content_und:\"$sanitizedSearchString\" OR content_und_ws:\"$sanitizedSearchString\" OR content_en:\"$sanitizedSearchString\" OR content:\"$sanitizedSearchString\")";
         $query->setQuery($finalQuery);
       } else {
         $words = preg_split('/\s+/', $sanitizedSearchString);
