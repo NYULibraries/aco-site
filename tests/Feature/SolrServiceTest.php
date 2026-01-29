@@ -20,7 +20,7 @@ describe('SolrService BuilQuery', function () {
     $scopeIs = $builderParams['scopeIs'];
     $sortField = $builderParams['sortField'];
     $sortDir = $builderParams['sortDir'];
-    $rowStart = $builderParams['rowStart'];
+    $start = $builderParams['start'];
     $rows = $builderParams['rows'];
 
     // base URL to compare
@@ -52,7 +52,7 @@ describe('SolrService BuilQuery', function () {
 
     // compare ROW START AND ROWS
     $options = $request->getOptions();
-    expect($options['start'])->toBe($rowStart);
+    expect($options['start'])->toBe($start);
     expect($options['rows'])->toBe($rows);
 
     // compare FIELD LIST fl
@@ -68,7 +68,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -80,7 +80,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -93,7 +93,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -105,7 +105,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -117,7 +117,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -129,7 +129,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -141,7 +141,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -153,7 +153,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -165,7 +165,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -177,7 +177,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -189,7 +189,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -201,7 +201,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -213,7 +213,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -225,7 +225,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -237,7 +237,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -249,7 +249,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -261,7 +261,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -273,7 +273,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -285,7 +285,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -297,7 +297,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -309,7 +309,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -321,7 +321,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -333,7 +333,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
@@ -345,7 +345,7 @@ describe('SolrService BuilQuery', function () {
         'query' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
-        'rowStart' => 0,
+        'start' => 0,
         'rows' => 10,
       ]
     ],
