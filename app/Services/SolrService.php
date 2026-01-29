@@ -183,11 +183,8 @@ class SolrService
      * these only need to be when anyfield is selected in field select
      * q = query is the only thing coming from the Request Object
      */
-
     if ($fieldSelect == 'q') {
-      $helper = $query->getHelper();
-      $sanitizedSearchString = $helper->escapeTerm($searchString);
-      if ($scopeIs === 'matches') {
+            if ($scopeIs === 'matches') {
         $finalQuery = "(content_und:\"$sanitizedSearchString\" OR content_und_ws:\"$sanitizedSearchString\" OR content_en:\"$sanitizedSearchString\" OR content:\"$sanitizedSearchString\")";
         $query->setQuery($finalQuery);
       } else {
