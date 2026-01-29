@@ -10,6 +10,87 @@ use Illuminate\Support\Facades\Log;
 
 class SolrService
 {
+  private const BUNDLE = "bundle:dlts_book";
+  private const SM_COLLECTION_CODE = "sm_collection_code:aco";
+  private const SS_LANGUAGE = "ss_language:en";
+  // these are all the possible fields to add to the filter query
+  // we will use the request options to trim these down to use on our query
+  private const FIELD_LIST = [
+    'title' => [
+      'match' => [
+        'tks_title_long',
+        'tks_ar_title_long',
+      ],
+      'contains' => [
+        'tus_title_long',
+        'ts_title_long',
+        'tusar_title_long',
+      ],
+    ],
+    'author' => [
+      'match' => [
+        'tkm_author',
+        'tkm_ar_author',
+      ],
+      'contains' => [
+        'tum_author',
+        'tm_author',
+        'tumar_author',
+      ]
+    ],
+    'pubplace'  => [
+      'match' => [
+        'tks_publocation',
+        'tks_ar_publocation',
+      ],
+      'contains' => [
+        'tus_publocation',
+        'ts_publocation',
+        'tusar_publocation',
+      ],
+    ],
+    'publisher' => [
+      'match' => [
+        'tkm_publisher',
+        'tkm_ar_publisher',
+      ],
+      'contains' => [
+        'tum_publisher',
+        'tm_publisher',
+        'tumar_publisher',
+      ],
+    ],
+    'category' => [
+      'match' => [
+        'tkm_topic',
+        'tkm_ar_topic',
+      ],
+      'contains' => [
+        'tum_topic',
+        'tm_topic',
+        'tumar_topic',
+      ],
+    ],
+    'provider' => [
+      'match' => [
+        'tkm_provider_label',
+      ],
+      'contains' => [
+        'tum_provider_label',
+        'tm_provider_label',
+      ],
+    ],
+    'subject' => [
+      'match' => [
+        'tkm_subject_label',
+      ],
+      'contains' => [
+        'tum_subject_label',
+        'tm_subject_label',
+      ],
+    ],
+  ];
+
   protected Client $client;
 
   public function __construct(private Client $solrClient)
@@ -18,17 +99,27 @@ class SolrService
   }
 
   /**
-   * Modifies the query object according to search params passed
-   * use the previous YUI implementation for reference https://github.com/NYULibraries/aco-site/blob/main/source/js/search.js
+   * Creates and modifies a Solarium query object according to search params passed
+   *
+   * previous YUI implementation for reference https://github.com/NYULibraries/aco-site/blob/main/source/js/search.js
+   *
+   * @param int $start - pagination start point for solr
+   * @param int $rows - how many items to display after the start point
+   * @param string $fieldSelect - what field the user wants to perform the search on
+   * @param string $searchString - the actual search values to use
+   * @param string $scopeIs - how to match the results
+   * @param string $sortField - what field to sort on
+   * @param string $sortDir - what direction to sort
+   * @return Query
    */
   public function buildQuery(
-    string $fieldSelect = 'q', // what field to search on
-    string $searchString,  // what query to use
-    string $scopeIs = 'matches', // how to match results
-    string $sortField = 'score', // how to order results
+    int $start,
+    int $rows,
+    string $fieldSelect = 'q',
+    string $searchString,
+    string $scopeIs = 'matches',
+    string $sortField = 'score',
     string $sortDir = 'desc',
-    $rowStart,
-    $rows
   ): Query {
     /**
      * Possible combinations:
@@ -70,93 +161,16 @@ class SolrService
      * FILTER QUERY - fq
      */
     // these filter queries always have to happen as of 2026
-    $query->createFilterQuery(md5('bundle:dlts_book'))->setQuery('bundle:dlts_book');
-    $query->createFilterQuery(md5('sm_collection_code:aco'))->setQuery('sm_collection_code:aco');
-    $query->createFilterQuery(md5('ss_language:en'))->setQuery('ss_language:en');
+    $query->createFilterQuery('bundle')->setQuery(self::BUNDLE);
+    $query->createFilterQuery('sm_collection_code')->setQuery(self::SM_COLLECTION_CODE);
+    $query->createFilterQuery('ss_language')->setQuery(self::SS_LANGUAGE);
 
-    // these are all the possible fields to add to the filter query
-    // we will use the request options to trim these down to use on our query
-    $fields = [
-      'title' => [
-        'match' => [
-          'tks_title_long',
-          'tks_ar_title_long',
-        ],
-        'contains' => [
-          'tus_title_long',
-          'ts_title_long',
-          'tusar_title_long',
-        ],
-      ],
-      'author' => [
-        'match' => [
-          'tkm_author',
-          'tkm_ar_author',
-        ],
-        'contains' => [
-          'tum_author',
-          'tm_author',
-          'tumar_author',
-        ]
-      ],
-      'pubplace'  => [
-        'match' => [
-          'tks_publocation',
-          'tks_ar_publocation',
-        ],
-        'contains' => [
-          'tus_publocation',
-          'ts_publocation',
-          'tusar_publocation',
-        ],
-      ],
-      'publisher' => [
-        'match' => [
-          'tkm_publisher',
-          'tkm_ar_publisher',
-        ],
-        'contains' => [
-          'tum_publisher',
-          'tm_publisher',
-          'tumar_publisher',
-        ],
-      ],
-      'category' => [
-        'match' => [
-          'tkm_topic',
-          'tkm_ar_topic',
-        ],
-        'contains' => [
-          'tum_topic',
-          'tm_topic',
-          'tumar_topic',
-        ],
-      ],
-      'provider' => [
-        'match' => [
-          'tkm_provider_label',
-        ],
-        'contains' => [
-          'tum_provider_label',
-          'tm_provider_label',
-        ],
-      ],
-      'subject' => [
-        'match' => [
-          'tkm_subject_label',
-        ],
-        'contains' => [
-          'tum_subject_label',
-          'tm_subject_label',
-        ],
-      ],
-    ];
 
     $helper = $query->getHelper();
     $sanitizedSearchString = $helper->escapeTerm($searchString);
 
     $fq = [];
-    foreach ($fields as $key => $map) {
+    foreach (self::FIELD_LIST as $key => $map) {
       if ($fieldSelect !== $key) continue; // go to the next loop, skip the rest
       $value = trim($fieldSelect);
       if ($scopeIs === 'matches') {
@@ -175,7 +189,7 @@ class SolrService
 
     // set filter queries
     foreach ($fq as $filter) {
-      $query->createFilterQuery(md5($filter))->setQuery($filter);
+      $query->createFilterQuery($filter)->setQuery($filter);
     }
 
     /**
@@ -184,7 +198,7 @@ class SolrService
      * q = query is the only thing coming from the Request Object
      */
     if ($fieldSelect == 'q') {
-            if ($scopeIs === 'matches') {
+      if ($scopeIs === 'matches') {
         $finalQuery = "(content_und:\"$sanitizedSearchString\" OR content_und_ws:\"$sanitizedSearchString\" OR content_en:\"$sanitizedSearchString\" OR content:\"$sanitizedSearchString\")";
         $query->setQuery($finalQuery);
       } else {
@@ -203,7 +217,7 @@ class SolrService
     /**
      * PAGINATION
      */
-        $query->setStart($start); // what item to start from (page)
+    $query->setStart($start); // what item to start from (page)
     $query->setRows($rows);  // how many items to show (page size)
 
     /**
@@ -232,17 +246,15 @@ class SolrService
    */
   public function search(string $fieldSelect, string $query = '*', string $scopeIs = 'matches', string $sortField, string $sortDir, $start, $rows): array
   {
-    echo "running search2 \n";
-    echo "-----args-----\n";
-    echo "fieldSelect: $fieldSelect \n";
-    echo "query: $query \n";
-    echo "scopeIs: $scopeIs \n";
-    echo "sortField: $sortField \n";
-    echo "sortDir: $sortDir \n";
-    // echo "sortBy: $sortBy \n";
-    echo "rowStart: $rowStart \n";
-    echo "rows: $rows \n";
-    echo "-----args-----\n";
+    Log::info("SolrService::Search", [
+      "fieldSelect" => $fieldSelect,
+      "query" => $query,
+      "scopeIs" => $scopeIs,
+      "sortField" => $sortField,
+      "sortDir" => $sortDir,
+      "start" => $start,
+      "rows" => $rows,
+    ]);
 
     $BuiltQuery = $this->buildQuery(
       fieldSelect: $fieldSelect,
@@ -250,13 +262,15 @@ class SolrService
       scopeIs: $scopeIs,
       sortField: $sortField,
       sortDir: $sortDir,
-      rowStart: $rowStart,
+      start: $start,
       rows: $rows
     );
+    // Log::info(dump($BuiltQuery));
+    // dump($BuiltQuery);
+
     // $compareQuery = "select?wt=json&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))";
     // $comparison = compareQueryToUrl($BuiltQuery, $query, $compareQuery)
     // // THIS IS WHERE THE QUERY IS EXECUTED
-    dump($BuiltQuery);
     // $resultset = $this->solrClient->select($BuiltQuery);
     // dump($resultset);
 
@@ -451,15 +465,26 @@ class SolrService
     //   break;
     // }
 
-    // return [
-    //   'documents' => $documents,
-    //   'total' => $total,
-    //   'rows' => $rows,
-    'page' => ($rowStart / $rows) + 1,
-    // ];
-    return [];
+    return [
+      // 'documents' => $documents,
+      'documents' => [],
+      // 'total' => $total,
+      'total' => [],
+      'rows' => $rows,
+      'page' => ($start / $rows) + 1,
+    ];
+    // return [];
   }
 
+  /**
+   * Parses the old solr URLs into it's query parameters
+   *
+   * method used primarily in the test suite to verify that
+   * the correct filter queries were generated by Solarium
+   *
+   * @param string $url - the full original URL in production to be parsed
+   * @return array<string, array|string> - associative array of query parameters
+   */
   public function parseSolrUrl(string $url): array
   {
     // 1. Parse the URL to get the query string (after the ?)
@@ -492,26 +517,10 @@ class SolrService
     }
 
     // Normalize single 'fq' to array for consistent comparison later
+    // using the toEqualCanonicalizing comparison
     if (isset($result['fq']) && !is_array($result['fq'])) {
       $result['fq'] = [$result['fq']];
     }
-
     return $result;
-  }
-
-  function getParamsFromSolarium(Client $client, QueryInterface $query): array
-  {
-    // Convert the Query object into a Request object
-    $request = $client->createRequest($query);
-
-    // Get the params (returns an array)
-    $params = $request->getParams();
-
-    // Normalize 'fq' to array for consistency
-    if (isset($params['fq']) && !is_array($params['fq'])) {
-      $params['fq'] = [$params['fq']];
-    }
-
-    return $params;
   }
 }
