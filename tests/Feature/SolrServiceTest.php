@@ -11,7 +11,7 @@ describe('SolrService BuilQuery', function () {
     expect(method_exists(SolrService::class, 'buildQuery'))->toBeTrue();
   });
 
-  it('compares all queries: ', function ($oldURL, $builderParams) {
+  it('ensures old queries match: ', function ($oldURL, $builderParams) {
     // import the solr service
     $solrService = app(SolrService::class);
 
@@ -27,7 +27,15 @@ describe('SolrService BuilQuery', function () {
     $parsedURL = $solrService->parseSolrUrl($oldURL);
 
     // call the buildQuery method
-    $request = $solrService->buildQuery($fieldSelect, $query, $scopeIs, $sortField, $sortDir, $rowStart, $rows);
+    $request = $solrService->buildQuery(
+      fieldSelect: $fieldSelect,
+      searchString: $query,
+      scopeIs: $scopeIs,
+      sortField: $sortField,
+      sortDir: $sortDir,
+      start: $start,
+      rows: $rows
+    );
 
     // compare QUERY
     $newQuery = $request->getQuery();
@@ -47,7 +55,7 @@ describe('SolrService BuilQuery', function () {
     foreach ($newSort as $key => $value) {
       expect($key)->toBe($sortField);
       expect($value)->toBe($sortDir);
-      break; // should only be one iteration
+      // break; // should only be one iteration
     }
 
     // compare ROW START AND ROWS
