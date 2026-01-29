@@ -206,9 +206,7 @@ class SolrService
     /**
      * PAGINATION
      */
-    $start = $options['start'] ?? 0;
-    $rows  = $options['rpp'] ?? 10;
-    $query->setStart($start); // what item to start from (page)
+        $query->setStart($start); // what item to start from (page)
     $query->setRows($rows);  // how many items to show (page size)
 
     /**
@@ -232,10 +230,10 @@ class SolrService
    * @param string $query
    * @param string $scope 'matches', 'contains all', 'contains any'
    * @param string $sortBy 'asc, 'desc'
-   * @param int $rowStart
+   * @param int $start
    * @param int $rows
    */
-  public function search(string $fieldSelect, string $query = '*', string $scopeIs = 'matches', string $sortField, string $sortDir, $rowStart, $rows): array
+  public function search(string $fieldSelect, string $query = '*', string $scopeIs = 'matches', string $sortField, string $sortDir, $start, $rows): array
   {
     echo "running search2 \n";
     echo "-----args-----\n";
@@ -460,7 +458,7 @@ class SolrService
     //   'documents' => $documents,
     //   'total' => $total,
     //   'rows' => $rows,
-    //   'page' => ($rowStart / $rows) + 1,
+    'page' => ($rowStart / $rows) + 1,
     // ];
     return [];
   }
