@@ -4,8 +4,6 @@ namespace App\Services;
 
 use Solarium\Client;
 use Solarium\QueryType\Select\Query\Query;
-use Solarium\Core\Query\QueryInterface;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class SolrService
@@ -91,8 +89,6 @@ class SolrService
     ],
   ];
 
-  protected Client $client;
-
   public function __construct(private Client $solrClient)
   {
     // this->client = $solrClient;
@@ -110,7 +106,7 @@ class SolrService
    * @param string $scopeIs - how to match the results
    * @param string $sortField - what field to sort on
    * @param string $sortDir - what direction to sort
-   * @return Query
+   * @return Query - Full Solarium Query object
    */
   public function buildQuery(
     int $start,
@@ -159,26 +155,36 @@ class SolrService
 
     /**
      * FILTER QUERY - fq
+     * when creating the URL, we put the query in two possible places: the `fq` or the `q`
+     *
      */
+
     // these filter queries always have to happen as of 2026
     $query->createFilterQuery('bundle')->setQuery(self::BUNDLE);
     $query->createFilterQuery('sm_collection_code')->setQuery(self::SM_COLLECTION_CODE);
     $query->createFilterQuery('ss_language')->setQuery(self::SS_LANGUAGE);
 
-
+    // sanitize the user's input
     $helper = $query->getHelper();
     $sanitizedSearchString = $helper->escapeTerm($searchString);
 
+    // catcher for the final filterquery list
     $fq = [];
+    // looping the fieldList to use the wording in the map on our fq
     foreach (self::FIELD_LIST as $key => $map) {
-      if ($fieldSelect !== $key) continue; // go to the next loop, skip the rest
-      $value = trim($fieldSelect);
+      // skip any actio if the keys don't match
+      if ($fieldSelect !== $key) continue;
       if ($scopeIs === 'matches') {
+        // combine the FieldList keywords with the user's input
         $parts = array_map(fn($f) => "$f:\"$sanitizedSearchString\"", $map['match']);
+        // flatten those parts
         $fq[] = '(' . implode(' OR ', $parts) . ')';
       } else {
+        // split the user's query into words
         $words = preg_split('/\s+/', $sanitizedSearchString);
+        // catcher for keywords
         $clauses = [];
+        // each words of the users input
         foreach ($words as $w) {
           $sub = array_map(fn($f) => "$f:\"$w\"", $map['contains']);
           $clauses[] = '(' . implode(' OR ', $sub) . ')';
@@ -265,8 +271,6 @@ class SolrService
       start: $start,
       rows: $rows
     );
-    // Log::info(dump($BuiltQuery));
-    // dump($BuiltQuery);
 
     // $compareQuery = "select?wt=json&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))";
     // $comparison = compareQueryToUrl($BuiltQuery, $query, $compareQuery)
