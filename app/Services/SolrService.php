@@ -250,7 +250,7 @@ class SolrService
    * @param int $start
    * @param int $rows
    */
-  public function search(string $fieldSelect, string $searchString = '*', string $scopeIs = 'matches', string $sortField, string $sortDir, $start, $rows): array
+  public function search(string $fieldSelect = 'q', string $searchString = '*', string $scopeIs = 'matches', string $sortField = 'score', string $sortDir = 'desc', int $start = 0, int $rows = 10): array
   {
     Log::info("SolrService::Search", [
       "fieldSelect" => $fieldSelect,
