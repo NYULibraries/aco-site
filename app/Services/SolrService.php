@@ -111,11 +111,11 @@ class SolrService
   public function buildQuery(
     int $start,
     int $rows,
-    string $fieldSelect = 'q',
+    string $fieldSelect,
     string $searchString,
-    string $scopeIs = 'matches',
-    string $sortField = 'score',
-    string $sortDir = 'desc',
+    string $scopeIs,
+    string $sortField,
+    string $sortDir,
   ): Query {
     /**
      * Possible combinations:
