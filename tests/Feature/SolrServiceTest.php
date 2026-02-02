@@ -16,7 +16,7 @@ describe('SolrService BuilQuery', function () {
     $solrService = app(SolrService::class);
 
     $fieldSelect = $builderParams['fieldSelect']; // for anyField
-    $query = $builderParams['query'];
+    $searchString = $builderParams['searchString'];
     $scopeIs = $builderParams['scopeIs'];
     $sortField = $builderParams['sortField'];
     $sortDir = $builderParams['sortDir'];
@@ -29,7 +29,7 @@ describe('SolrService BuilQuery', function () {
     // call the buildQuery method
     $request = $solrService->buildQuery(
       fieldSelect: $fieldSelect,
-      searchString: $query,
+      searchString: $searchString,
       scopeIs: $scopeIs,
       sortField: $sortField,
       sortDir: $sortDir,
@@ -73,7 +73,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'q',
         'scopeIs' => 'containsAny',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -85,7 +85,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'q',
         'scopeIs' => 'containsAll',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -98,7 +98,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'q',
         'scopeIs' => 'matches',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -110,7 +110,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'title',
         'scopeIs' => 'containsAny',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -122,7 +122,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'title',
         'scopeIs' => 'containsAll',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -134,7 +134,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'title',
         'scopeIs' => 'matches',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -146,7 +146,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'author',
         'scopeIs' => 'containsAny',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -158,7 +158,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'author',
         'scopeIs' => 'containsAll',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -170,7 +170,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'author',
         'scopeIs' => 'matches',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -182,7 +182,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'category',
         'scopeIs' => 'containsAny',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -194,7 +194,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'category',
         'scopeIs' => 'containsAll',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -206,7 +206,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'category',
         'scopeIs' => 'matches',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -218,7 +218,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'publisher',
         'scopeIs' => 'containsAny',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -230,7 +230,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'publisher',
         'scopeIs' => 'containsAll',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -242,7 +242,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'publisher',
         'scopeIs' => 'matches',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -254,7 +254,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'pubplace',
         'scopeIs' => 'containsAny',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -266,7 +266,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'pubplace',
         'scopeIs' => 'containsAll',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -278,7 +278,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'pubplace',
         'scopeIs' => 'matches',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -290,7 +290,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'provider',
         'scopeIs' => 'containsAny',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -302,7 +302,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'provider',
         'scopeIs' => 'containsAll',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -314,7 +314,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'provider',
         'scopeIs' => 'matches',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -326,7 +326,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'subject',
         'scopeIs' => 'containsAny',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -338,7 +338,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'subject',
         'scopeIs' => 'containsAll',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -350,7 +350,7 @@ describe('SolrService BuilQuery', function () {
       [
         'fieldSelect' => 'subject',
         'scopeIs' => 'matches',
-        'query' => 'arabs',
+        'searchString' => 'arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,

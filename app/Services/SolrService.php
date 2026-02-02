@@ -250,11 +250,11 @@ class SolrService
    * @param int $start
    * @param int $rows
    */
-  public function search(string $fieldSelect, string $query = '*', string $scopeIs = 'matches', string $sortField, string $sortDir, $start, $rows): array
+  public function search(string $fieldSelect, string $searchString = '*', string $scopeIs = 'matches', string $sortField, string $sortDir, $start, $rows): array
   {
     Log::info("SolrService::Search", [
       "fieldSelect" => $fieldSelect,
-      "query" => $query,
+      "searchString" => $searchString,
       "scopeIs" => $scopeIs,
       "sortField" => $sortField,
       "sortDir" => $sortDir,
@@ -264,7 +264,7 @@ class SolrService
 
     $BuiltQuery = $this->buildQuery(
       fieldSelect: $fieldSelect,
-      searchString: $query,
+      searchString: $searchString,
       scopeIs: $scopeIs,
       sortField: $sortField,
       sortDir: $sortDir,
