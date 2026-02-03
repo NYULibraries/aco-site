@@ -150,6 +150,8 @@ class SolrService
 
     /**
      * FIELD LIST - fl
+     * although this is the only fl we add
+     * when adding a sort key solarium will add it as a fieldList
      */
     $query->addParam('fl', '*'); // field list: all fields
 
@@ -250,7 +252,7 @@ class SolrService
    * @param int $start
    * @param int $rows
    */
-  public function search(string $fieldSelect = 'q', string $searchString = '*', string $scopeIs = 'matches', string $sortField = 'score', string $sortDir = 'desc', int $start = 0, int $rows = 10): array
+  public function search(string $fieldSelect = 'q', string $searchString = '*:*', string $scopeIs = 'matches', string $sortField = 'score', string $sortDir = 'desc', int $start = 0, int $rows = 10): array
   {
     Log::info("SolrService::Search", [
       "fieldSelect" => $fieldSelect,
@@ -272,212 +274,194 @@ class SolrService
       rows: $rows
     );
 
-    // $compareQuery = "select?wt=json&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))";
-    // $comparison = compareQueryToUrl($BuiltQuery, $query, $compareQuery)
-    // // THIS IS WHERE THE QUERY IS EXECUTED
-    // $resultset = $this->solrClient->select($BuiltQuery);
-    // dump($resultset);
-
-    // // 7. extract more data form the request
-    // // returns documents and facets
-    // $total = $resultset->getNumFound();
+    // dump($BuiltQuery);
+    $resultset = $this->solrClient->select($BuiltQuery);
+    $total = $resultset->getNumFound();
 
     // result sets are already iterable, don't convert solarium call to iterator
     // $docs = iterator_to_array($resultset);
+    $docs = $resultset->getDocuments();
 
     // catcher
-    // $documents = [];
+    $documents = [];
 
-    // // TODO: figure out if this should be it's own method
-    // // // 8. data transformation
+    // 8. data transformation
     // foreach ($resultset as $doc) {
+    foreach ($docs as $doc) {
 
-    //   $publocation = [];
-    //   if (isset($doc->ss_publocation)) {
-    //     $publocation[] = [
-    //       'label' => $doc->ss_publocation,
-    //       'path' => "search/?provider={$doc->ss_publocation}",
-    //     ];
-    //   }
+      $publocation = [];
+      if (isset($doc->ss_publocation)) {
+        $publocation[] = [
+          'label' => $doc->ss_publocation,
+          'path' => "search/?provider={$doc->ss_publocation}",
+        ];
+      }
 
-    //   $ar_publocation = [];
+      $ar_publocation = [];
+      if (isset($doc->ss_ar_publocation)) {
+        $ar_publocation[] = [
+          'label' => $doc->ss_ar_publocation,
+          'path' => "search/?provider={$doc->ss_ar_publocation}",
+        ];
+      }
 
-    //   if (isset($doc->ss_ar_publocation)) {
-    //     $ar_publocation[] = [
-    //       'label' => $doc->ss_ar_publocation,
-    //       'path' => "search/?provider={$doc->ss_ar_publocation}",
-    //     ];
-    //   }
+      $providers = [];
+      if (isset($doc->sm_provider_label)) {
+        foreach ($doc->sm_provider_label as $provider) {
+          $providers[] = [
+            'label' => $provider,
+            'path' => "search/?provider={$provider}",
+          ];
+        }
+      }
 
-    //   $providers = [];
+      $publishers = [];
+      if (isset($doc->sm_publisher)) {
+        foreach ($doc->sm_publisher as $publisher) {
+          $publishers[] = [
+            'label' => $publisher,
+            'path' => "search/?publisher={$publisher}",
+          ];
+        }
+      }
 
-    //   if (isset($doc->sm_provider_label)) {
-    //     foreach ($doc->sm_provider_label as $provider) {
-    //       $providers[] = [
-    //         'label' => $provider,
-    //         'path' => "search/?provider={$provider}",
-    //       ];
-    //     }
-    //   }
+      $topics = [];
+      if (isset($doc->sm_field_topic)) {
+        foreach ($doc->sm_field_topic as $topic) {
+          $topics[] = [
+            'label' => $topic,
+            'path' => "search?category={$topic}&scope=matches",
+          ];
+        }
+      }
 
-    //   $publishers = [];
+      $subjects = [];
+      if (isset($doc->zm_subject)) {
+        foreach ($doc->zm_subject as $subject) {
+          $subject = json_decode($subject);
+          $subject->path = "search?subject={$subject->name}";
+          $subjects[] = $subject;
+        }
+      }
 
-    //   if (isset($doc->sm_publisher)) {
-    //     foreach ($doc->sm_publisher as $publisher) {
-    //       $publishers[] = [
-    //         'label' => $publisher,
-    //         'path' => "search/?publisher={$publisher}",
-    //       ];
-    //     }
-    //   }
+      $partners_map = [
+        'Arabic collections online' => 'المجموعات العربية على الانترنت',
+        'New York University Libraries' => 'مكتبات جامعة نيويورك',
+        'Princeton University Libraries' => 'مكتبات جامعة برينستون',
+        'Cornell University Libraries' => 'مكتبات جامعة كورنيل',
+        'Columbia University Libraries' => 'مكتبات جامعة كولومبيا',
+        'American University of Beirut' => 'الجامعة الاميركية في بيروت',
+        'American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
+        'The American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
+        'United Arab Emirates National Archives' => 'الامارات العربية المتحدة - الارشيف الوطني',
+      ];
 
-    //   $topics = [];
+      $partners = [];
 
-    //   if (isset($doc->sm_field_topic)) {
-    //     foreach ($doc->sm_field_topic as $topic) {
-    //       $topics[] = [
-    //         'label' => $topic,
-    //         'path' => "search?category={$topic}&scope=matches",
-    //       ];
-    //     }
-    //   }
+      $partners_ar = [];
 
-    //   $subjects = [];
+      if (isset($doc->zm_partner)) {
+        foreach ($doc->zm_partner as $partner) {
+          $partner = json_decode($partner);
+          $partner->path = "search?partner={$partner->name}";
+          $partners[] = $partner;
+          if (isset($partners_map[$partner->name])) {
+            $partners_ar[] = [
+              'label' => $partners_map[$partner->name],
+              'path' => "search?partner={$partner->name}",
+            ];
+          }
+        }
+      }
 
-    //   if (isset($doc->zm_subject)) {
-    //     foreach ($doc->zm_subject as $subject) {
-    //       $subject = json_decode($subject);
-    //       $subject->path = "search?subject={$subject->name}";
-    //       $subjects[] = $subject;
-    //     }
-    //   }
+      $authors = [];
+      if (isset($doc->sm_author)) {
+        foreach ($doc->sm_author as $author) {
+          $authors[] = [
+            'label' => $author,
+            'path' => "search?subject={$author}",
+          ];
+        }
+      }
 
-    //   $partners_map = [
-    //     'Arabic collections online' => 'المجموعات العربية على الانترنت',
-    //     'New York University Libraries' => 'مكتبات جامعة نيويورك',
-    //     'Princeton University Libraries' => 'مكتبات جامعة برينستون',
-    //     'Cornell University Libraries' => 'مكتبات جامعة كورنيل',
-    //     'Columbia University Libraries' => 'مكتبات جامعة كولومبيا',
-    //     'American University of Beirut' => 'الجامعة الاميركية في بيروت',
-    //     'American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
-    //     'The American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
-    //     'United Arab Emirates National Archives' => 'الامارات العربية المتحدة - الارشيف الوطني',
-    //   ];
+      $authors_ar = [];
+      if (isset($doc->sm_ar_author)) {
+        foreach ($doc->sm_ar_author as $author) {
+          $authors_ar[] = [
+            'label' => $author,
+            'path' => "search?subject={$author}",
+          ];
+        }
+      }
 
-    //   $partners = [];
+      $pdf_hi = [];
 
-    //   $partners_ar = [];
+      if (isset($doc->zm_pdf_hi) && isset($doc->zm_pdf_hi[0])) {
+        $pdf_hi = json_decode($doc->zm_pdf_hi[0]);
+      }
 
-    //   if (isset($doc->zm_partner)) {
-    //     foreach ($doc->zm_partner as $partner) {
-    //       $partner = json_decode($partner);
-    //       $partner->path = "search?partner={$partner->name}";
-    //       $partners[] = $partner;
-    //       if (isset($partners_map[$partner->name])) {
-    //         $partners_ar[] = [
-    //           'label' => $partners_map[$partner->name],
-    //           'path' => "search?partner={$partner->name}",
-    //         ];
-    //       }
-    //     }
-    //   }
+      $pdf_lo = [];
 
-    //   $authors = [];
+      if (isset($doc->zm_pdf_lo) && isset($doc->zm_pdf_lo[0])) {
+        $pdf_lo = json_decode($doc->zm_pdf_lo[0]);
+      }
 
-    //   if (isset($doc->sm_author)) {
-    //     foreach ($doc->sm_author as $author) {
-    //       $authors[] = [
-    //         'label' => $author,
-    //         'path' => "search?subject={$author}",
-    //       ];
-    //     }
-    //   }
+      $pubdate = 'n.d.';
 
-    //   $authors_ar = [];
+      if (isset($doc->ss_pubdate) && isset($doc->ss_pubdate)) {
+        $pubdate = $doc->ss_pubdate;
+      }
 
-    //   if (isset($doc->sm_ar_author)) {
-    //     foreach ($doc->sm_ar_author as $author) {
-    //       $authors_ar[] = [
-    //         'label' => $author,
-    //         'path' => "search?subject={$author}",
-    //       ];
-    //     }
-    //   }
-
-    //   $pdf_hi = [];
-
-    //   if (isset($doc->zm_pdf_hi) && isset($doc->zm_pdf_hi[0])) {
-    //     $pdf_hi = json_decode($doc->zm_pdf_hi[0]);
-    //   }
-
-    //   $pdf_lo = [];
-
-    //   if (isset($doc->zm_pdf_lo) && isset($doc->zm_pdf_lo[0])) {
-    //     $pdf_lo = json_decode($doc->zm_pdf_lo[0]);
-    //   }
-
-    //   $pubdate = 'n.d.';
-
-    //   if (isset($doc->ss_pubdate) && isset($doc->ss_pubdate)) {
-    //     $pubdate = $doc->ss_pubdate;
-    //   }
-
-    //   $documents[] = [
-    //     'en' => [
-    //       'title' => $doc->ss_title_long,
-    //       'identifier' => $doc->ss_book_identifier,
-    //       'path' => "book/{$doc->ss_book_identifier}/1",
-    //       'noid' => $doc->ss_noid,
-    //       'handle' => $doc->ss_handle,
-    //       'manifest' => $doc->ss_manifest,
-    //       'subjects' => $subjects,
-    //       'pubdate' => $pubdate,
-    //       'pdf' => [
-    //         'hi' => $pdf_hi,
-    //         'lo' => $pdf_lo,
-    //       ],
-    //       'authors' => $authors,
-    //       'partners' => $partners,
-    //       'topics' => $topics,
-    //       'publishers' => $publishers,
-    //       'provider' => $providers,
-    //       'publocation' => $publocation,
-    //     ],
-    //     'ar' => [
-    //       'title' => $doc->ss_ar_title_long,  // ok
-    //       'identifier' => $doc->ss_book_identifier,  // ok
-    //       'path' => "book/{$doc->ss_book_identifier}/1?lang=ar",  // ok
-    //       'noid' => $doc->ss_noid,  // ok
-    //       'handle' => $doc->ss_handle,  // ok
-    //       'manifest' => $doc->ss_manifest,  // ok
-    //       'subjects' => [], // we do not display subjects in ar?
-    //       'pubdate' => $pubdate,  // ok
-    //       'pdf' => [
-    //         'hi' => $pdf_hi,
-    //         'lo' => $pdf_lo,
-    //       ],
-    //       'authors' => $authors_ar,  // ok
-    //       'partners' => $partners_ar,
-    //       'topics' => $topics,
-    //       'publishers' => $publishers,
-    //       'provider' => $providers,
-    //       'publocation' => $ar_publocation,
-    //     ],
-    //   ];
-
-    //   // stop iteration on first loop
-    //   break;
-    // }
+      $documents[] = [
+        'en' => [
+          'title' => $doc->ss_title_long,
+          'identifier' => $doc->ss_book_identifier,
+          'path' => "book/{$doc->ss_book_identifier}/1",
+          'noid' => $doc->ss_noid,
+          'handle' => $doc->ss_handle,
+          'manifest' => $doc->ss_manifest,
+          'subjects' => $subjects,
+          'pubdate' => $pubdate,
+          'pdf' => [
+            'hi' => $pdf_hi,
+            'lo' => $pdf_lo,
+          ],
+          'authors' => $authors,
+          'partners' => $partners,
+          'topics' => $topics,
+          'publishers' => $publishers,
+          'provider' => $providers,
+          'publocation' => $publocation,
+        ],
+        'ar' => [
+          'title' => $doc->ss_ar_title_long,  // ok
+          'identifier' => $doc->ss_book_identifier,  // ok
+          'path' => "book/{$doc->ss_book_identifier}/1?lang=ar",  // ok
+          'noid' => $doc->ss_noid,  // ok
+          'handle' => $doc->ss_handle,  // ok
+          'manifest' => $doc->ss_manifest,  // ok
+          'subjects' => [], // we do not display subjects in ar?
+          'pubdate' => $pubdate,  // ok
+          'pdf' => [
+            'hi' => $pdf_hi,
+            'lo' => $pdf_lo,
+          ],
+          'authors' => $authors_ar,  // ok
+          'partners' => $partners_ar,
+          'topics' => $topics,
+          'publishers' => $publishers,
+          'provider' => $providers,
+          'publocation' => $ar_publocation,
+        ],
+      ];
+    }
 
     return [
-      // 'documents' => $documents,
-      'documents' => [],
-      // 'total' => $total,
-      'total' => [],
+      'documents' => $documents,
+      'total' => $total,
       'rows' => $rows,
       'page' => ($start / $rows) + 1,
     ];
-    // return [];
   }
 
   /**
