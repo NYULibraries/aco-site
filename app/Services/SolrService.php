@@ -151,14 +151,13 @@ class SolrService
     /**
      * FIELD LIST - fl
      * although this is the only fl we add
-     * when adding a sort key solarium will add it as a fieldList
+     * when adding a sort key solarium will add it as a fieldList item too
      */
-    $query->addParam('fl', '*'); // field list: all fields
+    $query->addParam('fl', '*');
 
     /**
      * FILTER QUERY - fq
      * when creating the URL, we put the query in two possible places: the `fq` or the `q`
-     *
      */
 
     // these filter queries always have to happen as of 2026
@@ -202,7 +201,7 @@ class SolrService
 
     /**
      * QUERY q
-     * these only need to be when anyfield is selected in field select
+     * these only need to exist when anyfield is selected in field select
      * q = query is the only thing coming from the Request Object
      */
     if ($fieldSelect == 'q') {
@@ -219,6 +218,8 @@ class SolrService
         $query->setQuery($finalQuery);
       }
     } else {
+      // setting query to * makes all scores be 1.0 removing
+      // matching everything makes all documents the same importance score of 1.0
       $query->setQuery("*");
     }
 
@@ -254,15 +255,15 @@ class SolrService
    */
   public function search(string $fieldSelect = 'q', string $searchString = '*:*', string $scopeIs = 'matches', string $sortField = 'score', string $sortDir = 'desc', int $start = 0, int $rows = 10): array
   {
-    Log::info("SolrService::Search", [
-      "fieldSelect" => $fieldSelect,
-      "searchString" => $searchString,
-      "scopeIs" => $scopeIs,
-      "sortField" => $sortField,
-      "sortDir" => $sortDir,
-      "start" => $start,
-      "rows" => $rows,
-    ]);
+    // Log::info("SolrService::Search", [
+    //   "fieldSelect" => $fieldSelect,
+    //   "scopeIs" => $scopeIs,
+    //   "searchString" => $searchString,
+    //   "sortField" => $sortField,
+    //   "sortDir" => $sortDir,
+    //   "start" => $start,
+    //   "rows" => $rows,
+    // ]);
 
     $BuiltQuery = $this->buildQuery(
       fieldSelect: $fieldSelect,
@@ -274,19 +275,16 @@ class SolrService
       rows: $rows
     );
 
-    // dump($BuiltQuery);
     $resultset = $this->solrClient->select($BuiltQuery);
     $total = $resultset->getNumFound();
 
     // result sets are already iterable, don't convert solarium call to iterator
-    // $docs = iterator_to_array($resultset);
     $docs = $resultset->getDocuments();
 
-    // catcher
+    // catcher for transformed docs
     $documents = [];
 
     // 8. data transformation
-    // foreach ($resultset as $doc) {
     foreach ($docs as $doc) {
 
       $publocation = [];
@@ -395,19 +393,16 @@ class SolrService
       }
 
       $pdf_hi = [];
-
       if (isset($doc->zm_pdf_hi) && isset($doc->zm_pdf_hi[0])) {
         $pdf_hi = json_decode($doc->zm_pdf_hi[0]);
       }
 
       $pdf_lo = [];
-
       if (isset($doc->zm_pdf_lo) && isset($doc->zm_pdf_lo[0])) {
         $pdf_lo = json_decode($doc->zm_pdf_lo[0]);
       }
 
       $pubdate = 'n.d.';
-
       if (isset($doc->ss_pubdate) && isset($doc->ss_pubdate)) {
         $pubdate = $doc->ss_pubdate;
       }
