@@ -24,7 +24,7 @@ Artisan::command(
   function (SolrService $solrService) {
     Log::info("Artisan Command", [
       "fieldSelect" => $this->option('field-select'),
-      "scopeIs" => $this->option('scope'),
+      "scope" => $this->option('scope'),
       "searchString" => $this->argument('searchString'),
       "sortField" => $this->option('sort-field'),
       "sortDir" => $this->option('sort-dir'),
@@ -33,7 +33,7 @@ Artisan::command(
     ]);
     $results = $solrService->search(
       fieldSelect: $this->option('field-select'),
-      scopeIs: $this->option('scope'),
+      scope: $this->option('scope'),
       searchString: $this->argument('searchString'),
       sortField: $this->option('sort-field'),
       sortDir: $this->option('sort-dir'),
