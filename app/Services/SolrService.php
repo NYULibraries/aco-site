@@ -4,10 +4,11 @@ namespace App\Services;
 
 use Solarium\Client;
 use Solarium\QueryType\Select\Query\Query;
-use Illuminate\Support\Facades\Log;
+use Solarium\QueryType\Select\Result\Result as SolariumResult;
 
 class SolrService
 {
+  private const FL_LIST = '*';
   private const BUNDLE = "bundle:dlts_book";
   private const SM_COLLECTION_CODE = "sm_collection_code:aco";
   private const SS_LANGUAGE = "ss_language:en";
@@ -89,10 +90,7 @@ class SolrService
     ],
   ];
 
-  public function __construct(private Client $solrClient)
-  {
-    // this->client = $solrClient;
-  }
+  public function __construct(private Client $solrClient) {}
 
   /**
    * Creates and modifies a Solarium query object according to search params passed
@@ -103,9 +101,9 @@ class SolrService
    * @param int $rows - how many items to display after the start point
    * @param string $fieldSelect - what field the user wants to perform the search on
    * @param string $searchString - the actual search values to use
-   * @param string $scopeIs - how to match the results
+   * @param string $scope - how to match the results <matches, contains all, contains any>
    * @param string $sortField - what field to sort on
-   * @param string $sortDir - what direction to sort
+   * @param string $sortDir - what direction to sort <asc, desc>
    * @return Query - Full Solarium Query object
    */
   public function buildQuery(
@@ -113,69 +111,33 @@ class SolrService
     int $rows,
     string $fieldSelect,
     string $searchString,
-    string $scopeIs,
+    string $scope,
     string $sortField,
     string $sortDir,
   ): Query {
-    /**
-     * Possible combinations:
-     * searchString - whatever sentence the user has
-     * scopeIs - matches, contains all, contains any
-     * sortBy - asc, desc
-     */
-    // title, matches, jibran
-    // fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&
-    // fq=(tks_title_long:"jibran" OR tks_ar_title_long:"jibran")&rows=10&start=0&sort=score desc&q=*
-
-    // title, contains all, jibran
-    // fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en
-    // &fq=((tus_title_long:%22jibran%22%20OR%20ts_title_long:%22jibran%22%20OR%20tusar_title_long:%22jibran%22))&rows=10&start=0&sort=score%20desc&q=*
-
-    // title, contains aany, jibran
-    // fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en
-    // &fq=((tus_title_long:%22jibran%22%20OR%20ts_title_long:%22jibran%22%20OR%20tusar_title_long:%22jibran%22))&rows=10&start=0&sort=score%20desc&q=*
-
-    // select?
-    // wt=json
-    // fl=*
-    // fq=bundle:dlts_book
-    // fq=sm_collection_code:aco
-    // fq=ss_language:en
-    // rows=10
-    // start=0
-    // sort=score%20desc
-    // q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))
 
     $query = $this->solrClient->createSelect();
-
-    /**
-     * FIELD LIST - fl
-     * although this is the only fl we add
-     * when adding a sort key solarium will add it as a fieldList item too
-     */
-    $query->addParam('fl', '*');
-
-    /**
-     * FILTER QUERY - fq
-     * when creating the URL, we put the query in two possible places: the `fq` or the `q`
-     */
-
-    // these filter queries always have to happen as of 2026
-    $query->createFilterQuery('bundle')->setQuery(self::BUNDLE);
-    $query->createFilterQuery('sm_collection_code')->setQuery(self::SM_COLLECTION_CODE);
-    $query->createFilterQuery('ss_language')->setQuery(self::SS_LANGUAGE);
 
     // sanitize the user's input
     $helper = $query->getHelper();
     $sanitizedSearchString = $helper->escapeTerm($searchString);
 
-    // catcher for the final filterquery list
+    // FIELD LIST - fl
+    $query->addParam('fl', self::FL_LIST);
+
+    // FILTER QUERY - fq
+    // these filter queries always have to happen as of 2026
+    $query->createFilterQuery('bundle')->setQuery(self::BUNDLE);
+    $query->createFilterQuery('sm_collection_code')->setQuery(self::SM_COLLECTION_CODE);
+    $query->createFilterQuery('ss_language')->setQuery(self::SS_LANGUAGE);
+
+    // when creating query, we put the users searchInput in two possible places: the `fq` or the `q`
     $fq = [];
     // looping the fieldList to use the wording in the map on our fq
     foreach (self::FIELD_LIST as $key => $map) {
       // skip any actio if the keys don't match
       if ($fieldSelect !== $key) continue;
-      if ($scopeIs === 'matches') {
+      if ($scope === 'matches') {
         // combine the FieldList keywords with the user's input
         $parts = array_map(fn($f) => "$f:\"$sanitizedSearchString\"", $map['match']);
         // flatten those parts
@@ -190,7 +152,7 @@ class SolrService
           $sub = array_map(fn($f) => "$f:\"$w\"", $map['contains']);
           $clauses[] = '(' . implode(' OR ', $sub) . ')';
         }
-        $fq[] = '(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $clauses) . ')';
+        $fq[] = '(' . implode(($scope === 'containsAny') ? ' OR ' : ' AND ', $clauses) . ')';
       }
     }
 
@@ -199,13 +161,9 @@ class SolrService
       $query->createFilterQuery($filter)->setQuery($filter);
     }
 
-    /**
-     * QUERY q
-     * these only need to exist when anyfield is selected in field select
-     * q = query is the only thing coming from the Request Object
-     */
+    // QUERY q
     if ($fieldSelect == 'q') {
-      if ($scopeIs === 'matches') {
+      if ($scope === 'matches') {
         $finalQuery = "(content_und:\"$sanitizedSearchString\" OR content_und_ws:\"$sanitizedSearchString\" OR content_en:\"$sanitizedSearchString\" OR content:\"$sanitizedSearchString\")";
         $query->setQuery($finalQuery);
       } else {
@@ -214,7 +172,7 @@ class SolrService
         foreach ($words as $w) {
           $parts[] = "(content_und:$w OR content_und_ws:$w OR content_en:$w OR content:$w)";
         }
-        $finalQuery = ('(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $parts) . ')');
+        $finalQuery = ('(' . implode(($scope === 'containsAny') ? ' OR ' : ' AND ', $parts) . ')');
         $query->setQuery($finalQuery);
       }
     } else {
@@ -223,68 +181,29 @@ class SolrService
       $query->setQuery("*");
     }
 
-    /**
-     * PAGINATION
-     */
+    // PAGINATION
     $query->setStart($start); // what item to start from (page)
     $query->setRows($rows);  // how many items to show (page size)
 
-    /**
-     * SORT
-     * field
-     * direction
-     */
+    // SORT
     $sortDirec = ($sortDir == 'desc') ? $query::SORT_DESC : $query::SORT_ASC;
     $query->addSort($sortField, $sortDirec);
 
-    $request = $this->solrClient->createRequest($query);
-    $uri = $request->getUri();
     return $query;
   }
 
   /**
-   * Orchestrates the search
-   * new search method, where building the solr query doesn't happen in the same place as excuting it
-   * public function search2(Request $request, string $scopeIs = 'matches', string $sortBy = 'score desc'): array
-   * use the previous YUI implementation for reference https://github.com/NYULibraries/aco-site/blob/main/source/js/search.js
-   * @param string $query
-   * @param string $scope 'matches', 'contains all', 'contains any'
-   * @param string $sortBy 'asc, 'desc'
-   * @param int $start
-   * @param int $rows
+   * Transforms Solarium Result into usable data by our application
+   * @param $resultset - Solarium result from executing a query
+   * @return array - final transformed data
    */
-  public function search(string $fieldSelect = 'q', string $searchString = '*:*', string $scopeIs = 'matches', string $sortField = 'score', string $sortDir = 'desc', int $start = 0, int $rows = 10): array
+  public function transformData(SolariumResult $resultset): array
   {
-    // Log::info("SolrService::Search", [
-    //   "fieldSelect" => $fieldSelect,
-    //   "scopeIs" => $scopeIs,
-    //   "searchString" => $searchString,
-    //   "sortField" => $sortField,
-    //   "sortDir" => $sortDir,
-    //   "start" => $start,
-    //   "rows" => $rows,
-    // ]);
 
-    $BuiltQuery = $this->buildQuery(
-      fieldSelect: $fieldSelect,
-      searchString: $searchString,
-      scopeIs: $scopeIs,
-      sortField: $sortField,
-      sortDir: $sortDir,
-      start: $start,
-      rows: $rows
-    );
-
-    $resultset = $this->solrClient->select($BuiltQuery);
     $total = $resultset->getNumFound();
-
-    // result sets are already iterable, don't convert solarium call to iterator
     $docs = $resultset->getDocuments();
 
-    // catcher for transformed docs
     $documents = [];
-
-    // 8. data transformation
     foreach ($docs as $doc) {
 
       $publocation = [];
@@ -355,9 +274,7 @@ class SolrService
       ];
 
       $partners = [];
-
       $partners_ar = [];
-
       if (isset($doc->zm_partner)) {
         foreach ($doc->zm_partner as $partner) {
           $partner = json_decode($partner);
@@ -451,12 +368,51 @@ class SolrService
       ];
     }
 
+    $rows2 = $resultset->getQuery()->getOption('rows');
+    $start2 = $resultset->getQuery()->getOption('start');
+
     return [
       'documents' => $documents,
       'total' => $total,
-      'rows' => $rows,
-      'page' => ($start / $rows) + 1,
+      'rows' => $rows2,
+      'page' => ($start2 / $rows2) + 1,
     ];
+  }
+
+  /**
+   * Builds the query, executes Solr search, transforms data
+   * use the previous YUI implementation for reference https://github.com/NYULibraries/aco-site/blob/main/source/js/search.js
+   * @param string fieldSelect - the field the user wants to search over
+   * @param string $searchString - what the user is searching
+   * @param string $scope - how well to match the search string <'matches', 'contains all', 'contains any>
+   * @param string $sortField - what field to use as sorting point
+   * @param string $sortDir - direction of sort <'asc, 'desc'>
+   * @param int $start - pagination start
+   * @param int $rows - how many items to paginate
+   */
+  public function search(
+    string $fieldSelect = 'q',
+    string $searchString = '*:*',
+    string $scope = 'matches',
+    string $sortField = 'score',
+    string $sortDir = 'desc',
+    int $start = 0,
+    int $rows = 10
+  ): array {
+    $BuiltQuery = $this->buildQuery(
+      fieldSelect: $fieldSelect,
+      searchString: $searchString,
+      scope: $scope,
+      sortField: $sortField,
+      sortDir: $sortDir,
+      start: $start,
+      rows: $rows
+    );
+
+    $resultset = $this->solrClient->select($BuiltQuery);
+
+    $finalData = $this->transformData($resultset);
+    return $finalData;
   }
 
   /**
@@ -470,7 +426,7 @@ class SolrService
    */
   public function parseSolrUrl(string $url): array
   {
-    // 1. Parse the URL to get the query string (after the ?)
+    // Parse the URL to get the query string (after the ?)
     $queryString = parse_url($url, PHP_URL_QUERY);
 
     if (!$queryString) {
@@ -479,7 +435,7 @@ class SolrService
 
     $result = [];
 
-    // 2. Explode by '&' to get raw key=value pairs
+    // Explode by '&' to get raw key=value pairs
     foreach (explode('&', $queryString) as $part) {
       $parts = explode('=', $part, 2);
 
