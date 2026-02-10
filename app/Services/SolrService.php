@@ -201,11 +201,9 @@ class SolrService
   {
 
     $total = $resultset->getNumFound();
-    $docs = $resultset->getDocuments();
+    $docs = collect($resultset->getDocuments());
 
-    $documents = [];
-    foreach ($docs as $doc) {
-
+    $transformedDocs = $docs->map(function ($doc) {
       $publocation = [];
       if (isset($doc->ss_publocation)) {
         $publocation[] = [
@@ -324,7 +322,7 @@ class SolrService
         $pubdate = $doc->ss_pubdate;
       }
 
-      $documents[] = [
+      return [
         'en' => [
           'title' => $doc->ss_title_long,
           'identifier' => $doc->ss_book_identifier,
@@ -366,13 +364,14 @@ class SolrService
           'publocation' => $ar_publocation,
         ],
       ];
-    }
+    });
 
     $rows2 = $resultset->getQuery()->getOption('rows');
     $start2 = $resultset->getQuery()->getOption('start');
 
     return [
-      'documents' => $documents,
+      // note: not transforming toArray since this is to be used within the Blade templates
+      'documents' => $transformedDocs,
       'total' => $total,
       'rows' => $rows2,
       'page' => ($start2 / $rows2) + 1,
