@@ -246,7 +246,7 @@ class DiscoveryResource extends JsonResource
         if (!isset($this->resource[$field][0])) {
             return null;
         }
-        
+
         $pdfData = $this->safeJsonDecode($this->resource[$field][0]);
 
         if ($pdfData && isset($pdfData['filesize'])) {
@@ -334,7 +334,10 @@ class DiscoveryResource extends JsonResource
         ]];
     }
     /**
-     * Convert file size to correct unit.
+     * Convert file size to correct unit based on intervals of 10^3 (1000)
+     * Appends the correct unit to the converted value.
+     * @param int $bytes File size in bytes
+     * @return string File size with correct unit
      */
     private function convertFileSize(int $bytes): string
     {
