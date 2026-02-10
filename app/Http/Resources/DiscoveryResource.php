@@ -247,7 +247,13 @@ class DiscoveryResource extends JsonResource
             return null;
         }
 
-        return $this->safeJsonDecode($this->resource[$field][0]);
+        $pdfData = $this->safeJsonDecode($this->resource[$field][0]);
+
+        if ($pdfData && isset($pdfData['filesize'])) {
+            $pdfData['filesize'] = $this->convertFileSize($pdfData['filesize']);
+        }
+
+        return $pdfData;
     }
 
     /**
@@ -326,5 +332,29 @@ class DiscoveryResource extends JsonResource
             'label' => $location,
             'path' => $this->buildSearchUrl(['publocation' => $location]),
         ]];
+    }
+    /**
+     * Convert file size to correct unit based on intervals of 10^3 (1000)
+     * Appends the correct unit to the converted value.
+     * @param int $bytes File size in bytes
+     * @return string File size with correct unit
+     */
+    private function convertFileSize(int $bytes): string
+    {
+      $thresh = 1000;
+
+      if (abs($bytes) < $thresh) {
+          return $bytes . ' B';
+      }
+
+      $units = ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+      $u = -1;
+
+      do {
+          $bytes /= $thresh;
+          ++$u;
+      } while (abs($bytes) >= $thresh && $u < count($units) - 1);
+
+      return round($bytes, 1) . ' ' . $units[$u];
     }
 }
