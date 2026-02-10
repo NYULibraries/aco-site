@@ -17,12 +17,19 @@
 
             <div class="aboutinfo">
                 <div class="aboutinfo-links">
-                    <a href="#" dir="ltr" lang="en"
-                        class="aboutinfo-link aboutinfo-link-available"><span></span>About this search</a>
-                    <a href="#" dir="rtl" lang="ar" class="aboutinfo-link aboutinfo-link-available">بخصوص
+                    <a href="#" dir="ltr" lang="en" class="aboutinfo-link aboutinfo-link-available"
+                        data-name="aboutinfo-link" aria-expanded="false"
+                        aria-controls="aboutinfocontent-id"><span></span>About this search</a>
+                    <a href="#" dir="rtl" lang="ar" class="aboutinfo-link aboutinfo-link-available"
+                        data-name="aboutinfo-link" aria-expanded="false" aria-controls="aboutinfocontent-id">بخصوص
                         هذا البحث<span class="arrow-left"></span></a>
                 </div>
-                <div class="about-info-content" style="height:0; overflow:hidden">&nbsp;</div>
+                <div id="aboutinfocontent-id" class="about-info-content" data-name="aboutinfo-content"
+                    style="height:0; overflow:hidden">
+                    <div class="inner">
+                        @include('partials.searchtips')
+                    </div>
+                </div>
             </div>
 
             <div class="select-style sort-select">

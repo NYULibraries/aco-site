@@ -2,25 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Services\FeaturedBooksService;
 use App\Services\ItemCountService;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(ItemCountService $itemCounts, FeaturedBooksService $featuredBooksService)
     {
-      $itemCounts = ItemCountService::getItemCounts();
 
-      $data = [
-        'body_class' => 'front',
-        'appName' => 'Arabic Collections Online',
-        'title' => 'Welcome to My Laravel Site',
-        'message' => 'This text comes from the controller.',
-        'frontCount' => number_format($itemCounts['volumes']),
-        'subjectCount' => number_format($itemCounts['subjects']),
-      ];
+        $itemCounts = $itemCounts->getItemCounts();
 
-      return view('pages.home', $data);
+        $featured = $featuredBooksService->featured(
+            config('featured.books'),
+            rows: 9,
+        );
+
+        $documents = $featured->toArray();
+
+        $data = [
+            'body_class' => 'front',
+            'appName' => 'Arabic Collections Online',
+            'frontCount' => number_format($itemCounts['volumes']),
+            'subjectCount' => number_format($itemCounts['subjects']),
+            'documents' => $documents['documents'] ?? [],
+        ];
+
+        return view('pages.home', $data);
 
     }
 }

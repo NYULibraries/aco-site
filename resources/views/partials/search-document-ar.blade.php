@@ -34,7 +34,7 @@
     </div>
 
     {{-- <div class="md_publisher">
-        <span class="md_label">الناشر:</span>
+
         @if (empty($item['sm_ar_publisher']))
           n.p.
         @else
@@ -42,8 +42,22 @@
             <a class="md_publisher" href="{{ url('/search/?publisher={{ $publisher }}"><span>{{ $publisher }}</span></a>
           @endforeach
         @endif
-      </div> --}}
+    </div> --}}
 
+    <div class="md_publisher">
+        <span class="md_label">الناشر:</span>
+        @if (!empty($item['publishers']))
+            @foreach ($item['publishers'] as $publisher)
+                @if (!empty($publisher))
+                    <a class="md_publisher" href="{{ url($publisher['path']) }}">
+                        <span>{{ $publisher['label'] }}</span>
+                    </a>
+                @else
+                    n.p.
+                @endif
+            @endforeach
+        @endif
+    </div>
 
     <div class="md_publocation">
         <span class="md_label">مكان النشر:</span>
@@ -71,5 +85,4 @@
             @endforeach
         </div>
     @endif
-
 </div>

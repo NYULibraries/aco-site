@@ -2,6 +2,7 @@
     <div class="md_title">
         <a href="{{ url($item['path']) }}">{{ $item['title'] }}</a>
     </div>
+
     <div class="md_authors">
         <span class="md_label">Author:</span>
         @if (empty($item['authors']))
@@ -14,6 +15,7 @@
             @endforeach
         @endif
     </div>
+
     <div class="md_category">
         <span class="md_label">Category:</span>
         @if (empty($item['topics']))
@@ -26,19 +28,22 @@
             @endforeach
         @endif
     </div>
+
     <div class="md_publisher">
         <span class="md_label">Publisher:</span>
         @if (!empty($item['publishers']))
             @foreach ($item['publishers'] as $publisher)
                 @if (!empty($publisher))
-                    <span><a class="md_publisher"
-                            href="{{ url($publisher['path']) }}">{{ $publisher['label'] }}</a></span>
+                    <span>
+                        <a class="md_publisher" href="{{ url($publisher['path']) }}">{{ $publisher['label'] }}</a>
+                    </span>
                 @else
                     n.p.
                 @endif
             @endforeach
         @endif
     </div>
+
     <div class="md_pubplace">
         <span class="md_label">Place of Publication:</span>
         @if (empty($item['publocation']))
@@ -51,27 +56,30 @@
             @endforeach
         @endif
     </div>
+
     @if (!empty($item['pubdate']))
         <div class="md_pubdate">
             <span class="md_label">Date of Publication:</span>
             {{ $item['pubdate'] }}
         </div>
     @endif
+
     @if (!empty($item['subjects']))
         <div class="md_subjects">
-            <span class="md_label">Subject:</span>
+            <span class="md_label">Subjects:</span>
             @foreach ($item['subjects'] as $subject)
                 <span class="one_subject">
-                    <a class="md_subject" href="{{ url($subject['path']) }}">{{ $subject['name'] }}</a>
+                    <a class="md_subject" href="{{ url($subject['path']) }}">{{ $subject['label'] }}</a>
                 </span>
             @endforeach
         </div>
     @endif
+
     @if (!empty($item['partners']))
         <div class="md_partner">
             <span class="md_label">Provider:</span>
             @foreach ($item['partners'] as $partner)
-                <a class="md_provider" href="{{ url($partner['path']) }}">{{ $partner['name'] }}</a>
+                <a class="md_provider" href="{{ url($partner['path']) }}">{{ $partner['label'] }}</a>
             @endforeach
         </div>
     @endif
