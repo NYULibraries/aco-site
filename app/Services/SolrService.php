@@ -12,9 +12,9 @@ use App\Http\Resources\DiscoveryResource;
 class SolrService
 {
   private const FL_LIST = '*';
-  private const BUNDLE = "bundle:dlts_book";
-  private const SM_COLLECTION_CODE = "sm_collection_code:aco";
-  private const SS_LANGUAGE = "ss_language:en";
+  private const BUNDLE = 'bundle:dlts_book';
+  private const SM_COLLECTION_CODE = 'sm_collection_code:aco';
+  private const SS_LANGUAGE = 'ss_language:en';
   // these are all the possible fields to add to the filter query
   // we will use the request options to trim these down to use on our query
   private const FIELD_LIST = [
@@ -167,13 +167,13 @@ class SolrService
     // QUERY q
     if ($fieldSelect == 'q') {
       if ($scope === 'matches') {
-        $finalQuery = "(content_und:\"$sanitizedSearchString\" OR content_und_ws:\"$sanitizedSearchString\" OR content_en:\"$sanitizedSearchString\" OR content:\"$sanitizedSearchString\")";
+        $finalQuery = "(content_und:\"{$sanitizedSearchString}\" OR content_und_ws:\"{$sanitizedSearchString}\" OR content_en:\"{$sanitizedSearchString}\" OR content:\"{$sanitizedSearchString}\")";
         $query->setQuery($finalQuery);
       } else {
         $words = preg_split('/\s+/', $sanitizedSearchString);
         $parts = [];
         foreach ($words as $w) {
-          $parts[] = "(content_und:$w OR content_und_ws:$w OR content_en:$w OR content:$w)";
+          $parts[] = "(content_und:{$w} OR content_und_ws:{$w} OR content_en:{$w} OR content:{$w})";
         }
         $finalQuery = ('(' . implode(($scope === 'containsAny') ? ' OR ' : ' AND ', $parts) . ')');
         $query->setQuery($finalQuery);
@@ -181,7 +181,7 @@ class SolrService
     } else {
       // setting query to * makes all scores be 1.0 removing
       // matching everything makes all documents the same importance score of 1.0
-      $query->setQuery("*");
+      $query->setQuery('*');
     }
 
     // PAGINATION
