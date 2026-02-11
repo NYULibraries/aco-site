@@ -1,7 +1,6 @@
 <?php
 
 use App\Services\SolrService;
-use Solarium\Client;
 
 describe('SolrService BuilQuery', function () {
 
@@ -24,7 +23,7 @@ describe('SolrService BuilQuery', function () {
     $rows = $builderParams['rows'];
 
     // base URL to compare
-    $parsedURL = $solrService->parseSolrUrl($oldURL);
+    $parsedURL = parseSolrUrl($oldURL);
 
     // call the buildQuery method
     $request = $solrService->buildQuery(
