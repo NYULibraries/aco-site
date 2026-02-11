@@ -15,7 +15,11 @@ class BookController extends Controller
     $page = $request->route('page');
 
     // Gets the book identifier metadata by taking the identifier, params, cache bool
-    $result = $featuredBooksService->byIdentifiers([$identifier], 1, false)->toArray();
+    $result = $featuredBooksService->byIdentifiers([$identifier], 1, true)->toArray();
+
+    if (empty($result) || empty($result['documents'])) {
+      abort(404, 'Book not found');
+    }
 
     $enTitle = $result['documents'][0]['en']['title'] ?? 'Book Viewer';
     $arTitle = $result['documents'][0]['ar']['title'] ?? 'Book Viewer';

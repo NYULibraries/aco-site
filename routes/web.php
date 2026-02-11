@@ -23,4 +23,6 @@ Route::get('/search', [ SearchController::class, 'search' ])->name('search.index
 
 Route::get('/searchcollections', [ SearchController::class, 'searchcollection' ])->name('searchcollections.index');
 
+Route::redirect('/book/{identifier}', '/book/{identifier}/1', 301);
+
 Route::get('/book/{identifier}/{page}', [ BookController::class, 'index' ])->name('book.index');

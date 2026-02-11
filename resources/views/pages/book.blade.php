@@ -7,7 +7,7 @@
 @section('content')
     <iframe role="main" title="Book Viewer: ACO" class="widget book" id="book" name="book" data-name="book"
         mozallowfullscreen="" webkitallowfullscreen="" style="height: 701px; opacity: 0;" data-identifier="{{ $identifier }}"
-        src="https://sites.dlib.nyu.edu/viewer/books/{{ $identifier }}/{{ $page }}?embed=1&amp;lang=en">
+        src="{{ config('viewer.endpoint') }}/books/{{ $identifier }}/{{ $page }}?embed=1&amp;lang=en">
     </iframe>
     {{-- Loader animation --}}
     <div class="bubblingG">
