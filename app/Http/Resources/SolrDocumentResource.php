@@ -111,20 +111,14 @@ class SolrDocumentResource extends JsonResource
       }
     }
 
-    $pdf_hi = [];
-    if (isset($doc->zm_pdf_hi) && isset($doc->zm_pdf_hi[0])) {
-      $pdf_hi = json_decode($doc->zm_pdf_hi[0]);
-    }
+    $pdf_hi = isset($doc->zm_pdf_hi) && isset($doc->zm_pdf_hi[0]) ?
+      json_decode($doc->zm_pdf_hi[0]) : [];
 
-    $pdf_lo = [];
-    if (isset($doc->zm_pdf_lo) && isset($doc->zm_pdf_lo[0])) {
-      $pdf_lo = json_decode($doc->zm_pdf_lo[0]);
-    }
+    $pdf_lo = isset($doc->zm_pdf_lo) && isset($doc->zm_pdf_lo[0]) ?
+      json_decode($doc->zm_pdf_lo[0]) : [];
 
-    $pubdate = 'n.d.';
-    if (isset($doc->ss_pubdate) && isset($doc->ss_pubdate)) {
-      $pubdate = $doc->ss_pubdate;
-    }
+    $pubdate = isset($doc->ss_pubdate) && isset($doc->ss_pubdate) ?
+      $doc->ss_pubdate : 'n.d.';
 
     return [
       'en' => [
