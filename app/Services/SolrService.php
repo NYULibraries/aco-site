@@ -165,7 +165,7 @@ class SolrService
     }
 
     // QUERY q
-    if ($fieldSelect == 'q') {
+    if ($fieldSelect === 'q') {
       if ($scope === 'matches') {
         $finalQuery = "(content_und:\"{$sanitizedSearchString}\" OR content_und_ws:\"{$sanitizedSearchString}\" OR content_en:\"{$sanitizedSearchString}\" OR content:\"{$sanitizedSearchString}\")";
         $query->setQuery($finalQuery);
@@ -189,7 +189,7 @@ class SolrService
     $query->setRows($rows);  // how many items to show (page size)
 
     // SORT
-    $sortDirec = ($sortDir == 'desc') ? $query::SORT_DESC : $query::SORT_ASC;
+    $sortDirec = ($sortDir === 'desc') ? $query::SORT_DESC : $query::SORT_ASC;
     $query->addSort($sortField, $sortDirec);
 
     return $query;
