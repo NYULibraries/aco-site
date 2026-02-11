@@ -22,11 +22,11 @@ window.addEventListener("DOMContentLoaded", () => {
   const searchTipsAccordion = () => {
     // en and ar links
     const aboutInfoLinks = document.querySelectorAll(
-      '[data-name="aboutinfo-link"]'
+      '[data-name="aboutinfo-link"]',
     );
 
     const aboutContent = document.querySelector(
-      "[data-name='aboutinfo-content']"
+      "[data-name='aboutinfo-content']",
     );
 
     aboutInfoLinks.forEach((link) => {
@@ -36,13 +36,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
         // remove available class during transition
         aboutInfoLinks.forEach((l) =>
-          l.classList.remove("aboutinfo-link-available")
+          l.classList.remove("aboutinfo-link-available"),
         );
 
         if (isOpen) {
           aboutInfoLinks.forEach((l) => l.classList.remove("open"));
           aboutInfoLinks.forEach((l) =>
-            l.setAttribute("aria-expanded", "false")
+            l.setAttribute("aria-expanded", "false"),
           );
 
           aboutContent.classList.remove("open");
@@ -57,7 +57,7 @@ window.addEventListener("DOMContentLoaded", () => {
         } else {
           aboutInfoLinks.forEach((l) => l.classList.add("open"));
           aboutInfoLinks.forEach((l) =>
-            l.setAttribute("aria-expanded", "true")
+            l.setAttribute("aria-expanded", "true"),
           );
 
           aboutContent.classList.add("open");
@@ -66,13 +66,26 @@ window.addEventListener("DOMContentLoaded", () => {
           // readd available class after transition
           setTimeout(() => {
             aboutInfoLinks.forEach((l) =>
-              l.classList.add("aboutinfo-link-available")
+              l.classList.add("aboutinfo-link-available"),
             );
           }, 500);
         }
       });
     });
   };
+
+  // bookpage - iframe remove loader animation for .bubblingG
+  const bookIframeRemoveLoader = () => {
+    const bookIframe = document.querySelector("iframe[data-name='book']");
+    if (bookIframe) {
+      bookIframe.addEventListener("load", function () {
+        document.body.classList.remove("io-loading");
+        bookIframe.style.opacity = "1";
+      });
+    }
+  };
+
   mobileNavHamburger();
   searchTipsAccordion();
+  bookIframeRemoveLoader();
 });
