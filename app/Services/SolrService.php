@@ -4,9 +4,7 @@ namespace App\Services;
 
 use Solarium\Client;
 use Solarium\QueryType\Select\Query\Query;
-use Solarium\QueryType\Select\Result\Result as SolariumResult;
 use App\Http\Resources\DiscoveryCollection;
-use App\Http\Resources\DiscoveryResource;
 
 
 class SolrService
@@ -196,24 +194,6 @@ class SolrService
   }
 
   /**
-   * Transforms Solarium Result into usable data by our application
-   * uses Laravel Resources
-   * @param $resultset - Solarium result from executing a query
-   * @return array - final transformed data
-   */
-  public function transformData(SolariumResult $resultset): array
-  {
-    $rows = $resultset->getQuery()->getOption('rows');
-    $start = $resultset->getQuery()->getOption('start');
-    $numFound = $resultset->getNumFound();
-
-    $rawDocs = collect($resultset->getDocuments());
-    $resourceDocs = DiscoveryResource::collection($rawDocs);
-    $collection = new DiscoveryCollection($resourceDocs, ['numFound' => $numFound, 'start' => $start, 'rows' => $rows]);
-    return $collection->resolve();
-  }
-
-  /**
    * Builds the query, executes Solr search, transforms data
    * use the previous YUI implementation for reference https://github.com/NYULibraries/aco-site/blob/main/source/js/search.js
    * @param string fieldSelect - the field the user wants to search over
@@ -232,7 +212,7 @@ class SolrService
     string $sortDir = 'desc',
     int $start = 0,
     int $rows = 10
-  ): array {
+  ): DiscoveryCollection {
     $BuiltQuery = $this->buildQuery(
       fieldSelect: $fieldSelect,
       searchString: $searchString,
@@ -244,8 +224,13 @@ class SolrService
     );
 
     $resultset = $this->solrClient->select($BuiltQuery);
-
-    $finalData = $this->transformData($resultset);
-    return $finalData;
+    return new DiscoveryCollection(
+      collect($resultset->getDocuments() ?? []),
+      [
+        'numFound' => $resultset->getNumFound() ?? 0,
+        'start' => $resultset->getQuery()->getStart() ?? $start,
+        'rows' => $resultset->getQuery()->getRows() ?? $rows,
+      ]
+    );
   }
 }
