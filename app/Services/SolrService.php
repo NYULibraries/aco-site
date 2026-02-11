@@ -5,8 +5,8 @@ namespace App\Services;
 use Solarium\Client;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result as SolariumResult;
-use App\Http\Resources\SolrCollectionResource;
-use App\Http\Resources\SolrDocumentResource;
+use App\Http\Resources\DiscoveryCollection;
+use App\Http\Resources\DiscoveryResource;
 
 
 class SolrService
@@ -203,10 +203,13 @@ class SolrService
    */
   public function transformData(SolariumResult $resultset): array
   {
+    $rows = $resultset->getQuery()->getOption('rows');
+    $start = $resultset->getQuery()->getOption('start');
+    $numFound = $resultset->getNumFound();
+
     $rawDocs = collect($resultset->getDocuments());
-    $resourceDocs = SolrDocumentResource::collection($rawDocs);
-    $collection = new SolrCollectionResource($resourceDocs, $resultset);
-    // resolving as plain array for blade templates
+    $resourceDocs = DiscoveryResource::collection($rawDocs);
+    $collection = new DiscoveryCollection($resourceDocs, ['numFound' => $numFound, 'start' => $start, 'rows' => $rows]);
     return $collection->resolve();
   }
 
