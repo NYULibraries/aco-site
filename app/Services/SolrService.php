@@ -6,7 +6,6 @@ use Solarium\Client;
 use Solarium\QueryType\Select\Query\Query;
 use App\Http\Resources\DiscoveryCollection;
 
-
 class SolrService
 {
   private const FL_LIST = '*';
@@ -120,8 +119,7 @@ class SolrService
     $query = $this->solrClient->createSelect();
 
     // sanitize the user's input
-    $helper = $query->getHelper();
-    $sanitizedSearchString = $helper->escapeTerm($searchString);
+    $sanitizedSearchString = $query->getHelper()->escapeTerm($searchString);
 
     // FIELD LIST - fl
     $query->addParam('fl', self::FL_LIST);
@@ -134,52 +132,57 @@ class SolrService
 
     // when creating query, we put the users searchInput in two possible places: the `fq` or the `q`
     $fq = [];
-    // looping the fieldList to use the wording in the map on our fq
     foreach (self::FIELD_LIST as $key => $map) {
-      // skip any actio if the keys don't match
+      // skip any action if the keys don't match
       if ($fieldSelect !== $key) continue;
-      if ($scope === 'matches') {
-        // combine the FieldList keywords with the user's input
-        $parts = array_map(fn($f) => "$f:\"$sanitizedSearchString\"", $map['match']);
-        // flatten those parts
-        $fq[] = '(' . implode(' OR ', $parts) . ')';
-      } else {
-        // split the user's query into words
-        $words = preg_split('/\s+/', $sanitizedSearchString);
-        // catcher for keywords
-        $clauses = [];
-        // each words of the users input
-        foreach ($words as $w) {
-          $sub = array_map(fn($f) => "$f:\"$w\"", $map['contains']);
-          $clauses[] = '(' . implode(' OR ', $sub) . ')';
-        }
-        $fq[] = '(' . implode(($scope === 'containsAny') ? ' OR ' : ' AND ', $clauses) . ')';
-      }
+      match ($scope) {
+        'matches' => (function () use (&$fq, $map, $sanitizedSearchString) {
+          // combine the FieldList keywords with the user's input
+          $parts = array_map(fn($f) => "$f:\"$sanitizedSearchString\"", $map['match']);
+          // flatten those parts
+          $fq[] = '(' . implode(' OR ', $parts) . ')';
+        })(),
+        'containsAll', 'containsAny' => (function () use (&$fq, $map, $sanitizedSearchString, $scope) {
+          // split the user's query into words
+          $words = preg_split('/\s+/', $sanitizedSearchString);
+          // catcher for keywords
+          $clauses = [];
+          // each words of the users input
+          foreach ($words as $w) {
+            $sub = array_map(fn($f) => "$f:\"$w\"", $map['contains']);
+            $clauses[] = '(' . implode(' OR ', $sub) . ')';
+          }
+          $glue = ($scope === 'containsAny') ? ' OR ' : ' AND ';
+          $fq[] = '(' . implode($glue, $clauses) . ')';
+        })(),
+        default => throw new \InvalidArgumentException("Invalid scope: {$scope}"),
+      };
     }
-
-    // set filter queries
+    // set filter queries that we just created
     foreach ($fq as $filter) {
       $query->createFilterQuery($filter)->setQuery($filter);
     }
 
-    // QUERY q
-    if ($fieldSelect === 'q') {
-      if ($scope === 'matches') {
-        $finalQuery = "(content_und:\"{$sanitizedSearchString}\" OR content_und_ws:\"{$sanitizedSearchString}\" OR content_en:\"{$sanitizedSearchString}\" OR content:\"{$sanitizedSearchString}\")";
-        $query->setQuery($finalQuery);
-      } else {
-        $words = preg_split('/\s+/', $sanitizedSearchString);
-        $parts = [];
-        foreach ($words as $w) {
-          $parts[] = "(content_und:{$w} OR content_und_ws:{$w} OR content_en:{$w} OR content:{$w})";
-        }
-        $finalQuery = ('(' . implode(($scope === 'containsAny') ? ' OR ' : ' AND ', $parts) . ')');
-        $query->setQuery($finalQuery);
-      }
-    } else {
-      // setting query to * makes all scores be 1.0 removing
+    if ($fieldSelect !== 'q') {
       // matching everything makes all documents the same importance score of 1.0
       $query->setQuery('*');
+    } else {
+      $queryFields = ['content_und', 'content_und_ws', 'content_en', 'content'];
+      $buildTermQuery = function (string $term) use ($queryFields) {
+        $parts = array_map(fn($f) => "$f:$term", $queryFields);
+        return '(' . implode(' OR ', $parts) . ')';
+      };
+      $finalQuery = match ($scope) {
+        'matches' => $buildTermQuery($sanitizedSearchString),
+        'containsAny', 'containsAll' => (function () use ($sanitizedSearchString, $scope, $buildTermQuery) {
+          $words = preg_split('/\s+/', $sanitizedSearchString);
+          $parts = array_map(fn($w) => $buildTermQuery($w), $words);
+          $glue = ($scope === 'containsAny') ? ' OR ' : ' AND ';
+          return ('(' . implode($glue, $parts) . ')');
+        })(),
+        default => throw new \InvalidArgumentException("Invalid scope: {$scope}"),
+      };
+      $query->setQuery($finalQuery);
     }
 
     // PAGINATION
