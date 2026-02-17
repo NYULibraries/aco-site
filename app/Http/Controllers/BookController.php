@@ -12,24 +12,37 @@ class BookController extends Controller
   {
 
     $identifier = $request->route('identifier');
+
     $page = $request->route('page');
 
     // Gets the book identifier metadata by taking the identifier, params, cache bool
     $result = $featuredBooksService->byIdentifiers([$identifier], 1, true)->toArray();
+        $request->mergeIfMissing(['lang' => 'en']);
+
+    $validated = $request->validate([
+        'lang' => 'required|in:en,ar',
+    ]);
+
+    $lang = $validated['lang'];
+
+    $pageCount = $result['documents'][0][$lang]['page_count'][0];
 
     if (empty($result) || empty($result['documents'])) {
       abort(404, 'Book not found');
     }
 
-    $enTitle = $result['documents'][0]['en']['title'] ?? 'Book Viewer';
-    $arTitle = $result['documents'][0]['ar']['title'] ?? 'Book Viewer';
+    if ($page > $pageCount || $page < 1 || empty($pageCount) || !is_numeric($page)) {
+      abort(404, 'Page not found');
+    }
+
+    $pageTitle = $result['documents'][0][$lang]['title'] ?? 'Book Viewer';
 
     $data = [
-      'pagetitle' => $enTitle,
-      'pagetitle_ar' => $arTitle,
+      'pagetitle' => $pageTitle,
       'body_class' => 'book io-loading',
       'identifier' => $identifier,
       'page' => $page,
+      'lang' => $lang,
     ];
 
     return view('pages.book', $data);
