@@ -1,17 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-use Solarium\Client;
 use Illuminate\View\View;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
-use App\Providers\SolrServiceProvider;
 use App\Services\SolrService;
+use App\Http\Resources\DiscoveryCollection;
+use App\Http\Requests\SearchRequest;
 
 class SearchController extends Controller
 {
 
-  public function searchcollection(Request $request, Client $solrClient): View
+  public function searchcollection(): View
   {
 
         $data = [
@@ -61,93 +61,120 @@ class SearchController extends Controller
 
   }
 
-  public function search(Request $request, SolrService $solrService): View
-  {
+   public function search(SearchRequest $request, SolrService $solrService): View
+   {
 
-    $scope = $request->query('scope', 'containsAny');
+      $searchData = $request->getSearchData();
 
-    $results = $solrService->search($request, $scope);
+      $page = $request->getPage();
 
-    $documents = $results['documents'];
+      $scope = $request->getScope();
 
-    $total = $results['total'];
+      $rows = $request->getRows();
 
-    $rows = $results['rows'];
+      $start = ($page - 1) * $rows;
 
-    $page = $results['page'];
+      $sortDir = $request->getSortDir();
 
-    // Calculate Solr start offset
-    $start = ($page - 1) * $rows;
+      if (empty($searchData)) {
+          return view('pages.search', $this->buildView());
+      }
 
-    $q = $request->query('q', '');
+      $sortField = $request->getSortField();
 
-    $paginator = new LengthAwarePaginator(
-        $documents,
-        $total,
-        $rows,
-        $page,
-        [
-            'path' => $request->url(),
-            'query' => $request->query(),
-        ]
-    );
+      $results = $solrService->search(
+          fieldSelect: $searchData['field'],
+          searchString: $searchData['value'],
+          scope: $scope,
+          sortField: $sortField,
+          sortDir: $sortDir,
+          start: $start,
+          rows: $rows,
+      );
 
-    $data = [
-      'pagetitle' => 'Search Results',
-      'body_class' => 'search',
-      'title' => [
-        'en' => [
-          'label' => 'Search Results',
-          'language' => [
-            'code' => 'en',
-            'dir' => 'ltr'
-          ]
-        ],
-        'ar' => [
-          'label' => 'نتائج البحث',
-          'language' => [
-            'code' => 'ar',
-            'dir' => 'rtl'
-          ]
-        ],
-      ],
-      'content' => [
-        'body' => [
+     return view('pages.search', $this->buildViewData($results, $request, $searchData));
+
+   }
+
+   private function getBilingualTitle(): array
+   {
+       return [
           'en' => [
-            'language' => [
-              'class' => 'col col-l',
-              'lang' => 'en',
-              'dir' => 'ltr',
-            ],
-            'label' => 'Search tips in Arabic transliteration',
-            'content' => '',
+              'label' => 'Search Results',
+              'language' => ['code' => 'en', 'dir' => 'ltr']
           ],
           'ar' => [
-            'language' => [
-              'class' => 'col col-r',
-              'lang' => 'ar',
-              'dir' => 'rtl'
-            ],
-            'label' => 'إرشادات للبحث لدى استخدام الترجمة الصوتية بالحروف اللاتينية',
-            'content' => '',
+              'label' => 'نتائج البحث',
+              'language' => ['code' => 'ar', 'dir' => 'rtl']
           ],
-        ],
-      ],
-      'limit' => $rows,
-      'docslength' => count($documents),
-      'numfound' => $total,
-      'total' => $total,
-      'query' => '',
-      'documents' => $documents,
-      'currentPage' => $page,
-      'totalPages' => ceil($total / $rows),
-      'paginator' => $paginator,
-      'startIndex' => $total > 0 ? $start + 1 : 0,
-      'endIndex' => min($start + count($documents), $total),
-    ];
+      ];
+  }
 
-    return view('pages.search', $data);
+  private function getBilingualContent(): array
+  {
+      return [
+          'body' => [
+              'en' => [
+                  'language' => ['class' => 'col col-l', 'lang' => 'en', 'dir' => 'ltr'],
+                  'label' => 'Search tips in Arabic transliteration',
+                  'content' => '',
+              ],
+              'ar' => [
+                  'language' => ['class' => 'col col-r', 'lang' => 'ar', 'dir' => 'rtl'],
+                  'label' => 'إرشادات للبحث لدى استخدام الترجمة الصوتية بالحروف اللاتينية',
+                  'content' => '',
+              ],
+          ],
+      ];
+  }
 
+  private function buildView(): array
+  {
+
+      return [
+          'pagetitle' => "Search",
+          'body_class' => 'search',
+          'title' => $this->getBilingualTitle(),
+          'content' => $this->getBilingualContent(),
+      ];
+  }
+
+  private function buildViewData(DiscoveryCollection $results, Request $request, $searchData): array
+  {
+      $data = $results->toArray();
+
+      $documents = $data['documents'];
+
+      $total = $data['total'];
+
+      $rows = $data['rows'];
+
+      $page = $data['page'];
+
+      $start = $data['start'];
+
+      $paginator = new LengthAwarePaginator($documents, $total, $rows, $page,
+          [
+              'path' => $request->url(),
+              'query' => $request->query(),
+          ]
+      );
+
+      return [
+          'pagetitle' => "Search Results for {$searchData['value']}",
+          'body_class' => 'search',
+          'title' => $this->getBilingualTitle(),
+          'content' => $this->getBilingualContent(),
+          'query' => $searchData['value'],
+          'documents' => $documents,
+          'paginator' => $paginator,
+          'total' => $total,
+          'limit' => $rows,
+          'currentPage' => $page,
+          'totalPages' => $total > 0 ? (int) ceil($total / $rows) : 0,
+          'startIndex' => $total > 0 ? $start + 1 : 0,
+          'endIndex' => min($start + count($documents), $total),
+      ];
   }
 
 }

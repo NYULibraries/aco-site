@@ -3,7 +3,7 @@
         <div class="fieldset group1">
             <div class="select-hold">
                 <div class="select-style">
-                    <select class="field-select" aria-label="Attribute">
+                    <select name="scope" class="field-select" aria-label="Attribute">
                         <option value="q">Any Field / أي مُصطلح</option>
                         <option value="title">Title / العنوان</option>
                         <option value="author">Author / الكاتب</option>
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="input-hold">
-                <input value="{{ $form['q'] }}" class="q1" aria-label="Search" name="q" type="text"
+                <input @if(!empty($query)) value="{{ $query }}" @endif class="q1" aria-label="Search" name="q" type="text"
                     placeholder="search  /  ابحث" title="Enter the terms you wish to search for.">
             </div>
             <div class="submit-hold">
