@@ -62,7 +62,7 @@ class DiscoveryResource extends JsonResource
     private const FIELD_PROVIDER = 'sm_provider_label';
     private const FIELD_PDF_HI = 'zm_pdf_hi';
     private const FIELD_PDF_LO = 'zm_pdf_lo';
-    private const FIELD_SEQUENCE_COUNT = 'itm_field_sequence_count';
+    private const FIELD_SEQUENCE_COUNT = 'its_field_sequence_count';
     /**
      * Default values.
      */

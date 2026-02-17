@@ -25,7 +25,7 @@ class BookController extends Controller
 
     $lang = $validated['lang'];
 
-    $sequenceCount = $result['documents'][0][$lang]['sequence_count'][0];
+    $sequenceCount = $result['documents'][0][$lang]['sequence_count'];
 
     if (empty($result) || empty($result['documents'])) {
       abort(404, 'Book not found');
