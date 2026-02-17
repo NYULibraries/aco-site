@@ -62,7 +62,7 @@ class DiscoveryResource extends JsonResource
     private const FIELD_PROVIDER = 'sm_provider_label';
     private const FIELD_PDF_HI = 'zm_pdf_hi';
     private const FIELD_PDF_LO = 'zm_pdf_lo';
-    private const FIELD_PAGE_COUNT = 'itm_field_page_count';
+    private const FIELD_SEQUENCE_COUNT = 'itm_field_sequence_count';
     /**
      * Default values.
      */
@@ -101,7 +101,7 @@ class DiscoveryResource extends JsonResource
             'publishers' => $this->transformSimpleItems(self::FIELD_EN_PUBLISHER, 'publisher'),
             'provider' => $this->transformSimpleItems(self::FIELD_PROVIDER, 'provider'),
             'publocation' => $this->transformPublocation(self::FIELD_EN_PUBLOCATION),
-            'page_count' => $this->getField(self::FIELD_PAGE_COUNT, self::DEFAULT_NOT_AVAILABLE),
+            'sequence_count' => $this->getField(self::FIELD_SEQUENCE_COUNT, self::DEFAULT_NOT_AVAILABLE),
         ];
     }
 
@@ -126,7 +126,7 @@ class DiscoveryResource extends JsonResource
             'publishers' => $this->transformSimpleItems(self::FIELD_AR_PUBLISHER, 'publisher'),
             'provider' => $this->transformSimpleItems(self::FIELD_PROVIDER, 'provider'),
             'publocation' => $this->transformPublocation(self::FIELD_AR_PUBLOCATION),
-            'page_count' => $this->getField(self::FIELD_PAGE_COUNT, self::DEFAULT_NOT_AVAILABLE),
+            'sequence_count' => $this->getField(self::FIELD_SEQUENCE_COUNT, self::DEFAULT_NOT_AVAILABLE),
         ];
     }
 
