@@ -3,381 +3,237 @@
 namespace App\Services;
 
 use Solarium\Client;
-use Illuminate\Http\Request;
+use Solarium\QueryType\Select\Query\Query;
+use App\Http\Resources\DiscoveryCollection;
 
 class SolrService
 {
-    public function __construct(private Client $solrClient) {}
+  private const FL_LIST = '*';
+  private const BUNDLE = 'bundle:dlts_book';
+  private const SM_COLLECTION_CODE = 'sm_collection_code:aco';
+  private const SS_LANGUAGE = 'ss_language:en';
+  // these are all the possible fields to add to the filter query
+  // we will use the request options to trim these down to use on our query
+  private const FIELD_LIST = [
+    'title' => [
+      'match' => [
+        'tks_title_long',
+        'tks_ar_title_long',
+      ],
+      'contains' => [
+        'tus_title_long',
+        'ts_title_long',
+        'tusar_title_long',
+      ],
+    ],
+    'author' => [
+      'match' => [
+        'tkm_author',
+        'tkm_ar_author',
+      ],
+      'contains' => [
+        'tum_author',
+        'tm_author',
+        'tumar_author',
+      ]
+    ],
+    'pubplace'  => [
+      'match' => [
+        'tks_publocation',
+        'tks_ar_publocation',
+      ],
+      'contains' => [
+        'tus_publocation',
+        'ts_publocation',
+        'tusar_publocation',
+      ],
+    ],
+    'publisher' => [
+      'match' => [
+        'tkm_publisher',
+        'tkm_ar_publisher',
+      ],
+      'contains' => [
+        'tum_publisher',
+        'tm_publisher',
+        'tumar_publisher',
+      ],
+    ],
+    'category' => [
+      'match' => [
+        'tkm_topic',
+        'tkm_ar_topic',
+      ],
+      'contains' => [
+        'tum_topic',
+        'tm_topic',
+        'tumar_topic',
+      ],
+    ],
+    'provider' => [
+      'match' => [
+        'tkm_provider_label',
+      ],
+      'contains' => [
+        'tum_provider_label',
+        'tm_provider_label',
+      ],
+    ],
+    'subject' => [
+      'match' => [
+        'tkm_subject_label',
+      ],
+      'contains' => [
+        'tum_subject_label',
+        'tm_subject_label',
+      ],
+    ],
+  ];
 
-    public function search(Request $request, string $scopeIs = 'matches', string $sortBy = 'score desc'): array
-    {
+  public function __construct(private Client $solrClient) {}
 
-      // title, matches, jibran
-      // fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&
-      // fq=(tks_title_long:"jibran" OR tks_ar_title_long:"jibran")&rows=10&start=0&sort=score desc&q=*
+  /**
+   * Creates and modifies a Solarium query object according to search params passed
+   *
+   * previous YUI implementation for reference https://github.com/NYULibraries/aco-site/blob/main/source/js/search.js
+   *
+   * @param int $start - pagination start point for solr
+   * @param int $rows - how many items to display after the start point
+   * @param string $fieldSelect - what field the user wants to perform the search on
+   * @param string $searchString - the actual search values to use
+   * @param string $scope - how to match the results <matches, contains all, contains any>
+   * @param string $sortField - what field to sort on
+   * @param string $sortDir - what direction to sort <asc, desc>
+   * @return Query - Full Solarium Query object
+   */
+  public function buildQuery(
+    int $start,
+    int $rows,
+    string $fieldSelect,
+    string $searchString,
+    string $scope,
+    string $sortField,
+    string $sortDir,
+  ): Query {
 
-      // title, contains all, jibran
-      // fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en
-      // &fq=((tus_title_long:%22jibran%22%20OR%20ts_title_long:%22jibran%22%20OR%20tusar_title_long:%22jibran%22))&rows=10&start=0&sort=score%20desc&q=*
+    $query = $this->solrClient->createSelect();
 
-      // title, contains aany, jibran
-      // fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en
-      // &fq=((tus_title_long:%22jibran%22%20OR%20ts_title_long:%22jibran%22%20OR%20tusar_title_long:%22jibran%22))&rows=10&start=0&sort=score%20desc&q=*
+    // sanitize the user's input
+    $sanitizedSearchString = $query->getHelper()->escapeTerm($searchString);
 
-      // select?
-      // wt=json
-      // fl=*
-      // fq=bundle:dlts_book
-      // fq=sm_collection_code:aco
-      // fq=ss_language:en
-      // rows=10
-      // start=0
-      // sort=score%20desc
-      // q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))
+    // FIELD LIST - fl
+    $query->addParam('fl', self::FL_LIST);
 
-      $options = $request->all();
+    // FILTER QUERY - fq
+    // these filter queries always have to happen as of 2026
+    $query->createFilterQuery('bundle')->setQuery(self::BUNDLE);
+    $query->createFilterQuery('sm_collection_code')->setQuery(self::SM_COLLECTION_CODE);
+    $query->createFilterQuery('ss_language')->setQuery(self::SS_LANGUAGE);
 
-      $fq = [];
-
-      $fields = [
-        'title' => [
-          'match' => [
-            'tks_title_long',
-            'tks_ar_title_long',
-          ],
-          'contains' => [
-            'tus_title_long',
-            'ts_title_long',
-            'tusar_title_long',
-          ],
-        ],
-        'author' => [
-          'match' => [
-            'tkm_author',
-            'tkm_ar_author',
-          ],
-          'contains' => [
-            'tum_author',
-            'tm_author',
-            'tumar_author',
-          ]
-        ],
-        'pubplace'  => [
-          'match' => [
-            'tks_publocation',
-            'tks_ar_publocation',
-          ],
-          'contains' => [
-            'tus_publocation',
-            'ts_publocation',
-            'tusar_publocation',
-          ],
-        ],
-        'publisher' => [
-          'match' => [
-            'tkm_publisher',
-            'tkm_ar_publisher',
-          ],
-          'contains' => [
-            'tum_publisher',
-            'tm_publisher',
-            'tumar_publisher',
-          ],
-        ],
-        'category' => [
-          'match' => [
-            'tkm_topic',
-            'tkm_ar_topic',
-          ],
-          'contains' => [
-            'tum_topic',
-            'tm_topic',
-            'tumar_topic',
-          ],
-        ],
-        'provider' => [
-          'match' => [
-            'tkm_provider_label',
-          ],
-          'contains' => [
-            'tum_provider_label',
-            'tm_provider_label',
-          ],
-        ],
-        'subject' => [
-          'match' => [
-            'tkm_subject_label',
-          ],
-          'contains' => [
-            'tum_subject_label',
-            'tm_subject_label',
-          ],
-        ],
-      ];
-
-      foreach ($fields as $key => $map) {
-
-        if (empty($options[$key])) continue;
-
-        $value = trim($options[$key]);
-
-        if ($scopeIs === 'matches') {
-
-          $parts = array_map(fn($f) => "$f:\"$value\"", $map['match']);
-
+    // when creating query, we put the users searchInput in two possible places: the `fq` or the `q`
+    $fq = [];
+    foreach (self::FIELD_LIST as $key => $map) {
+      // skip any action if the keys don't match
+      if ($fieldSelect !== $key) continue;
+      match ($scope) {
+        'matches' => (function () use (&$fq, $map, $sanitizedSearchString) {
+          // combine the FieldList keywords with the user's input
+          $parts = array_map(fn($f) => "$f:\"$sanitizedSearchString\"", $map['match']);
+          // flatten those parts
           $fq[] = '(' . implode(' OR ', $parts) . ')';
-
-        }
-        else {
-
-          $words = preg_split('/\s+/', $value);
-
+        })(),
+        'containsAll', 'containsAny' => (function () use (&$fq, $map, $sanitizedSearchString, $scope) {
+          // split the user's query into words
+          $words = preg_split('/\s+/', $sanitizedSearchString);
+          // catcher for keywords
           $clauses = [];
-
+          // each words of the users input
           foreach ($words as $w) {
-
             $sub = array_map(fn($f) => "$f:\"$w\"", $map['contains']);
-
             $clauses[] = '(' . implode(' OR ', $sub) . ')';
-
           }
-
-          $fq[] = '(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $clauses) . ')';
-
-        }
-
-      }
-
-      $query = $this->solrClient->createSelect();
-
-      $query->setQuery('*:*');
-
-      foreach ($fq as $filter) {
-        $query->createFilterQuery(md5($filter))->setQuery($filter);
-      }
-
-      if (!empty($options['q'])) {
-
-        $q = trim($options['q']);
-
-        if ($scopeIs === 'matches') {
-          $query->setQuery("(content_und:\"$q\" OR content_und_ws:\"$q\" OR content_en:\"$q\" OR content:\"$q\")");
-        } else {
-          $words = preg_split('/\s+/', $q);
-          $parts = [];
-          foreach ($words as $w) {
-            $parts[] = "(content_und:$w OR content_und_ws:$w OR content_en:$w OR content:$w)";
-          }
-          $query->setQuery('(' . implode(($scopeIs === 'containsAny') ? ' OR ' : ' AND ', $parts) . ')');
-        }
-
-      }
-
-      $start = $options['start'] ?? 0;
-
-      $rows  = $options['rpp'] ?? 10;
-
-      $query->setStart($start);
-
-      $query->setRows($rows);
-
-      $request = $this->solrClient->createRequest($query);
-
-      $uri = $request->getUri();
-
-      $resultset = $this->solrClient->select($query);
-
-      $total = $resultset->getNumFound();
-
-      $docs = iterator_to_array($resultset);
-
-      $documents = [];
-
-      foreach ($docs as $doc) {
-
-        $publocation = [];
-
-        if (isset($doc->ss_publocation)) {
-          $publocation[] = [
-            'label' => $doc->ss_publocation,
-            'path' => "search/?provider={$doc->ss_publocation}",
-          ];
-        }
-
-        $ar_publocation = [];
-
-        if (isset($doc->ss_ar_publocation)) {
-          $ar_publocation[] = [
-            'label' => $doc->ss_ar_publocation,
-            'path' => "search/?provider={$doc->ss_ar_publocation}",
-          ];
-        }
-
-        $providers = [];
-
-        if (isset($doc->sm_provider_label)) {
-          foreach ($doc->sm_provider_label as $provider) {
-            $providers[] = [
-              'label' => $provider,
-              'path' => "search/?provider={$provider}",
-            ];
-          }
-        }
-
-        $publishers = [];
-
-        if (isset($doc->sm_publisher)) {
-          foreach ($doc->sm_publisher as $publisher) {
-            $publishers[] = [
-              'label' => $publisher,
-              'path' => "search/?publisher={$publisher}",
-            ];
-          }
-        }
-
-        $topics = [];
-
-        if (isset($doc->sm_field_topic)) {
-          foreach ($doc->sm_field_topic as $topic) {
-            $topics[] = [
-              'label' => $topic,
-              'path' => "search?category={$topic}&scope=matches",
-            ];
-          }
-        }
-
-        $subjects = [];
-
-        if (isset($doc->zm_subject)) {
-          foreach ($doc->zm_subject as $subject) {
-            $subject = json_decode($subject);
-            $subject->path = "search?subject={$subject->name}";
-            $subjects[] = $subject;
-          }
-        }
-
-        $partners_map = [
-          'Arabic collections online' => 'المجموعات العربية على الانترنت',
-          'New York University Libraries' => 'مكتبات جامعة نيويورك',
-          'Princeton University Libraries' => 'مكتبات جامعة برينستون',
-          'Cornell University Libraries' => 'مكتبات جامعة كورنيل',
-          'Columbia University Libraries' => 'مكتبات جامعة كولومبيا',
-          'American University of Beirut' => 'الجامعة الاميركية في بيروت',
-          'American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
-          'The American University in Cairo' => 'الجامعة الاميركية بالقاهرة',
-          'United Arab Emirates National Archives' => 'الامارات العربية المتحدة - الارشيف الوطني',
-        ];
-
-        $partners = [];
-
-        $partners_ar = [];
-
-        if (isset($doc->zm_partner)) {
-          foreach ($doc->zm_partner as $partner) {
-            $partner = json_decode($partner);
-            $partner->path = "search?partner={$partner->name}";
-            $partners[] = $partner;
-            if (isset($partners_map[$partner->name])) {
-              $partners_ar[] = [
-                'label' => $partners_map[$partner->name],
-                'path' => "search?partner={$partner->name}",
-              ];
-            }
-          }
-        }
-
-        $authors = [];
-
-        if (isset($doc->sm_author)) {
-          foreach ($doc->sm_author as $author) {
-            $authors[] = [
-              'label' => $author,
-              'path' => "search?subject={$author}",
-            ];
-          }
-        }
-
-        $authors_ar = [];
-
-        if (isset($doc->sm_ar_author)) {
-          foreach ($doc->sm_ar_author as $author) {
-            $authors_ar[] = [
-              'label' => $author,
-              'path' => "search?subject={$author}",
-            ];
-          }
-        }
-
-        $pdf_hi = [];
-
-        if (isset($doc->zm_pdf_hi) && isset($doc->zm_pdf_hi[0])) {
-          $pdf_hi = json_decode($doc->zm_pdf_hi[0]);
-        }
-
-        $pdf_lo = [];
-
-        if (isset($doc->zm_pdf_lo) && isset($doc->zm_pdf_lo[0])) {
-          $pdf_lo = json_decode($doc->zm_pdf_lo[0]);
-        }
-
-      $pubdate = 'n.d.';
-
-      if (isset($doc->ss_pubdate) && isset($doc->ss_pubdate)) {
-        $pubdate = $doc->ss_pubdate;
-      }
-
-      $documents[] = [
-        'en' => [
-          'title' => $doc->ss_title_long,
-          'identifier' => $doc->ss_book_identifier,
-          'path' => "book/{$doc->ss_book_identifier}/1",
-          'noid' => $doc->ss_noid,
-          'handle' => $doc->ss_handle,
-          'manifest' => $doc->ss_manifest,
-          'subjects' => $subjects,
-          'pubdate' => $pubdate,
-          'pdf' => [
-            'hi' => $pdf_hi,
-            'lo' => $pdf_lo,
-          ],
-          'authors' => $authors,
-          'partners' => $partners,
-          'topics' => $topics,
-          'publishers' => $publishers,
-          'provider' => $providers,
-          'publocation' => $publocation,
-        ],
-        'ar' => [
-          'title' => $doc->ss_ar_title_long,  // ok
-          'identifier' => $doc->ss_book_identifier,  // ok
-          'path' => "book/{$doc->ss_book_identifier}/1?lang=ar",  // ok
-          'noid' => $doc->ss_noid,  // ok
-          'handle' => $doc->ss_handle,  // ok
-          'manifest' => $doc->ss_manifest,  // ok
-          'subjects' => [], // we do not display subjects in ar?
-          'pubdate' => $pubdate,  // ok
-          'pdf' => [
-            'hi' => $pdf_hi,
-            'lo' => $pdf_lo,
-          ],
-          'authors' => $authors_ar,  // ok
-          'partners' => $partners_ar,
-          'topics' => $topics,
-          'publishers' => $publishers,
-          'provider' => $providers,
-          'publocation' => $ar_publocation,
-        ],
-      ];
-
+          $glue = ($scope === 'containsAny') ? ' OR ' : ' AND ';
+          $fq[] = '(' . implode($glue, $clauses) . ')';
+        })(),
+        default => throw new \InvalidArgumentException("Invalid scope: {$scope}"),
+      };
+    }
+    // set filter queries that we just created
+    foreach ($fq as $filter) {
+      $query->createFilterQuery($filter)->setQuery($filter);
     }
 
-    return [
-      'documents' => $documents,
-      'total' => $total,
-      'rows' => $rows,
-      'page' => ($start / $rows) + 1,
-    ];
+    if ($fieldSelect !== 'q') {
+      // matching everything makes all documents the same importance score of 1.0
+      $query->setQuery('*');
+    } else {
+      $queryFields = ['content_und', 'content_und_ws', 'content_en', 'content'];
+      $buildTermQuery = function (string $term) use ($queryFields) {
+        $parts = array_map(fn($f) => "$f:$term", $queryFields);
+        return '(' . implode(' OR ', $parts) . ')';
+      };
+      $finalQuery = match ($scope) {
+        'matches' => $buildTermQuery($sanitizedSearchString),
+        'containsAny', 'containsAll' => (function () use ($sanitizedSearchString, $scope, $buildTermQuery) {
+          $words = preg_split('/\s+/', $sanitizedSearchString);
+          $parts = array_map(fn($w) => $buildTermQuery($w), $words);
+          $glue = ($scope === 'containsAny') ? ' OR ' : ' AND ';
+          return ('(' . implode($glue, $parts) . ')');
+        })(),
+        default => throw new \InvalidArgumentException("Invalid scope: {$scope}"),
+      };
+      $query->setQuery($finalQuery);
+    }
 
+    // PAGINATION
+    $query->setStart($start); // what item to start from (page)
+    $query->setRows($rows);  // how many items to show (page size)
+
+    // SORT
+    $sortDirec = ($sortDir === 'desc') ? $query::SORT_DESC : $query::SORT_ASC;
+    $query->addSort($sortField, $sortDirec);
+
+    return $query;
   }
 
+  /**
+   * Builds the query, executes Solr search, transforms data
+   * use the previous YUI implementation for reference https://github.com/NYULibraries/aco-site/blob/main/source/js/search.js
+   * @param string fieldSelect - the field the user wants to search over
+   * @param string $searchString - what the user is searching
+   * @param string $scope - how well to match the search string <'matches', 'contains all', 'contains any>
+   * @param string $sortField - what field to use as sorting point
+   * @param string $sortDir - direction of sort <'asc, 'desc'>
+   * @param int $start - pagination start
+   * @param int $rows - how many items to paginate
+   */
+  public function search(
+    string $fieldSelect = 'q',
+    string $searchString = '*:*',
+    string $scope = 'matches',
+    string $sortField = 'score',
+    string $sortDir = 'desc',
+    int $start = 0,
+    int $rows = 10
+  ): DiscoveryCollection {
+    $BuiltQuery = $this->buildQuery(
+      fieldSelect: $fieldSelect,
+      searchString: $searchString,
+      scope: $scope,
+      sortField: $sortField,
+      sortDir: $sortDir,
+      start: $start,
+      rows: $rows
+    );
+
+    $resultset = $this->solrClient->select($BuiltQuery);
+    return new DiscoveryCollection(
+      collect($resultset->getDocuments() ?? []),
+      [
+        'numFound' => $resultset->getNumFound() ?? 0,
+        'start' => $resultset->getQuery()->getStart() ?? $start,
+        'rows' => $resultset->getQuery()->getRows() ?? $rows,
+      ]
+    );
+  }
 }
