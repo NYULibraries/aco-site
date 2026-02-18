@@ -8,9 +8,8 @@
 
 @section('content')
     <iframe role="main" title="Book Viewer: ACO" class="widget book" id="book" name="book" data-name="book"
-        mozallowfullscreen="" webkitallowfullscreen="" style="height: 701px; opacity: 0;" data-identifier="{{ $identifier }}"
-        data-sourceurl="{{ config('viewer.endpoint') }}"
-        data-script="{ &quot;js&quot; : [ &quot;crossframe.min.js&quot;, &quot;book.min.js&quot; ] }"
+        allowfullscreen mozallowfullscreen webkitallowfullscreen style="height: 701px; opacity: 0;"
+        data-identifier="{{ $identifier }}" data-sourceurl="{{ config('viewer.endpoint') }}"
         src="{{ config('viewer.endpoint') }}/books/{{ $identifier }}/{{ $page }}?embed=1&amp;lang={{ $lang }}">
     </iframe>
     {{-- Loader animation --}}
@@ -20,3 +19,7 @@
         <span id="bubblingG_3"></span>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/book.js') }}"></script>
+@endpush

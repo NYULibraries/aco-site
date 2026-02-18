@@ -25,11 +25,11 @@ class BookController extends Controller
 
     $lang = $validated['lang'];
 
-    $sequenceCount = $result['documents'][0][$lang]['sequence_count'];
-
     if (empty($result) || empty($result['documents'])) {
       abort(404, 'Book not found');
     }
+
+    $sequenceCount = $result['documents'][0][$lang]['sequence_count'];
 
     if ($page > $sequenceCount || $page < 1 || empty($sequenceCount) || !is_numeric($page)) {
       abort(404, 'Page not found');

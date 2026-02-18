@@ -68,6 +68,7 @@ class DiscoveryResource extends JsonResource
      */
     private const DEFAULT_NOT_AVAILABLE = 'N/A';
     private const DEFAULT_NO_DATE = 'n.d.';
+    private const DEFAULT_NO_INTEGER = 0;
 
     /**
      * Transform the resource into an array.
@@ -101,7 +102,7 @@ class DiscoveryResource extends JsonResource
             'publishers' => $this->transformSimpleItems(self::FIELD_EN_PUBLISHER, 'publisher'),
             'provider' => $this->transformSimpleItems(self::FIELD_PROVIDER, 'provider'),
             'publocation' => $this->transformPublocation(self::FIELD_EN_PUBLOCATION),
-            'sequence_count' => $this->getField(self::FIELD_SEQUENCE_COUNT, self::DEFAULT_NOT_AVAILABLE),
+            'sequence_count' => $this->getField(self::FIELD_SEQUENCE_COUNT, self::DEFAULT_NO_INTEGER),
         ];
     }
 
