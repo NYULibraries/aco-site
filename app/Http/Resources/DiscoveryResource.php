@@ -62,12 +62,13 @@ class DiscoveryResource extends JsonResource
     private const FIELD_PROVIDER = 'sm_provider_label';
     private const FIELD_PDF_HI = 'zm_pdf_hi';
     private const FIELD_PDF_LO = 'zm_pdf_lo';
-
+    private const FIELD_SEQUENCE_COUNT = 'its_field_sequence_count';
     /**
      * Default values.
      */
     private const DEFAULT_NOT_AVAILABLE = 'N/A';
     private const DEFAULT_NO_DATE = 'n.d.';
+    private const DEFAULT_NO_INTEGER = 0;
 
     /**
      * Transform the resource into an array.
@@ -101,6 +102,7 @@ class DiscoveryResource extends JsonResource
             'publishers' => $this->transformSimpleItems(self::FIELD_EN_PUBLISHER, 'publisher'),
             'provider' => $this->transformSimpleItems(self::FIELD_PROVIDER, 'provider'),
             'publocation' => $this->transformPublocation(self::FIELD_EN_PUBLOCATION),
+            'sequence_count' => $this->getField(self::FIELD_SEQUENCE_COUNT, self::DEFAULT_NO_INTEGER),
         ];
     }
 
@@ -125,6 +127,7 @@ class DiscoveryResource extends JsonResource
             'publishers' => $this->transformSimpleItems(self::FIELD_AR_PUBLISHER, 'publisher'),
             'provider' => $this->transformSimpleItems(self::FIELD_PROVIDER, 'provider'),
             'publocation' => $this->transformPublocation(self::FIELD_AR_PUBLOCATION),
+            'sequence_count' => $this->getField(self::FIELD_SEQUENCE_COUNT, self::DEFAULT_NOT_AVAILABLE),
         ];
     }
 

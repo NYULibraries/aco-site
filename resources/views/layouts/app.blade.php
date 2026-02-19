@@ -8,7 +8,10 @@
 <body class="@yield('body_class')">
     @include('partials.header')
     @yield('content')
-    @include('partials.footer')
+    @if (!View::hasSection('no_footer'))
+        @include('partials.footer')
+    @endif
+    @stack('scripts')
 </body>
 
 </html>

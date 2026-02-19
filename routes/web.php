@@ -7,6 +7,7 @@ use App\Http\Controllers\BrowseByCategoryController;
 use App\Http\Controllers\BrowseController;
 use App\Http\Controllers\ResourcesController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\BookController;
 
 Route::get('/', [ HomeController::class, 'index' ])->name('home.index');
 
@@ -21,3 +22,7 @@ Route::get('/resources', [ ResourcesController::class, 'index' ])->name('resourc
 Route::get('/search', [ SearchController::class, 'search' ])->name('search.index');
 
 Route::get('/searchcollections', [ SearchController::class, 'searchcollection' ])->name('searchcollections.index');
+
+Route::redirect('/book/{identifier}', '/book/{identifier}/1', 301);
+
+Route::get('/book/{identifier}/{page}', [ BookController::class, 'index' ])->name('book.index');
