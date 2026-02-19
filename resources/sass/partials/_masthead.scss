@@ -1,8 +1,11 @@
+@use "../bootstrap/mixins/vendor-prefixes";
+@use "../bootstrap/variables";
+
 .header-wrapper {
   background-color: #000066;
   color: #fff;
-  @include box-shadow(0px 0px 10px 5px rgba(110, 102, 93, 0.3));
-  @include box-shadow(0px 0px 10px 5px $item-border-color);
+  @include vendor-prefixes.box-shadow(0px 0px 10px 5px rgba(110, 102, 93, 0.3));
+  @include vendor-prefixes.box-shadow(0px 0px 10px 5px variables.$item-border-color);
   width: 100%;
   overflow: auto;
   background-image: url('@assets/bg_pattern008.svg');
@@ -34,7 +37,7 @@
   }
 
 
-  @media (min-width: $grid-float-breakpoint-max) {
+  @media (min-width: variables.$grid-float-breakpoint-max) {
     // full width, horizontally arranged
     padding-top: 20px;
     padding-bottom: 20px;
@@ -76,11 +79,11 @@
       font-weight: 300;
       text-transform: uppercase;
 
-      @media (max-width: $screen-xs) {
+      @media (max-width: variables.$screen-xs) {
         font-size: 1.3rem;
       }
 
-      @media (min-width: $grid-float-breakpoint) {
+      @media (min-width: variables.$grid-float-breakpoint) {
         font-size: 1.5rem;
         line-height: 1;
         // allow centered flower
@@ -96,7 +99,7 @@
     &[lang="ar"] {
 
       /* tweaking the baseline */
-      @media (min-width: $grid-float-breakpoint) {
+      @media (min-width: variables.$grid-float-breakpoint) {
         margin-bottom: -3px;
       }
 
@@ -106,11 +109,11 @@
         font-weight: normal;
         font-size: 1.4rem;
 
-        @media (max-width: $screen-xs) {
+        @media (max-width: variables.$screen-xs) {
           font-size: 1.3rem;
         }
 
-        @media (min-width: $grid-float-breakpoint) {
+        @media (min-width: variables.$grid-float-breakpoint) {
           // full size
           // allow centered flower
           padding-left: 40px;
