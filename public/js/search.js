@@ -12,8 +12,10 @@ window.addEventListener("DOMContentLoaded", () => {
       const scopeValue = scopeSelect.value;
       const textValue = searchInput?.value.trim();
 
-      if (!textValue) return;
-      // TODO: the live site isnt using removequerydiacritics
+      if (!textValue) {
+        window.location.href = "/searchcollections";
+        return;
+      } // TODO: the live site isnt using removequerydiacritics
       // const normalizedTextValue = removeQueryDiacritics(textValue);
       const normalizedTextValue = textValue;
 
