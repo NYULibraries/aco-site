@@ -1,4 +1,75 @@
 window.addEventListener("DOMContentLoaded", () => {
+  // Takes the values from the field, scope , and input to query viewer params
+  function searchFormAggregateSubmit() {
+    const form = document.querySelector('form.advanced[role="search"]');
+    if (!form) return;
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const fieldSelect = form?.querySelector("select.field-select");
+      const scopeSelect = form?.querySelector("select.scope-select");
+      const searchInput = form?.querySelector('input[type="text"]');
+      const fieldValue = fieldSelect.value;
+      const scopeValue = scopeSelect.value;
+      const textValue = searchInput?.value.trim();
+
+      if (!textValue) return;
+      // TODO: the live site isnt using removequerydiacritics
+      // const normalizedTextValue = removeQueryDiacritics(textValue);
+      const normalizedTextValue = textValue;
+
+      if (!fieldSelect || !scopeSelect || !searchInput) return;
+      if (!fieldValue || !scopeValue || !normalizedTextValue) return;
+
+      // if input is empty, redirect to searchcollections
+      if (normalizedTextValue === "") {
+        window.location.href = "/searchcollections";
+      }
+      const params = new URLSearchParams({
+        [fieldValue]: normalizedTextValue,
+        scope: scopeValue,
+      });
+      window.location.href = `/search?${params.toString()}`;
+    });
+  }
+
+  function filterResults() {
+    const filterRowsPerPage = document.getElementById("rpp-select-el");
+    const filterByParam = document.getElementById("sort-select-el");
+
+    if (!filterRowsPerPage || !filterByParam) return;
+
+    const currentUrl = new URL(window.location.href);
+
+    // on load set the select to the current rows
+    const currentRows = currentUrl.searchParams.get("rpp");
+    if (currentRows) {
+      filterRowsPerPage.value = currentRows;
+    }
+
+    // on load set the select to the sort param and remove the dir
+    const currentParam = currentUrl.searchParams.get("sort");
+    if (currentParam) {
+      const [field] = currentParam.split(" ");
+      filterByParam.value = field;
+    }
+
+    filterRowsPerPage.addEventListener("change", (e) => {
+      const options = e.target.selectedOptions[0];
+      const value = options.value;
+      currentUrl.searchParams.set("rpp", value);
+      window.location.href = currentUrl;
+    });
+
+    filterByParam.addEventListener("change", (e) => {
+      const options = e.target.selectedOptions[0];
+      // default to asc if no sortDir
+      const dir = options.dataset.sortDir || "asc";
+      const value = options.value;
+      currentUrl.searchParams.set("sort", `${value} ${dir}`);
+      window.location.href = currentUrl;
+    });
+  }
+
   // search tips accordion
   const searchTipsAccordion = () => {
     // en and ar links
@@ -56,4 +127,8 @@ window.addEventListener("DOMContentLoaded", () => {
   };
 
   searchTipsAccordion();
+  searchFormAggregateSubmit();
+  filterResults();
 });
+
+// TODO: inputs with a space fails - solrservice bug

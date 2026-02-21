@@ -40,3 +40,8 @@
         @endif
     </main>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/util/removeQueryDiacritics.js') }}"></script>
+    <script src="{{ asset('js/search.js') }}"></script>
+@endpush
