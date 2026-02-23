@@ -37,21 +37,29 @@
                 </div>
                 <div class="select-style sort-select">
                     <select id="sort-select-el" aria-label="Sorting Criteria">
-                        <option data-sort-dir="desc" value="score">Relevance / فرز حسب</option>
-                        <option data-sort-dir="asc" value="tks_title_long">Title in English / العنوان بالانجليزية</option>
-                        <option data-sort-dir="asc" value="tks_ar_title_long">Title in Arabic / العنوان بالعربية</option>
-                        <option data-sort-dir="asc" value="iass_pubyear">Date of Publication / تاريخ النشر</option>
-                        <option data-sort-dir="asc" value="tks_publocation">Place in English / بلد النشر بالانجليزية
+                        <option data-sort-dir="desc" value="score" @if ($currentSort === 'score') selected @endif>
+                            Relevance / فرز حسب</option>
+                        <option data-sort-dir="asc" value="tks_title_long"
+                            @if ($currentSort === 'tks_title_long') selected @endif>Title in English / العنوان بالانجليزية
                         </option>
-                        <option data-sort-dir="asc" value="tks_ar_publocation">Place in Arabic / بلد النشر بالعربية</option>
-                        <option data-sort-dir="desc" value="ds_created">Recently added / وضِعت مؤخراً</option>
+                        <option data-sort-dir="asc" value="tks_ar_title_long"
+                            @if ($currentSort === 'tks_ar_title_long') selected @endif>Title in Arabic / العنوان بالعربية</option>
+                        <option data-sort-dir="asc" value="iass_pubyear" @if ($currentSort === 'iass_pubyear') selected @endif>
+                            Date of Publication / تاريخ النشر</option>
+                        <option data-sort-dir="asc" value="tks_publocation"
+                            @if ($currentSort === 'tks_publocation') selected @endif>Place in English / بلد النشر بالانجليزية
+                        </option>
+                        <option data-sort-dir="asc" value="tks_ar_publocation"
+                            @if ($currentSort === 'tks_ar_publocation') selected @endif>Place in Arabic / بلد النشر بالعربية</option>
+                        <option data-sort-dir="desc" value="ds_created" @if ($currentSort === 'ds_created') selected @endif>
+                            Recently added / وضِعت مؤخراً</option>
                     </select>
                 </div>
                 <div class="select-style rpp-select">
                     <select id="rpp-select-el" aria-label="Number of Results Per Page">
-                        <option value="10" selected>10 per page</option>
-                        <option value="20">20 per page</option>
-                        <option value="40">40 per page</option>
+                        <option value="10" @if ($currentRows === 10) selected @endif>10 per page</option>
+                        <option value="20" @if ($currentRows === 20) selected @endif>20 per page</option>
+                        <option value="40" @if ($currentRows === 40) selected @endif>40 per page</option>
                     </select>
                 </div>
                 @if (!empty($query) && !empty($total) && !empty($startIndex) && !empty($endIndex))

@@ -15,9 +15,9 @@ window.addEventListener("DOMContentLoaded", () => {
       if (!textValue) {
         window.location.href = "/searchcollections";
         return;
-      } // TODO: the live site isnt using removequerydiacritics
-      // const normalizedTextValue = removeQueryDiacritics(textValue);
-      const normalizedTextValue = textValue;
+      }
+      // uses removequerydiacritics to remove accents and special chars
+      const normalizedTextValue = removeQueryDiacritics(textValue);
 
       if (!fieldSelect || !scopeSelect || !searchInput) return;
       if (!fieldValue || !scopeValue || !normalizedTextValue) return;
@@ -41,19 +41,6 @@ window.addEventListener("DOMContentLoaded", () => {
     if (!filterRowsPerPage || !filterByParam) return;
 
     const currentUrl = new URL(window.location.href);
-
-    // on load set the select to the current rows
-    const currentRows = currentUrl.searchParams.get("rpp");
-    if (currentRows) {
-      filterRowsPerPage.value = currentRows;
-    }
-
-    // on load set the select to the sort param and remove the dir
-    const currentParam = currentUrl.searchParams.get("sort");
-    if (currentParam) {
-      const [field] = currentParam.split(" ");
-      filterByParam.value = field;
-    }
 
     filterRowsPerPage.addEventListener("change", (e) => {
       const options = e.target.selectedOptions[0];
@@ -133,4 +120,3 @@ window.addEventListener("DOMContentLoaded", () => {
   filterResults();
 });
 
-// TODO: inputs with a space fails - solrservice bug
