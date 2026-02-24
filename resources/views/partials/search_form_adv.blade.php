@@ -4,21 +4,21 @@
             <div class="select-hold">
                 <div class="select-style">
                     <select name="scope" class="field-select" aria-label="Attribute">
-                        <option value="q" @if ($currentField === 'q') selected @endif>Any Field / أي مُصطلح
+                        <option value="q" @selected(($currentField ?? 'q') === 'q')>Any Field / أي مُصطلح
                         </option>
-                        <option value="title" @if ($currentField === 'title') selected @endif>Title / العنوان
+                        <option value="title" @selected(($currentField ?? 'q') === 'title')>Title / العنوان
                         </option>
-                        <option value="author" @if ($currentField === 'author') selected @endif>Author / الكاتب
+                        <option value="author" @selected(($currentField ?? 'q') === 'author')>Author / الكاتب
                         </option>
-                        <option value="category" @if ($currentField === 'category') selected @endif>Category / فئة
+                        <option value="category" @selected(($currentField ?? 'q') === 'category')>Category / فئة
                             الموضوع</option>
-                        <option value="publisher" @if ($currentField === 'publisher') selected @endif>Publisher / الناشر
+                        <option value="publisher" @selected(($currentField ?? 'q') === 'publisher')>Publisher / الناشر
                         </option>
-                        <option value="pubplace" @if ($currentField === 'pubplace') selected @endif>Place of Publication
+                        <option value="pubplace" @selected(($currentField ?? 'q') === 'pubplace')>Place of Publication
                             / مكان النشر</option>
-                        <option value="provider" @if ($currentField === 'provider') selected @endif>Provider / الشريك
+                        <option value="provider" @selected(($currentField ?? 'q') === 'provider')>Provider / الشريك
                         </option>
-                        <option value="subject" @if ($currentField === 'subject') selected @endif>Subject / الموضوع
+                        <option value="subject" @selected(($currentField ?? 'q') === 'subject')>Subject / الموضوع
                         </option>
                     </select>
                 </div>
