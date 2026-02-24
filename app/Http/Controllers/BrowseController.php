@@ -71,7 +71,7 @@ class BrowseController extends Controller
             'startIndex' => $total > 0 ? $start + 1 : 0,
             'endIndex' => min($start + count($documents), $total),
             'currentRows' => $request->getRows(),
-            'currentSort' => $request->getSort(),
+            'currentSort' => $request->getSortField(),
         ];
     }
 }
