@@ -139,7 +139,7 @@ class SearchController extends Controller
       ];
   }
 
-  private function buildViewData(DiscoveryCollection $results, Request $request, $searchData): array
+  private function buildViewData(DiscoveryCollection $results, SearchRequest $request, $searchData): array
   {
       $data = $results->toArray();
 
@@ -174,6 +174,9 @@ class SearchController extends Controller
           'totalPages' => $total > 0 ? (int) ceil($total / $rows) : 0,
           'startIndex' => $total > 0 ? $start + 1 : 0,
           'endIndex' => min($start + count($documents), $total),
+          'currentField' => $searchData['field'],
+          'currentRows' => $request->getRows(),
+          'currentSort' => $request->getSort(),
       ];
   }
 

@@ -16,9 +16,9 @@
       padding: $padding-base-vertical $padding-base-horizontal;
       line-height: $line-height-base;
       text-decoration: none;
-      color: $pagination-color;
-      background-color: $pagination-bg;
-      border: 1px solid $pagination-border;
+      color: #3f3494;
+      background-color: #fcf7f0;
+      border: 1px solid #ddd;
       margin-left: -1px;
     }
     &:first-child {
@@ -40,8 +40,8 @@
   > li > span {
     &:hover,
     &:focus {
-      color: $pagination-hover-color;
-      background-color: $pagination-hover-bg;
+      // color: $pagination-hover-color;
+      background-color: #eeeeee;
       border-color: $pagination-hover-border;
     }
   }
@@ -52,9 +52,9 @@
     &:hover,
     &:focus {
       z-index: 2;
-      color: $pagination-active-color;
-      background-color: $pagination-active-bg;
-      border-color: $pagination-active-border;
+      color: #fff;
+      background-color: #27205a;
+      border-color: #27205a;
       cursor: default;
     }
   }

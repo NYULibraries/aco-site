@@ -4,14 +4,22 @@
             <div class="select-hold">
                 <div class="select-style">
                     <select name="scope" class="field-select" aria-label="Attribute">
-                        <option value="q">Any Field / أي مُصطلح</option>
-                        <option value="title">Title / العنوان</option>
-                        <option value="author">Author / الكاتب</option>
-                        <option value="category">Category / فئة الموضوع</option>
-                        <option value="publisher">Publisher / الناشر</option>
-                        <option value="pubplace">Place of Publication / مكان النشر</option>
-                        <option value="provider">Provider / الشريك</option>
-                        <option value="subject">Subject / الموضوع</option>
+                        <option value="q" @selected(($currentField ?? 'q') === 'q')>Any Field / أي مُصطلح
+                        </option>
+                        <option value="title" @selected(($currentField ?? 'q') === 'title')>Title / العنوان
+                        </option>
+                        <option value="author" @selected(($currentField ?? 'q') === 'author')>Author / الكاتب
+                        </option>
+                        <option value="category" @selected(($currentField ?? 'q') === 'category')>Category / فئة
+                            الموضوع</option>
+                        <option value="publisher" @selected(($currentField ?? 'q') === 'publisher')>Publisher / الناشر
+                        </option>
+                        <option value="pubplace" @selected(($currentField ?? 'q') === 'pubplace')>Place of Publication
+                            / مكان النشر</option>
+                        <option value="provider" @selected(($currentField ?? 'q') === 'provider')>Provider / الشريك
+                        </option>
+                        <option value="subject" @selected(($currentField ?? 'q') === 'subject')>Subject / الموضوع
+                        </option>
                     </select>
                 </div>
             </div>
@@ -27,8 +35,9 @@
                 </div>
             </div>
             <div class="input-hold">
-                <input @if(!empty($query)) value="{{ $query }}" @endif class="q1" aria-label="Search" name="q" type="text"
-                    placeholder="search  /  ابحث" title="Enter the terms you wish to search for.">
+                <input @if (!empty($query)) value="{{ $query }}" @endif class="q1"
+                    aria-label="Search" name="q" type="text" placeholder="search  /  ابحث"
+                    title="Enter the terms you wish to search for.">
             </div>
             <div class="submit-hold">
                 <input type="submit" class="submit-search">
