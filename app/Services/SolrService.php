@@ -118,8 +118,11 @@ class SolrService
 
     $query = $this->solrClient->createSelect();
 
-    // sanitize the user's input
-    $sanitizedSearchString = $query->getHelper()->escapeTerm($searchString);
+    // escape per term, but mash them together at the end
+    $terms = explode(' ', $searchString);
+    $escapedTerms = array_map(fn($term) => $query->getHelper()->escapeTerm($term), $terms);
+    $sanitizedSearchString = implode(' ', $escapedTerms);
+
 
     // FIELD LIST - fl
     $query->addParam('fl', self::FL_LIST);
@@ -136,6 +139,7 @@ class SolrService
       // skip any action if the keys don't match
       if ($fieldSelect !== $key) continue;
       match ($scope) {
+        // matches are more functional and are intended for returning data when matching, not processing stuff.
         'matches' => (function () use (&$fq, $map, $sanitizedSearchString) {
           // combine the FieldList keywords with the user's input
           $parts = array_map(fn($f) => "$f:\"$sanitizedSearchString\"", $map['match']);
@@ -144,7 +148,7 @@ class SolrService
         })(),
         'containsAll', 'containsAny' => (function () use (&$fq, $map, $sanitizedSearchString, $scope) {
           // split the user's query into words
-          $words = preg_split('/\s+/', $sanitizedSearchString);
+          $words = preg_split('/[\s,]+/', $sanitizedSearchString);
           // catcher for keywords
           $clauses = [];
           // each words of the users input
@@ -174,8 +178,9 @@ class SolrService
       };
       $finalQuery = match ($scope) {
         'matches' => $buildTermQuery($sanitizedSearchString),
+        // since match functions are not meant for logic, using an annonymous function to do some logic dancing inside
         'containsAny', 'containsAll' => (function () use ($sanitizedSearchString, $scope, $buildTermQuery) {
-          $words = preg_split('/\s+/', $sanitizedSearchString);
+          $words = preg_split('/[\s,]+/', $sanitizedSearchString);
           $parts = array_map(fn($w) => $buildTermQuery($w), $words);
           $glue = ($scope === 'containsAny') ? ' OR ' : ' AND ';
           return ('(' . implode($glue, $parts) . ')');

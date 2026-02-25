@@ -79,6 +79,19 @@ describe('SolrService BuilQuery', function () {
         'rows' => 10,
       ]
     ],
+    // testing for phrases with whitespace
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1771971789804_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=((content_und:jibran%20OR%20content_und_ws:jibran%20OR%20content_en:jibran%20OR%20content:jibran)%20OR%20(content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))",
+      [
+        'fieldSelect' => 'q',
+        'scope' => 'containsAny',
+        'searchString' => 'jibran arabs',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
     [
       "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1765998709194_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=((content_und:arabs%20OR%20content_und_ws:arabs%20OR%20content_en:arabs%20OR%20content:arabs))",
       [
@@ -99,6 +112,20 @@ describe('SolrService BuilQuery', function () {
         'fieldSelect' => 'q',
         'scope' => 'matches',
         'searchString' => 'arabs',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // testing for phrases with whitespace
+    [
+      // "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1765998738928_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=(content_und:%22arabs%22%20OR%20content_und_ws:%22arabs%22%20OR%20content_en:%22arabs%22%20OR%20content:%22arabs%22)",
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1771971850872_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&rows=10&start=0&sort=score%20desc&q=(content_und:jibran%20arabs%20OR%20content_und_ws:jibran%20arabs%20OR%20content_en:jibran%20arabs%20OR%20content:jibran%20arabs)",
+      [
+        'fieldSelect' => 'q',
+        'scope' => 'matches',
+        'searchString' => 'jibran arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -129,12 +156,38 @@ describe('SolrService BuilQuery', function () {
         'rows' => 10,
       ]
     ],
+    // testing for phrases with whitespace
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1771972031985_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=((tus_title_long:%22jibran%22%20OR%20ts_title_long:%22jibran%22%20OR%20tusar_title_long:%22jibran%22)%20AND%20(tus_title_long:%22arabs%22%20OR%20ts_title_long:%22arabs%22%20OR%20tusar_title_long:%22arabs%22))&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'title',
+        'scope' => 'containsAll',
+        'searchString' => 'jibran arabs',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
     [
       "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1765999156213_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tks_title_long:%22arabs%22%20OR%20tks_ar_title_long:%22arabs%22)&rows=10&start=0&sort=score%20desc&q=*",
       [
         'fieldSelect' => 'title',
         'scope' => 'matches',
         'searchString' => 'arabs',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // testing for phrases with whitespace
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1771972084851_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tks_title_long:%22jibran%20arabs%22%20OR%20tks_ar_title_long:%22jibran%20arabs%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'title',
+        'scope' => 'matches',
+        'searchString' => 'jibran arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
@@ -255,6 +308,19 @@ describe('SolrService BuilQuery', function () {
         'fieldSelect' => 'pubplace',
         'scope' => 'containsAny',
         'searchString' => 'arabs',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // testing for phrases with whitespace
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1771972140954_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=((tus_publocation:%22jibran%22%20OR%20ts_publocation:%22jibran%22%20OR%20tusar_publocation:%22jibran%22)%20OR%20(tus_publocation:%22arabs%22%20OR%20ts_publocation:%22arabs%22%20OR%20tusar_publocation:%22arabs%22))&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'pubplace',
+        'scope' => 'containsAny',
+        'searchString' => 'jibran arabs',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
