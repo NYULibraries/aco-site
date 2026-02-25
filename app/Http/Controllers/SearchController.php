@@ -176,7 +176,7 @@ class SearchController extends Controller
           'endIndex' => min($start + count($documents), $total),
           'currentField' => $searchData['field'],
           'currentRows' => $request->getRows(),
-          'currentSort' => $request->getSort(),
+          'currentSort' => $request->getSortField(),
       ];
   }
 
