@@ -148,7 +148,7 @@ class SolrService
         })(),
         'containsAll', 'containsAny' => (function () use (&$fq, $map, $sanitizedSearchString, $scope) {
           // split the user's query into words
-          $words = preg_split('/\s+/', $sanitizedSearchString);
+          $words = preg_split('/[\s,]+/', $sanitizedSearchString);
           // catcher for keywords
           $clauses = [];
           // each words of the users input
