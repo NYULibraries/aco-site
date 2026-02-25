@@ -46,6 +46,7 @@ window.addEventListener("DOMContentLoaded", () => {
       const options = e.target.selectedOptions[0];
       const value = options.value;
       currentUrl.searchParams.set("rpp", value);
+      currentUrl.searchParams.set("page", "1");
       window.location.href = currentUrl;
     });
 
@@ -55,6 +56,7 @@ window.addEventListener("DOMContentLoaded", () => {
       const dir = options.dataset.sortDir || "asc";
       const value = options.value;
       currentUrl.searchParams.set("sort", `${value} ${dir}`);
+      currentUrl.searchParams.set("page", "1");
       window.location.href = currentUrl;
     });
   }
@@ -119,4 +121,3 @@ window.addEventListener("DOMContentLoaded", () => {
   searchFormAggregateSubmit();
   filterResults();
 });
-
