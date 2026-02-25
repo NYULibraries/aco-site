@@ -102,6 +102,7 @@ class DiscoveryResource extends JsonResource
             'publishers' => $this->transformSimpleItems(self::FIELD_EN_PUBLISHER, 'publisher'),
             'provider' => $this->transformSimpleItems(self::FIELD_PROVIDER, 'provider'),
             'publocation' => $this->transformPublocation(self::FIELD_EN_PUBLOCATION),
+            'pubplace' => $this->transformPubPlace(self::FIELD_EN_PUBLOCATION),
             'sequence_count' => $this->getField(self::FIELD_SEQUENCE_COUNT, self::DEFAULT_NO_INTEGER),
         ];
     }
@@ -127,6 +128,7 @@ class DiscoveryResource extends JsonResource
             'publishers' => $this->transformSimpleItems(self::FIELD_AR_PUBLISHER, 'publisher'),
             'provider' => $this->transformSimpleItems(self::FIELD_PROVIDER, 'provider'),
             'publocation' => $this->transformPublocation(self::FIELD_AR_PUBLOCATION),
+            'pubplace' => $this->transformPubPlace(self::FIELD_AR_PUBLOCATION),
             'sequence_count' => $this->getField(self::FIELD_SEQUENCE_COUNT, self::DEFAULT_NOT_AVAILABLE),
         ];
     }
@@ -323,6 +325,25 @@ class DiscoveryResource extends JsonResource
      * Transform publication location.
      * Returns arrays with ['label'] and ['path'] keys.
      */
+    private function transformPubPlace(string $field): array
+    {
+        if (!isset($this->resource[$field])) {
+            return [];
+        }
+
+        $location = $this->resource[$field];
+
+        return [[
+            'label' => $location,
+            'path' => $this->buildSearchUrl(['pubplace' => $location]),
+        ]];
+    }
+
+    /**
+     * Transform publication location.
+     * Returns arrays with ['label'] and ['path'] keys.
+     * @TODO: Remove since production uses pubplace instead of publocation
+     */
     private function transformPublocation(string $field): array
     {
         if (!isset($this->resource[$field])) {
@@ -336,6 +357,7 @@ class DiscoveryResource extends JsonResource
             'path' => $this->buildSearchUrl(['publocation' => $location]),
         ]];
     }
+
     /**
      * Convert file size to correct unit based on intervals of 10^3 (1000)
      * Appends the correct unit to the converted value.

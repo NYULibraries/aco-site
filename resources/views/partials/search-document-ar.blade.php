@@ -61,12 +61,12 @@
 
     <div class="md_publocation">
         <span class="md_label">مكان النشر:</span>
-        @if (empty($item['publocation']))
+        @if (empty($item['pubplace']))
             n.p.
         @else
-            @foreach ($item['publocation'] as $publocation)
+            @foreach ($item['pubplace'] as $pubplace)
                 <span class="one_author">
-                    <a class="md_pubplace" href="{{ url($publocation['path']) }}">{{ $publocation['label'] }}</a>
+                    <a class="md_pubplace" href="{{ url($pubplace['path']) }}">{{ $pubplace['label'] }}</a>
                 </span>
             @endforeach
         @endif
