@@ -266,6 +266,19 @@ describe('SolrService BuilQuery', function () {
         'rows' => 10,
       ]
     ],
+    // Language and Literature - subcategory default search
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1772056426218_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tkm_topic:%22language%20and%20literature%22%20OR%20tkm_ar_topic:%22language%20and%20literature%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'category',
+        'scope' => 'matches',
+        'searchString' => 'language and literature',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
     [
       "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1765999130268_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=((tum_publisher:%22arabs%22%20OR%20tm_publisher:%22arabs%22%20OR%20tumar_publisher:%22arabs%22))&rows=10&start=0&sort=score%20desc&q=*",
       [
