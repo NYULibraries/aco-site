@@ -140,9 +140,11 @@ class SolrService
       if ($fieldSelect !== $key) continue;
       match ($scope) {
         // matches are more functional and are intended for returning data when matching, not processing stuff.
-        'matches' => (function () use (&$fq, $map, $sanitizedSearchString) {
+        // 'matches' => (function () use (&$fq, $map, $sanitizedSearchString) {
+        'matches' => (function () use (&$fq, $map, $searchString, $query) {
+          $nospace = $query->getHelper()->escapePhrase($searchString);
           // combine the FieldList keywords with the user's input
-          $parts = array_map(fn($f) => "$f:\"$sanitizedSearchString\"", $map['match']);
+          $parts = array_map(fn($f) => "$f:$nospace", $map['match']);
           // flatten those parts
           $fq[] = '(' . implode(' OR ', $parts) . ')';
         })(),
