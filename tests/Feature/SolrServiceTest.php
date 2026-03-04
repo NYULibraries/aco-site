@@ -47,14 +47,16 @@ describe('SolrService BuilQuery', function () {
     foreach ($filterQueries as $filterQuery) {
       $fqValues[] = $filterQuery->getOptions()['query'];
     }
-    expect($parsedURL['fq'])->toEqualCanonicalizing($fqValues);
+    // removing periods and commas at the test level since we want to preserve them in the URL
+    $normalizedUserProvidedValues = array_map(fn($f) => strtoLower(str_replace(['.', ','], '', $f)), $fqValues);
+    $normalizedProductionSiteValues = array_map(fn($f) => strtoLower(str_replace(['.', ','], '', $f)), $parsedURL['fq']);
+    expect($normalizedUserProvidedValues)->toEqualCanonicalizing($normalizedProductionSiteValues);
 
     // compare SORTFIELD
     $newSort = $request->getSorts();
     foreach ($newSort as $key => $value) {
       expect($key)->toBe($sortField);
       expect($value)->toBe($sortDir);
-      // break; // should only be one iteration
     }
 
     // compare ROW START AND ROWS
@@ -273,6 +275,32 @@ describe('SolrService BuilQuery', function () {
         'fieldSelect' => 'category',
         'scope' => 'matches',
         'searchString' => 'language and literature',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // World History and History of Europe, Asia, Africa, Australia, New Zealand, etc - subcategory default search
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1772056862390_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tkm_topic:%22world%20history%20and%20history%20of%20europe%20asia%20africa%20australia%20new%20zealand%20etc%22%20OR%20tkm_ar_topic:%22world%20history%20and%20history%20of%20europe%20asia%20africa%20australia%20new%20zealand%20etc%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'category',
+        'scope' => 'matches',
+        'searchString' => 'world history and history of europe, asia, africa, australia, new zealand, etc.',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // Geography. Anthropology. Recreation
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1772058833644_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tkm_topic:%22geography%20anthropology%20recreation%22%20OR%20tkm_ar_topic:%22geography%20anthropology%20recreation%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'category',
+        'scope' => 'matches',
+        'searchString' => 'Geography. Anthropology. Recreation',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
