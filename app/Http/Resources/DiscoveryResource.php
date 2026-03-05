@@ -299,7 +299,7 @@ class DiscoveryResource extends JsonResource
         return $this->decodeJsonCollection(self::FIELD_PARTNER)
             ->map(fn($partner) => [
                 'label' => $partner['name'] ?? '',
-                'path' => $this->buildSearchUrl(['partner' => $partner['name'] ?? '']),
+                'path' => $this->buildSearchUrl(['provider' => $partner['name'] ?? '']),
             ])
             ->values()
             ->all();
@@ -315,7 +315,7 @@ class DiscoveryResource extends JsonResource
             ->filter(fn($partner) => isset(self::PARTNER_TRANSLATIONS[$partner['name'] ?? '']))
             ->map(fn($partner) => [
                 'label' => self::PARTNER_TRANSLATIONS[$partner['name']],
-                'path' => $this->buildSearchUrl(['partner' => $partner['name']]),
+                'path' => $this->buildSearchUrl(['provider' => $partner['name']]),
             ])
             ->values()
             ->all();
