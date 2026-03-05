@@ -47,14 +47,16 @@ describe('SolrService BuilQuery', function () {
     foreach ($filterQueries as $filterQuery) {
       $fqValues[] = $filterQuery->getOptions()['query'];
     }
-    expect($parsedURL['fq'])->toEqualCanonicalizing($fqValues);
+    // removing periods and commas at the test level since we want to preserve them in the URL
+    $normalizedUserProvidedValues = array_map(fn($f) => strtoLower(str_replace(['.', ','], '', $f)), $fqValues);
+    $normalizedProductionSiteValues = array_map(fn($f) => strtoLower(str_replace(['.', ','], '', $f)), $parsedURL['fq']);
+    expect($normalizedUserProvidedValues)->toEqualCanonicalizing($normalizedProductionSiteValues);
 
     // compare SORTFIELD
     $newSort = $request->getSorts();
     foreach ($newSort as $key => $value) {
       expect($key)->toBe($sortField);
       expect($value)->toBe($sortDir);
-      // break; // should only be one iteration
     }
 
     // compare ROW START AND ROWS
@@ -260,6 +262,149 @@ describe('SolrService BuilQuery', function () {
         'fieldSelect' => 'category',
         'scope' => 'matches',
         'searchString' => 'arabs',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // Language and Literature - subcategory default search
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1772056426218_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tkm_topic:%22language%20and%20literature%22%20OR%20tkm_ar_topic:%22language%20and%20literature%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'category',
+        'scope' => 'matches',
+        'searchString' => 'language and literature',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // World History and History of Europe, Asia, Africa, Australia, New Zealand, etc - subcategory default search
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1772056862390_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tkm_topic:%22world%20history%20and%20history%20of%20europe%20asia%20africa%20australia%20new%20zealand%20etc%22%20OR%20tkm_ar_topic:%22world%20history%20and%20history%20of%20europe%20asia%20africa%20australia%20new%20zealand%20etc%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'category',
+        'scope' => 'matches',
+        'searchString' => 'world history and history of europe, asia, africa, australia, new zealand, etc.',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // Geography. Anthropology. Recreation
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1772058833644_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tkm_topic:%22geography%20anthropology%20recreation%22%20OR%20tkm_ar_topic:%22geography%20anthropology%20recreation%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'category',
+        'scope' => 'matches',
+        'searchString' => 'Geography. Anthropology. Recreation',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // Socal Sciences
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1772655597710_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tkm_topic:%22social%20sciences%22%20OR%20tkm_ar_topic:%22social%20sciences%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'category',
+        'scope' => 'matches',
+        'searchString' => 'Social Sciences',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // Bibliography. Library Science. Information Resources (General)
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1772655716967_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tkm_topic:%22bibliography%20library%20science%20information%20resources%20(general)%22%20OR%20tkm_ar_topic:%22bibliography%20library%20science%20information%20resources%20(general)%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'category',
+        'scope' => 'matches',
+        'searchString' => 'Bibliography. Library Science. Information Resources (General)',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // Political Science
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1772655762981_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tkm_topic:%22political%20science%22%20OR%20tkm_ar_topic:%22political%20science%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'category',
+        'scope' => 'matches',
+        'searchString' => 'Political Science',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // General Works
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1772655835032_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tkm_topic:%22general%20works%22%20OR%20tkm_ar_topic:%22general%20works%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'category',
+        'scope' => 'matches',
+        'searchString' => 'General Works',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // Geography. Anthropology. Recreation
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1772655932373_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tkm_topic:%22geography%20anthropology%20recreation%22%20OR%20tkm_ar_topic:%22geography%20anthropology%20recreation%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'category',
+        'scope' => 'matches',
+        'searchString' => 'Geography. Anthropology. Recreation',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // Auxiliary Sciences of History
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1772656039513_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tkm_topic:%22auxiliary%20sciences%20of%20history%22%20OR%20tkm_ar_topic:%22auxiliary%20sciences%20of%20history%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'category',
+        'scope' => 'matches',
+        'searchString' => 'Auxiliary Sciences of History',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // Music and Books on Music
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1772656127021_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tkm_topic:%22music%20and%20books%20on%20music%22%20OR%20tkm_ar_topic:%22music%20and%20books%20on%20music%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'category',
+        'scope' => 'matches',
+        'searchString' => 'Music and Books on Music',
+        'sortField' => 'score',
+        'sortDir' => 'desc',
+        'start' => 0,
+        'rows' => 10,
+      ]
+    ],
+    // History of the Americas
+    [
+      "https://discovery1.dlib.nyu.edu/solr/viewer/select?wt=json&json.wrf=callback=YUI.Env.JSONP.yui_3_18_1_3_1772656208754_48&fl=*&fq=bundle:dlts_book&fq=sm_collection_code:aco&fq=ss_language:en&fq=(tkm_topic:%22history%20of%20the%20americas%22%20OR%20tkm_ar_topic:%22history%20of%20the%20americas%22)&rows=10&start=0&sort=score%20desc&q=*",
+      [
+        'fieldSelect' => 'category',
+        'scope' => 'matches',
+        'searchString' => 'History of the Americas',
         'sortField' => 'score',
         'sortDir' => 'desc',
         'start' => 0,
