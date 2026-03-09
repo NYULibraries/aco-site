@@ -93,16 +93,16 @@ class DiscoveryResource extends JsonResource
             'noid' => $this->getField(self::FIELD_NOID, self::DEFAULT_NOT_AVAILABLE),
             'handle' => $this->getField(self::FIELD_HANDLE, self::DEFAULT_NOT_AVAILABLE),
             'manifest' => $this->getField(self::FIELD_MANIFEST, self::DEFAULT_NOT_AVAILABLE),
-            'subjects' => $this->transformSubjects(),
+            'subjects' => $this->transformSubjects(['scope' => 'matches']),
             'pubdate' => $this->getPubdate(),
             'pdf' => $this->transformPdf(),
-            'authors' => $this->transformSimpleItems(self::FIELD_EN_AUTHOR, 'author'),
-            'partners' => $this->transformPartners(),
+            'authors' => $this->transformSimpleItems(self::FIELD_EN_AUTHOR, 'author', ['scope' => 'matches']),
+            'partners' => $this->transformPartners(['scope' => 'matches']),
             'topics' => $this->transformSimpleItems(self::FIELD_EN_TOPIC, 'category', ['scope' => 'matches']),
-            'publishers' => $this->transformSimpleItems(self::FIELD_EN_PUBLISHER, 'publisher'),
+            'publishers' => $this->transformSimpleItems(self::FIELD_EN_PUBLISHER, 'publisher', ['scope' => 'matches']),
             'provider' => $this->transformSimpleItems(self::FIELD_PROVIDER, 'provider'),
             'publocation' => $this->transformPublocation(self::FIELD_EN_PUBLOCATION),
-            'pubplace' => $this->transformPubPlace(self::FIELD_EN_PUBLOCATION),
+            'pubplace' => $this->transformPubPlace(self::FIELD_EN_PUBLOCATION, ['scope' => 'matches']),
             'sequence_count' => $this->getField(self::FIELD_SEQUENCE_COUNT, self::DEFAULT_NO_INTEGER),
         ];
     }
@@ -122,13 +122,13 @@ class DiscoveryResource extends JsonResource
             'subjects' => $this->transformArabicSubjects(),
             'pubdate' => $this->getPubdate(),
             'pdf' => $this->transformPdf(),
-            'authors' => $this->transformSimpleItems(self::FIELD_AR_AUTHOR, 'author'),
-            'partners' => $this->transformArabicPartners(),
+            'authors' => $this->transformSimpleItems(self::FIELD_AR_AUTHOR, 'author', ['scope' => 'matches']),
+            'partners' => $this->transformArabicPartners(['scope' => 'matches']),
             'topics' => $this->transformSimpleItems(self::FIELD_AR_TOPIC, 'category', ['scope' => 'matches']),
-            'publishers' => $this->transformSimpleItems(self::FIELD_AR_PUBLISHER, 'publisher'),
+            'publishers' => $this->transformSimpleItems(self::FIELD_AR_PUBLISHER, 'publisher', ['scope' => 'matches']),
             'provider' => $this->transformSimpleItems(self::FIELD_PROVIDER, 'provider'),
             'publocation' => $this->transformPublocation(self::FIELD_AR_PUBLOCATION),
-            'pubplace' => $this->transformPubPlace(self::FIELD_AR_PUBLOCATION),
+            'pubplace' => $this->transformPubPlace(self::FIELD_AR_PUBLOCATION, ['scope' => 'matches']),
             'sequence_count' => $this->getField(self::FIELD_SEQUENCE_COUNT, self::DEFAULT_NOT_AVAILABLE),
         ];
     }
@@ -210,12 +210,12 @@ class DiscoveryResource extends JsonResource
      * Transform subjects from JSON data.
      * Returns arrays with consistent ['label'] and ['path'] structure.
      */
-    private function transformSubjects(): array
+    private function transformSubjects(array $additionalParams = []): array
     {
         return $this->decodeJsonCollection(self::FIELD_SUBJECT)
             ->map(fn($subject) => [
                 'label' => $subject['name'] ?? '',
-                'path' => $this->buildSearchUrl(['subject' => $subject['name'] ?? '']),
+                'path' => $this->buildSearchUrl(array_merge(['subject' => $subject['name'] ?? ''], $additionalParams)),
             ])
             ->values()
             ->all();
@@ -294,12 +294,12 @@ class DiscoveryResource extends JsonResource
      * Transform partners with English and Arabic translations.
      * Returns arrays with consistent ['label'] and ['path'] structure.
      */
-    private function transformPartners(): array
+    private function transformPartners(array $additionalParams = []): array
     {
         return $this->decodeJsonCollection(self::FIELD_PARTNER)
             ->map(fn($partner) => [
                 'label' => $partner['name'] ?? '',
-                'path' => $this->buildSearchUrl(['provider' => $partner['name'] ?? '']),
+                'path' => $this->buildSearchUrl(array_merge(['provider' => $partner['name'] ?? ''], $additionalParams)),
             ])
             ->values()
             ->all();
@@ -309,13 +309,13 @@ class DiscoveryResource extends JsonResource
      * Transform Arabic partners using translation map.
      * Returns arrays with ['label'] and ['path'] keys.
      */
-    private function transformArabicPartners(): array
+    private function transformArabicPartners(array $additionalParams = []): array
     {
         return $this->decodeJsonCollection(self::FIELD_PARTNER)
             ->filter(fn($partner) => isset(self::PARTNER_TRANSLATIONS[$partner['name'] ?? '']))
             ->map(fn($partner) => [
                 'label' => self::PARTNER_TRANSLATIONS[$partner['name']],
-                'path' => $this->buildSearchUrl(['provider' => $partner['name']]),
+                'path' => $this->buildSearchUrl(array_merge(['provider' => $partner['name']], $additionalParams)),
             ])
             ->values()
             ->all();
@@ -325,7 +325,7 @@ class DiscoveryResource extends JsonResource
      * Transform publication location.
      * Returns arrays with ['label'] and ['path'] keys.
      */
-    private function transformPubPlace(string $field): array
+    private function transformPubPlace(string $field, array $additionalParams = []): array
     {
         if (!isset($this->resource[$field])) {
             return [];
@@ -335,7 +335,7 @@ class DiscoveryResource extends JsonResource
 
         return [[
             'label' => $location,
-            'path' => $this->buildSearchUrl(['pubplace' => $location]),
+            'path' => $this->buildSearchUrl(array_merge(['pubplace' => $location], $additionalParams)),
         ]];
     }
 
