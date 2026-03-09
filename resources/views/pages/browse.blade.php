@@ -1,0 +1,89 @@
+@extends('layouts.app')
+
+@section('pagetitle', $pagetitle)
+
+@section('body_class', $body_class)
+
+@section('content')
+    <main class="main container-fluid" role="main">
+
+        <header class="results-header">
+            @include('partials.pagetitle')
+        </header>
+
+        @if (!empty($documents))
+            <header class="results-header">
+                <div class="aboutinfo">
+                    <div class="aboutinfo-links">
+                        <a href="#" dir="ltr" lang="en" class="aboutinfo-link aboutinfo-link-available"
+                            data-name="aboutinfo-link" aria-expanded="false"
+                            aria-controls="aboutinfocontent-id"><span></span>About this search</a>
+                        <a href="#" dir="rtl" lang="ar" class="aboutinfo-link aboutinfo-link-available"
+                            data-name="aboutinfo-link" aria-expanded="false" aria-controls="aboutinfocontent-id">بخصوص
+                            هذا البحث<span class="arrow-left"></span></a>
+                    </div>
+                    <div id="aboutinfocontent-id" class="about-info-content" data-name="aboutinfo-content"
+                        style="height:0; overflow:hidden">
+                        <div class="inner">
+                            @include('partials.searchtips')
+                        </div>
+                    </div>
+                </div>
+                <div class="select-style sort-select">
+                    <select id="sort-select-el" aria-label="Sorting Criteria">
+                        <option data-sort-dir="desc" value="score" @if ($currentSort === 'score') selected @endif>
+                            Relevance / فرز حسب</option>
+                        <option data-sort-dir="asc" value="tks_title_long"
+                            @if ($currentSort === 'tks_title_long') selected @endif>Title in English / العنوان بالانجليزية
+                        </option>
+                        <option data-sort-dir="asc" value="tks_ar_title_long"
+                            @if ($currentSort === 'tks_ar_title_long') selected @endif>Title in Arabic / العنوان بالعربية</option>
+                        <option data-sort-dir="asc" value="iass_pubyear" @if ($currentSort === 'iass_pubyear') selected @endif>
+                            Date of Publication / تاريخ النشر</option>
+                        <option data-sort-dir="asc" value="tks_publocation"
+                            @if ($currentSort === 'tks_publocation') selected @endif>Place in English / بلد النشر بالانجليزية
+                        </option>
+                        <option data-sort-dir="asc" value="tks_ar_publocation"
+                            @if ($currentSort === 'tks_ar_publocation') selected @endif>Place in Arabic / بلد النشر بالعربية</option>
+                        <option data-sort-dir="desc" value="ds_created" @if ($currentSort === 'ds_created') selected @endif>
+                            Recently added / وضِعت مؤخراً</option>
+                    </select>
+                </div>
+                <div class="select-style rpp-select">
+                    <select id="rpp-select-el" aria-label="Number of Results Per Page">
+                        <option value="10" @if ($currentRows === 10) selected @endif>10 per page</option>
+                        <option value="20" @if ($currentRows === 20) selected @endif>20 per page</option>
+                        <option value="40" @if ($currentRows === 40) selected @endif>40 per page</option>
+                    </select>
+                </div>
+                @if (!empty($total) && !empty($startIndex) && !empty($endIndex))
+                    <div class="resultsnum">Showing <span class="start">{{ $startIndex }}</span> - <span
+                            class="docslength">{{ $endIndex }}</span> of <span
+                            class="numfound">{{ $total }}</span>
+                        <span class="resultsfor">results for</span> <span class="s-query"></span>
+                    </div>
+                @endif
+            </header>
+            <div class="item-list">
+                @foreach ($documents as $item)
+                    <div class="item flexrow">
+                        @include('partials.search-document-en', ['item' => $item['en']])
+                        @include('partials.search-document-thumb', ['item' => $item['en']])
+                        @include('partials.search-document-ar', ['item' => $item['ar']])
+                    </div>
+                @endforeach
+            </div>
+            <div class="text-center">
+                <div id="paginator" class="pagination">
+                    {{ $paginator->links('vendor.pagination.default') }}
+                </div>
+            </div>
+        @else
+            <div>Discovery not available at this time.</div>
+        @endif
+    </main>
+@endsection
+
+@push('scripts')
+    <script src="{{ asset('js/search.js') }}"></script>
+@endpush
