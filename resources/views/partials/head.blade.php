@@ -4,7 +4,7 @@
     @endif
 </title>
 
-@if (env('ANALYTICS_ENABLED') === 'true')
+@if (config('app.analytics_enabled'))
     <!-- Matomo -->
     <script>
         var _paq = window._paq = window._paq || [];
