@@ -20,35 +20,35 @@ class ResourcesController extends Controller
           ],
           'links' => [
             [
-              'href' => 'http://corpus.quran.com/',
+              'href' => 'https://corpus.quran.com/',
               'label' => 'The Quranic Arabic Corpus',
             ],
             [
-              'href' => 'http://www.altafsir.com/',
+              'href' => 'https://www.altafsir.com/',
               'label' => 'Altafsir',
             ],
             [
-              'href' => 'http://www.waqfeya.net/',
+              'href' => 'https://waqfeya.net/',
               'label' => 'Almaktaba alwaqfiyya',
             ],
             [
-              'href' => 'http://www.nlm.nih.gov/hmd/arabic/welcome.html',
+              'href' => 'https://www.nlm.nih.gov/hmd/arabic/welcome.html',
               'label' => 'Islamic Medical Manuscripts at the National Library of Medicine',
              ],
             [
-              'href' => 'http://shamela.ws/',
+              'href' => 'https://shamela.ws/',
               'label' => 'Almaktaba alshamila',
             ],
             [
-              'href' => 'http://www.alwaraq.net/',
+              'href' => 'https://www.alwaraq.net/',
               'label' => 'Alwaraq',
             ],
             [
-              'href' => 'http://guides.nyu.edu/mideast',
+              'href' => 'https://guides.nyu.edu/mideast',
               'label' => 'The Middle Eastern and Islamic Studies Collection at NYU',
             ],
             [
-              'href' => 'http://libguides.princeton.edu/NECollections',
+              'href' => 'https://libguides.princeton.edu/c.php?g=1258622',
               'label' => 'The Near East Collections at Princeton',
             ],
             [
@@ -56,11 +56,11 @@ class ResourcesController extends Controller
               'label' => 'The Middle East and Islamic Studies Collection at Cornell',
             ],
             [
-              'href' => 'http://library.columbia.edu/locations/global/mideast.html',
+              'href' => 'https://library.columbia.edu/locations/global/mideast.html',
               'label' => 'The Middle East and Islamic Studies Collection at Columbia',
             ],
             [
-              'href' => 'http://www.aub.edu.lb/ulibraries/Pages/index.aspx',
+              'href' => 'https://www.aub.edu.lb/libraries/Pages/default.aspx',
               'label' => 'AUB (American University of Beirut) Libraries',
             ],
             [
@@ -68,7 +68,7 @@ class ResourcesController extends Controller
               'label' => 'United Arab Emirates National Library and Archives',
             ],
             [
-              'href' => 'http://ocp.hul.harvard.edu/ihp/',
+              'href' => 'https://ocp.hul.harvard.edu/ihp/',
               'label' => 'Islamic Heritage project',
             ],
             [
@@ -85,35 +85,35 @@ class ResourcesController extends Controller
           ],
           'links' => [
             [
-              'href' => 'http://corpus.quran.com/',
+              'href' => 'https://corpus.quran.com/',
               'label' => 'مورد لغوي يشرح قواعد اللغة العربية والنحو والصرف لكل كلمة في القرآن',
             ],
             [
-              'href' => 'http://www.altafsir.com/',
+              'href' => 'https://www.altafsir.com/',
               'label' => 'تعليقات عربية وانجليزية من وجهات نظر مختلفة',
             ],
             [
-              'href' => 'http://www.waqfeya.net/',
+              'href' => 'https://waqfeya.net/',
               'label' => 'مكتبة من الملفات العربية الممسوحة ضوئيا',
             ],
             [
-              'href' => 'http://www.nlm.nih.gov/hmd/arabic/welcome.html',
+              'href' => 'https://www.nlm.nih.gov/hmd/arabic/welcome.html',
               'label' => 'الطب الإسلامي والعلوم في العصور الوسطى والدور الهام الذي لعبته في تاريخ أوروبا',
             ],
             [
-              'href' => 'http://shamela.ws/',
+              'href' => 'https://shamela.ws/',
               'label' => 'مكتبة من النصوص العربية للتنزيل',
             ],
             [
-              'href' => 'http://www.alwaraq.net/',
+              'href' => 'https://www.alwaraq.net/',
               'label' => 'بحث في النصوص العربية الفصحى',
             ],
             [
-              'href' => 'http://guides.nyu.edu/mideast',
+              'href' => 'https://guides.nyu.edu/mideast',
               'label' => 'مجموعة دراسات الشرق الاوسط الاسلامية في جامعة نيويورك',
             ],
             [
-              'href' => 'http://libguides.princeton.edu/NECollections',
+              'href' => 'https://libguides.princeton.edu/c.php?g=1258622',
               'label' => 'مجموعة الشرق الأدنى في جامعة برنستون',
             ],
             [
@@ -121,11 +121,11 @@ class ResourcesController extends Controller
               'label' => 'الشرق الأوسط ومجموعة الدراسات الأسلامية في جامعة كورنيل',
             ],
             [
-              'href' => 'http://library.columbia.edu/locations/global/mideast.html',
+              'href' => 'https://library.columbia.edu/locations/global/mideast.html',
               'label' => 'الشرق الأوسط و مجموعة الدراسات الأسلامية في جامعة كولومبيا',
             ],
             [
-              'href' => 'http://www.aub.edu.lb/ulibraries/Pages/index.aspx',
+              'href' => 'https://www.aub.edu.lb/libraries/Pages/default.aspx',
               'label' => 'مكتبات الجامعة الأمريكية في لبنان',
             ],
             [
@@ -133,7 +133,7 @@ class ResourcesController extends Controller
               'label' => 'الأرشيف والمكتبة الوطنية بدولة الإمارات العربية المتحدة',
             ],
             [
-              'href' => 'http://ocp.hul.harvard.edu/ihp/',
+              'href' => 'https://ocp.hul.harvard.edu/ihp/',
               'label' => 'التراث الاسلامي',
             ],
             [
