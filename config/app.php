@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'analytics_enabled' => (bool) env('ANALYTICS_ENABLED', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
