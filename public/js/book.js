@@ -23,7 +23,9 @@ window.addEventListener("DOMContentLoaded", () => {
       return height;
     };
     window.addEventListener("load", () => {
-      calculateAvailableHeight();
+      requestAnimationFrame(() =>
+        requestAnimationFrame(calculateAvailableHeight),
+      );
     });
     window.addEventListener("resize", () => {
       calculateAvailableHeight();
