@@ -68,8 +68,8 @@
     });
 </script>
 
-<link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
-<link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}" />
+<link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
+<link rel="icon" href="{{ asset('favicon.ico') }}" />
 
 <script src="{{ asset('js/app.js') }}"></script>
 @vite(['resources/sass/style.scss'])
